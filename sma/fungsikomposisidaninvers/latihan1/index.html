@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Belajar - Fungsi Komposisi & Invers</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            min-height: 250mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page::after {
+            counter-increment: page;
+            content: counter(page);
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 10pt;
+            color: #888;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page::after, .toc-page::after {
+            content: ''; /* No page number on cover and TOC */
+        }
+
+        .cover-page img {
+            max-width: 300px; /* Logo enlarged */
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 38pt; /* Title adjusted */
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 18pt; /* Subtitle enlarged */
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+        
+        .watermark-container .page::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cover-page::before, .toc-page::before {
+            opacity: 0; /* No watermark on cover and TOC */
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 24pt;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-text);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .toc-list { list-style-type: none; padding: 0; }
+        .toc-list li { margin-bottom: 10px; font-size: 12pt; }
+        .toc-list a { text-decoration: none; color: var(--primary-text); }
+        .toc-list a:hover { text-decoration: underline; }
+        
+        .layout-1-kolom { columns: 1; }
+        .layout-latihan { display: flex; flex-direction: column; gap: 20px; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; }
+
+        .soal-item, .soal-latihan {
+             margin-bottom: 20px;
+             break-inside: avoid;
+             overflow-wrap: break-word; /* Prevents overflow */
+             word-wrap: break-word; /* Prevents overflow */
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 0px; 
+        }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; margin-bottom: 15px;}
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">FUNGSI KOMPOSISI & INVERS</h1>
+            <p class="subtitle">Mengungkap Hubungan dan Kebalikan Fungsi</p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="page toc-page">
+        <div class="content-wrapper">
+            <h1>Daftar Isi</h1>
+            <ul class="toc-list">
+                <li><a href="#fungsi-komposisi-invers">Topik: Fungsi Komposisi & Invers</a></li>
+                 <li><a href="#materi-singkat">&nbsp;&nbsp;&nbsp;› Materi Singkat</a></li>
+                 <li><a href="#contoh-soal">&nbsp;&nbsp;&nbsp;› Contoh Soal & Pembahasan</a></li>
+                 <li><a href="#latihan-soal">&nbsp;&nbsp;&nbsp;› Latihan Soal Mandiri</a></li>
+                 <li><a href="#pembahasan-latihan">&nbsp;&nbsp;&nbsp;› Kunci Jawaban & Pembahasan Latihan</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Topik: Fungsi Komposisi & Invers -->
+    <section id="fungsi-komposisi-invers" class="page">
+      <div class="content-wrapper">
+        <h2 id="materi-singkat">Topik: Fungsi Komposisi & Invers</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <h4>Fungsi Komposisi</h4>
+            <p>Fungsi komposisi adalah penggabungan dua fungsi atau lebih secara berurutan sehingga menghasilkan sebuah fungsi baru. Bayangkan seperti proses perakitan di pabrik: bahan baku dimasukkan ke mesin A, hasilnya kemudian dimasukkan ke mesin B. </p>
+            <p>Notasi komposisi fungsi $f$ dan $g$ adalah $(f \circ g)(x)$, yang dibaca "f bundaran g dari x". Ini berarti kita menerapkan fungsi $g$ terlebih dahulu, kemudian hasilnya kita masukkan ke dalam fungsi $f$.</p>
+            <b>Definisi: $(f \circ g)(x) = f(g(x))$</b>
+            <br><br>
+            <b>Sifat-sifat Fungsi Komposisi:</b>
+            <ul>
+                <li><b>Tidak Komutatif:</b> Secara umum, $(f \circ g)(x) \neq (g \circ f)(x)$. Urutan pengerjaan sangat penting.</li>
+                <li><b>Asosiatif:</b> $((f \circ g) \circ h)(x) = (f \circ (g \circ h))(x)$.</li>
+                <li><b>Elemen Identitas:</b> Terdapat fungsi identitas $I(x)=x$, sehingga $(f \circ I)(x) = (I \circ f)(x) = f(x)$.</li>
+            </ul>
+
+            <h4>Fungsi Invers</h4>
+            <p>Fungsi invers, dilambangkan dengan $f^{-1}(x)$, adalah kebalikan dari suatu fungsi. Jika fungsi $f$ memetakan $x$ ke $y$, maka fungsi invers $f^{-1}$ akan memetakan $y$ kembali ke $x$.</p>
+            <b>Definisi: Jika $f(x)=y$, maka $f^{-1}(y)=x$.</b>
+            <p>Syarat sebuah fungsi memiliki invers adalah fungsi tersebut harus <b>bijektif</b> (korespondensi satu-satu).</p>
+
+            <b>Cara Menentukan Fungsi Invers:</b>
+            <ol>
+                <li>Ubah bentuk $y=f(x)$ menjadi bentuk $x=f(y)$.</li>
+                <li>Setelah berhasil membuat $x$ menjadi subjek, ganti $x$ dengan $f^{-1}(y)$.</li>
+                <li>Ganti variabel $y$ dengan $x$ untuk mendapatkan rumus $f^{-1}(x)$.</li>
+            </ol>
+            
+            <b>Contoh:</b> Cari invers dari $f(x)=2x-6$.
+            <br>1. $y = 2x - 6$
+            <br>2. $y + 6 = 2x \implies x = \frac{y+6}{2}$
+            <br>3. $f^{-1}(y) = \frac{y+6}{2}$
+            <br>4. $f^{-1}(x) = \frac{x+6}{2}$
+            <br><br>
+            <b>Sifat-sifat Fungsi Invers:</b>
+            <ul>
+                <li>$(f^{-1})^{-1}(x) = f(x)$</li>
+                <li>$(f \circ f^{-1})(x) = (f^{-1} \circ f)(x) = x$</li>
+                <li><b>Penting:</b> Invers dari komposisi fungsi dibalik urutannya: $(f \circ g)^{-1}(x) = (g^{-1} \circ f^{-1})(x)$.</li>
+            </ul>
+
+            <b>Rumus Cepat Invers Fungsi Pecahan Linear:</b>
+            <p>Jika $f(x) = \frac{ax+b}{cx+d}$, maka $f^{-1}(x) = \frac{-dx+b}{cx-a}$. (Posisi $a$ dan $d$ ditukar, lalu dikali -1).</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="contoh-soal" class="page">
+        <div class="content-wrapper">
+            <h3>2. Contoh Soal & Pembahasan</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Diketahui $f(x) = 2x + 3$ dan $g(x) = x - 5$. Rumus untuk $(f \circ g)(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$2x - 7$</li><li data-option="B">$2x - 2$</li><li data-option="C">$2x+8$</li><li data-option="D">$3x - 2$</li><li data-option="E">$x-2$</li>
+                        </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Definisi komposisi $(f \circ g)(x)$ adalah $f(g(x))$. Artinya, kita substitusi $g(x)$ ke dalam setiap $x$ di fungsi $f(x)$.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Tuliskan definisi: $(f \circ g)(x) = f(g(x))$.
+                        <br>2. Ganti $g(x)$ dengan rumusnya: $f(x-5)$.
+                        <br>3. Masukkan $(x-5)$ ke dalam fungsi $f(x)=2x+3$: $f(x-5) = 2(x-5) + 3$.
+                        <br>4. Sederhanakan: $2x - 10 + 3 = 2x - 7$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda</div>
+                    <b>Soal 2.</b> Jika $f(x) = 4x + 1$, maka $f^{-1}(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$4x-1$</li><li data-option="B">$\frac{x-1}{4}$</li><li data-option="C">$\frac{x+1}{4}$</li><li data-option="D">$\frac{1}{4}x-1$</li><li data-option="E">$-4x-1$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Untuk mencari invers, kita misalkan $f(x)=y$, lalu selesaikan persamaan untuk $x$.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Misalkan $y = 4x+1$.
+                        <br>2. Pindahkan 1 ke ruas kiri: $y - 1 = 4x$.
+                        <br>3. Bagi kedua ruas dengan 4: $x = \frac{y-1}{4}$.
+                        <br>4. Ganti $x$ dengan $f^{-1}(y)$: $f^{-1}(y) = \frac{y-1}{4}$.
+                        <br>5. Ganti variabel $y$ dengan $x$: $f^{-1}(x) = \frac{x-1}{4}$.<br>
+                        <b>Jawaban yang benar adalah B.</b>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda</div>
+                    <b>Soal 3.</b> Diketahui $f(x)=x^2+1$ dan $g(x)=x-3$. Nilai dari $(f \circ g)(5)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">5</li><li data-option="B">10</li><li data-option="C">17</li><li data-option="D">22</li><li data-option="E">26</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> $(f \circ g)(5)$ berarti $f(g(5))$. Kita hitung nilai $g(5)$ terlebih dahulu, lalu hasilnya dimasukkan ke fungsi $f$.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Hitung $g(5)$: $g(5) = 5 - 3 = 2$.
+                        <br>2. Masukkan hasilnya ke $f(x)$: $f(g(5)) = f(2)$.
+                        <br>3. Hitung $f(2)$: $f(2) = (2)^2 + 1 = 4 + 1 = 5$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda</div>
+                    <b>Soal 4.</b> Diberikan fungsi $f(x) = \frac{3x+2}{2x-1}$, untuk $x \neq \frac{1}{2}$. Fungsi inversnya, $f^{-1}(x)$, adalah...
+                    <div class="pilihan-ganda-container">
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\frac{x+2}{2x-3}$</li><li data-option="B">$\frac{x-2}{2x+3}$</li><li data-option="C">$\frac{-x+2}{2x+3}$</li><li data-option="D">$\frac{3x-1}{2x+2}$</li><li data-option="E">$\frac{2x+3}{x-2}$</li>
+                        </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Kita bisa menggunakan cara biasa atau rumus cepat untuk fungsi pecahan linear. Jika $f(x) = \frac{ax+b}{cx+d}$, maka $f^{-1}(x) = \frac{-dx+b}{cx-a}$.<br>
+                        <b>Langkah-langkah (Rumus Cepat):</b>
+                        <br>1. Identifikasi koefisien: $a=3, b=2, c=2, d=-1$.
+                        <br>2. Tukar posisi $a$ dan $d$, lalu kalikan -1: $-d = -(-1) = 1$ dan $-a = -3$.
+                        <br>3. Susun inversnya: $f^{-1}(x) = \frac{(1)x+2}{2x-3} = \frac{x+2}{2x-3}$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda</div>
+                    <b>Soal 5.</b> Diketahui $(f \circ g)(x) = 6x - 10$ dan $f(x) = 3x + 2$. Rumus fungsi $g(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$2x-4$</li><li data-option="B">$2x+4$</li><li data-option="C">$3x-12$</li><li data-option="D">$3x+8$</li><li data-option="E">$6x-12$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Kita tahu bahwa $(f \circ g)(x) = f(g(x))$. Kita substitusikan $g(x)$ ke dalam $f(x)$ dan samakan dengan rumus komposisi yang diketahui.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. $f(g(x)) = 6x - 10$.
+                        <br>2. Dari $f(x) = 3x+2$, maka $f(g(x)) = 3(g(x)) + 2$.
+                        <br>3. Samakan kedua persamaan: $3(g(x)) + 2 = 6x - 10$.
+                        <br>4. Selesaikan untuk $g(x)$: $3(g(x)) = 6x - 12$.
+                        <br>5. $g(x) = \frac{6x-12}{3} = 2x - 4$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda</div>
+                    <b>Soal 6.</b> Diketahui $(f \circ g)(x) = x^2 - 4x + 7$ dan $g(x) = x-2$. Rumus fungsi $f(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$x^2+3$</li><li data-option="B">$x^2-1$</li><li data-option="C">$x^2-2x+3$</li><li data-option="D">$x^2+2x-3$</li><li data-option="E">$x^2+4$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Kita ingin mencari $f(x)$ dari $f(g(x))$. Caranya adalah dengan memisalkan $g(x)$ sebagai variabel baru, lalu substitusi kembali.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Kita punya $f(x-2) = x^2 - 4x + 7$.
+                        <br>2. Misalkan $p = x-2$. Maka $x = p+2$.
+                        <br>3. Ganti semua $x$ di ruas kanan dengan $(p+2)$: $f(p) = (p+2)^2 - 4(p+2) + 7$.
+                        <br>4. Jabarkan dan sederhanakan: $f(p) = (p^2+4p+4) - (4p+8) + 7$.
+                        <br>5. $f(p) = p^2 + 4p - 4p + 4 - 8 + 7 = p^2 + 3$.
+                        <br>6. Ganti kembali $p$ dengan $x$: $f(x) = x^2+3$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda</div>
+                    <b>Soal 7.</b> Diketahui $f(x) = 2x-5$ dan $g(x) = \frac{1}{x+1}$. Jika $h(x) = (f \circ g)(x)$, maka $h^{-1}(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">$\frac{-x-3}{x+5}$</li><li data-option="B">$\frac{x+1}{x-5}$</li><li data-option="C">$\frac{2-x}{x+5}$</li><li data-option="D">$\frac{x-5}{x+1}$</li><li data-option="E">$\frac{1-x}{x-5}$</li>
+                        </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Cara paling langsung adalah mencari rumus $h(x)$ terlebih dahulu, baru kemudian mencari inversnya.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Cari $h(x) = (f \circ g)(x) = f(g(x))$.
+                        <br>2. Substitusi $g(x)$: $h(x) = f(\frac{1}{x+1}) = 2(\frac{1}{x+1}) - 5$.
+                        <br>3. Samakan penyebut: $h(x) = \frac{2}{x+1} - \frac{5(x+1)}{x+1} = \frac{2 - 5x - 5}{x+1} = \frac{-5x-3}{x+1}$.
+                        <br>4. Cari invers dari $h(x) = \frac{-5x-3}{x+1}$ menggunakan rumus cepat. Di sini, $a=-5, b=-3, c=1, d=1$.
+                        <br>5. $h^{-1}(x) = \frac{-dx+b}{cx-a} = \frac{-(1)x+(-3)}{(1)x-(-5)} = \frac{-x-3}{x+5}$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda</div>
+                    <b>Soal 8.</b> Diberikan $f(x) = \sqrt{2x-4}$ dengan domain $x \ge 2$. Invers dari fungsi $f(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$f^{-1}(x)=\frac{x^2+4}{2}, x \ge 0$</li><li data-option="B">$f^{-1}(x)=\frac{x^2-4}{2}, x \ge 0$</li><li data-option="C">$f^{-1}(x)=\frac{x^2+2}{4}, x \ge 2$</li><li data-option="D">$f^{-1}(x)=(\frac{x+4}{2})^2, x \ge -4$</li><li data-option="E">$f^{-1}(x)=2x^2+4, x \ge 0$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Untuk menginverskan fungsi akar, kita kuadratkan kedua ruas. Penting untuk memperhatikan domain dan range. Range dari $f(x)=\sqrt{2x-4}$ adalah $y \ge 0$. Range ini akan menjadi domain dari $f^{-1}(x)$.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Misalkan $y = \sqrt{2x-4}$.
+                        <br>2. Kuadratkan kedua ruas: $y^2 = 2x-4$.
+                        <br>3. Selesaikan untuk $x$: $y^2 + 4 = 2x \implies x = \frac{y^2+4}{2}$.
+                        <br>4. Ganti $x$ dengan $f^{-1}(y)$: $f^{-1}(y) = \frac{y^2+4}{2}$.
+                        <br>5. Ganti $y$ dengan $x$: $f^{-1}(x) = \frac{x^2+4}{2}$.
+                        <br>6. Tentukan domain $f^{-1}(x)$. Domain ini sama dengan range $f(x)$. Karena hasil akar kuadrat tidak pernah negatif, maka range $f(x)$ adalah $y \ge 0$. Jadi, domain untuk $f^{-1}(x)$ adalah $x \ge 0$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda</div>
+                    <b>Soal 9.</b> Jika $f(x-2) = 3x+1$, maka $f^{-1}(x)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$\frac{x-7}{3}$</li><li data-option="B">$\frac{x+7}{3}$</li><li data-option="C">$\frac{x-1}{3}-2$</li><li data-option="D">$3x-5$</li><li data-option="E">$\frac{x-3}{7}$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Pertama, kita harus menemukan rumus untuk $f(x)$ terlebih dahulu, baru kemudian mencari inversnya.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. <b>Mencari $f(x)$</b>: Misalkan $p=x-2$, maka $x=p+2$.
+                        <br>2. Substitusi ke persamaan: $f(p) = 3(p+2)+1 = 3p+6+1 = 3p+7$.
+                        <br>3. Jadi, rumus untuk $f(x)$ adalah $f(x)=3x+7$.
+                        <br>4. <b>Mencari $f^{-1}(x)$</b>: Misalkan $y=3x+7$.
+                        <br>5. $y-7 = 3x \implies x = \frac{y-7}{3}$.
+                        <br>6. Jadi, $f^{-1}(x) = \frac{x-7}{3}$.<br>
+                        <b>Jawaban yang benar adalah A.</b>
+                    </div>
+                </div>
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda</div>
+                    <b>Soal 10.</b> Diketahui $f^{-1}(x-1) = \frac{4-3x}{x-2}$. Nilai $f(-5)$ adalah...
+                    <div class="pilihan-ganda-container">
+                    <ol class="pilihan-ganda">
+                        <li data-option="A">$-2$</li><li data-option="B">$-1/2$</li><li data-option="C">$0$</li><li data-option="D">$1/2$</li><li data-option="E">$2$</li>
+                    </ol>
+                    </div>
+                    <div class="pembahasan"><b>Pembahasan:</b><br>
+                        <b>Teori Dasar:</b> Kita tidak perlu mencari $f(x)$ terlebih dahulu. Kita gunakan definisi invers: jika $f^{-1}(a)=b$, maka $f(b)=a$.<br>
+                        <b>Langkah-langkah:</b>
+                        <br>1. Kita ingin mencari $f(-5)$. Berdasarkan definisi, kita perlu mencari nilai $a$ sehingga $f^{-1}(a) = -5$.
+                        <br>2. Dari soal, kita punya $f^{-1}(x-1) = \frac{4-3x}{x-2}$.
+                        <br>3. Kita set outputnya sama dengan -5: $\frac{4-3x}{x-2} = -5$.
+                        <br>4. Selesaikan persamaan: $4-3x = -5(x-2) \implies 4-3x = -5x+10$.
+                        <br>5. $5x-3x = 10-4 \implies 2x=6 \implies x=3$.
+                        <br>6. Ini berarti, saat kita masukkan $x=3$ ke persamaan di soal, kita akan mendapatkan hasil -5.
+                        <br>7. Input untuk $f^{-1}$ adalah $a = x-1 = 3-1 = 2$. Jadi kita telah menemukan bahwa $f^{-1}(2)=-5$.
+                        <br>8. Karena $f^{-1}(2)=-5$, maka berdasarkan definisi invers, $f(-5)=2$.<br>
+                        <b>Jawaban yang benar adalah E.</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="latihan-soal" class="page">
+        <div class="content-wrapper">
+            <h3>3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Mudah</div><b>1.</b> Jika $f(x)=x-5$ dan $g(x)=2x+3$, maka $(g \circ f)(x)$ adalah... <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2x-7$</li><li data-option="B">$2x-2$</li><li data-option="C">$2x+8$</li><li data-option="D">$x-2$</li><li data-option="E">$2x-10$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Mudah</div><b>2.</b> Invers dari fungsi $f(x)=\frac{x+1}{3}$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3x+1$</li><li data-option="B">$x-3$</li><li data-option="C">$3x-1$</li><li data-option="D">$-3x+1$</li><li data-option="E">$3(x-1)$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Mudah</div><b>3.</b> Diketahui $f(x)=x^2$ dan $g(x)=x+1$. Nilai dari $(f \circ g)(2)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">4</li><li data-option="C">5</li><li data-option="D">8</li><li data-option="E">9</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sedang</div><b>4.</b> Diketahui $f(x)=3x+a$ dan $(f \circ f)(x)=9x+8$. Nilai $a$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sedang</div><b>5.</b> Diberikan $f(x) = x^2 - 6x + 5$ untuk $x \ge 3$. Rumus untuk $f^{-1}(x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3+\sqrt{x+4}$</li><li data-option="B">$3-\sqrt{x+4}$</li><li data-option="C">$-3+\sqrt{x-4}$</li><li data-option="D">$\sqrt{x-3}+4$</li><li data-option="E">$\sqrt{3x-5}$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+            <div class="layout-latihan">
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sedang</div><b>6.</b> Jika $g(x)=x+3$ dan $(f \circ g)(x)=\frac{2x-1}{x+3}$, maka $f(x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{2x-7}{x}$</li><li data-option="B">$\frac{2x+5}{x}$</li><li data-option="C">$\frac{2x-1}{x}$</li><li data-option="D">$\frac{3x-1}{x}$</li><li data-option="E">$\frac{x-7}{x+3}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sedang</div><b>7.</b> Diketahui $f(x)=\frac{2x+1}{x-3}$. Nilai dari $f^{-1}(3)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">4</li><li data-option="C">6</li><li data-option="D">8</li><li data-option="E">10</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>8.</b> Jika $(f \circ g)(x) = 4x^2 + 8x - 3$ dan $g(x)=2x+4$, maka $f^{-1}(x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x^2-2x-3$</li><li data-option="B">$2+\sqrt{x+7}$</li><li data-option="C">$\sqrt{x+7}-2$</li><li data-option="D">$x+7$</li><li data-option="E">$\frac{\sqrt{x+7}-4}{2}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>9.</b> Diberikan $f^{-1}(x) = 3x-1$ dan $g^{-1}(x) = 2x+5$. Rumus untuk $(f \circ g)(x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{x-13}{6}$</li><li data-option="B">$\frac{x+13}{6}$</li><li data-option="C">$6x-7$</li><li data-option="D">$6x+13$</li><li data-option="E">$\frac{x-3}{6}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>10.</b> Jika $f(x)=ax+3$ dan $f(f(f(x))) = 8x+21$, nilai dari $a^2+a+1$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">7</li><li data-option="C">13</li><li data-option="D">21</li><li data-option="E">31</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+            <div class="layout-latihan">
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>11.</b> Jika $f(2x-1) = \frac{6x-1}{3x}$, maka $f^{-1}(3)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$-5/3$</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>12.</b> Diketahui $g(x)=2x-1$ dan $(f \circ g)(x) = \frac{x-3}{x+1}$. Nilai $f^{-1}(-1)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>13.</b> Jika $f(\frac{x+1}{x-1})=x$, maka nilai dari $f^{-1}(2)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>14.</b> Diketahui fungsi $f(x) = 1-\sqrt{x}$. Jika $(g \circ f)(x)=x$, maka $g(3)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">4</li><li data-option="C">6</li><li data-option="D">8</li><li data-option="E">Tidak terdefinisi</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Sulit</div><b>15.</b> Diberikan $f(x)+2f(\frac{1}{x})=3x$. Nilai $f(2)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pembahasan-latihan" class="page">
+        <div class="content-wrapper">
+            <h3>Kunci Jawaban dan Pembahasan Latihan Soal</h3>
+            <div class="pembahasan"><b>1. Jawaban: A</b><br><b>Pembahasan:</b> $(g \circ f)(x) = g(f(x)) = g(x-5) = 2(x-5)+3 = 2x-10+3 = 2x-7$.</div>
+            <div class="pembahasan"><b>2. Jawaban: C</b><br><b>Pembahasan:</b> Misalkan $y = \frac{x+1}{3} \implies 3y = x+1 \implies x = 3y-1$. Maka $f^{-1}(x) = 3x-1$.</div>
+            <div class="pembahasan"><b>3. Jawaban: E</b><br><b>Pembahasan:</b> $(f \circ g)(2) = f(g(2))$. Hitung $g(2) = 2+1=3$. Kemudian hitung $f(3) = 3^2=9$.</div>
+            <div class="pembahasan"><b>4. Jawaban: B</b><br><b>Pembahasan:</b> $(f \circ f)(x) = f(f(x)) = f(3x+a) = 3(3x+a)+a = 9x+3a+a = 9x+4a$. Diketahui $9x+4a = 9x+8$, maka $4a=8$, sehingga $a=2$.</div>
+            <div class="pembahasan"><b>5. Jawaban: A</b><br><b>Pembahasan:</b> Untuk menginverskan fungsi kuadrat, ubah ke bentuk kuadrat sempurna. $y=x^2-6x+5 \implies y=(x-3)^2-9+5 \implies y=(x-3)^2-4$. Maka $y+4 = (x-3)^2 \implies x-3 = \pm\sqrt{y+4}$. Karena domain awal $x \ge 3$, maka $x-3 \ge 0$, kita ambil akar yang positif. $x-3 = \sqrt{y+4} \implies x = 3+\sqrt{y+4}$. Jadi $f^{-1}(x) = 3+\sqrt{x+4}$.</div>
+            <div class="pembahasan"><b>6. Jawaban: A</b><br><b>Pembahasan:</b> $f(g(x)) = f(x+3) = \frac{2x-1}{x+3}$. Misalkan $p=x+3 \implies x=p-3$. Maka $f(p) = \frac{2(p-3)-1}{(p-3)+3} = \frac{2p-6-1}{p} = \frac{2p-7}{p}$. Jadi $f(x)=\frac{2x-7}{x}$.</div>
+            <div class="pembahasan"><b>7. Jawaban: E</b><br><b>Pembahasan:</b> Untuk mencari $f^{-1}(3)$, kita cari $x$ sehingga $f(x)=3$. $\frac{2x+1}{x-3}=3 \implies 2x+1=3(x-3) \implies 2x+1=3x-9 \implies 10=x$. Jadi $f^{-1}(3)=10$.</div>
+            <div class="pembahasan"><b>8. Jawaban: B</b><br><b>Pembahasan:</b> Pertama, cari rumus $f(x)$. Diketahui $f(g(x)) = f(2x+4) = 4x^2+8x-3$. Misalkan $p=2x+4 \implies 2x=p-4 \implies x=\frac{p-4}{2}$. Substitusikan $x$:<br>$f(p) = 4(\frac{p-4}{2})^2 + 8(\frac{p-4}{2}) - 3$<br>$f(p) = 4(\frac{p^2-8p+16}{4}) + 4(p-4) - 3$<br>$f(p) = (p^2-8p+16) + (4p-16) - 3 = p^2 - 4p - 3$.<br>Jadi $f(x) = x^2-4x-3$. Untuk mencari inversnya, ubah ke bentuk kuadrat sempurna: $f(x)=(x-2)^2-7$.<br>$y=(x-2)^2-7 \implies y+7=(x-2)^2 \implies \sqrt{y+7}=x-2 \implies x = 2+\sqrt{y+7}$.<br>Maka $f^{-1}(x) = 2+\sqrt{x+7}$.</div>
+        </div>
+    </section>
+    <section class="page">
+        <div class="content-wrapper">
+            <div class="pembahasan"><b>9. Jawaban: E</b><br><b>Pembahasan:</b> Kita gunakan sifat $(f \circ g)(x) = (g^{-1} \circ f^{-1})^{-1}(x)$.<br> <b>Langkah 1:</b> Cari komposisi $h(x) = (g^{-1} \circ f^{-1})(x)$.<br>$h(x) = g^{-1}(f^{-1}(x)) = g^{-1}(3x-1) = 2(3x-1)+5 = 6x-2+5 = 6x+3$.<br><b>Langkah 2:</b> Cari invers dari $h(x)$, yang hasilnya adalah $(f \circ g)(x)$.<br>$y = 6x+3 \implies y-3=6x \implies x=\frac{y-3}{6}$.<br>Jadi, $(f \circ g)(x) = \frac{x-3}{6}$.</div>
+             <div class="pembahasan"><b>10. Jawaban: B</b><br><b>Pembahasan:</b> $f(f(x)) = a(ax+3)+3 = a^2x+3a+3$.<br>$f(f(f(x))) = a(a^2x+3a+3)+3 = a^3x+3a^2+3a+3$.<br>Samakan dengan $8x+21$. Dari koefisien $x$, kita dapat $a^3=8 \implies a=2$.<br>Cek konstanta: $3(2^2)+3(2)+3 = 3(4)+6+3 = 12+6+3 = 21$. Cocok.<br>Maka nilai $a=2$. Yang ditanya adalah $a^2+a+1 = 2^2+2+1 = 4+2+1=7$.</div>
+             <div class="pembahasan"><b>11. Jawaban: A</b><br><b>Pembahasan:</b> Mencari $f^{-1}(3)$ artinya mencari nilai $a$ sehingga $f(a)=3$. Dari soal, kita punya $f(2x-1) = \frac{6x-1}{3x}$.<br>Kita cari nilai $x$ yang membuat outputnya sama dengan 3.<br>$\frac{6x-1}{3x}=3 \implies 6x-1=9x \implies -1=3x \implies x=-1/3$.<br>Nilai $a$ adalah input ke fungsi $f$, yaitu $a=2x-1$. Substitusi $x=-1/3$:<br>$a = 2(-1/3)-1 = -2/3-1 = -5/3$.<br>Jadi, kita tahu bahwa $f(-5/3)=3$, yang berarti $f^{-1}(3)=-5/3$.</div>
+            <div class="pembahasan"><b>12. Jawaban: C</b><br><b>Pembahasan:</b> Kita ingin mencari $f^{-1}(-1)$, yaitu nilai $a$ sehingga $f(a)=-1$.<br><b>Langkah 1:</b> Cari rumus $f(x)$.<br>Diketahui $(f \circ g)(x) = f(2x-1) = \frac{x-3}{x+1}$. Misalkan $p=2x-1 \implies x=\frac{p+1}{2}$.<br>$f(p) = \frac{(\frac{p+1}{2})-3}{(\frac{p+1}{2})+1} = \frac{\frac{p+1-6}{2}}{\frac{p+1+2}{2}} = \frac{p-5}{p+3}$. Jadi $f(x)=\frac{x-5}{x+3}$.<br><b>Langkah 2:</b> Cari $a$ sehingga $f(a)=-1$.<br>$\frac{a-5}{a+3}=-1 \implies a-5 = -(a+3) \implies a-5 = -a-3 \implies 2a=2 \implies a=1$.<br>Karena $f(1)=-1$, maka $f^{-1}(-1)=1$.</div>
+            <div class="pembahasan"><b>13. Jawaban: C</b><br><b>Pembahasan:</b> Dari $f(\frac{x+1}{x-1})=x$, kita bisa langsung menggunakan definisi invers. Jika $f(a)=b$, maka $f^{-1}(b)=a$.<br>Dalam kasus ini, $a = \frac{x+1}{x-1}$ dan $b=x$.<br>Maka, $f^{-1}(x) = \frac{x+1}{x-1}$.<br>Substitusi $x=2$: $f^{-1}(2) = \frac{2+1}{2-1} = \frac{3}{1}=3$.</div>
+            <div class="pembahasan"><b>14. Jawaban: E</b><br><b>Pembahasan:</b> Kondisi $(g \circ f)(x)=x$ berarti $g(x)$ adalah invers dari $f(x)$, yaitu $g(x)=f^{-1}(x)$.<br><b>Langkah 1:</b> Cari invers dari $f(x)=1-\sqrt{x}$.<br>$y=1-\sqrt{x} \implies \sqrt{x}=1-y \implies x=(1-y)^2$. Jadi $g(x)=(1-x)^2$.<br><b>Langkah 2:</b> Tentukan domain dari $g(x)$. Domain dari $g(x)$ sama dengan range dari $f(x)$.<br>Domain $f(x)$ adalah $x \ge 0$. Nilai $\sqrt{x}$ adalah $\ge 0$. Maka $f(x) = 1-\sqrt{x}$ akan memiliki range $y \le 1$.<br>Jadi, domain dari $g(x)$ adalah $x \le 1$.<br>Pertanyaannya adalah mencari $g(3)$. Karena $3$ tidak termasuk dalam domain $g(x)$, maka $g(3)$ tidak terdefinisi.</div>
+            <div class="pembahasan"><b>15. Jawaban: A</b><br><b>Pembahasan:</b> Ini adalah sistem persamaan fungsional. Kita punya persamaan awal:<br>(1) $f(x)+2f(\frac{1}{x})=3x$<br>Substitusi $x$ dengan $\frac{1}{x}$ untuk mendapatkan persamaan kedua:<br>(2) $f(\frac{1}{x})+2f(x)=\frac{3}{x}$<br>Kalikan persamaan (2) dengan 2: $4f(x)+2f(\frac{1}{x})=\frac{6}{x}$.<br>Sekarang kurangkan persamaan (1) dari hasil ini:<br>$(4f(x)+2f(\frac{1}{x})) - (f(x)+2f(\frac{1}{x})) = \frac{6}{x}-3x$<br>$3f(x)=\frac{6}{x}-3x \implies f(x)=\frac{2}{x}-x$.<br>Maka $f(2) = \frac{2}{2}-2 = 1-2=-1$.</div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
