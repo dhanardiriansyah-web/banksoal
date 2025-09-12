@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kumpulan Soal Turunan (Diferensial)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            min-height: 250mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page::after {
+            counter-increment: page;
+            content: counter(page);
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 10pt;
+            color: #888;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page::after {
+            content: ''; /* No page number on cover */
+        }
+
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 18pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .page {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+        
+        .watermark-container .page::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/jpeg_sijv7w_5618.jpeg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cover-page::before {
+            opacity: 0;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 24pt;
+            text-align: center;
+            border-bottom: 2px solid var(--primary-text);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid #555;
+            padding-left: 10px;
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .layout-1-kolom { columns: 1; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.8fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; }
+
+        .soal-item, .soal-latihan {
+             margin-bottom: 20px;
+             break-inside: avoid;
+             overflow-wrap: break-word;
+             word-wrap: break-word;
+        }
+
+        .pilihan-ganda-container {
+            padding-left: 20px;
+        }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; }
+        
+        .kumpulan-pembahasan h3{ text-align: center; }
+
+        .coret-coret {
+            border: 1px dashed #c0c0c0;
+            min-height: 200px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .kecukupan-data-stmt {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+        table.soal-kategori { width:100%; border-collapse: collapse; text-align: left;}
+        table.soal-kategori th, table.soal-kategori td { padding: 8px; border: 1px solid #ccc; }
+        table.soal-kategori th:not(:first-child) { text-align: center; width: 50px;}
+        table.soal-kategori td:not(:first-child) { text-align: center; vertical-align: middle; }
+    </style>
+</head>
+<body>
+
+<div class="watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/jpeg_sijv7w_5618.jpeg" alt="Logo EXE">
+            <h1 class="title">Turunan dan Aplikasinya</h1>
+            <p class="subtitle">Kumpulan Soal Diferensial untuk Ujian Masuk Perguruan Tinggi</p>
+        </div>
+    </section>
+
+    <!-- Topik: Turunan -->
+    <section id="turunan" class="page">
+      <div class="content-wrapper">
+        <h2>Topik: Turunan (Diferensial)</h2>
+        <h3>1. Materi Singkat</h3>
+        <div class="layout-1-kolom">
+            <p>Turunan sebuah fungsi $f(x)$, dinotasikan sebagai $f'(x)$ atau $\frac{dy}{dx}$, mengukur laju perubahan sesaat nilai fungsi terhadap perubahaan variabelnya. Secara geometris, turunan di sebuah titik adalah gradien garis singgung kurva di titik tersebut.</p>
+            <h4>Aturan Dasar Turunan</h4>
+            <ul>
+                <li><b>Fungsi Konstan:</b> Jika $f(x)=k$, maka $f'(x)=0$.</li>
+                <li><b>Aturan Pangkat:</b> Jika $f(x)=ax^n$, maka $f'(x)=anx^{n-1}$.</li>
+                <li><b>Aturan Penjumlahan/Pengurangan:</b> Jika $h(x)=f(x) \pm g(x)$, maka $h'(x)=f'(x) \pm g'(x)$.</li>
+                <li><b>Aturan Perkalian:</b> Jika $h(x)=u(x)v(x)$, maka $h'(x)=u'(x)v(x)+u(x)v'(x)$.</li>
+                <li><b>Aturan Pembagian:</b> Jika $h(x)=\frac{u(x)}{v(x)}$, maka $h'(x)=\frac{u'(x)v(x)-u(x)v'(x)}{[v(x)]^2}$.</li>
+                <li><b>Aturan Rantai:</b> Jika $h(x)=f(g(x))$, maka $h'(x)=f'(g(x)) \cdot g'(x)$.</li>
+            </ul>
+             <h4>Aplikasi Turunan</h4>
+             <p>Turunan memiliki banyak aplikasi penting dalam matematika dan sains.</p>
+            <ul>
+                <li><b>Gradien Garis Singgung:</b> Gradien garis singgung kurva $y=f(x)$ di titik $(x_1, y_1)$ adalah $m=f'(x_1)$. Persamaan garis singgungnya adalah $y-y_1 = m(x-x_1)$.</li>
+                <li><b>Fungsi Naik dan Turun:</b>
+                    <ul>
+                        <li>Fungsi $f(x)$ dikatakan <b>naik</b> pada suatu interval jika $f'(x) > 0$.</li>
+                        <li>Fungsi $f(x)$ dikatakan <b>turun</b> pada suatu interval jika $f'(x) < 0$.</li>
+                    </ul>
+                </li>
+                <li><b>Titik Stasioner:</b> Titik di mana fungsi berhenti naik atau turun sejenak. Syaratnya adalah $f'(x)=0$. Titik stasioner bisa berupa:
+                    <ul>
+                        <li><b>Titik Maksimum Lokal:</b> Terjadi jika $f''(x) < 0$. Kurva berubah dari naik ke turun.</li>
+                        <li><b>Titik Minimum Lokal:</b> Terjadi jika $f''(x) > 0$. Kurva berubah dari turun ke naik.</li>
+                        <li><b>Titik Belok Horizontal:</b> Terjadi jika $f''(x) = 0$ dan terjadi perubahan kecekungan.</li>
+                    </ul>
+                </li>
+                <li><b>Masalah Optimisasi:</b> Menemukan nilai maksimum atau minimum dari suatu fungsi dalam konteks masalah nyata (misalnya, memaksimalkan volume, meminimalkan biaya).</li>
+                <li><b>Kecepatan dan Percepatan:</b> Jika $s(t)$ adalah fungsi posisi terhadap waktu, maka kecepatan $v(t) = s'(t)$ dan percepatan $a(t) = v'(t) = s''(t)$.</li>
+            </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3>2. Contoh Soal</h3>
+            <div class="layout-1-kolom">
+                <div class="soal-item">
+                    <div class="keterangan-soal">Level: Aplikasi | Tipe: Pilihan Ganda</div>
+                    <b>Soal 1.</b> Tentukan titik-titik stasioner dan jenisnya untuk fungsi $f(x) = x^3 - 6x^2 + 9x + 1$.
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><br>
+                        <b>Teori Dasar:</b> Titik stasioner terjadi ketika turunan pertama fungsi sama dengan nol ($f'(x)=0$). Jenisnya (maksimum, minimum, atau belok) dapat ditentukan menggunakan turunan kedua ($f''(x)$).
+                        <br><br><b>Langkah 1: Cari turunan pertama.</b><br>
+                        $f(x) = x^3 - 6x^2 + 9x + 1$<br>
+                        $f'(x) = 3x^2 - 12x + 9$.
+                        <br><br><b>Langkah 2: Cari titik stasioner dengan $f'(x)=0$.</b><br>
+                        $3x^2 - 12x + 9 = 0$<br>
+                        $x^2 - 4x + 3 = 0$ (dibagi 3)<br>
+                        $(x-1)(x-3) = 0$.<br>
+                        Didapat absis titik stasioner adalah $x=1$ dan $x=3$.
+                        <br><br><b>Langkah 3: Cari nilai y untuk setiap x.</b><br>
+                        Untuk $x=1$, $y = f(1) = 1^3 - 6(1)^2 + 9(1) + 1 = 1 - 6 + 9 + 1 = 5$. Titik stasioner pertama: $(1, 5)$.<br>
+                        Untuk $x=3$, $y = f(3) = 3^3 - 6(3)^2 + 9(3) + 1 = 27 - 54 + 27 + 1 = 1$. Titik stasioner kedua: $(3, 1)$.
+                        <br><br><b>Langkah 4: Gunakan uji turunan kedua untuk menentukan jenisnya.</b><br>
+                        $f'(x) = 3x^2 - 12x + 9$<br>
+                        $f''(x) = 6x - 12$.<br>
+                        Uji titik $x=1$: $f''(1) = 6(1) - 12 = -6$. Karena $f''(1) < 0$, maka $(1, 5)$ adalah <b>titik maksimum lokal</b>.<br>
+                        Uji titik $x=3$: $f''(3) = 6(3) - 12 = 18 - 12 = 6$. Karena $f''(3) > 0$, maka $(3, 1)$ adalah <b>titik minimum lokal</b>.
+                    </div>
+                </div>
+                 <div class="soal-item">
+                    <div class="keterangan-soal">Level: Penalaran | Tipe: Pilihan Ganda</div>
+                    <b>Soal 2.</b> Selembar karton berbentuk persegi panjang dengan ukuran 8 cm x 5 cm. Pada keempat sudutnya dipotong persegi identik, kemudian dilipat untuk membuat kotak tanpa tutup. Berapakah volume maksimum kotak yang bisa dibuat?
+                    <div class="pembahasan"><b>Pembahasan Komprehensif:</b><br>
+                        <b>Teori Dasar:</b> Soal ini adalah masalah optimisasi. Kita harus membuat fungsi volume, lalu mencari nilai maksimumnya menggunakan turunan.
+                        <br><br><b>Langkah 1: Buat model matematika.</b><br>
+                        Misalkan panjang sisi persegi yang dipotong adalah $x$ cm.<br>
+                        Panjang kotak menjadi: $p = 8 - 2x$.<br>
+                        Lebar kotak menjadi: $l = 5 - 2x$.<br>
+                        Tinggi kotak menjadi: $t = x$.<br>
+                        Domain $x$: $x>0$, $8-2x>0 \Rightarrow x<4$, dan $5-2x>0 \Rightarrow x<2.5$. Jadi, $0 < x < 2.5$.
+                        <br><br><b>Langkah 2: Buat fungsi volume $V(x)$.</b><br>
+                        $V(x) = p \cdot l \cdot t = (8-2x)(5-2x)x$<br>
+                        $V(x) = (40 - 16x - 10x + 4x^2)x$<br>
+                        $V(x) = 4x^3 - 26x^2 + 40x$.
+                        <br><br><b>Langkah 3: Cari titik stasioner dengan $V'(x)=0$.</b><br>
+                        $V'(x) = 12x^2 - 52x + 40 = 0$<br>
+                        $3x^2 - 13x + 10 = 0$ (dibagi 4)<br>
+                        $(3x-10)(x-1) = 0$.<br>
+                        Didapat $x = 10/3$ atau $x=1$.
+                        <br><br><b>Langkah 4: Pilih nilai x yang valid.</b><br>
+                        Dari domain $0 < x < 2.5$, satu-satunya nilai yang valid adalah $x=1$. Nilai $x=10/3 \approx 3.33$ tidak valid.<br>
+                        Jadi, volume akan maksimum saat $x=1$.
+                        <br><br><b>Langkah 5: Hitung volume maksimum.</b><br>
+                        $V(1) = 4(1)^3 - 26(1)^2 + 40(1) = 4 - 26 + 40 = 18$.<br>
+                        Volume maksimum kotak adalah <b>18 cm$^3$</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3>3. Latihan Soal</h3>
+            <p>Kerjakan soal-soal berikut. Gunakan kolom di sebelah kanan untuk corat-coret.</p>
+            <div class="layout-latihan">
+                <!-- Soal 1-5 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>1.</b> Turunan pertama dari $f(x) = 3x^4 - 2x^2 + 5x$ adalah... <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$12x^3 - 4x + 5$</li><li data-option="B">$12x^3 - 4x$</li><li data-option="C">$3x^3 - 2x + 5$</li><li data-option="D">$4x^3 - 2x + 5$</li><li data-option="E">$12x^4 - 4x^2 + 5$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>2.</b> Jika $f(x) = (2x^2-1)(x+3)$, maka $f'(x) = $...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$4x+1$</li><li data-option="B">$2x^2+12x-1$</li><li data-option="C">$6x^2+12x-1$</li><li data-option="D">$6x^2-12x+1$</li><li data-option="E">$4x^2+12x+1$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>3.</b> Gradien garis singgung kurva $y = x^2 - 4x + 3$ di titik $(3, 0)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">4</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>4.</b> Fungsi $f(x) = x^3 - 3x^2 - 9x + 15$ turun pada interval...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x < -1$ atau $x > 3$</li><li data-option="B">$x < -3$ atau $x > 1$</li><li data-option="C">$-1 < x < 3$</li><li data-option="D">$-3 < x < 1$</li><li data-option="E">$1 < x < 3$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>5.</b> Nilai-nilai stasioner dari fungsi $f(x) = 2x^3 + 3x^2 - 12x + 7$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 dan -2</li><li data-option="B">0 dan 27</li><li data-option="C">-5 dan 14</li><li data-option="D">14 dan 27</li><li data-option="E">7 dan 0</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 6-10 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>6.</b> Biaya produksi $x$ unit barang dinyatakan dengan fungsi $C(x) = x^2 - 100x + 3000$ (dalam ribuan rupiah). Biaya produksi minimum adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Rp 250.000</li><li data-option="B">Rp 500.000</li><li data-option="C">Rp 750.000</li><li data-option="D">Rp 1.000.000</li><li data-option="E">Rp 1.250.000</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>7.</b> Turunan pertama dari $f(x) = \sqrt{2x-1}$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{1}{2\sqrt{2x-1}}$</li><li data-option="B">$\frac{1}{\sqrt{2x-1}}$</li><li data-option="C">$\frac{2}{\sqrt{2x-1}}$</li><li data-option="D">$\sqrt{2}$</li><li data-option="E">$-\frac{1}{2\sqrt{2x-1}}$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>8.</b> Persamaan garis singgung kurva $f(x) = \frac{1}{x^2}$ di titik yang berabsis $x=1$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$y = -2x+3$</li><li data-option="B">$y = 2x-1$</li><li data-option="C">$y = -x+2$</li><li data-option="D">$y = x$</li><li data-option="E">$y = -2x-1$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>9.</b> Sebuah proyektil ditembakkan ke atas dengan fungsi ketinggian $h(t) = 120t - 5t^2$ meter setelah $t$ detik. Ketinggian maksimum yang dicapai proyektil adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">120 m</li><li data-option="B">240 m</li><li data-option="C">600 m</li><li data-option="D">720 m</li><li data-option="E">1440 m</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>10.</b> Titik belok dari fungsi $f(x) = x^3 - 6x^2 + 5$ terjadi saat $x=...$<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 11-15 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>11.</b> Diketahui $f(x) = ax^3+bx^2$ dengan $a,b \ne 0$. Fungsi $f$ mempunyai titik stasioner di $x=1$. Nilai $b/a$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$-3/2$</li><li data-option="B">$-2/3$</li><li data-option="C">$1$</li><li data-option="D">$2/3$</li><li data-option="E">$3/2$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>12.</b> Nilai maksimum dari fungsi $f(x) = -x^2+8x-12$ pada interval $0 \le x \le 5$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">4</li><li data-option="C">5</li><li data-option="D">6</li><li data-option="E">7</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>13.</b> Jumlah dua bilangan adalah 20. Hasil kali kuadrat bilangan pertama dengan bilangan kedua akan maksimum jika bilangan-bilangan tersebut adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">10 dan 10</li><li data-option="B">12 dan 8</li><li data-option="C">15 dan 5</li><li data-option="D">$40/3$ dan $20/3$</li><li data-option="E">$35/3$ dan $25/3$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>14.</b> Garis $y=mx+c$ menyinggung parabola $y=x^2+x+1$ di titik $(1,3)$. Nilai $m$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>15.</b> Jika $s(t) = t^3 - 6t^2 + 9t$ adalah fungsi jarak, maka kecepatan benda akan nol pada saat $t=...$<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">0 dan 1</li><li data-option="B">1 dan 2</li><li data-option="C">1 dan 3</li><li data-option="D">2 dan 3</li><li data-option="E">0 dan 3</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 16-20 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>16.</b> Berapakah nilai minimum dari fungsi $f(x)=x^2+px+q$? <div class="kecukupan-data-stmt">(1) Fungsi mencapai nilai minimum di $x=2$.</div> <div class="kecukupan-data-stmt">(2) Nilai $q=7$.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>17.</b> Titik minimum lokal dari fungsi $f(x)=\frac{1}{3}x^3 - \frac{5}{2}x^2 + 6x$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$(2, 14/3)$</li><li data-option="B">$(3, 9/2)$</li><li data-option="C">$(2, 9/2)$</li><li data-option="D">$(3, 14/3)$</li><li data-option="E">$(1, 25/6)$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG Kompleks</div><b>18.</b> Kurva $f(x) = x^3+ax^2+bx+c$ melalui titik $(1,0)$ dan memiliki titik stasioner di $x=-1$. Manakah pernyataan berikut yang PASTI benar? <b>(bisa pilih lebih dari satu jawaban)</b><div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$a+b+c=-1$</li><li data-option="B">$3-2a+b=0$</li><li data-option="C">Titik stasioner lainnya ada di $x=0$.</li><li data-option="D">Kurva tersebut tidak memiliki nilai minimum.</li><li data-option="E">Gradien di $x=0$ adalah $b$.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>19.</b> Jarak terdekat titik pada kurva $y=\sqrt{x}$ ke titik $(4,0)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\sqrt{15}/2$</li><li data-option="B">$\sqrt{14}/2$</li><li data-option="C">$\sqrt{15}$</li><li data-option="D">$\sqrt{14}$</li><li data-option="E">$2$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>20.</b> Turunan kedua dari $f(x)=\sin(2x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2\cos(2x)$</li><li data-option="B">$-2\sin(2x)$</li><li data-option="C">$4\cos(2x)$</li><li data-option="D">$-4\sin(2x)$</li><li data-option="E">$-4\cos(2x)$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 21-25 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG Kompleks Kategori</div><b>21.</b> Diberikan fungsi $f(x) = x^4 - 2x^2 + 3$. Periksalah kebenaran dari setiap pernyataan berikut.
+                    <table class="soal-kategori">
+                        <thead>
+                            <tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Fungsi memiliki 3 titik stasioner.</td><td></td><td></td></tr>
+                            <tr><td>2. Titik $(0,3)$ adalah titik maksimum lokal.</td><td></td><td></td></tr>
+                            <tr><td>3. Fungsi turun pada interval $(-\infty, -1)$ dan $(0,1)$.</td><td></td><td></td></tr>
+                        </tbody>
+                    </table></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>22.</b> Sebuah tabung tanpa tutup akan dibuat dari selembar seng dengan luas $300\pi$ cm$^2$. Agar volume tabung maksimum, jari-jarinya adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">5 cm</li><li data-option="B">$5\sqrt{2}$ cm</li><li data-option="C">10 cm</li><li data-option="D">$10\sqrt{2}$ cm</li><li data-option="E">15 cm</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>23.</b> Fungsi $f(x)=x-2\sqrt{x}$ naik pada interval...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$x>0$</li><li data-option="B">$x>1$</li><li data-option="C">$0<x<1$</li><li data-option="D">$x>2$</li><li data-option="E">$x<1$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>24.</b> Jika $f(x) = \frac{x+1}{x-1}$, maka $f'(2)=...$<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">2</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>25.</b> Garis singgung kurva $y=x^3-3x^2+3x+1$ yang memiliki gradien 3 akan menyinggung kurva di titik...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$(1, 2)$</li><li data-option="B">$(0, 1)$</li><li data-option="C">$(2, 1)$</li><li data-option="D">$(-1, -6)$</li><li data-option="E">$(3, 10)$</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 26-30 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>26.</b> Percepatan suatu benda yang bergerak sepanjang garis lurus adalah $a(t) = 12t-2$. Jika kecepatan pada $t=1$ adalah 5 m/s, maka fungsi kecepatannya adalah $v(t)=...$<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$6t^2-2t+1$</li><li data-option="B">$12t^2-2t-5$</li><li data-option="C">$6t^2-2t$</li><li data-option="D">$6t^2-2t-1$</li><li data-option="E">$12$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>27.</b> Apakah fungsi $f(x)=ax^2+bx+c$ memiliki nilai maksimum? <div class="kecukupan-data-stmt">(1) $a < 0$.</div> <div class="kecukupan-data-stmt">(2) $b^2 - 4ac > 0$.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>28.</b> Nilai minimum dari $f(x)=x+\frac{4}{x}$ untuk $x>0$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG Kompleks</div><b>29.</b> Diberikan $f'(x)=(x-1)(x+2)(x-3)$. Manakah kesimpulan yang benar mengenai fungsi $f(x)$? <b>(bisa pilih lebih dari satu jawaban)</b><div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$f$ memiliki minimum lokal di $x=-2$.</li><li data-option="B">$f$ memiliki maksimum lokal di $x=1$.</li><li data-option="C">$f$ memiliki minimum lokal di $x=3$.</li><li data-option="D">$f$ turun pada interval $(-\infty, -2)$.</li><li data-option="E">$f$ naik pada interval $(1,3)$.</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>30.</b> Sebuah perusahaan memproduksi $x$ unit barang dengan biaya total $B(x)=(2x^2+1000)$ ribu rupiah. Harga jual per unit adalah $p(x)=(150-x)$ ribu rupiah. Keuntungan maksimum diperoleh jika perusahaan memproduksi...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">10 unit</li><li data-option="B">20 unit</li><li data-option="C">25 unit</li><li data-option="D">50 unit</li><li data-option="E">100 unit</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 31-35 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Pengetahuan | Tipe: PG</div><b>31.</b> Turunan dari $y=\cos^3(x)$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3\cos^2(x)\sin(x)$</li><li data-option="B">$-3\cos^2(x)\sin(x)$</li><li data-option="C">$3\sin^2(x)\cos(x)$</li><li data-option="D">$-3\sin^2(x)\cos(x)$</li><li data-option="E">$-3\sin(x)$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>32.</b> Kurva $y = x^3+px+q$ memiliki garis singgung $y=9x-5$ di titik $(2,13)$. Nilai $p$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">3</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>33.</b> Laju perubahan luas sebuah lingkaran terhadap jari-jarinya ketika jari-jarinya 5 cm adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$5\pi$ cm$^2$/cm</li><li data-option="B">$10\pi$ cm$^2$/cm</li><li data-option="C">$15\pi$ cm$^2$/cm</li><li data-option="D">$20\pi$ cm$^2$/cm</li><li data-option="E">$25\pi$ cm$^2$/cm</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>34.</b> Jika $f(x)=x^3+3x^2-9x-7$, maka nilai maksimum fungsi $f(x)$ untuk interval $-4 \le x \le 2$ adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">13</li><li data-option="B">20</li><li data-option="C">27</li><li data-option="D">32</li><li data-option="E">35</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG Kompleks Kategori</div><b>35.</b> Sebuah partikel bergerak dengan posisi $s(t) = t^3 - 3t^2 + 2$ untuk $t \ge 0$. Periksa kebenaran pernyataan berikut.
+                    <table class="soal-kategori"><thead><tr><th>Pernyataan</th><th>Benar</th><th>Salah</th></tr></thead><tbody>
+                    <tr><td>1. Partikel bergerak ke kiri saat $0 < t < 2$.</td><td></td><td></td></tr>
+                    <tr><td>2. Percepatan partikel adalah 0 saat $t=1$.</td><td></td><td></td></tr>
+                    <tr><td>3. Partikel berhenti pada $t=0$ dan $t=2$.</td><td></td><td></td></tr>
+                    </tbody></table></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 36-40 -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>36.</b> Diketahui selembar karton berbentuk persegi dengan sisi 12 cm. Akan dibuat kotak tanpa tutup dengan memotong keempat sudutnya berbentuk persegi. Agar volume kotak maksimum, panjang sisi persegi yang dipotong adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 cm</li><li data-option="B">2 cm</li><li data-option="C">3 cm</li><li data-option="D">4 cm</li><li data-option="E">6 cm</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>37.</b> Fungsi $f(x) = \sin x + \cos x$ untuk $0 \le x \le 2\pi$ mencapai nilai maksimumnya saat $x=...$<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\pi/4$</li><li data-option="B">$\pi/2$</li><li data-option="C">$3\pi/4$</li><li data-option="D">$5\pi/4$</li><li data-option="E">$3\pi/2$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>38.</b> Volume sebuah bola bertambah dengan laju 12 cm$^3$/s. Laju pertambahan jari-jari bola pada saat jari-jarinya 2 cm adalah... (Volume bola $V=\frac{4}{3}\pi r^3$)<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$3/(4\pi)$ cm/s</li><li data-option="B">$1/(2\pi)$ cm/s</li><li data-option="C">$3/(2\pi)$ cm/s</li><li data-option="D">$1/\pi$ cm/s</li><li data-option="E">$3/(16\pi)$ cm/s</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>39.</b> Agar fungsi $f(x) = x^3 - 3x^2 + px + 2$ selalu naik untuk semua $x \in \mathbb{R}$, maka nilai $p$ haruslah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$p > 3$</li><li data-option="B">$p > 0$</li><li data-option="C">$p < 3$</li><li data-option="D">$p < 0$</li><li data-option="E">$p > -3$</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: Kecukupan Data</div><b>40.</b> Apakah $f(1) > f(2)$ untuk fungsi $f(x)=ax^2-bx-2$? <div class="kecukupan-data-stmt">(1) Fungsi $f(x)$ naik pada interval $(1, \infty)$.</div> <div class="kecukupan-data-stmt">(2) $f'(3)=0$.</div> <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Pernyataan (1) SAJA cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup.</li><li data-option="D">SALAH SATU pernyataan SAJA cukup.</li><li data-option="E">(1) dan (2) tidak cukup.</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="layout-latihan">
+                <!-- Soal 41-50 (Soal Tambahan) -->
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>41.</b> Sebuah pabrik memperkirakan biaya total untuk memproduksi $q$ unit produk adalah $C(q) = 0.1q^3 - 0.5q^2 + 500q + 200$ dolar. Biaya marginal (biaya tambahan untuk memproduksi satu unit lagi) pada tingkat produksi 10 unit adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$520/unit</li><li data-option="B">$530/unit</li><li data-option="C">$500/unit</li><li data-option="D">$510/unit</li><li data-option="E">$505/unit</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>42.</b> Seseorang setinggi 1.6 m berjalan menjauhi tiang lampu setinggi 4 m dengan kecepatan 1 m/s. Laju pertambahan panjang bayangannya adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2/3 m/s</li><li data-option="B">3/2 m/s</li><li data-option="C">1 m/s</li><li data-option="D">5/3 m/s</li><li data-option="E">3/5 m/s</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>43.</b> Luas sebuah peternakan persegi panjang akan dipagari dengan kawat sepanjang 800 meter. Agar luas peternakan maksimum, panjang dan lebarnya berturut-turut adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">300 m dan 100 m</li><li data-option="B">250 m dan 150 m</li><li data-option="C">200 m dan 200 m</li><li data-option="D">350 m dan 50 m</li><li data-option="E">Tidak dapat ditentukan</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>44.</b> Air dituangkan ke dalam wadah berbentuk kerucut terbalik dengan laju 2 cm$^3$/detik. Jari-jari alas kerucut adalah 5 cm dan tingginya 10 cm. Laju kenaikan tinggi air saat tinggi air 4 cm adalah... (Volume Kerucut $V=\frac{1}{3}\pi r^2 h$)<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$1/(2\pi)$ cm/s</li><li data-option="B">$2/\pi$ cm/s</li><li data-option="C">$1/\pi$ cm/s</li><li data-option="D">$2/(3\pi)$ cm/s</li><li data-option="E">$3/(2\pi)$ cm/s</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>45.</b> Sebuah perusahaan menemukan bahwa untuk memproduksi $x$ unit barang, biaya rata-rata per unit adalah $A(x) = \frac{400}{x} + 0.1x + 10$. Jumlah unit yang harus diproduksi untuk meminimalkan biaya rata-rata adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Sekitar 63 unit</li><li data-option="B">Sekitar 40 unit</li><li data-option="C">Sekitar 100 unit</li><li data-option="D">Sekitar 20 unit</li><li data-option="E">Sekitar 50 unit</li></ol></div></div><div class="coret-coret"></div></div>
+                <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>46.</b> Sebuah tangga sepanjang 5 meter bersandar pada dinding vertikal. Ujung bawah tangga ditarik menjauhi dinding dengan laju 0.2 m/s. Seberapa cepat ujung atas tangga meluncur ke bawah saat ujung bawah tangga berjarak 3 meter dari dinding?<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">0.15 m/s</li><li data-option="B">0.2 m/s</li><li data-option="C">0.25 m/s</li><li data-option="D">0.3 m/s</li><li data-option="E">0.1 m/s</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>47.</b> Sebuah toko buku menemukan bahwa permintaan mingguan untuk novel terbaru adalah $q = 1000 - 2p$, di mana $q$ adalah jumlah buku yang terjual dan $p$ adalah harga dalam ribuan rupiah. Harga yang harus ditetapkan untuk memaksimalkan pendapatan adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Rp 125.000</li><li data-option="B">Rp 200.000</li><li data-option="C">Rp 250.000</li><li data-option="D">Rp 300.000</li><li data-option="E">Rp 500.000</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>48.</b> Efisiensi seorang pekerja setelah $t$ jam bekerja diberikan oleh fungsi $E(t) = 0.5 + 0.8t - 0.2t^2$. Efisiensi pekerja tersebut mulai menurun setelah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 jam</li><li data-option="B">1.5 jam</li><li data-option="C">2 jam</li><li data-option="D">2.5 jam</li><li data-option="E">3 jam</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Aplikasi | Tipe: PG</div><b>49.</b> Dua mobil berangkat dari titik yang sama. Mobil A bergerak ke utara dengan kecepatan 60 km/jam dan mobil B bergerak ke timur dengan kecepatan 80 km/jam. Laju perubahan jarak antara kedua mobil setelah 30 menit adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">80 km/jam</li><li data-option="B">90 km/jam</li><li data-option="C">100 km/jam</li><li data-option="D">120 km/jam</li><li data-option="E">140 km/jam</li></ol></div></div><div class="coret-coret"></div></div>
+                 <div class="latihan-item"><div class="soal-latihan"><div class="keterangan-soal">Level: Penalaran | Tipe: PG</div><b>50.</b> Sebuah balon udara berbentuk bola mengembang karena diisi udara. Jika jari-jarinya bertambah dengan laju konstan 3 cm/menit, laju pertambahan volume balon saat jari-jarinya 10 cm adalah...<div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$400\pi$ cm$^3$/menit</li><li data-option="B">$800\pi$ cm$^3$/menit</li><li data-option="C">$1000\pi$ cm$^3$/menit</li><li data-option="D">$1200\pi$ cm$^3$/menit</li><li data-option="E">$1500\pi$ cm$^3$/menit</li></ol></div></div><div class="coret-coret"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3>Kunci Jawaban dan Pembahasan Latihan Soal: Turunan</h3>
+            <div class="pembahasan"><b>1. Jawaban: A</b><br><br>Gunakan aturan pangkat $f(x)=ax^n \implies f'(x)=anx^{n-1}$.<br><br>$f'(x) = 3(4)x^{4-1} - 2(2)x^{2-1} + 5(1)x^{1-1} = 12x^3 - 4x + 5$.</div>
+            <div class="pembahasan"><b>2. Jawaban: C</b><br><br>Gunakan aturan perkalian $h'(x)=u'v+uv'$. Misal $u=2x^2-1 \implies u'=4x$ dan $v=x+3 \implies v'=1$.<br><br>$f'(x) = (4x)(x+3) + (2x^2-1)(1) = 4x^2+12x+2x^2-1 = 6x^2+12x-1$.</div>
+            <div class="pembahasan"><b>3. Jawaban: D</b><br><br>Gradien $m = y' = 2x-4$. Substitusi $x=3$, $m = 2(3)-4 = 2$.</div>
+            <div class="pembahasan"><b>4. Jawaban: C</b><br><br>Fungsi turun jika $f'(x)<0$.<br><br>$f'(x) = 3x^2-6x-9 < 0 \implies x^2-2x-3 < 0 \implies (x-3)(x+1) < 0$.<br><br>Pembuat nol adalah $x=-1$ dan $x=3$. Uji titik (misal $x=0$) menghasilkan nilai negatif. Jadi intervalnya adalah $-1 < x < 3$.</div>
+            <div class="pembahasan"><b>5. Jawaban: B</b><br><br><b>Langkah 1: Cari absis titik stasioner.</b><br>$f'(x)=6x^2+6x-12=0 \implies x^2+x-2=0 \implies (x+2)(x-1)=0$.<br>Absis titik stasioner adalah $x=-2$ dan $x=1$.<br><br><b>Langkah 2: Cari nilai stasioner (nilai y).</b><br>$f(-2)=2(-2)^3+3(-2)^2-12(-2)+7 = -16+12+24+7=27$.<br>$f(1)=2(1)^3+3(1)^2-12(1)+7=2+3-12+7=0$.<br><br>Nilai-nilai stasionernya adalah 0 dan 27.</div>
+            <div class="pembahasan"><b>6. Jawaban: B</b><br><br>Biaya minimum terjadi saat $C'(x)=0$.<br><br>$C'(x)=2x-100=0 \implies x=50$.<br><br>Biaya minimum $C(50) = 50^2 - 100(50) + 3000 = 2500-5000+3000=500$. Dalam ribuan rupiah, jadi Rp 500.000.</div>
+            <div class="pembahasan"><b>7. Jawaban: B</b><br><br>Tulis $f(x)=(2x-1)^{1/2}$. Gunakan aturan rantai: $f'(x) = \frac{1}{2}(2x-1)^{-1/2} \cdot 2 = (2x-1)^{-1/2} = \frac{1}{\sqrt{2x-1}}$.</div>
+            <div class="pembahasan"><b>8. Jawaban: A</b><br><br><b>Langkah 1: Cari titik singgung.</b><br>$x=1 \implies y = 1/1^2 = 1$. Titik $(1,1)$.<br><br><b>Langkah 2: Cari gradien.</b><br>$f(x)=x^{-2} \implies f'(x)=-2x^{-3} = -2/x^3$. Di $x=1$, $m=f'(1)=-2/1^3=-2$.<br><br><b>Langkah 3: Buat Persamaan Garis Singgung (PGS).</b><br>$y-y_1 = m(x-x_1) \implies y-1 = -2(x-1) \implies y-1=-2x+2 \implies y=-2x+3$.</div>
+            <div class="pembahasan"><b>9. Jawaban: D</b><br><br>Ketinggian maksimum saat kecepatan nol, $h'(t)=0$.<br><br>$h'(t) = 120-10t=0 \implies t=12$ detik.<br><br>Tinggi maksimum: $h(12) = 120(12)-5(12^2) = 1440-5(144)=1440-720=720$ m.</div>
+            <div class="pembahasan"><b>10. Jawaban: C</b><br><br>Titik belok terjadi saat turunan kedua sama dengan nol, $f''(x)=0$.<br><br>$f'(x)=3x^2-12x$.<br><br>$f''(x)=6x-12=0 \implies x=2$.</div>
+        </div>
+    </section>
+        
+    <section class="page">
+        <div class="content-wrapper">
+            <!-- Pembahasan 11-20 -->
+            <div class="pembahasan"><b>11. Jawaban: A</b><br><br>$f'(x) = 3ax^2+2bx$. Stasioner di $x=1$, maka $f'(1)=0$.<br><br>$3a(1)^2+2b(1)=0 \implies 3a+2b=0 \implies 2b=-3a \implies b/a = -3/2$.</div>
+            <div class="pembahasan"><b>12. Jawaban: B</b><br><br><b>Langkah 1: Cari titik stasioner.</b><br>$f'(x)=-2x+8=0 \implies x=4$. Titik ini ada di dalam interval $0 \le x \le 5$.<br><br><b>Langkah 2: Uji nilai fungsi di titik kritis (ujung interval dan titik stasioner).</b><br>$f(0)=-12$.<br>$f(4)=-(4^2)+8(4)-12=-16+32-12=4$.<br>$f(5)=-(5^2)+8(5)-12=-25+40-12=3$.<br><br>Nilai maksimum adalah 4.</div>
+            <div class="pembahasan"><b>13. Jawaban: D</b><br><br>Misal bilangan itu $x$ dan $y$. $x+y=20 \implies y=20-x$.<br><br>Fungsi yang akan dimaksimalkan: $P(x) = x^2 y = x^2(20-x) = 20x^2-x^3$.<br><br>$P'(x) = 40x-3x^2=0 \implies x(40-3x)=0$. Solusinya $x=0$ (tidak menghasilkan maksimum) atau $x=40/3$.<br><br>Jika $x=40/3$, maka $y=20-40/3=20/3$.</div>
+            <div class="pembahasan"><b>14. Jawaban: C</b><br><br>Gradien garis singgung $m$ adalah nilai turunan parabola di titik singgung.<br><br>$y'=2x+1$. Di titik $(1,3)$, substitusi $x=1$: $m = 2(1)+1 = 3$.</div>
+            <div class="pembahasan"><b>15. Jawaban: C</b><br><br>Kecepatan $v(t)$ adalah turunan dari fungsi jarak $s(t)$. Kecepatan nol berarti $s'(t)=0$.<br><br>$s'(t)=v(t)=3t^2-12t+9=0$.<br><br>Bagi dengan 3: $t^2-4t+3=0 \implies (t-1)(t-3)=0$.<br><br>Jadi kecepatan nol saat $t=1$ atau $t=3$.</div>
+            <div class="pembahasan"><b>16. Jawaban: C</b><br><br>Fungsi $f(x)=x^2+px+q$ adalah parabola terbuka ke atas, jadi pasti punya nilai minimum.<br><br><b>Analisis (1):</b> Minimum di $x=2 \implies f'(2)=0$. $f'(x)=2x+p \implies 2(2)+p=0 \implies p=-4$. Fungsinya menjadi $f(x)=x^2-4x+q$. Nilai minimumnya adalah $f(2)=2^2-4(2)+q = q-4$. Kita belum tahu nilai $q$. Tidak cukup.<br><br><b>Analisis (2):</b> $q=7$. Fungsinya $f(x)=x^2+px+7$. Kita tidak tahu di mana minimumnya terjadi tanpa tahu $p$. Tidak cukup.<br><br><b>Analisis Bersama:</b> Dari (1) kita tahu $p=-4$. Dari (2) kita tahu $q=7$. Jadi kita bisa tentukan nilai minimumnya, yaitu $f(2)=2^2-4(2)+7=3$. Kedua pernyataan BERSAMA-SAMA cukup.</div>
+            <div class="pembahasan"><b>17. Jawaban: B</b><br><br><b>Langkah 1: Cari titik stasioner.</b><br>$f'(x)=x^2-5x+6=0 \implies (x-2)(x-3)=0$. Stasioner di $x=2, x=3$.<br><br><b>Langkah 2: Uji turunan kedua.</b><br>$f''(x)=2x-5$.<br>$f''(2)=4-5=-1$ (maksimum lokal).<br>$f''(3)=6-5=1$ (minimum lokal).<br><br><b>Langkah 3: Cari koordinat y.</b><br>Nilai y saat minimum: $f(3)=\frac{1}{3}(3)^3 - \frac{5}{2}(3)^2 + 6(3)=9-\frac{45}{2}+18=27-\frac{45}{2}=\frac{54-45}{2}=\frac{9}{2}$. Titik minimum lokalnya adalah $(3, 9/2)$.</div>
+            <div class="pembahasan"><b>18. Jawaban: A, B, E</b><br><br><b>Analisis Pilihan:</b><br>A. Melalui $(1,0) \implies f(1)=0 \implies 1^3+a(1)^2+b(1)+c=0 \implies a+b+c=-1$. (Benar)<br><br>B. $f'(x)=3x^2+2ax+b$. Stasioner di $x=-1 \implies f'(-1)=0 \implies 3(-1)^2+2a(-1)+b=0 \implies 3-2a+b=0$. (Benar)<br><br>E. Gradien di $x=0$ adalah $f'(0)=3(0)^2+2a(0)+b = b$. (Benar)<br><br>C & D: Dari (A) dan (B) kita tidak bisa menentukan nilai $a,b,c$ secara unik, jadi kita tidak bisa tahu titik stasioner lain atau sifat kurvanya. C dan D belum tentu benar.</div>
+            <div class="pembahasan"><b>19. Jawaban: A</b><br><br>Jarak kuadrat dari titik $(x,y)$ pada kurva ke $(4,0)$ adalah $D^2 = (x-4)^2 + (y-0)^2$.<br><br>Karena $y=\sqrt{x}$, maka $D^2(x) = (x-4)^2 + (\sqrt{x})^2 = x^2-8x+16+x = x^2-7x+16$.<br><br>Minimalkan $D^2$ dengan turunan: $(D^2)' = 2x-7=0 \implies x=7/2$.<br><br>Jarak kuadrat minimum: $D^2(7/2) = (7/2)^2-7(7/2)+16 = 49/4-49/2+16 = (49-98+64)/4=15/4$.<br><br>Jarak terdekat $D = \sqrt{15/4} = \sqrt{15}/2$.</div>
+            <div class="pembahasan"><b>20. Jawaban: D</b><br><br>$f(x)=\sin(2x)$.<br><br>$f'(x) = \cos(2x) \cdot 2 = 2\cos(2x)$.<br><br>$f''(x) = 2(-\sin(2x) \cdot 2) = -4\sin(2x)$.</div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <!-- Pembahasan 21-30 -->
+            <div class="pembahasan"><b>21. Jawaban: Benar, Benar, Benar</b><br><br>1. $f'(x)=4x^3-4x = 4x(x^2-1)=4x(x-1)(x+1)=0$. Titik stasioner di $x=-1, 0, 1$. (Benar)<br><br>2. $f''(x)=12x^2-4$. $f''(0)=-4<0$, jadi $(0, f(0))=(0,3)$ adalah maksimum lokal. (Benar)<br><br>3. Uji interval $f'(x)$. $x<-1$ (misal -2), $f'(-2)<0$ (turun). $-1<x<0$ (misal -0.5), $f'(-0.5)>0$ (naik). $0<x<1$ (misal 0.5), $f'(0.5)<0$ (turun). $x>1$ (misal 2), $f'(2)>0$ (naik). Jadi turun di $(-\infty, -1)$ dan $(0,1)$. (Benar)</div>
+            <div class="pembahasan"><b>22. Jawaban: C</b><br><br>Luas seng = Luas alas + Luas selimut. $L = \pi r^2 + 2\pi rh = 300\pi \implies r^2+2rh=300 \implies h = \frac{300-r^2}{2r}$.<br><br>Volume $V(r)=\pi r^2 h = \pi r^2 (\frac{300-r^2}{2r}) = \frac{\pi}{2}(300r-r^3)$.<br><br>$V'(r) = \frac{\pi}{2}(300-3r^2)=0 \implies 3r^2=300 \implies r^2=100 \implies r=10$.</div>
+            <div class="pembahasan"><b>23. Jawaban: B</b><br><br>Domain $x \ge 0$. Fungsi naik jika $f'(x)>0$.<br><br>$f(x) = x - 2x^{1/2} \implies f'(x) = 1 - 2(\frac{1}{2}x^{-1/2}) = 1 - \frac{1}{\sqrt{x}}$.<br><br>$1 - \frac{1}{\sqrt{x}} > 0 \implies 1 > \frac{1}{\sqrt{x}} \implies \sqrt{x} > 1 \implies x > 1$.</div>
+            <div class="pembahasan"><b>24. Jawaban: A</b><br><br>Gunakan aturan pembagian. $u=x+1, u'=1, v=x-1, v'=1$.<br><br>$f'(x) = \frac{u'v-uv'}{v^2} = \frac{1(x-1)-(x+1)(1)}{(x-1)^2} = \frac{x-1-x-1}{(x-1)^2} = \frac{-2}{(x-1)^2}$.<br><br>$f'(2) = \frac{-2}{(2-1)^2} = -2$.</div>
+            <div class="pembahasan"><b>25. Jawaban: B</b><br><br>Gradien $m$ sama dengan turunan pertama, $m=y'$. Diberikan $m=3$.<br><br>$y'=3x^2-6x+3$.<br><br>Samakan gradien: $3x^2-6x+3 = 3 \implies 3x^2-6x=0 \implies 3x(x-2)=0$.<br><br>Absis titik singgung adalah $x=0$ atau $x=2$.<br><br>Cari y: Jika $x=0$, $y=0-0+0+1=1$. Titik singgung $(0,1)$.<br>Jika $x=2$, $y=8-12+6+1=3$. Titik singgung $(2,3)$.<br><br>Dari pilihan yang tersedia, jawaban yang benar adalah $(0,1)$.</div>
+            <div class="pembahasan"><b>26. Jawaban: A</b><br><br>Kecepatan adalah integral dari percepatan. $v(t) = \int a(t) dt = \int (12t-2) dt = 6t^2-2t+C$.<br><br>Diketahui $v(1)=5$, maka $6(1)^2-2(1)+C=5 \implies 4+C=5 \implies C=1$.<br><br>Jadi fungsi kecepatannya adalah $v(t) = 6t^2-2t+1$.</div>
+            <div class="pembahasan"><b>27. Jawaban: A</b><br><br><b>Analisis (1):</b> $a<0$ berarti parabola $f(x)=ax^2+bx+c$ terbuka ke bawah. Parabola yang terbuka ke bawah pasti memiliki titik puncak yang merupakan nilai maksimum. Pernyataan (1) SAJA cukup.<br><br><b>Analisis (2):</b> $b^2-4ac > 0$ berarti parabola memotong sumbu x di dua titik berbeda. Informasi ini tidak menentukan apakah parabola terbuka ke atas (punya minimum) atau ke bawah (punya maksimum). Tidak cukup.</div>
+            <div class="pembahasan"><b>28. Jawaban: D</b><br><br>$f(x)=x+4x^{-1}$. Turunkan untuk mencari titik stasioner: $f'(x) = 1 - 4x^{-2} = 1 - 4/x^2 = 0$.<br><br>$1 = 4/x^2 \implies x^2=4 \implies x=2$ (karena domain $x>0$).<br><br>Nilai minimumnya adalah $f(2)=2+4/2=4$. Uji turunan kedua $f''(x)=8/x^3$, $f''(2)>0$ (konfirmasi minimum).</div>
+            <div class="pembahasan"><b>29. Jawaban: A, B, C, D</b><br><br>Pembuat nol $f'(x)$ adalah $x=-2, 1, 3$.<br><br>Buat garis bilangan untuk uji tanda $f'(x)$: ---(-2)+++ (1)---(3)+++.<br><br>Dari tanda, kita simpulkan:<br>$f$ turun pada interval $(-\infty, -2)$ dan $(1,3)$. (Pernyataan D benar, E salah).<br>$f$ naik pada interval $(-2,1)$ dan $(3, \infty)$.<br>Di $x=-2$, terjadi perubahan dari turun ke naik, maka ini adalah titik <b>minimum lokal</b>. (Pernyataan A benar).<br>Di $x=1$, terjadi perubahan dari naik ke turun, maka ini adalah titik <b>maksimum lokal</b>. (Pernyataan B benar).<br>Di $x=3$, terjadi perubahan dari turun ke naik, maka ini adalah titik <b>minimum lokal</b>. (Pernyataan C benar).</div>
+            <div class="pembahasan"><b>30. Jawaban: C</b><br><br>Pendapatan Total $R(x) = x \cdot p(x) = x(150-x) = 150x-x^2$.<br><br>Keuntungan $K(x)=R(x)-B(x) = (150x-x^2)-(2x^2+1000) = -3x^2+150x-1000$.<br><br>Keuntungan maksimum terjadi saat $K'(x)=0$.<br><br>$K'(x)=-6x+150=0 \implies 6x=150 \implies x=25$.<br><br>Keuntungan maksimum diperoleh jika memproduksi 25 unit.</div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <!-- Pembahasan 31-40 -->
+            <div class="pembahasan"><b>31. Jawaban: B</b><br><br>Gunakan aturan rantai. Misal $u=\cos(x)$, maka $y=u^3$.<br><br>$dy/dx = (dy/du)(du/dx) = (3u^2)(-\sin(x)) = 3\cos^2(x)(-\sin(x)) = -3\cos^2(x)\sin(x)$.</div>
+            <div class="pembahasan"><b>32. Jawaban: A</b><br><br>Gradien garis singgung $y=9x-5$ adalah $m=9$.<br><br>Gradien kurva adalah $y'=3x^2+p$. Di titik singgung $(2,13)$, gradien kurva harus sama dengan gradien garis.<br><br>$y'(2) = 3(2^2)+p = 9 \implies 12+p=9 \implies p=-3$.</div>
+            <div class="pembahasan"><b>33. Jawaban: B</b><br><br>Luas lingkaran $A(r) = \pi r^2$. Laju perubahan luas terhadap jari-jari adalah turunan $A$ terhadap $r$, yaitu $dA/dr$.<br><br>$dA/dr = 2\pi r$. Saat $r=5$ cm, lajunya adalah $2\pi(5)=10\pi$ cm$^2$/cm.</div>
+            <div class="pembahasan"><b>34. Jawaban: B</b><br><br>Cari nilai maksimum pada interval tertutup. Pertama cari titik stasioner:<br><br>$f'(x)=3x^2+6x-9=0 \implies x^2+2x-3=0 \implies (x+3)(x-1)=0$.<br><br>Titik stasioner $x=-3$ dan $x=1$. Keduanya berada di dalam interval $[-4, 2]$.<br><br>Uji nilai fungsi di titik kritis (ujung interval dan stasioner):<br>$f(-4)=(-4)^3+3(-4)^2-9(-4)-7=-64+48+36-7=13$.<br>$f(-3)=(-3)^3+3(-3)^2-9(-3)-7=-27+27+27-7=20$.<br>$f(1)=1+3-9-7=-12$.<br>$f(2)=2^3+3(2)^2-9(2)-7=8+12-18-7=-5$.<br><br>Nilai maksimum dari semua hasil adalah 20.</div>
+            <div class="pembahasan"><b>35. Jawaban: Benar, Benar, Benar</b><br><br>1. Kecepatan $v(t)=s'(t)=3t^2-6t=3t(t-2)$. Partikel bergerak ke kiri jika $v(t)<0$, yang terjadi saat $0<t<2$. (Benar)<br><br>2. Percepatan $a(t)=v'(t)=6t-6$. Percepatan nol jika $a(t)=0 \implies 6t-6=0 \implies t=1$. (Benar)<br><br>3. Partikel berhenti saat kecepatan nol, $v(t)=0 \implies 3t(t-2)=0 \implies t=0$ dan $t=2$. (Benar)</div>
+            <div class="pembahasan"><b>36. Jawaban: B</b><br><br>Jika sisi persegi yang dipotong adalah $x$, maka panjang kotak $p=12-2x$, lebar $l=12-2x$, dan tinggi $t=x$. Volume $V(x)=(12-2x)^2 x = (144-48x+4x^2)x = 4x^3-48x^2+144x$.<br><br>$V'(x)=12x^2-96x+144=0$. Bagi dengan 12: $x^2-8x+12=0 \implies (x-2)(x-6)=0$.<br><br>Didapat $x=2$ atau $x=6$. Nilai $x=6$ tidak mungkin karena akan membuat panjang sisi kotak nol. Jadi, volume maksimum saat $x=2$ cm.</div>
+            <div class="pembahasan"><b>37. Jawaban: A</b><br><br>$f'(x) = \cos x - \sin x = 0 \implies \cos x = \sin x \implies \tan x = 1$.<br><br>Solusi untuk $x$ di interval $0 \le x \le 2\pi$ adalah $x=\pi/4$ dan $x=5\pi/4$.<br><br>Uji turunan kedua: $f''(x) = -\sin x - \cos x$.<br>$f''(\pi/4) = -\sin(\pi/4) - \cos(\pi/4) = -(\sqrt{2}/2) - (\sqrt{2}/2) = -\sqrt{2} < 0$ (ini titik maksimum).<br>$f''(5\pi/4) = -\sin(5\pi/4) - \cos(5\pi/4) = -(-\sqrt{2}/2) - (-\sqrt{2}/2) = \sqrt{2} > 0$ (ini titik minimum).<br><br>Nilai maksimum terjadi pada $x=\pi/4$.</div>
+            <div class="pembahasan"><b>38. Jawaban: A</b><br><br>Diberikan $dV/dt = 12$. Ditanya $dr/dt$ saat $r=2$.<br><br>Gunakan aturan rantai: $\frac{dV}{dt} = \frac{dV}{dr} \cdot \frac{dr}{dt}$.<br><br>Dari $V=\frac{4}{3}\pi r^3$, kita dapatkan $\frac{dV}{dr} = 4\pi r^2$.<br><br>Substitusi nilai yang diketahui: $12 = (4\pi r^2) \cdot \frac{dr}{dt}$.<br><br>Saat $r=2$: $12 = (4\pi(2^2)) \cdot \frac{dr}{dt} \implies 12=16\pi \cdot \frac{dr}{dt}$.<br><br>Maka, $\frac{dr}{dt} = \frac{12}{16\pi} = \frac{3}{4\pi}$ cm/s.</div>
+            <div class="pembahasan"><b>39. Jawaban: A</b><br><br>Agar fungsi selalu naik, turunannya harus selalu positif, $f'(x) > 0$.<br><br>$f'(x)=3x^2-6x+p$. Ini adalah fungsi kuadrat (parabola) yang terbuka ke atas. Agar nilainya selalu positif, grafiknya harus berada di atas sumbu-x dan tidak pernah menyentuhnya, yang berarti diskriminannya harus negatif ($D < 0$).<br><br>$D = b^2-4ac = (-6)^2-4(3)(p) < 0$.<br><br>$36-12p < 0 \implies 36 < 12p \implies p > 3$.</div>
+            <div class="pembahasan"><b>40. Jawaban: A</b><br><br><b>Analisis (1):</b> Fungsi $f(x)$ naik pada interval $(1, \infty)$. Definisi fungsi naik adalah jika $x_2 > x_1$, maka $f(x_2) > f(x_1)$. Dalam kasus ini, kita punya $2 > 1$. Karena keduanya ada di dalam atau di batas interval naik, maka $f(2) > f(1)$. Ini berarti pernyataan $f(1) > f(2)$ adalah salah. Karena kita bisa memberikan jawaban pasti ("salah"), maka pernyataan (1) SAJA cukup.<br><br><b>Analisis (2):</b> $f'(3)=0$ berarti titik stasioner (puncak/lembah) ada di $x=3$. Kita tidak tahu tanda dari koefisien $a$. Jika $a>0$, parabola terbuka ke atas dan turun sebelum $x=3$. Jika $a<0$, parabola terbuka ke bawah dan naik sebelum $x=3$. Karena kita tidak tahu perilaku fungsi antara $x=1$ dan $x=2$, pernyataan (2) tidak cukup.</div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <!-- Pembahasan 41-50 -->
+            <div class="pembahasan"><b>41. Jawaban: A</b><br><br><b>Teori Dasar:</b> Biaya marginal adalah turunan pertama dari fungsi biaya total, $C'(q)$.<br><br><b>Langkah 1: Cari fungsi biaya marginal.</b><br>$C'(q) = \frac{d}{dq}(0.1q^3 - 0.5q^2 + 500q + 200) = 0.3q^2 - q + 500$.<br><br><b>Langkah 2: Substitusi $q=10$.</b><br>$C'(10) = 0.3(10)^2 - 10 + 500 = 0.3(100) - 10 + 500 = 30 - 10 + 500 = 520$.<br><br>Jadi, biaya marginalnya adalah $520/unit.</div>
+            <div class="pembahasan"><b>42. Jawaban: A</b><br><br><b>Teori Dasar:</b> Soal ini menggunakan konsep kesebangunan segitiga dan laju terkait (related rates).<br><br><b>Langkah 1: Buat model.</b><br>Misal $x$ adalah jarak orang dari tiang, dan $s$ adalah panjang bayangan. Tinggi tiang $T=4$, tinggi orang $O=1.6$.<br>Dengan kesebangunan segitiga: $\frac{s}{O} = \frac{x+s}{T} \implies \frac{s}{1.6} = \frac{x+s}{4}$.<br>$4s = 1.6x + 1.6s \implies 2.4s = 1.6x \implies s = \frac{1.6}{2.4}x = \frac{2}{3}x$.<br><br><b>Langkah 2: Turunkan terhadap waktu $t$.</b><br>$\frac{ds}{dt} = \frac{2}{3}\frac{dx}{dt}$.<br><br><b>Langkah 3: Substitusi nilai yang diketahui.</b><br>Diketahui kecepatan orang $\frac{dx}{dt} = 1$ m/s. Maka, $\frac{ds}{dt} = \frac{2}{3}(1) = \frac{2}{3}$ m/s.</div>
+            <div class="pembahasan"><b>43. Jawaban: C</b><br><br><b>Teori Dasar:</b> Optimisasi luas dengan keliling tetap.<br><br><b>Langkah 1: Buat fungsi.</b><br>Keliling $K = 2p + 2l = 800 \implies p+l=400 \implies p = 400-l$.<br>Luas $A = p \cdot l = (400-l)l = 400l - l^2$.<br><br><b>Langkah 2: Cari nilai maksimum.</b><br>$A'(l) = 400 - 2l = 0 \implies l = 200$ m.<br>Jika $l=200$ m, maka $p = 400-200 = 200$ m. Bentuknya adalah persegi.</div>
+            <div class="pembahasan"><b>44. Jawaban: A</b><br><br><b>Teori Dasar:</b> Laju terkait pada kerucut. Gunakan kesebangunan untuk menghubungkan $r$ dan $h$.<br><br><b>Langkah 1: Hubungkan $r$ dan $h$.</b><br>Dari kesebangunan, $\frac{r}{h} = \frac{5}{10} \implies r = \frac{1}{2}h$.<br><br><b>Langkah 2: Buat fungsi Volume dalam satu variabel.</b><br>$V = \frac{1}{3}\pi r^2 h = \frac{1}{3}\pi (\frac{1}{2}h)^2 h = \frac{1}{12}\pi h^3$.<br><br><b>Langkah 3: Turunkan terhadap waktu $t$.</b><br>$\frac{dV}{dt} = \frac{1}{12}\pi (3h^2) \frac{dh}{dt} = \frac{1}{4}\pi h^2 \frac{dh}{dt}$.<br><br><b>Langkah 4: Substitusi nilai yang diketahui.</b><br>$\frac{dV}{dt} = 2$, $h=4$.<br>$2 = \frac{1}{4}\pi (4)^2 \frac{dh}{dt} \implies 2 = 4\pi \frac{dh}{dt} \implies \frac{dh}{dt} = \frac{2}{4\pi} = \frac{1}{2\pi}$ cm/s.</div>
+            <div class="pembahasan"><b>45. Jawaban: A</b><br><br><b>Teori Dasar:</b> Meminimalkan fungsi biaya rata-rata.<br><br><b>Langkah 1: Turunkan fungsi biaya rata-rata.</b><br>$A(x) = 400x^{-1} + 0.1x + 10$.<br>$A'(x) = -400x^{-2} + 0.1 = -\frac{400}{x^2} + 0.1$.<br><br><b>Langkah 2: Cari titik stasioner.</b><br>$-\frac{400}{x^2} + 0.1 = 0 \implies 0.1 = \frac{400}{x^2} \implies x^2 = \frac{400}{0.1} = 4000$.<br>$x = \sqrt{4000} = \sqrt{400 \cdot 10} = 20\sqrt{10}$.<br>Karena $\sqrt{10} \approx 3.16$, maka $x \approx 20 \cdot 3.16 = 63.2$. Jadi, sekitar 63 unit.</div>
+            <div class="pembahasan"><b>46. Jawaban: A</b><br><br><b>Teori Dasar:</b> Laju terkait menggunakan teorema Pythagoras.<br><br><b>Langkah 1: Buat model Pythagoras.</b><br>Misal $x$ jarak ujung bawah dari dinding, dan $y$ ketinggian ujung atas. $x^2+y^2=5^2=25$.<br><br><b>Langkah 2: Turunkan terhadap waktu $t$.</b><br>$2x \frac{dx}{dt} + 2y \frac{dy}{dt} = 0 \implies x \frac{dx}{dt} + y \frac{dy}{dt} = 0$.<br><br><b>Langkah 3: Cari nilai variabel saat kejadian.</b><br>Saat $x=3$, maka $3^2+y^2=25 \implies y^2=16 \implies y=4$.<br>Diketahui $\frac{dx}{dt} = 0.2$ m/s. Kita cari $\frac{dy}{dt}$.<br><br><b>Langkah 4: Substitusi.</b><br>$3(0.2) + 4(\frac{dy}{dt}) = 0 \implies 0.6 = -4\frac{dy}{dt} \implies \frac{dy}{dt} = -\frac{0.6}{4} = -0.15$ m/s.<br>Tanda negatif menunjukkan ketinggian berkurang (meluncur ke bawah). Laju peluncurannya adalah 0.15 m/s.</div>
+            <div class="pembahasan"><b>47. Jawaban: C</b><br><br><b>Teori Dasar:</b> Memaksimalkan pendapatan. Pendapatan = Harga x Kuantitas.<br><br><b>Langkah 1: Buat fungsi pendapatan $R(p)$.</b><br>$R(p) = p \cdot q = p(1000 - 2p) = 1000p - 2p^2$.<br><br><b>Langkah 2: Cari nilai maksimum.</b><br>$R'(p) = 1000 - 4p = 0 \implies 4p=1000 \implies p=250$.<br><br>Harga yang memaksimalkan pendapatan adalah 250 ribu rupiah atau Rp 250.000.</div>
+            <div class="pembahasan"><b>48. Jawaban: C</b><br><br><b>Teori Dasar:</b> Efisiensi mulai menurun setelah mencapai titik maksimumnya.<br><br><b>Langkah 1: Cari titik maksimum dari fungsi efisiensi.</b><br>$E'(t) = 0.8 - 0.4t = 0$.<br><br><b>Langkah 2: Selesaikan untuk $t$.</b><br>$0.4t = 0.8 \implies t = \frac{0.8}{0.4} = 2$.<br><br>Efisiensi mencapai puncaknya pada 2 jam, dan mulai menurun setelah itu.</div>
+            <div class="pembahasan"><b>49. Jawaban: C</b><br><br><b>Teori Dasar:</b> Laju terkait dengan Pythagoras.<br><br><b>Langkah 1: Buat model.</b><br>Misal $y$ jarak mobil A dari titik awal, $x$ jarak mobil B. Jarak antara keduanya $z$.<br>$z^2 = x^2+y^2$.<br><br><b>Langkah 2: Turunkan terhadap waktu $t$.</b><br>$2z\frac{dz}{dt} = 2x\frac{dx}{dt} + 2y\frac{dy}{dt}$.<br><br><b>Langkah 3: Cari nilai variabel setelah 30 menit (0.5 jam).</b><br>$\frac{dy}{dt}=60$, $\frac{dx}{dt}=80$.<br>$y = 60 \cdot 0.5 = 30$ km.<br>$x = 80 \cdot 0.5 = 40$ km.<br>$z = \sqrt{30^2+40^2} = \sqrt{900+1600} = \sqrt{2500}=50$ km.<br><br><b>Langkah 4: Substitusi untuk mencari $\frac{dz}{dt}$.</b><br>$50\frac{dz}{dt} = 40(80) + 30(60) = 3200 + 1800 = 5000$.<br>$\frac{dz}{dt} = \frac{5000}{50} = 100$ km/jam.</div>
+            <div class="pembahasan"><b>50. Jawaban: D</b><br><br><b>Teori Dasar:</b> Laju terkait pada volume bola.<br><br><b>Langkah 1: Tuliskan hubungan dan turunkan.</b><br>Volume bola $V = \frac{4}{3}\pi r^3$.<br>Turunkan terhadap waktu $t$: $\frac{dV}{dt} = \frac{4}{3}\pi (3r^2) \frac{dr}{dt} = 4\pi r^2 \frac{dr}{dt}$.<br><br><b>Langkah 2: Substitusi nilai yang diketahui.</b><br>Diketahui laju pertambahan jari-jari $\frac{dr}{dt} = 3$ cm/menit.<br>Ditanya $\frac{dV}{dt}$ saat $r=10$ cm.<br>$\frac{dV}{dt} = 4\pi (10)^2 (3) = 4\pi(100)(3) = 1200\pi$ cm$^3$/menit.</div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
