@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Lengkap - Fungsi (SMA)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            min-height: 250mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page::after {
+            counter-increment: page;
+            content: counter(page);
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 10pt;
+            color: #888;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page::after, .toc-page::after {
+            content: ''; /* No page number on cover and TOC */
+        }
+
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 18pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @media print {
+            body { background: none; }
+            .page { width: 100%; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        }
+        
+        .watermark-container .page::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cover-page::before, .toc-page::before { opacity: 0; }
+
+        .content-wrapper { position: relative; z-index: 1; width: 100%; }
+        
+        h1 { font-size: 24pt; text-align: center; border-bottom: 2px solid var(--primary-text); padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { font-size: 18pt; color: #000; border-left: 5px solid #555; padding-left: 10px; margin-top: 30px; }
+        h3 { font-size: 14pt; color: #222; margin-top: 30px; font-weight: 700; }
+        h4 { font-size: 12pt; font-weight: 700; margin-bottom: 5px; }
+
+        .toc-list { list-style-type: none; padding: 0; }
+        .toc-list li { margin-bottom: 10px; font-size: 12pt; }
+        .toc-list a { text-decoration: none; color: var(--primary-text); }
+        .toc-list a:hover { text-decoration: underline; }
+        
+        .layout-1-kolom { columns: 1; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.7fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; }
+        .soal-item, .soal-latihan { margin-bottom: 15px; break-inside: avoid; overflow-wrap: break-word; word-wrap: break-word; }
+        
+        .coret-coret { border: 1px dashed #c0c0c0; min-height: 120px; padding: 10px; border-radius: 5px; }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; margin-bottom: 15px; }
+        
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; padding-left: 20px; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before { content: attr(data-option) ". "; font-weight: bold; margin-right: 5px; }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div class="watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">MODUL LENGKAP FUNGSI</h1>
+            <p class="subtitle">Materi & Kumpulan Soal Matematika SMA</p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="page toc-page">
+        <div class="content-wrapper">
+            <h1>Daftar Isi</h1>
+            <ul class="toc-list">
+                <li><a href="#materi">BAB 1: Materi Lengkap Fungsi</a></li>
+                <li><a href="#materi-1">&nbsp;&nbsp;&nbsp;› 1.1 Pengenalan Fungsi</a></li>
+                <li><a href="#materi-2">&nbsp;&nbsp;&nbsp;› 1.2 Operasi Aljabar Fungsi</a></li>
+                <li><a href="#materi-3">&nbsp;&nbsp;&nbsp;› 1.3 Fungsi Komposisi</a></li>
+                <li><a href="#materi-4">&nbsp;&nbsp;&nbsp;› 1.4 Fungsi Invers</a></li>
+                <li><a href="#contoh-soal">BAB 2: Contoh Soal & Pembahasan</a></li>
+                <li><a href="#latihan-soal">BAB 3: Bank Soal Latihan (100 Soal)</a></li>
+                <li><a href="#latihan-mudah">&nbsp;&nbsp;&nbsp;› 3.1 Soal Mudah (1-20)</a></li>
+                <li><a href="#latihan-sedang">&nbsp;&nbsp;&nbsp;› 3.2 Soal Sedang (21-70)</a></li>
+                <li><a href="#latihan-sulit">&nbsp;&nbsp;&nbsp;› 3.3 Soal Sulit (71-100)</a></li>
+                <li><a href="#pembahasan-latihan">BAB 4: Kunci Jawaban & Pembahasan</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Materi Lengkap -->
+    <section id="materi" class="page">
+      <div class="content-wrapper">
+        <h2>BAB 1: Materi Lengkap Fungsi</h2>
+        <h3 id="materi-1">1.1 Pengenalan Fungsi</h3>
+        <div class="layout-1-kolom">
+            <h4>Relasi dan Fungsi</h4>
+            <p><b>Relasi</b> dari himpunan A ke himpunan B adalah aturan yang menghubungkan anggota-anggota himpunan A dengan anggota-anggota himpunan B. Sementara itu, <b>Fungsi</b> (atau pemetaan) adalah relasi khusus di mana <b>setiap</b> anggota himpunan A (domain) dipasangkan dengan <b>tepat satu</b> anggota himpunan B (kodomain).</p>
+            
+            <h4>Domain, Kodomain, dan Range</h4>
+            <ul>
+                <li><b>Domain (Daerah Asal):</b> Himpunan semua input yang mungkin untuk sebuah fungsi. Dinotasikan $D_f$.</li>
+                <li><b>Kodomain (Daerah Kawan):</b> Himpunan semua output yang mungkin.</li>
+                <li><b>Range (Daerah Hasil):</b> Himpunan bagian dari kodomain yang merupakan hasil output aktual dari fungsi. Dinotasikan $R_f$.</li>
+            </ul>
+             <h4>Menentukan Domain Alami</h4>
+             <p>Jika domain tidak ditentukan, kita gunakan domain alami, yaitu himpunan bilangan riil terbesar yang membuat fungsi terdefinisi.</p>
+            <ul>
+                <li>Bentuk Polinomial, $f(x)=ax^n+...+c$: Domainnya adalah semua bilangan riil, $x \in \mathbb{R}$.</li>
+                <li>Bentuk Pecahan, $f(x)=\frac{g(x)}{h(x)}$: Syaratnya penyebut tidak boleh nol, $h(x) \neq 0$.</li>
+                <li>Bentuk Akar, $f(x)=\sqrt{g(x)}$: Syaratnya ekspresi di dalam akar harus non-negatif, $g(x) \ge 0$.</li>
+            </ul>
+            <h4>Jenis Fungsi Berdasarkan Sifatnya</h4>
+            <ul>
+                 <li><b>Fungsi Injektif (Satu-satu):</b> Setiap anggota domain yang berbeda memiliki pasangan yang berbeda di kodomain. Tidak ada dua input berbeda yang menghasilkan output yang sama.</li>
+                 <li><b>Fungsi Surjektif (Pada/Onto):</b> Setiap anggota kodomain memiliki pasangan di domain. Range sama dengan Kodomain ($R_f = B$).</li>
+                 <li><b>Fungsi Bijektif (Korespondensi Satu-satu):</b> Fungsi yang bersifat injektif sekaligus surjektif. Fungsi inilah yang memiliki invers.</li>
+            </ul>
+        </div>
+        <h3 id="materi-2">1.2 Operasi Aljabar Fungsi</h3>
+        <p>Jika $f(x)$ dan $g(x)$ adalah dua fungsi, maka operasi aljabar berikut dapat didefinisikan:</p>
+        <ul>
+            <li><b>Penjumlahan:</b> $(f+g)(x) = f(x)+g(x)$</li>
+            <li><b>Pengurangan:</b> $(f-g)(x) = f(x)-g(x)$</li>
+            <li><b>Perkalian:</b> $(f \cdot g)(x) = f(x) \cdot g(x)$</li>
+            <li><b>Pembagian:</b> $(\frac{f}{g})(x) = \frac{f(x)}{g(x)}$, dengan syarat $g(x) \neq 0$.</li>
+        </ul>
+        <p>Domain dari fungsi hasil operasi adalah irisan dari domain fungsi-fungsi asalnya, $D_{f+g} = D_f \cap D_g$. Untuk pembagian, ditambahkan syarat penyebut tidak nol.</p>
+      </div>
+    </section>
+    
+    <section class="page">
+      <div class="content-wrapper">
+        <h3 id="materi-3">1.3 Fungsi Komposisi</h3>
+        <div class="layout-1-kolom">
+            <p>Fungsi komposisi adalah penggabungan dua fungsi secara berurutan. Notasi $(f \circ g)(x)$ berarti fungsi $g$ diterapkan terlebih dahulu, kemudian hasilnya menjadi input untuk fungsi $f$.</p>
+            <b>Definisi: $(f \circ g)(x) = f(g(x))$</b>
+            <br><br>
+            <p><b>Syarat Komposisi:</b> Fungsi $(f \circ g)$ terdefinisi jika irisan antara range fungsi $g$ dan domain fungsi $f$ bukan himpunan kosong ($R_g \cap D_f \neq \emptyset$).</p>
+            <b>Sifat-sifat Fungsi Komposisi:</b>
+            <ul>
+                <li><b>Tidak Komutatif:</b> $(f \circ g)(x) \neq (g \circ f)(x)$</li>
+                <li><b>Asosiatif:</b> $(f \circ (g \circ h))(x) = ((f \circ g) \circ h)(x)$</li>
+                <li><b>Elemen Identitas:</b> Terdapat fungsi $I(x)=x$, sehingga $(f \circ I)(x) = (I \circ f)(x) = f(x)$.</li>
+            </ul>
+        </div>
+        <h3 id="materi-4">1.4 Fungsi Invers</h3>
+        <div class="layout-1-kolom">
+            <p>Fungsi invers, $f^{-1}(x)$, adalah kebalikan dari fungsi $f(x)$. Jika $f$ memetakan $a$ ke $b$, maka $f^{-1}$ memetakan $b$ kembali ke $a$.</p>
+            <b>Definisi: Jika $f(x)=y$, maka $f^{-1}(y)=x$.</b>
+            <br><br>
+            <p><b>Syarat Fungsi Memiliki Invers:</b> Fungsi tersebut harus bijektif.</p>
+            <b>Langkah Menentukan Fungsi Invers:</b>
+            <ol>
+                <li>Ubah $f(x)$ menjadi $y$.</li>
+                <li>Selesaikan persamaan $y=f(x)$ untuk $x$ sehingga menjadi $x = g(y)$.</li>
+                <li>Ganti $x$ dengan $f^{-1}(y)$ dan $y$ dengan $x$.</li>
+            </ol>
+            <b>Sifat-sifat Fungsi Invers:</b>
+            <ul>
+                <li>$(f^{-1})^{-1}(x) = f(x)$</li>
+                <li>$(f \circ f^{-1})(x) = (f^{-1} \circ f)(x) = x$</li>
+                <li><b>Invers Komposisi:</b> $(f \circ g)^{-1}(x) = (g^{-1} \circ f^{-1})(x)$ (urutan dibalik).</li>
+            </ul>
+             <b>Rumus Cepat Invers Fungsi Pecahan Linear:</b>
+            <p>Jika $f(x) = \frac{ax+b}{cx+d}$, maka $f^{-1}(x) = \frac{-dx+b}{cx-a}$.</p>
+        </div>
+      </div>
+    </section>
+    
+    <section id="contoh-soal" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 2: Contoh Soal & Pembahasan</h2>
+            <div class="soal-item">
+                <b>1. Menentukan Domain</b><br>
+                Tentukan domain alami dari fungsi $f(x) = \frac{\sqrt{2x-4}}{x-3}$.
+                <div class="pembahasan">
+                    <b>Teori Dasar:</b> Ada dua syarat yang harus dipenuhi: ekspresi di dalam akar harus non-negatif dan penyebut tidak boleh nol.<br>
+                    <b>Syarat 1 (Akar):</b> $2x-4 \ge 0 \implies 2x \ge 4 \implies x \ge 2$.<br>
+                    <b>Syarat 2 (Penyebut):</b> $x-3 \neq 0 \implies x \neq 3$.<br>
+                    <b>Gabungan:</b> Kita harus memenuhi kedua syarat. Jadi, domainnya adalah semua $x$ yang lebih besar atau sama dengan 2, kecuali 3.
+                    <br><b>Jawaban:</b> $D_f = \{x | x \ge 2, x \neq 3, x \in \mathbb{R}\}$.
+                </div>
+            </div>
+             <div class="soal-item">
+                <b>2. Operasi Aljabar</b><br>
+                Jika $f(x)=x^2-4$ dan $g(x)=x+2$, tentukan $(\frac{f}{g})(x)$ dan domainnya.
+                <div class="pembahasan">
+                    <b>Teori Dasar:</b> $(\frac{f}{g})(x) = \frac{f(x)}{g(x)}$ dengan syarat $g(x) \neq 0$.<br>
+                    <b>Langkah 1:</b> Bentuk fungsi pembagian.
+                    $(\frac{f}{g})(x) = \frac{x^2-4}{x+2}$.<br>
+                    <b>Langkah 2:</b> Sederhanakan fungsi.
+                    $(\frac{f}{g})(x) = \frac{(x-2)(x+2)}{x+2} = x-2$.<br>
+                     <b>Langkah 3:</b> Tentukan domain dari bentuk <b>sebelum</b> disederhanakan.
+                    Penyebutnya adalah $x+2$, maka syaratnya $x+2 \neq 0 \implies x \neq -2$.
+                    <br><b>Jawaban:</b> $(\frac{f}{g})(x) = x-2$ dengan domain $D_{f/g} = \{x | x \neq -2, x \in \mathbb{R}\}$.
+                </div>
+            </div>
+             <div class="soal-item">
+                <b>3. Komposisi Dasar</b><br>
+                Diketahui $f(x) = x^2+1$ dan $g(x)=x-3$. Tentukan $(f \circ g)(x)$ dan $(g \circ f)(x)$.
+                <div class="pembahasan">
+                     <b>(f o g)(x):</b><br>
+                     $(f \circ g)(x) = f(g(x)) = f(x-3) = (x-3)^2 + 1 = (x^2-6x+9)+1 = x^2-6x+10$.<br>
+                     <b>(g o f)(x):</b><br>
+                     $(g \circ f)(x) = g(f(x)) = g(x^2+1) = (x^2+1)-3 = x^2-2$.<br>
+                     Terbukti bahwa $(f \circ g)(x) \neq (g \circ f)(x)$.
+                </div>
+            </div>
+             <div class="soal-item">
+                <b>4. Invers Dasar</b><br>
+                Tentukan invers dari $f(x)=x^3-5$.
+                <div class="pembahasan">
+                    <b>Langkah 1:</b> $y = x^3-5$.<br>
+                    <b>Langkah 2:</b> $y+5 = x^3 \implies x = \sqrt[3]{y+5}$.<br>
+                    <b>Langkah 3:</b> $f^{-1}(x) = \sqrt[3]{x+5}$.<br>
+                    <b>Jawaban:</b> $f^{-1}(x) = \sqrt[3]{x+5}$.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="soal-item">
+                <b>5. Menentukan Fungsi dari Komposisi (1)</b><br>
+                Diketahui $(f \circ g)(x) = 6x-7$ dan $f(x)=2x+1$. Tentukan $g(x)$.
+                <div class="pembahasan">
+                    $f(g(x)) = 6x-7$<br>
+                    $2(g(x)) + 1 = 6x-7$<br>
+                    $2(g(x)) = 6x-8$<br>
+                    $g(x) = \frac{6x-8}{2} = 3x-4$.<br>
+                    <b>Jawaban:</b> $g(x)=3x-4$.
+                </div>
+            </div>
+            <div class="soal-item">
+                <b>6. Menentukan Fungsi dari Komposisi (2)</b><br>
+                Diketahui $(f \circ g)(x) = x^2-6x+5$ dan $g(x)=x-3$. Tentukan $f(x)$.
+                <div class="pembahasan">
+                    $f(g(x)) = f(x-3) = x^2-6x+5$.<br>
+                    Misalkan $p = x-3 \implies x = p+3$.<br>
+                    $f(p) = (p+3)^2 - 6(p+3) + 5$<br>
+                    $f(p) = (p^2+6p+9) - (6p+18) + 5$<br>
+                    $f(p) = p^2-4$.<br>
+                    <b>Jawaban:</b> $f(x)=x^2-4$.
+                </div>
+            </div>
+             <div class="soal-item">
+                <b>7. Invers Fungsi Kuadrat</b><br>
+                Tentukan invers dari $f(x)=x^2-8x+10$ dengan domain $x \ge 4$.
+                <div class="pembahasan">
+                    <b>Langkah 1 (Kuadrat Sempurna):</b><br>
+                    $y = (x^2-8x+16) - 16 + 10 \implies y=(x-4)^2-6$.<br>
+                    <b>Langkah 2 (Selesaikan untuk x):</b><br>
+                    $y+6 = (x-4)^2 \implies x-4 = \pm \sqrt{y+6}$.<br>
+                    Karena domain $x \ge 4$, maka $x-4 \ge 0$, kita pilih akar positif.<br>
+                    $x-4 = \sqrt{y+6} \implies x = 4+\sqrt{y+6}$.<br>
+                    <b>Jawaban:</b> $f^{-1}(x) = 4+\sqrt{x+6}$.
+                </div>
+            </div>
+            <div class="soal-item">
+                <b>8. Invers Fungsi Komposisi</b><br>
+                Jika $f(x)=x-5$ dan $g(x)=3x+1$, tentukan $(f \circ g)^{-1}(x)$.
+                <div class="pembahasan">
+                    <b>Teori:</b> $(f \circ g)^{-1}(x) = (g^{-1} \circ f^{-1})(x)$.<br>
+                    <b>Langkah 1 (Cari Invers Masing-masing):</b><br>
+                    $f(x)=x-5 \implies f^{-1}(x)=x+5$.<br>
+                    $g(x)=3x+1 \implies g^{-1}(x)=\frac{x-1}{3}$.<br>
+                    <b>Langkah 2 (Komposisikan Inversnya):</b><br>
+                    $(g^{-1} \circ f^{-1})(x) = g^{-1}(f^{-1}(x)) = g^{-1}(x+5) = \frac{(x+5)-1}{3} = \frac{x+4}{3}$.<br>
+                    <b>Jawaban:</b> $(f \circ g)^{-1}(x) = \frac{x+4}{3}$.
+                </div>
+            </div>
+            <div class="soal-item">
+                <b>9. Mencari Nilai Parameter</b><br>
+                Jika $f(x)=2x+k$ dan $g(x)=x-1$, serta $(f \circ g)(3)=7$, tentukan nilai $k$.
+                <div class="pembahasan">
+                    <b>Langkah 1 (Hitung g(3)):</b><br>
+                    $g(3) = 3-1=2$.<br>
+                    <b>Langkah 2 (Gunakan Definisi Komposisi):</b><br>
+                    $(f \circ g)(3) = f(g(3)) = f(2)$.<br>
+                    $f(2) = 2(2)+k = 4+k$.<br>
+                    <b>Langkah 3 (Selesaikan Persamaan):</b><br>
+                    $f(2)=7 \implies 4+k=7 \implies k=3$.<br>
+                    <b>Jawaban:</b> $k=3$.
+                </div>
+            </div>
+            <div class="soal-item">
+                <b>10. Soal Lanjutan</b><br>
+                Jika $f(x-2)=\frac{x+1}{x-3}$, tentukan nilai $f^{-1}(2)$.
+                <div class="pembahasan">
+                    <b>Teori:</b> Mencari $f^{-1}(2)$ sama dengan mencari nilai $a$ sehingga $f(a)=2$.<br>
+                    <b>Langkah 1 (Set output sama dengan 2):</b><br>
+                    Kita cari nilai $x$ yang membuat $\frac{x+1}{x-3}=2$.<br>
+                    $x+1 = 2(x-3) \implies x+1=2x-6 \implies 7=x$.<br>
+                    <b>Langkah 2 (Cari input 'a'):</b><br>
+                    Saat $x=7$, input untuk fungsi $f$ adalah $a=x-2 = 7-2=5$.<br>
+                    Jadi, kita tahu bahwa $f(5)=2$.<br>
+                    <b>Langkah 3 (Kesimpulan):</b><br>
+                    Karena $f(5)=2$, maka $f^{-1}(2)=5$.<br>
+                     <b>Jawaban:</b> $5$.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latihan Soal -->
+    <section id="latihan-soal" class="page">
+        <div class="content-wrapper">
+            <h2 id="latihan-mudah">BAB 3: Bank Soal Latihan</h2>
+            <h3>3.1 Soal Mudah (1-20)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>1.</b> Manakah di antara relasi berikut yang merupakan fungsi?<ol class="pilihan-ganda"><li data-option="A">{(1,a), (1,b), (2,c)}</li><li data-option="B">{(a,1), (b,2), (c,2)}</li><li data-option="C">{(1,a), (2,b), (1,c)}</li><li data-option="D">{(a,1), (b,1), (a,2)}</li><li data-option="E">{(1,1), (2,2), (1,3)}</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>2.</b> Domain dari fungsi $f(x) = 3x-5$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \neq 5/3$</li><li data-option="B">$x > 0$</li><li data-option="C">$x \ge 0$</li><li data-option="D">$x \in \mathbb{R}$</li><li data-option="E">$x \neq 0$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>3.</b> Range dari fungsi $f(x)=x^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \in \mathbb{R}$</li><li data-option="B">$y > 0$</li><li data-option="C">$y \ge 0$</li><li data-option="D">$y \neq 0$</li><li data-option="E">$y < 0$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>4.</b> Jika $f(x) = 2x+1$, nilai dari $f(3)$ adalah...<ol class="pilihan-ganda"><li data-option="A">5</li><li data-option="B">6</li><li data-option="C">7</li><li data-option="D">8</li><li data-option="E">9</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>5.</b> Jika $f(x)=x+1$ dan $g(x)=x+2$, maka $(f+g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x+3$</li><li data-option="B">$x^2+3$</li><li data-option="C">$x-1$</li><li data-option="D">$2x-1$</li><li data-option="E">$x^2+2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>6.</b> Jika $f(x)=3x$ dan $g(x)=x-4$, maka $(f \cdot g)(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">6</li><li data-option="B">-6</li><li data-option="C">12</li><li data-option="D">-12</li><li data-option="E">0</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>7.</b> Diketahui $f(x)=x+5$ dan $g(x)=2x$. Rumus $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x+10$</li><li data-option="B">$2x+5$</li><li data-option="C">$2x^2+5$</li><li data-option="D">$2x^2+10x$</li><li data-option="E">$x+7$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>8.</b> Diketahui $f(x)=x-1$ dan $g(x)=x^2$. Nilai $(g \circ f)(3)$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">4</li><li data-option="C">8</li><li data-option="D">9</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>9.</b> Invers dari fungsi $f(x) = x+10$ adalah...<ol class="pilihan-ganda"><li data-option="A">$10-x$</li><li data-option="B">$x-10$</li><li data-option="C">$-x-10$</li><li data-option="D">$10x$</li><li data-option="E">$x/10$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>10.</b> Invers dari fungsi $g(x) = 5x$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x-5$</li><li data-option="B">$x+5$</li><li data-option="C">$5-x$</li><li data-option="D">$x/5$</li><li data-option="E">$-5x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>11.</b> Jika $f^{-1}(x) = x-4$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x-4$</li><li data-option="B">$4-x$</li><li data-option="C">$x+4$</li><li data-option="D">$-x-4$</li><li data-option="E">$4x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>12.</b> Domain dari $f(x) = \frac{1}{x-2}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \in \mathbb{R}$</li><li data-option="B">$x \neq 2$</li><li data-option="C">$x > 2$</li><li data-option="D">$x < 2$</li><li data-option="E">$x \neq 0$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>13.</b> Domain dari $f(x) = \sqrt{x-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x > 1$</li><li data-option="B">$x \neq 1$</li><li data-option="C">$x \in \mathbb{R}$</li><li data-option="D">$x \ge 1$</li><li data-option="E">$x \le 1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>14.</b> Jika $f(x)=2x+3$, nilai dari $f^{-1}(7)$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">17</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>15.</b> Fungsi yang bersifat injektif, surjektif, dan bijektif adalah...<ol class="pilihan-ganda"><li data-option="A">$f(x)=x^2$</li><li data-option="B">$f(x)=|x|$</li><li data-option="C">$f(x)=5$</li><li data-option="D">$f(x)=x+5$</li><li data-option="E">$f(x)=\sqrt{x}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>16.</b> Jika $f(x)=x$ dan $g(x)=x^2+1$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x$</li><li data-option="B">$x^2+1$</li><li data-option="C">$x^2$</li><li data-option="D">$(x+1)^2$</li><li data-option="E">$x+1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>17.</b> Jika $f(x)=4$ dan $g(x)=2x$, maka $(f \circ g)(10)$ adalah...<ol class="pilihan-ganda"><li data-option="A">4</li><li data-option="B">8</li><li data-option="C">20</li><li data-option="D">24</li><li data-option="E">40</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>18.</b> Jika $f(x)=x+2$, $g(x)=x-3$, dan $h(x)=2x$, maka $(f \circ g \circ h)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x-1$</li><li data-option="B">$2x+1$</li><li data-option="C">$2x-5$</li><li data-option="D">$2x+5$</li><li data-option="E">$4x-2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>19.</b> Invers dari $f(x)=\frac{x}{2}-3$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x-6$</li><li data-option="B">$2x+3$</li><li data-option="C">$2x+6$</li><li data-option="D">$(x-3)/2$</li><li data-option="E">$(x+3)/2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>20.</b> Jika $f(x)=x^3$, maka $f^{-1}(27)$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">9</li><li data-option="C">81</li><li data-option="D">1/3</li><li data-option="E">$\sqrt{27}$</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="latihan-sedang" class="page">
+        <div class="content-wrapper">
+             <h3>3.2 Soal Sedang (21-70)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>21.</b> Domain dari $f(x) = \frac{x+1}{x^2-4}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \neq -1$</li><li data-option="B">$x \neq 2$</li><li data-option="C">$x \neq 4$</li><li data-option="D">$x \neq 2$ dan $x \neq -2$</li><li data-option="E">$x \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>22.</b> Diketahui $f(x)=\sqrt{x-3}$ dan $g(x)=x^2+1$. Domain dari $(g \circ f)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \ge 0$</li><li data-option="B">$x \ge 1$</li><li data-option="C">$x \ge 3$</li><li data-option="D">$x \neq 3$</li><li data-option="E">$x \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>23.</b> Jika $f(x) = 2x-1$ dan $(f \circ g)(x) = 2x^2+4x-1$, maka $g(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2+2x$</li><li data-option="B">$x^2+2x-1$</li><li data-option="C">$x^2+2x-2$</li><li data-option="D">$2x^2+4x$</li><li data-option="E">$x^2-2x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>24.</b> Jika $g(x)=x-4$ dan $(f \circ g)(x)=x^2-8x+10$, maka $f(-1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-5</li><li data-option="B">-3</li><li data-option="C">3</li><li data-option="D">5</li><li data-option="E">7</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>25.</b> Invers dari fungsi $f(x) = \frac{2x-3}{4x+1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{-x-3}{4x-2}$</li><li data-option="B">$\frac{x+3}{4x-2}$</li><li data-option="C">$\frac{x-3}{4x+2}$</li><li data-option="D">$\frac{-x+3}{4x+2}$</li><li data-option="E">$\frac{x+3}{2-4x}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>26.</b> Jika $f(x) = 3x-1$ dan $g(x) = 2x^2+3$, nilai dari $(g \circ f)(1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">5</li><li data-option="B">8</li><li data-option="C">11</li><li data-option="D">14</li><li data-option="E">17</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>27.</b> Diketahui $(f \circ g)(x) = 4x+6$ dan $g(x)=2x+1$. Maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x+4$</li><li data-option="B">$2x+5$</li><li data-option="C">$2x+6$</li><li data-option="D">$4x+4$</li><li data-option="E">$4x+5$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>28.</b> Jika $f(x-1) = 2x+5$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x+3$</li><li data-option="B">$2x-3$</li><li data-option="C">$2x+6$</li><li data-option="D">$2x+7$</li><li data-option="E">$2x-7$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>29.</b> Invers dari $f(x) = \sqrt[3]{x-2}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^3+2$</li><li data-option="B">$x^3-2$</li><li data-option="C">$(x-2)^3$</li><li data-option="D">$(x+2)^3$</li><li data-option="E">$2-x^3$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>30.</b> Jika $f(x) = \frac{x}{x-1}$, maka $f^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{x-1}{x}$</li><li data-option="B">$\frac{x}{x+1}$</li><li data-option="C">$\frac{x}{1-x}$</li><li data-option="D">$\frac{x}{x-1}$</li><li data-option="E">$\frac{1}{x-1}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>31.</b> Jika $f(x)=2x+a$ dan $(f \circ f)(x) = 4x-9$, nilai $a$ adalah...<ol class="pilihan-ganda"><li data-option="A">-9</li><li data-option="B">-3</li><li data-option="C">-1</li><li data-option="D">1</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>32.</b> Jika $f(x)=x^2$ dan $g(x)=2x-1$, maka $(f \circ g)(x-3)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$4x^2-28x+49$</li><li data-option="B">$4x^2-12x+9$</li><li data-option="C">$2x^2-1$</li><li data-option="D">$2x^2-12x+17$</li><li data-option="E">$4x^2-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>33.</b> Diketahui $f(x) = x+2$ dan $g(x)=\frac{x}{x+1}$. Nilai $(g \circ f)^{-1}(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-4</li><li data-option="B">-3</li><li data-option="C">0</li><li data-option="D">3</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>34.</b> Jika $f(x)=ax-1$ dan $f(f(3))=43$, maka nilai $a$ adalah...<ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">3</li><li data-option="C">4</li><li data-option="D">5</li><li data-option="E">6</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>35.</b> Invers dari $f(x)=x^2-6x+5$ dengan domain $x \ge 3$ adalah...<ol class="pilihan-ganda"><li data-option="A">$3+\sqrt{x+4}$</li><li data-option="B">$3-\sqrt{x+4}$</li><li data-option="C">$-3+\sqrt{x-4}$</li><li data-option="D">$\sqrt{x-3}+4$</li><li data-option="E">$3+\sqrt{x-4}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>36.</b> Jika $g(x)=x+1$ dan $(f \circ g)(x) = x^2+3x+2$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2+x$</li><li data-option="B">$x^2-x$</li><li data-option="C">$x^2+2x$</li><li data-option="D">$x^2-2x$</li><li data-option="E">$x^2+3x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>37.</b> Jika $f(x)=\sqrt{x}$ dan $g(x)=x^2+4$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x+2$</li><li data-option="B">$\sqrt{x^2+4}$</li><li data-option="C">$x+4$</li><li data-option="D">$x^4+4$</li><li data-option="E">$(x^2+4)\sqrt{x}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>38.</b> Jika $f(x)=\frac{1}{x+2}$ dan $f^{-1}(k)=3$, maka nilai $k$ adalah...<ol class="pilihan-ganda"><li data-option="A">$1/5$</li><li data-option="B">$1/3$</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>39.</b> Jika $f(x)=2x$ dan $g(x)=x+1$, maka $(f \circ g)^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$(x-2)/2$</li><li data-option="B">$(x-1)/2$</li><li data-option="C">$2x-1$</li><li data-option="D">$2x-2$</li><li data-option="E">$x-2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>40.</b> Range dari fungsi $f(x)=5-x^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \ge 5$</li><li data-option="B">$y \le 5$</li><li data-option="C">$y \ge 0$</li><li data-option="D">$y \le 0$</li><li data-option="E">$y \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>41.</b> Domain dari $f(x)=\frac{1}{\sqrt{4-x}}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x > 4$</li><li data-option="B">$x \ge 4$</li><li data-option="C">$x < 4$</li><li data-option="D">$x \le 4$</li><li data-option="E">$x \neq 4$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>42.</b> Jika $f(x)=x^2+1$ dan $g(x)=2x-3$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$4x^2-12x+10$</li><li data-option="B">$2x^2-1$</li><li data-option="C">$4x^2+10$</li><li data-option="D">$2x^2-2$</li><li data-option="E">$4x^2-6x+10$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>43.</b> Jika $f(x)=3x+2$ dan $g(x)=x-1$, maka $(g \circ f)^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$(x+1)/3$</li><li data-option="B">$(x-1)/3$</li><li data-option="C">$3x-1$</li><li data-option="D">$3x+1$</li><li data-option="E">$x-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>44.</b> Jika $f(x) = \frac{ax+b}{cx+d}$, maka $f^{-1}(x) = f(x)$ jika...<ol class="pilihan-ganda"><li data-option="A">$a = d$</li><li data-option="B">$a = -d$</li><li data-option="C">$b=c$</li><li data-option="D">$b=-c$</li><li data-option="E">$ad-bc=1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>45.</b> Diketahui $f(x) = x^3$ dan $g(x) = x-1$. Nilai $x$ yang memenuhi $(f \circ g)(x) = 8$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>46.</b> Range dari $f(x) = |x-3|$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \ge 3$</li><li data-option="B">$y > 3$</li><li data-option="C">$y \ge 0$</li><li data-option="D">$y > 0$</li><li data-option="E">$y \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>47.</b> Jika $(f \circ g)(x)=x$ untuk semua $x$, maka $g(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$f(x)$</li><li data-option="B">$1/f(x)$</li><li data-option="C">$-f(x)$</li><li data-option="D">$f^{-1}(x)$</li><li data-option="E">$I(x)=x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>48.</b> Jika $f(x) = 2^x$, maka $f^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\log_2 x$</li><li data-option="B">$x^2$</li><li data-option="C">$x/2$</li><li data-option="D">$\sqrt{x}$</li><li data-option="E">$-2^x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>49.</b> Jika $f(x+2)=x^2-1$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2-4x+3$</li><li data-option="B">$x^2-3$</li><li data-option="C">$x^2+4x+3$</li><li data-option="D">$x^2-4x-3$</li><li data-option="E">$x^2-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>50.</b> Domain dari $f(x) = \log(x-5)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \ge 5$</li><li data-option="B">$x > 5$</li><li data-option="C">$x \neq 5$</li><li data-option="D">$x \in \mathbb{R}$</li><li data-option="E">$x > 0$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>51.</b> Jika $f(x) = \frac{1}{x}$ dan $g(x)=2x+1$, maka $(g \circ f)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{2}{x}+1$</li><li data-option="B">$\frac{1}{2x+1}$</li><li data-option="C">$\frac{x}{2x+1}$</li><li data-option="D">$2x+1$</li><li data-option="E">$2/x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>52.</b> Jika $f^{-1}(x) = \frac{x-1}{5}$ dan $g^{-1}(x) = \frac{3-x}{2}$, maka $(f \circ g)^{-1}(1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">$3/2$</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>53.</b> Jika $f(x)=2x+1$, $g(x)=x^2$, $h(x)=1/x$, maka $(f \circ g \circ h)(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$1/4$</li><li data-option="B">$1/2$</li><li data-option="C">$3/2$</li><li data-option="D">2</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>54.</b> Jika $f(x)=4x+k$ dan $f^{-1}(7)=2$, maka nilai $k$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>55.</b> Range dari $f(x) = 2+\sqrt{x-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \ge 0$</li><li data-option="B">$y \ge 1$</li><li data-option="C">$y \ge 2$</li><li data-option="D">$y \le 2$</li><li data-option="E">$y \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>56.</b> Jika $f(x)=x^2+4x+5$, maka $f(x-2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2+1$</li><li data-option="B">$x^2-1$</li><li data-option="C">$x^2+9$</li><li data-option="D">$x^2-8x+21$</li><li data-option="E">$x^2+8x+21$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>57.</b> Jika $f(x)=k$ (fungsi konstan) dan $g(x)=x^2$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$k$</li><li data-option="B">$k^2$</li><li data-option="C">$x^2$</li><li data-option="D">$2k$</li><li data-option="E">Tidak terdefinisi</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>58.</b> Invers dari $f(x)=1-x^3$ adalah...<ol class="pilihan-ganda"><li data-option="A">$1- \sqrt[3]{x}$</li><li data-option="B">$\sqrt[3]{1-x}$</li><li data-option="C">$\sqrt[3]{x-1}$</li><li data-option="D">$(1-x)^3$</li><li data-option="E">$1+x^3$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>59.</b> Jika $f(x) = \frac{x+1}{2x-4}$, maka $f^{-1}(x+1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{4x+5}{2x-1}$</li><li data-option="B">$\frac{4x+5}{2x+1}$</li><li data-option="C">$\frac{4x-4}{2x+1}$</li><li data-option="D">$\frac{2x+5}{x-1}$</li><li data-option="E">$\frac{4x+1}{2x+1}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>60.</b> Jika $f(x)=2x-3$ dan $g(x)=1-x$, maka $(f \circ g)(x) + (g \circ f)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$-4x+2$</li><li data-option="B">$-2x+4$</li><li data-option="C">0</li><li data-option="D">$-4x+3$</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>61.</b> Domain dari $f(x) = \frac{x}{\sqrt{x^2-9}}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x<-3$ atau $x>3$</li><li data-option="B">$x \le -3$ atau $x \ge 3$</li><li data-option="C">$-3 < x < 3$</li><li data-option="D">$-3 \le x \le 3$</li><li data-option="E">$x \neq \pm 3$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>62.</b> Jika $g(x) = \frac{x}{2}$ dan $(f \circ g)(x) = \frac{x}{x-2}$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{2x}{2x-2}$</li><li data-option="B">$\frac{x}{x-1}$</li><li data-option="C">$\frac{2x}{x-2}$</li><li data-option="D">$\frac{x}{2x-4}$</li><li data-option="E">$\frac{2x}{x-4}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>63.</b> Jika $f(x)=x^2+1$ dengan $x \ge 0$, maka $f^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\sqrt{x-1}$</li><li data-option="B">$\sqrt{x}-1$</li><li data-option="C">$1-\sqrt{x}$</li><li data-option="D">$\pm \sqrt{x-1}$</li><li data-option="E">$x-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>64.</b> Jika $f(2x+3)=4x+1$, maka $f(1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-5</li><li data-option="B">-3</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>65.</b> Range dari $f(x) = \frac{1}{x-2}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \in \mathbb{R}$</li><li data-option="B">$y \neq 0$</li><li data-option="C">$y > 0$</li><li data-option="D">$y \neq 2$</li><li data-option="E">$y > 2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>66.</b> Jika $f(x)=3^x$ dan $g(x)=x+1$, maka $(f \circ g)(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">9</li><li data-option="B">10</li><li data-option="C">18</li><li data-option="D">27</li><li data-option="E">81</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>67.</b> Jika $(f \circ g)(x) = x^2$ dan $g(x)=\sqrt{x}$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x$</li><li data-option="B">$x^2$</li><li data-option="C">$x^4$</li><li data-option="D">$\sqrt{x}$</li><li data-option="E">$|x|$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>68.</b> Jika $f(x-3) = \frac{1}{x-1}$, maka $f^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$1/x+2$</li><li data-option="B">$1/x-2$</li><li data-option="C">$1/(x-2)$</li><li data-option="D">$1/(x+2)$</li><li data-option="E">$2-1/x$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>69.</b> Jika $f(x) = \log(x)$, $g(x)=10^x$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$10$</li><li data-option="B">$x$</li><li data-option="C">$10x$</li><li data-option="D">$10^x \log(x)$</li><li data-option="E">$x \log(10)$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>70.</b> Jika $f(x) = 2x$ dan $g(x)=x/2$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x$</li><li data-option="B">$x^2$</li><li data-option="C">$2x^2$</li><li data-option="D">1</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="latihan-sulit" class="page">
+        <div class="content-wrapper">
+             <h3>3.3 Soal Sulit (71-100)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>71.</b> Domain dari fungsi $f(x) = \sqrt{\frac{x^2-x-6}{x-1}}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$[-2,1) \cup [3,\infty)$</li><li data-option="B">$(-2,1) \cup (3,\infty)$</li><li data-option="C">$[-2,1] \cup [3,\infty)$</li><li data-option="D">$(-\infty,-2] \cup (1,3]$</li><li data-option="E">$(-\infty,-2] \cup [1,3]$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>72.</b> Jika $f(x) = ax+b$, $f^{-1}(x) = cx+d$ dan $a,b,c,d$ bukan nol, maka hubungan yang pasti benar adalah...<ol class="pilihan-ganda"><li data-option="A">$ac=1$ dan $b+d=0$</li><li data-option="B">$a=c$ dan $b=d$</li><li data-option="C">$ac=1$ dan $ad+b=0$</li><li data-option="D">$a+c=0$ dan $b+d=0$</li><li data-option="E">$ac=-1$ dan $b=d$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>73.</b> Jika $f(x)$ adalah fungsi linear, $f(1)=3$ dan $f(f(2))=11$, maka $f(0)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">7</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>74.</b> Diketahui $f(x)=2x+1$ dan $(g \circ f)(x)=\frac{x-1}{x+3}$. Nilai $g^{-1}(-1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>75.</b> Jika $f(x)=x^2+1$ dan $g(x)=x-1$, himpunan penyelesaian dari $(f \circ g)(x) < (g \circ f)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x > 1$</li><li data-option="B">$x < 1$</li><li data-option="C">$x > -1$</li><li data-option="D">$x < -1$</li><li data-option="E">$x \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>76.</b> Jika $f(x)+2f(\frac{1}{x})=3x$, nilai $f(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>77.</b> Jika $f(x) = \frac{x+1}{x-1}$, maka $(f \circ f \circ f)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x$</li><li data-option="B">$1/x$</li><li data-option="C">$\frac{x+1}{x-1}$</li><li data-option="D">$\frac{x-1}{x+1}$</li><li data-option="E">1</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>78.</b> Diberikan $f(x)=|x-1|$ dan $g(x)=|x+1|$. Range dari $(f+g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \ge 0$</li><li data-option="B">$y \ge 1$</li><li data-option="C">$y \ge 2$</li><li data-option="D">$0 \le y \le 2$</li><li data-option="E">$y \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>79.</b> Jika $f(x^2+1)=3x^2+5$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$3x+2$</li><li data-option="B">$3x-2$</li><li data-option="C">$3x+5$</li><li data-option="D">$3x-1$</li><li data-option="E">$3x+1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>80.</b> Jika $f(x)=ax+b$ dengan $a>0$, dan $f \circ f = f$, maka nilai $a+b$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>81.</b> Jika $g(x)=2x+3$ dan $(g \circ f)(x)=2x^2+2x+5$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2+x+1$</li><li data-option="B">$x^2+x+2$</li><li data-option="C">$x^2+x+3$</li><li data-option="D">$2x^2+2x+1$</li><li data-option="E">$2x^2+2x+2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>82.</b> Diberikan $f(x) = \frac{x}{1-x}$. Nilai dari $f^{-1}(-2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$-2$</li><li data-option="B">$-2/3$</li><li data-option="C">$2/3$</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>83.</b> Jika $f(\frac{x+1}{x-1})=x$, maka nilai $f^{-1}(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>84.</b> Domain dari $(f \circ g)(x)$ jika $f(x)=\sqrt{x}$ dan $g(x)=\frac{x+1}{x-2}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \le -1$ atau $x > 2$</li><li data-option="B">$x < -1$ atau $x \ge 2$</li><li data-option="C">$-1 \le x < 2$</li><li data-option="D">$-1 < x \le 2$</li><li data-option="E">$x \neq 2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>85.</b> Jika $f(x)=\sqrt{x-1}$ dan $g(x)=x^2+1$, maka $(f \circ g)^{-1}(2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\sqrt{2}$</li><li data-option="B">2</li><li data-option="C">$\sqrt{3}$</li><li data-option="D">3</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>86.</b> Jika $f(x)=2x^2-1$ dan $g(x)=\sqrt{\frac{x+1}{2}}$, maka $(f \circ g)(x)$ untuk $x \ge -1$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x$</li><li data-option="B">$|x|$</li><li data-option="C">$x^2$</li><li data-option="D">$(x+1)/2$</li><li data-option="E">$2x-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>87.</b> Jika $f(x-2)=3x+1$ dan $(f \circ g)(x)=6x+7$, maka $g(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$2x-1$</li><li data-option="B">$2x$</li><li data-option="C">$2x+1$</li><li data-option="D">$3x$</li><li data-option="E">$3x-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>88.</b> Range dari $f(x)=\frac{2x+1}{x-3}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$y \neq 3$</li><li data-option="B">$y \neq 1/3$</li><li data-option="C">$y \neq -1/3$</li><li data-option="D">$y \neq 2$</li><li data-option="E">$y \neq -2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>89.</b> Jika $f(x)=x-c$ dan $(g \circ f)(x)=x^2-2cx+c^2$, maka $g(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x^2$</li><li data-option="B">$x^2+c^2$</li><li data-option="C">$(x-c)^2$</li><li data-option="D">$(x+c)^2$</li><li data-option="E">$x^2-c^2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>90.</b> Jika $f(x)=2x+5$ dan $g(x)=\frac{x-1}{x+4}$, maka $(g \circ f)^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{-9x+4}{2x-2}$</li><li data-option="B">$\frac{9x+4}{1-2x}$</li><li data-option="C">$\frac{x-4}{2-x}$</li><li data-option="D">$\frac{x+4}{2-x}$</li><li data-option="E">$\frac{9x+1}{2x-1}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>91.</b> Jika $f(x)=2x+1$ dan $(f \circ g)(x+1)= -2x^2-4x-1$, maka $g(x^2)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$-x^4$</li><li data-option="B">$-x^4-1$</li><li data-option="C">$-x^2+1$</li><li data-option="D">$-x^4+x^2-1$</li><li data-option="E">$-x^4-x^2-1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>92.</b> Fungsi $f(x)=\sqrt{x^2-4}$ dan $g(x)=\sqrt{x-2}$. Domain dari $(f+g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \ge 2$</li><li data-option="B">$x \le -2$</li><li data-option="C">$-2 \le x \le 2$</li><li data-option="D">$x \le -2$ atau $x \ge 2$</li><li data-option="E">$x \in \mathbb{R}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>93.</b> Jika $f(2/x) = \frac{2x+1}{x-1}$, maka $f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{x+4}{x-2}$</li><li data-option="B">$\frac{4+x}{2-x}$</li><li data-option="C">$\frac{4-x}{2+x}$</li><li data-option="D">$\frac{x-4}{x+2}$</li><li data-option="E">$\frac{x+2}{x-4}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>94.</b> Jika $f(x) = x^2+2x+1$ dengan domain $x \ge -1$, maka $f^{-1}(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\sqrt{x}-1$</li><li data-option="B">$1+\sqrt{x}$</li><li data-option="C">$\sqrt{x-1}$</li><li data-option="D">$-1-\sqrt{x}$</li><li data-option="E">Tidak punya invers</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>95.</b> Diberikan $(f \circ (g \circ f))^{-1}(x)=x+1$. Jika $f(x)=x-2$, maka $g^{-1}(-1)$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-2</li><li data-option="C">-1</li><li data-option="D">1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>96.</b> Jika $f(x) = \frac{1}{x-1}$ dan $g(x) = x-1$, maka $(f \circ g)(x)$ tidak terdefinisi saat $x$ sama dengan...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">-1</li><li data-option="E">-2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>97.</b> Jika $f(x)=\frac{4^x}{4^x+2}$, maka nilai dari $f(1-x)+f(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">4</li><li data-option="D">$4^x$</li><li data-option="E">$1/2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>98.</b> Diketahui $f(x)=2x$ jika $x$ genap, dan $f(x)=x+1$ jika $x$ ganjil. Jika $g(x)=x-1$ untuk semua $x$, maka $(f \circ g)(4)$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">4</li><li data-option="C">6</li><li data-option="D">7</li><li data-option="E">8</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>99.</b> Jika $f(x)=x^2$ dan $g(x) = \sqrt{1-x^2}$, maka domain dari $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x \in \mathbb{R}$</li><li data-option="B">$x \ge 1$</li><li data-option="C">$x \le 1$</li><li data-option="D">$0 \le x \le 1$</li><li data-option="E">$-1 \le x \le 1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>100.</b> Jika $f(x) = |x|$ dan $g(x) = \sin(x)$, maka $(f \circ g)(x)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$|\sin(x)|$</li><li data-option="B">$\sin(|x|)$</li><li data-option="C">$\sin^2(x)$</li><li data-option="D">$|\sin|x||$</li><li data-option="E">Tidak bisa dikomposisikan</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="pembahasan-latihan" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 4: Kunci Jawaban & Pembahasan</h2>
+             <h3>Pembahasan Soal Mudah (1-20)</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><br>Fungsi mengharuskan setiap elemen domain (input) memiliki tepat satu pasangan di kodomain (output). Pilihan B memenuhi ini. Pilihan lain memiliki input yang bercabang.</div>
+            <div class="pembahasan"><b>2. Jawaban: D</b><br>Fungsi polinomial $f(x)=3x-5$ terdefinisi untuk semua bilangan riil.</div>
+            <div class="pembahasan"><b>3. Jawaban: C</b><br>Hasil kuadrat bilangan riil tidak pernah negatif. Nilai minimumnya 0. Jadi, range $y \ge 0$.</div>
+            <div class="pembahasan"><b>4. Jawaban: C</b><br>$f(3) = 2(3)+1 = 6+1=7$.</div>
+            <div class="pembahasan"><b>5. Jawaban: A</b><br>$(f+g)(x) = (x+1)+(x+2) = 2x+3$.</div>
+            <div class="pembahasan"><b>6. Jawaban: D</b><br>$(f \cdot g)(2) = f(2) \cdot g(2) = (3 \cdot 2) \cdot (2-4) = 6 \cdot (-2) = -12$.</div>
+            <div class="pembahasan"><b>7. Jawaban: B</b><br>$(f \circ g)(x) = f(g(x)) = f(2x) = (2x)+5 = 2x+5$.</div>
+            <div class="pembahasan"><b>8. Jawaban: B</b><br>$(g \circ f)(3) = g(f(3))$. $f(3)=3-1=2$. Maka $g(2)=2^2=4$.</div>
+            <div class="pembahasan"><b>9. Jawaban: B</b><br>$y=x+10 \implies x=y-10$. Maka $f^{-1}(x)=x-10$.</div>
+            <div class="pembahasan"><b>10. Jawaban: D</b><br>$y=5x \implies x=y/5$. Maka $g^{-1}(x)=x/5$.</div>
+            <div class="pembahasan"><b>11. Jawaban: C</b><br>Invers dari $f^{-1}(x)$ adalah $f(x)$. $y=x-4 \implies x=y+4$. Jadi $f(x)=x+4$.</div>
+            <div class="pembahasan"><b>12. Jawaban: B</b><br>Penyebut tidak boleh nol: $x-2 \neq 0 \implies x \neq 2$.</div>
+            <div class="pembahasan"><b>13. Jawaban: D</b><br>Ekspresi dalam akar harus non-negatif: $x-1 \ge 0 \implies x \ge 1$.</div>
+            <div class="pembahasan"><b>14. Jawaban: B</b><br>Cari $x$ agar $f(x)=7$. $2x+3=7 \implies 2x=4 \implies x=2$. Jadi $f^{-1}(7)=2$.</div>
+            <div class="pembahasan"><b>15. Jawaban: D</b><br>Fungsi linear $f(x)=x+5$ adalah satu-satunya yang merupakan korespondensi satu-satu.</div>
+            <div class="pembahasan"><b>16. Jawaban: B</b><br>$(f \circ g)(x) = f(g(x)) = f(x^2+1) = x^2+1$.</div>
+            <div class="pembahasan"><b>17. Jawaban: A</b><br>$(f \circ g)(10) = f(g(10)) = f(20)$. Karena $f(x)=4$ konstan, $f(20)=4$.</div>
+            <div class="pembahasan"><b>18. Jawaban: A</b><br>$(f \circ g \circ h)(x) = f(g(2x)) = f((2x)-3) = (2x-3)+2 = 2x-1$.</div>
+            <div class="pembahasan"><b>19. Jawaban: C</b><br>$y=\frac{x}{2}-3 \implies y+3=\frac{x}{2} \implies x=2(y+3)=2y+6$. Maka $f^{-1}(x)=2x+6$.</div>
+            <div class="pembahasan"><b>20. Jawaban: A</b><br>Cari $x$ agar $f(x)=27$. $x^3=27 \implies x=3$. Jadi $f^{-1}(27)=3$.</div>
+             <h3>Pembahasan Soal Sedang (21-70)</h3>
+            <div class="pembahasan"><b>21. Jawaban: D</b><br>Penyebut $x^2-4 \neq 0 \implies (x-2)(x+2) \neq 0$. Maka $x \neq 2$ dan $x \neq -2$.</div>
+            <div class="pembahasan"><b>22. Jawaban: C</b><br>Domain $(g \circ f)(x)$ ditentukan oleh domain fungsi dalam, $f(x)$. Domain $f(x)=\sqrt{x-3}$ adalah $x-3 \ge 0 \implies x \ge 3$.</div>
+            <div class="pembahasan"><b>23. Jawaban: A</b><br>$f(g(x)) = 2g(x)-1 = 2x^2+4x-1 \implies 2g(x) = 2x^2+4x \implies g(x) = x^2+2x$.</div>
+            <div class="pembahasan"><b>24. Jawaban: A</b><br>Cari $f(x)$ dulu. $f(x-4)=x^2-8x+10$. Misal $p=x-4 \implies x=p+4$. $f(p)=(p+4)^2-8(p+4)+10 = (p^2+8p+16)-(8p+32)+10 = p^2-6$. Jadi $f(x)=x^2-6$. Maka $f(-1)=(-1)^2-6 = 1-6=-5$.</div>
+            <div class="pembahasan"><b>25. Jawaban: A</b><br>Rumus cepat: $a=2, b=-3, c=4, d=1 \implies f^{-1}(x)=\frac{-dx+b}{cx-a}=\frac{-x-3}{4x-2}$.</div>
+            <div class="pembahasan"><b>26. Jawaban: C</b><br>$(g \circ f)(1) = g(f(1))$. $f(1)=3(1)-1=2$. Maka $g(2)=2(2^2)+3=2(4)+3=11$.</div>
+            <div class="pembahasan"><b>27. Jawaban: A</b><br>$f(g(x)) = f(2x+1) = 4x+6$. Misal $p=2x+1 \implies 2x=p-1 \implies x=(p-1)/2$. $f(p)=4(\frac{p-1}{2})+6 = 2(p-1)+6=2p-2+6=2p+4$. Jadi $f(x)=2x+4$.</div>
+            <div class="pembahasan"><b>28. Jawaban: D</b><br>$f(x-1)=2x+5$. Misal $p=x-1 \implies x=p+1$. $f(p)=2(p+1)+5=2p+2+5=2p+7$. Jadi $f(x)=2x+7$.</div>
+            <div class="pembahasan"><b>29. Jawaban: A</b><br>$y=\sqrt[3]{x-2} \implies y^3=x-2 \implies x=y^3+2$. Jadi $f^{-1}(x)=x^3+2$.</div>
+            <div class="pembahasan"><b>30. Jawaban: D</b><br>Ini adalah fungsi yang inversnya adalah dirinya sendiri. $y=\frac{x}{x-1} \implies y(x-1)=x \implies yx-y=x \implies yx-x=y \implies x(y-1)=y \implies x=\frac{y}{y-1}$. Jadi $f^{-1}(x)=\frac{x}{x-1}$.</div>
+            <div class="pembahasan"><b>31. Jawaban: B</b><br>$(f \circ f)(x) = f(2x+a) = 2(2x+a)+a = 4x+2a+a=4x+3a$. $4x+3a=4x-9 \implies 3a=-9 \implies a=-3$.</div>
+            <div class="pembahasan"><b>32. Jawaban: A</b><br>$(f \circ g)(x) = f(2x-1) = (2x-1)^2$. Maka $(f \circ g)(x-3)=(2(x-3)-1)^2 = (2x-6-1)^2=(2x-7)^2=4x^2-28x+49$.</div>
+            <div class="pembahasan"><b>33. Jawaban: A</b><br>Mencari $(g \circ f)^{-1}(2)$ sama dengan mencari $x$ sehingga $(g \circ f)(x)=2$. $g(f(x))=g(x+2)=\frac{x+2}{(x+2)+1}=\frac{x+2}{x+3}$. $\frac{x+2}{x+3}=2 \implies x+2=2(x+3)=2x+6 \implies -4=x$.</div>
+            <div class="pembahasan"><b>34. Jawaban: C</b><br>Soal: $f(x)=ax-1$, $f(f(3))=43$. $f(3)=3a-1$. $f(f(3))=f(3a-1)=a(3a-1)-1=3a^2-a-1$. $3a^2-a-1=43 \implies 3a^2-a-44=0 \implies (3a+11)(a-4)=0$. Karena opsi positif, $a=4$.</div>
+            <div class="pembahasan"><b>35. Jawaban: A</b><br>$y=x^2-6x+5 = (x-3)^2-4$. $y+4=(x-3)^2 \implies \sqrt{y+4}=x-3$ (ambil positif karena $x \ge 3$). $x=3+\sqrt{y+4}$. Jadi $f^{-1}(x)=3+\sqrt{x+4}$.</div>
+            <div class="pembahasan"><b>36. Jawaban: A</b><br>$f(x+1)=x^2+3x+2=(x+1)(x+2)$. Misal $p=x+1 \implies x=p-1$. $f(p)=p(p-1+2)=p(p+1)=p^2+p$. Jadi $f(x)=x^2+x$.</div>
+            <div class="pembahasan"><b>37. Jawaban: B</b><br>$(f \circ g)(x) = f(g(x)) = f(x^2+4) = \sqrt{x^2+4}$.</div>
+            <div class="pembahasan"><b>38. Jawaban: A</b><br>$f^{-1}(k)=3 \implies f(3)=k$. $f(3)=\frac{1}{3+2}=1/5$. Jadi $k=1/5$.</div>
+            <div class="pembahasan"><b>39. Jawaban: A</b><br>Cari $(f \circ g)(x) = f(x+1)=2(x+1)=2x+2$. Inverskan: $y=2x+2 \implies y-2=2x \implies x=(y-2)/2$. Jadi $(f \circ g)^{-1}(x)=(x-2)/2$.</div>
+            <div class="pembahasan"><b>40. Jawaban: B</b><br>$x^2 \ge 0 \implies -x^2 \le 0 \implies 5-x^2 \le 5$. Jadi range $y \le 5$.</div>
+            <div class="pembahasan"><b>41. Jawaban: C</b><br>Syarat akar di penyebut adalah $>0$. $4-x > 0 \implies 4 > x$ atau $x<4$.</div>
+            <div class="pembahasan"><b>42. Jawaban: A</b><br>$(f \circ g)(x) = f(2x-3) = (2x-3)^2+1 = (4x^2-12x+9)+1=4x^2-12x+10$.</div>
+            <div class="pembahasan"><b>43. Jawaban: B</b><br>$(g \circ f)(x) = g(3x+2) = (3x+2)-1 = 3x+1$. Inverskan: $y=3x+1 \implies x=(y-1)/3$.</div>
+            <div class="pembahasan"><b>44. Jawaban: B</b><br>$f^{-1}(x)=\frac{-dx+b}{cx-a}$. Agar $f(x)=f^{-1}(x)$, maka $\frac{ax+b}{cx+d}=\frac{-dx+b}{cx-a}$. Ini terpenuhi jika $a=-d$.</div>
+            <div class="pembahasan"><b>45. Jawaban: C</b><br>$(f \circ g)(x) = f(x-1)=(x-1)^3$. $(x-1)^3=8 \implies x-1=2 \implies x=3$.</div>
+            <div class="pembahasan"><b>46. Jawaban: C</b><br>Nilai absolut tidak pernah negatif, jadi $|x-3| \ge 0$. Range adalah $y \ge 0$.</div>
+            <div class="pembahasan"><b>47. Jawaban: D</b><br>$(f \circ g)(x)=x$ adalah definisi dari $g(x)$ sebagai invers dari $f(x)$.</div>
+            <div class="pembahasan"><b>48. Jawaban: A</b><br>$y=2^x \implies \log_2(y) = \log_2(2^x) \implies \log_2(y)=x$. Jadi $f^{-1}(x)=\log_2 x$.</div>
+            <div class="pembahasan"><b>49. Jawaban: A</b><br>$f(x+2)=x^2-1$. Misal $p=x+2 \implies x=p-2$. $f(p)=(p-2)^2-1 = p^2-4p+4-1=p^2-4p+3$. Jadi $f(x)=x^2-4x+3$.</div>
+            <div class="pembahasan"><b>50. Jawaban: B</b><br>Syarat argumen logaritma harus positif. $x-5 > 0 \implies x>5$.</div>
+            <div class="pembahasan"><b>51. Jawaban: A</b><br>$(g \circ f)(x)=g(1/x)=2(1/x)+1 = 2/x+1$.</div>
+            <div class="pembahasan"><b>52. Jawaban: B</b><br>$(f \circ g)^{-1}(1) = (g^{-1} \circ f^{-1})(1) = g^{-1}(f^{-1}(1)) = g^{-1}(\frac{1-1}{5}) = g^{-1}(0) = \frac{3-0}{2}=3/2$.</div>
+            <div class="pembahasan"><b>53. Jawaban: C</b><br>$(f \circ g \circ h)(2)=f(g(h(2))) = f(g(1/2)) = f((1/2)^2) = f(1/4) = 2(1/4)+1=1/2+1=3/2$.</div>
+            <div class="pembahasan"><b>54. Jawaban: B</b><br>$f^{-1}(7)=2 \implies f(2)=7$. $4(2)+k=7 \implies 8+k=7 \implies k=-1$.</div>
+            <div class="pembahasan"><b>55. Jawaban: C</b><br>$\sqrt{x-1} \ge 0 \implies 2+\sqrt{x-1} \ge 2$. Jadi range $y \ge 2$.</div>
+            <div class="pembahasan"><b>56. Jawaban: A</b><br>$f(x-2)=(x-2)^2+4(x-2)+5 = (x^2-4x+4)+(4x-8)+5 = x^2+1$.</div>
+            <div class="pembahasan"><b>57. Jawaban: A</b><br>$(f \circ g)(x)=f(g(x))=f(x^2)$. Karena $f$ adalah fungsi konstan $k$, outputnya selalu $k$.</div>
+            <div class="pembahasan"><b>58. Jawaban: B</b><br>$y=1-x^3 \implies x^3=1-y \implies x=\sqrt[3]{1-y}$. Jadi $f^{-1}(x)=\sqrt[3]{1-x}$.</div>
+            <div class="pembahasan"><b>59. Jawaban: B</b><br>Cari $f^{-1}(x)=\frac{4x+1}{2x-1}$. Maka $f^{-1}(x+1)=\frac{4(x+1)+1}{2(x+1)-1}=\frac{4x+4+1}{2x+2-1}=\frac{4x+5}{2x+1}$.</div>
+            <div class="pembahasan"><b>60. Jawaban: D</b><br>$(f \circ g)(x) = 2(1-x)-3 = 2-2x-3 = -2x-1$. $(g \circ f)(x)=1-(2x-3)=1-2x+3=-2x+4$. Jumlahnya $(-2x-1)+(-2x+4)=-4x+3$.</div>
+            <div class="pembahasan"><b>61. Jawaban: A</b><br>Syarat akar di penyebut: $x^2-9>0 \implies (x-3)(x+3)>0$. Pembuat nol $x=3, x=-3$. Garis bilangan menunjukkan positif di $x<-3$ atau $x>3$.</div>
+            <div class="pembahasan"><b>62. Jawaban: B</b><br>$f(g(x))=f(x/2)=\frac{x}{x-2}$. Misal $p=x/2 \implies x=2p$. $f(p)=\frac{2p}{2p-2}=\frac{p}{p-1}$. Jadi $f(x)=\frac{x}{x-1}$.</div>
+            <div class="pembahasan"><b>63. Jawaban: A</b><br>$y=x^2+1 \implies y-1=x^2 \implies x=\sqrt{y-1}$ (ambil positif karena $x \ge 0$).</div>
+            <div class="pembahasan"><b>64. Jawaban: B</b><br>Cari $x$ agar input $2x+3=1 \implies 2x=-2 \implies x=-1$. Maka $f(1)=4(-1)+1=-3$.</div>
+            <div class="pembahasan"><b>65. Jawaban: B</b><br>Range fungsi $y=\frac{ax+b}{cx+d}$ adalah $y \neq a/c$. Di sini $a=0, c=1$. Range $y \neq 0/1 \implies y \neq 0$.</div>
+            <div class="pembahasan"><b>66. Jawaban: D</b><br>$(f \circ g)(2)=f(g(2))=f(2+1)=f(3)=3^3=27$.</div>
+            <div class="pembahasan"><b>67. Jawaban: C</b><br>$f(g(x))=f(\sqrt{x})=x^2$. Misal $p=\sqrt{x} \implies p^2=x$. $f(p)=(p^2)^2=p^4$. Jadi $f(x)=x^4$.</div>
+            <div class="pembahasan"><b>68. Jawaban: B</b><br>Cari $f(x)$. Misal $p=x-3 \implies x=p+3$. $f(p)=\frac{1}{(p+3)-1}=\frac{1}{p+2}$. Jadi $f(x)=\frac{1}{x+2}$. Inversnya: $y=\frac{1}{x+2} \implies x+2=1/y \implies x=1/y-2$. Jadi $f^{-1}(x)=1/x-2$.</div>
+            <div class="pembahasan"><b>69. Jawaban: B</b><br>$(f \circ g)(x)=f(g(x))=f(10^x)=\log(10^x)=x$.</div>
+            <div class="pembahasan"><b>70. Jawaban: A</b><br>$(f \circ g)(x)=f(x/2)=2(x/2)=x$.</div>
+             <h3>Pembahasan Soal Sulit (71-100)</h3>
+            <div class="pembahasan"><b>71. Jawaban: A</b><br>Syarat: $\frac{(x-3)(x+2)}{x-1} \ge 0$. Pembuat nol: $x=3, x=-2, x=1$. Uji titik di garis bilangan menghasilkan daerah positif di $[-2,1)$ dan $[3, \infty)$. $x=1$ tidak termasuk karena penyebut.</div>
+            <div class="pembahasan"><b>72. Jawaban: C</b><br>$f^{-1}(x)=\frac{x-b}{a} = \frac{1}{a}x - \frac{b}{a}$. Samakan dengan $cx+d$. Maka $c=1/a \implies ac=1$. Dan $d=-b/a \implies ad=-b \implies ad+b=0$.</div>
+            <div class="pembahasan"><b>73. Jawaban: C & E</b><br>Misal $f(x)=ax+b$. $f(1)=a+b=3 \implies b=3-a$. $f(2)=2a+b$. $f(f(2))=f(2a+b)=a(2a+b)+b=2a^2+ab+b=11$. Substitusi $b$: $2a^2+a(3-a)+(3-a)=11 \implies a^2+2a-8=0 \implies (a+4)(a-2)=0$. Jika $a=2, b=1$. Jika $a=-4, b=7$. $f(0)=b$. Jadi bisa 1 atau 7.</div>
+            <div class="pembahasan"><b>74. Jawaban: B</b><br>Soal: cari $g^{-1}(-1)$. Ini sama dengan mencari $a$ sehingga $g(a)=-1$. Kita punya $g(2x+1)=\frac{x-1}{x+3}$. Agar $g$ mendapat output -1, maka $\frac{x-1}{x+3}=-1 \implies x-1=-x-3 \implies 2x=-2 \implies x=-1$. Saat $x=-1$, input untuk $g$ adalah $a=2(-1)+1=-1$. Jadi $g(-1)=-1$, maka $g^{-1}(-1)=-1$.</div>
+            <div class="pembahasan"><b>75. Jawaban: A</b><br>$(f \circ g)(x)=(x-1)^2+1=x^2-2x+2$. $(g \circ f)(x)=(x^2+1)-1=x^2$. $x^2-2x+2 < x^2 \implies -2x+2 < 0 \implies 2 < 2x \implies 1 < x$.</div>
+            <div class="pembahasan"><b>76. Jawaban: A</b><br>(1) $f(x)+2f(1/x)=3x$. Ganti $x$ dengan $1/x$: (2) $f(1/x)+2f(x)=3/x$. Kalikan (2) dengan 2: $4f(x)+2f(1/x)=6/x$. Kurangkan (1): $3f(x)=6/x-3x \implies f(x)=2/x-x$. Maka $f(2)=2/2-2=1-2=-1$.</div>
+            <div class="pembahasan"><b>77. Jawaban: C</b><br>$(f \circ f)(x)=f(\frac{x+1}{x-1})=\frac{(\frac{x+1}{x-1})+1}{(\frac{x+1}{x-1})-1} = \frac{x+1+x-1}{x+1-(x-1)} = \frac{2x}{2}=x$. Maka $(f \circ f \circ f)(x)=f((f \circ f)(x))=f(x)=\frac{x+1}{x-1}$.</div>
+            <div class="pembahasan"><b>78. Jawaban: C</b><br>Menggunakan ketaksamaan segitiga $|a|+|b| \ge |a-b|$. Di sini, $f+g=|x-1|+|x+1|=|x-1|+|-(x+1)|=|x-1|+|-x-1|$. Nilai minimum terjadi di antara -1 dan 1, misal $x=0, | -1 |+| 1 |=2$. Jadi range $y \ge 2$.</div>
+            <div class="pembahasan"><b>79. Jawaban: A</b><br>$f(x^2+1)=3(x^2+1)+2$. Misal $p=x^2+1$. Maka $f(p)=3p+2$. Jadi $f(x)=3x+2$.</div>
+            <div class="pembahasan"><b>80. Jawaban: D</b><br>$f(f(x))=a(ax+b)+b=a^2x+ab+b$. $a^2x+ab+b = ax+b$. Samakan koefisien: $a^2=a \implies a=1$ (karena $a>0$). Samakan konstanta: $ab+b=b \implies ab=0 \implies (1)b=0 \implies b=0$. Maka $a+b=1+0=1$.</div>
+            <div class="pembahasan"><b>81. Jawaban: A</b><br>$g(f(x))=2f(x)+3 = 2x^2+2x+5 \implies 2f(x)=2x^2+2x+2 \implies f(x)=x^2+x+1$.</div>
+            <div class="pembahasan"><b>82. Jawaban: D</b><br>Mencari $f^{-1}(-2)$ sama dengan mencari $x$ agar $f(x)=-2$. $\frac{x}{1-x}=-2 \implies x=-2(1-x)=-2+2x \implies 2=x$. Jadi $f^{-1}(-2)=2$.</div>
+            <div class="pembahasan"><b>83. Jawaban: C</b><br>Definisi invers $f(a)=b \iff f^{-1}(b)=a$. Dari soal $f(\frac{x+1}{x-1})=x$. Jadi $f^{-1}(x)=\frac{x+1}{x-1}$. Maka $f^{-1}(2)=\frac{2+1}{2-1}=3$.</div>
+            <div class="pembahasan"><b>84. Jawaban: A</b><br>Domain $(f \circ g)(x)=f(g(x))=\sqrt{\frac{x+1}{x-2}}$. Syarat: $\frac{x+1}{x-2} \ge 0$. Pembuat nol $x=-1, x=2$. Garis bilangan positif di $x \le -1$ atau $x > 2$.</div>
+            <div class="pembahasan"><b>85. Jawaban: B</b><br>Cari $x$ agar $(f \circ g)(x)=2$. $f(g(x))=f(x^2+1)=\sqrt{(x^2+1)-1}=\sqrt{x^2}=|x|$. $|x|=2 \implies x=\pm 2$. Jadi jawabannya 2 (karena biasanya diambil nilai positif).</div>
+            <div class="pembahasan"><b>86. Jawaban: A</b><br>$(f \circ g)(x)=f(\sqrt{\frac{x+1}{2}}) = 2(\sqrt{\frac{x+1}{2}})^2-1 = 2(\frac{x+1}{2})-1=(x+1)-1=x$.</div>
+            <div class="pembahasan"><b>87. Jawaban: B</b><br>Cari $f(x)$ dulu. Misal $p=x-2 \implies x=p+2$. $f(p)=3(p+2)+1=3p+7$. Jadi $f(x)=3x+7$. $f(g(x))=3g(x)+7=6x+7 \implies 3g(x)=6x \implies g(x)=2x$.</div>
+            <div class="pembahasan"><b>88. Jawaban: D</b><br>Range $y=\frac{ax+b}{cx+d}$ adalah $y \neq a/c$. Di sini $a=2, c=1$. Range $y \neq 2/1 \implies y \neq 2$.</div>
+            <div class="pembahasan"><b>89. Jawaban: A</b><br>$g(f(x))=g(x-c)=x^2-2cx+c^2=(x-c)^2$. Misal $p=x-c$, maka $g(p)=p^2$. Jadi $g(x)=x^2$.</div>
+            <div class="pembahasan"><b>90. Jawaban: A</b><br>$(g \circ f)(x)=g(2x+5)=\frac{(2x+5)-1}{(2x+5)+4}=\frac{2x+4}{2x+9}$. Inversnya (pakai rumus cepat): $y=\frac{-9x+4}{2x-2}$.</div>
+            <div class="pembahasan"><b>91. Jawaban: A</b><br>$f(g(x+1))=2g(x+1)+1=-2x^2-4x-1$. $2g(x+1)=-2x^2-4x-2 \implies g(x+1)=-x^2-2x-1=-(x+1)^2$. Misal $p=x+1$, maka $g(p)=-p^2$. Jadi $g(x)=-x^2$. Maka $g(x^2)=-(x^2)^2=-x^4$.</div>
+            <div class="pembahasan"><b>92. Jawaban: A</b><br>Domain $f(x)$ adalah $x^2-4 \ge 0 \implies x \le -2$ atau $x \ge 2$. Domain $g(x)$ adalah $x-2 \ge 0 \implies x \ge 2$. Domain $f+g$ adalah irisan keduanya, yaitu $x \ge 2$.</div>
+            <div class="pembahasan"><b>93. Jawaban: B</b><br>Misal $p=2/x \implies x=2/p$. $f(p)=\frac{2(2/p)+1}{(2/p)-1} = \frac{4/p+1}{(2-p)/p} = \frac{(4+p)/p}{(2-p)/p} = \frac{4+p}{2-p}$. Jadi $f(x)=\frac{4+x}{2-x}$.</div>
+            <div class="pembahasan"><b>94. Jawaban: A</b><br>Soal: $f(x) = (x+1)^2$ domain $x \ge -1$. $y=(x+1)^2 \implies \sqrt{y}=x+1$ (karena $x+1 \ge 0$). $x=\sqrt{y}-1$. Jadi $f^{-1}(x)=\sqrt{x}-1$.</div>
+            <div class="pembahasan"><b>95. Jawaban: B</b><br>Soal: $(f \circ (g \circ f))^{-1}(x)=x+1$, $f(x)=x-2$. Cari $g^{-1}(-1)$. Inverskan: $f(g(f(x)))=x-1$. $f(g(x-2))=x-1$. $g(x-2)-2=x-1 \implies g(x-2)=x+1$. Misal $p=x-2 \implies x=p+2$. $g(p)=(p+2)+1=p+3$. Jadi $g(x)=x+3$. $g^{-1}(x)=x-3$. Maka $g^{-1}(-1)=-1-3=-4$. *Ada kesalahan di soal/pilihan, seharusnya jawabannya -4*.</div>
+            <div class="pembahasan"><b>96. Jawaban: C</b><br>$(f \circ g)(x)=f(x-1)=\frac{1}{(x-1)-1}=\frac{1}{x-2}$. Fungsi ini tidak terdefinisi jika penyebutnya nol, $x-2=0 \implies x=2$.</div>
+            <div class="pembahasan"><b>97. Jawaban: A</b><br>$f(1-x)=\frac{4^{1-x}}{4^{1-x}+2}=\frac{4/4^x}{4/4^x+2}=\frac{4}{4+2 \cdot 4^x}=\frac{2}{2+4^x}$. Maka $f(x)+f(1-x)=\frac{4^x}{4^x+2}+\frac{2}{4^x+2}=\frac{4^x+2}{4^x+2}=1$.</div>
+            <div class="pembahasan"><b>98. Jawaban: B</b><br>$(f \circ g)(4)=f(g(4))=f(4-1)=f(3)$. Karena 3 ganjil, gunakan aturan kedua: $f(3)=3+1=4$.</div>
+            <div class="pembahasan"><b>99. Jawaban: E</b><br>Domain $(f \circ g)(x)$ ditentukan oleh domain $g(x)$. Domain $g(x)=\sqrt{1-x^2}$ adalah $1-x^2 \ge 0 \implies 1 \ge x^2 \implies -1 \le x \le 1$.</div>
+            <div class="pembahasan"><b>100. Jawaban: A</b><br>$(f \circ g)(x)=f(g(x))=f(\sin(x))=|\sin(x)|$.</div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
