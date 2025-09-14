@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Lengkap - Matriks (SMA)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            min-height: 250mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page::after {
+            counter-increment: page;
+            content: counter(page);
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 10pt;
+            color: #888;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page::after, .toc-page::after {
+            content: ''; /* No page number on cover and TOC */
+        }
+
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 18pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @media print {
+            body { background: none; }
+            .page { width: 100%; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        }
+        
+        .watermark-container .page::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cover-page::before, .toc-page::before { opacity: 0; }
+
+        .content-wrapper { position: relative; z-index: 1; width: 100%; }
+        
+        h1 { font-size: 24pt; text-align: center; border-bottom: 2px solid var(--primary-text); padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { font-size: 18pt; color: #000; border-left: 5px solid #555; padding-left: 10px; margin-top: 30px; }
+        h3 { font-size: 14pt; color: #222; margin-top: 30px; font-weight: 700; }
+        h4 { font-size: 12pt; font-weight: 700; margin-bottom: 5px; }
+
+        .toc-list { list-style-type: none; padding: 0; }
+        .toc-list li { margin-bottom: 10px; font-size: 12pt; }
+        .toc-list a { text-decoration: none; color: var(--primary-text); }
+        .toc-list a:hover { text-decoration: underline; }
+        
+        .layout-1-kolom { columns: 1; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.7fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; }
+        .soal-item, .soal-latihan { margin-bottom: 15px; break-inside: avoid; overflow-wrap: break-word; word-wrap: break-word; }
+        
+        .coret-coret { border: 1px dashed #c0c0c0; min-height: 120px; padding: 10px; border-radius: 5px; }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; margin-bottom: 15px; overflow-wrap: break-word; }
+        
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; padding-left: 20px; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before { content: attr(data-option) ". "; font-weight: bold; margin-right: 5px; }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div class="watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">MODUL LENGKAP MATRIKS</h1>
+            <p class="subtitle">Materi & Kumpulan Soal Matematika SMA</p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="page toc-page">
+        <div class="content-wrapper">
+            <h1>Daftar Isi</h1>
+            <ul class="toc-list">
+                <li><a href="#materi">BAB 1: Materi Lengkap Matriks</a></li>
+                <li><a href="#materi-1">&nbsp;&nbsp;&nbsp;› 1.1 Pengenalan Matriks</a></li>
+                <li><a href="#materi-2">&nbsp;&nbsp;&nbsp;› 1.2 Operasi Aljabar Matriks</a></li>
+                <li><a href="#materi-3">&nbsp;&nbsp;&nbsp;› 1.3 Determinan & Invers</a></li>
+                <li><a href="#materi-4">&nbsp;&nbsp;&nbsp;› 1.4 Penerapan Matriks</a></li>
+                <li><a href="#contoh-soal">BAB 2: Contoh Soal & Pembahasan</a></li>
+                <li><a href="#latihan-soal">BAB 3: Bank Soal Latihan (100 Soal)</a></li>
+                <li><a href="#latihan-mudah">&nbsp;&nbsp;&nbsp;› 3.1 Soal Mudah (1-20)</a></li>
+                <li><a href="#latihan-sedang">&nbsp;&nbsp;&nbsp;› 3.2 Soal Sedang (21-70)</a></li>
+                <li><a href="#latihan-sulit">&nbsp;&nbsp;&nbsp;› 3.3 Soal Sulit (71-100)</a></li>
+                <li><a href="#pembahasan-latihan">BAB 4: Kunci Jawaban & Pembahasan</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Materi Lengkap -->
+    <section id="materi" class="page">
+      <div class="content-wrapper">
+        <h2>BAB 1: Materi Lengkap Matriks</h2>
+        <h3 id="materi-1">1.1 Pengenalan Matriks</h3>
+        <div class="layout-1-kolom">
+            <h4>Definisi dan Ordo</h4>
+            <p><b>Matriks</b> adalah susunan bilangan, simbol, atau ekspresi, yang disusun dalam baris dan kolom sehingga membentuk suatu bangun persegi. Ukuran sebuah matriks ditentukan oleh jumlah baris dan kolomnya, disebut sebagai <b>ordo</b> $m \times n$, di mana $m$ adalah jumlah baris dan $n$ adalah jumlah kolom.</p>
+            
+            <h4>Jenis-jenis Matriks</h4>
+            <ul>
+                <li><b>Matriks Baris:</b> Hanya memiliki satu baris (ordo $1 \times n$).</li>
+                <li><b>Matriks Kolom:</b> Hanya memiliki satu kolom (ordo $m \times 1$).</li>
+                <li><b>Matriks Persegi:</b> Jumlah baris sama dengan jumlah kolom ($m=n$).</li>
+                <li><b>Matriks Diagonal:</b> Matriks persegi yang semua elemen di luar diagonal utamanya adalah nol.</li>
+                <li><b>Matriks Identitas (I):</b> Matriks diagonal yang semua elemen pada diagonal utamanya adalah 1.</li>
+                <li><b>Matriks Nol (O):</b> Matriks yang semua elemennya adalah nol.</li>
+            </ul>
+             <h4>Transpose Matriks ($A^T$)</h4>
+             <p>Transpose matriks diperoleh dengan menukar elemen baris menjadi elemen kolom dan sebaliknya. Jika $A$ berordo $m \times n$, maka $A^T$ berordo $n \times m$.</p>
+        </div>
+        <h3 id="materi-2">1.2 Operasi Aljabar Matriks</h3>
+        <ul>
+            <li><b>Penjumlahan & Pengurangan:</b> Hanya bisa dilakukan pada matriks dengan ordo yang sama. Caranya adalah dengan menjumlahkan atau mengurangkan elemen-elemen yang seletak.</li>
+            <li><b>Perkalian Skalar:</b> Mengalikan sebuah bilangan skalar $k$ dengan setiap elemen matriks. Jika $B=kA$, maka $b_{ij} = k \cdot a_{ij}$.</li>
+            <li><b>Perkalian Matriks:</b> Perkalian matriks $A_{m \times n}$ dengan $B_{n \times p}$ menghasilkan matriks $C_{m \times p}$. Syaratnya, jumlah kolom matriks A harus sama dengan jumlah baris matriks B. Elemen $c_{ij}$ didapat dari perkalian titik antara baris ke-$i$ dari A dan kolom ke-$j$ dari B.</li>
+        </ul>
+        <p><b>Sifat Perkalian Matriks:</b> Asosiatif ($A(BC)=(AB)C$), Distributif ($A(B+C)=AB+AC$), tetapi <b>tidak komutatif</b> ($AB \neq BA$ secara umum).</p>
+      </div>
+    </section>
+    
+    <section class="page">
+      <div class="content-wrapper">
+        <h3 id="materi-3">1.3 Determinan & Invers</h3>
+        <div class="layout-1-kolom">
+            <h4>Determinan Matriks Persegi</h4>
+            <p>Determinan adalah nilai skalar yang bisa dihitung dari elemen-elemen matriks persegi. Notasi determinan A adalah $|A|$ atau det(A).</p>
+            <ul>
+                <li>Untuk ordo $2 \times 2$, $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, maka $|A| = ad - bc$.</li>
+                <li>Untuk ordo $3 \times 3$, $B = \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & i \end{pmatrix}$, determinan dapat dihitung dengan <b>Aturan Sarrus</b>: $|B| = (aei + bfg + cdh) - (ceg + afh + bdi)$.</li>
+            </ul>
+            <b>Sifat Determinan:</b>
+            <ul>
+                <li>$|A^T| = |A|$</li>
+                <li>$|AB|=|A||B|$</li>
+                <li>$|kA| = k^n|A|$ untuk matriks ordo $n \times n$.</li>
+                <li>$|A^{-1}|=1/|A|$</li>
+            </ul>
+        </div>
+        <div class="layout-1-kolom">
+            <h4>Invers Matriks</h4>
+            <p>Matriks yang memiliki invers disebut matriks non-singular ($|A| \neq 0$). Matriks yang tidak memiliki invers disebut matriks singular ($|A|=0$). Invers dari A, dinotasikan $A^{-1}$, memenuhi $A \cdot A^{-1} = A^{-1} \cdot A = I$.</p>
+             <ul>
+                <li>Untuk ordo $2 \times 2$, $A^{-1} = \frac{1}{|A|} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$.</li>
+            </ul>
+            <b>Sifat Invers:</b>
+            <ul>
+                <li>$(AB)^{-1} = B^{-1}A^{-1}$</li>
+                <li>$(A^{-1})^{-1}=A$</li>
+                <li>$(A^T)^{-1} = (A^{-1})^T$</li>
+            </ul>
+        </div>
+        <h3 id="materi-4">1.4 Penerapan Matriks</h3>
+        <p>Matriks sangat berguna untuk menyelesaikan Sistem Persamaan Linear (SPL). Bentuk $ax+by=p$ dan $cx+dy=q$ dapat diubah menjadi bentuk matriks:</p>
+        $$ \begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} p \\ q \end{pmatrix} $$
+        Jika matriks koefisien $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$ non-singular, maka solusinya adalah:
+        $$ \begin{pmatrix} x \\ y \end{pmatrix} = A^{-1} \begin{pmatrix} p \\ q \end{pmatrix} $$
+      </div>
+    </section>
+    
+    <section id="contoh-soal" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 2: Contoh Soal & Pembahasan</h2>
+            <div class="soal-item"><b>1. Operasi Dasar</b><br>Diberikan $A=\begin{pmatrix} 1 & -2 \\ 3 & 4 \end{pmatrix}$ dan $B=\begin{pmatrix} 0 & 5 \\ -1 & 2 \end{pmatrix}$. Tentukan $2A - B^T$.<div class="pembahasan"><b>Teori:</b> Lakukan perkalian skalar dulu, lalu transpose, baru pengurangan.<br><b>Langkah 1 (Hitung 2A):</b> $2A = 2\begin{pmatrix} 1 & -2 \\ 3 & 4 \end{pmatrix} = \begin{pmatrix} 2 & -4 \\ 6 & 8 \end{pmatrix}$.<br><b>Langkah 2 (Hitung $B^T$):</b> $B^T = \begin{pmatrix} 0 & -1 \\ 5 & 2 \end{pmatrix}$.<br><b>Langkah 3 (Pengurangan):</b> $2A-B^T = \begin{pmatrix} 2 & -4 \\ 6 & 8 \end{pmatrix} - \begin{pmatrix} 0 & -1 \\ 5 & 2 \end{pmatrix} = \begin{pmatrix} 2-0 & -4-(-1) \\ 6-5 & 8-2 \end{pmatrix} = \begin{pmatrix} 2 & -3 \\ 1 & 6 \end{pmatrix}$.</div></div>
+            <div class="soal-item"><b>2. Perkalian Matriks</b><br>Jika $P=\begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}$ dan $Q=\begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}$, tentukan $PQ$.<div class="pembahasan"><b>Teori:</b> Kalikan baris matriks pertama dengan kolom matriks kedua.<br>$PQ = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix} \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}$<br>$= \begin{pmatrix} (2\cdot1+0\cdot4) & (2\cdot2+0\cdot5) & (2\cdot3+0\cdot6) \\ (1\cdot1+3\cdot4) & (1\cdot2+3\cdot5) & (1\cdot3+3\cdot6) \end{pmatrix}$<br>$= \begin{pmatrix} 2 & 4 & 6 \\ 1+12 & 2+15 & 3+18 \end{pmatrix} = \begin{pmatrix} 2 & 4 & 6 \\ 13 & 17 & 21 \end{pmatrix}$.</div></div>
+            <div class="soal-item"><b>3. Determinan 3x3</b><br>Tentukan determinan dari $M = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 4 \\ 5 & 6 & 0 \end{pmatrix}$.<div class="pembahasan"><b>Teori:</b> Gunakan Aturan Sarrus.<br>$|M| = (1\cdot1\cdot0 + 2\cdot4\cdot5 + 3\cdot0\cdot6) - (3\cdot1\cdot5 + 1\cdot4\cdot6 + 2\cdot0\cdot0)$<br>$= (0 + 40 + 0) - (15 + 24 + 0) = 40 - 39 = 1$.</div></div>
+            <div class="soal-item"><b>4. Invers 2x2</b><br>Tentukan invers dari matriks $A = \begin{pmatrix} 4 & 7 \\ 1 & 2 \end{pmatrix}$.<div class="pembahasan"><b>Langkah 1 (Determinan):</b> $|A| = (4)(2) - (7)(1) = 8-7=1$.<br><b>Langkah 2 (Invers):</b> $A^{-1} = \frac{1}{|A|} \begin{pmatrix} 2 & -7 \\ -1 & 4 \end{pmatrix} = \frac{1}{1}\begin{pmatrix} 2 & -7 \\ -1 & 4 \end{pmatrix} = \begin{pmatrix} 2 & -7 \\ -1 & 4 \end{pmatrix}$.</div></div>
+            <div class="soal-item"><b>5. Persamaan Matriks (1)</b><br>Jika $\begin{pmatrix} 2x & 3 \\ 4 & 1 \end{pmatrix} = \begin{pmatrix} 6 & 3 \\ 4 & y \end{pmatrix}$, tentukan nilai $x+y$.<div class="pembahasan"><b>Teori:</b> Samakan elemen-elemen yang seletak.<br>Elemen (1,1): $2x=6 \implies x=3$.<br>Elemen (2,2): $1=y$.<br>Maka $x+y = 3+1=4$.</div></div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+             <div class="soal-item"><b>6. Persamaan Matriks (2)</b><br>Diberikan $A=\begin{pmatrix} 2 & 1 \\ 3 & 4 \end{pmatrix}$ dan $B=\begin{pmatrix} -1 & 2 \\ 5 & 6 \end{pmatrix}$. Jika $AX=B$, tentukan matriks $X$.<div class="pembahasan"><b>Teori:</b> $AX=B \implies X=A^{-1}B$.<br><b>Langkah 1 (Cari $A^{-1}$):</b><br>$|A|=2(4)-1(3)=5$.<br>$A^{-1}=\frac{1}{5}\begin{pmatrix} 4 & -1 \\ -3 & 2 \end{pmatrix}$.<br><b>Langkah 2 (Kalikan):</b><br>$X = \frac{1}{5}\begin{pmatrix} 4 & -1 \\ -3 & 2 \end{pmatrix}\begin{pmatrix} -1 & 2 \\ 5 & 6 \end{pmatrix}$<br>$X = \frac{1}{5}\begin{pmatrix} -4-5 & 8-6 \\ 3+10 & -6+12 \end{pmatrix} = \frac{1}{5}\begin{pmatrix} -9 & 2 \\ 13 & 6 \end{pmatrix}$.</div></div>
+            <div class="soal-item"><b>7. Matriks Singular</b><br>Tentukan nilai $p$ agar matriks $\begin{pmatrix} p & 4 \\ 9 & p \end{pmatrix}$ menjadi matriks singular.<div class="pembahasan"><b>Teori:</b> Matriks singular memiliki determinan nol.<br>$|A|=p(p) - 4(9) = p^2-36=0$.<br>$p^2=36 \implies p = \pm 6$.</div></div>
+            <div class="soal-item"><b>8. Sifat Determinan</b><br>Jika $A$ dan $B$ adalah matriks ordo $2 \times 2$ dengan $|A|=2$ dan $|B|=3$, tentukan $|(AB)^{-1}|$.<div class="pembahasan"><b>Teori:</b> $|(AB)^{-1}| = \frac{1}{|AB|} = \frac{1}{|A||B|}$.<br>$|(AB)^{-1}| = \frac{1}{2 \cdot 3} = \frac{1}{6}$.</div></div>
+            <div class="soal-item"><b>9. Penerapan SPLDV</b><br>Harga 2 buku dan 3 pensil adalah Rp 12.000. Harga 4 buku dan 1 pensil adalah Rp 16.000. Tentukan harga 1 buku dan 1 pensil.<div class="pembahasan"><b>Model Matriks:</b> $\begin{pmatrix} 2 & 3 \\ 4 & 1 \end{pmatrix}\begin{pmatrix} b \\ p \end{pmatrix} = \begin{pmatrix} 12000 \\ 16000 \end{pmatrix}$.<br><b>Cari Invers:</b> Det = $2(1)-3(4)=-10$. Invers = $\frac{1}{-10}\begin{pmatrix} 1 & -3 \\ -4 & 2 \end{pmatrix}$.<br><b>Solusi:</b><br>$\begin{pmatrix} b \\ p \end{pmatrix} = \frac{1}{-10}\begin{pmatrix} 1 & -3 \\ -4 & 2 \end{pmatrix}\begin{pmatrix} 12000 \\ 16000 \end{pmatrix}$<br>$\begin{pmatrix} b \\ p \end{pmatrix} = \frac{1}{-10}\begin{pmatrix} 12000-48000 \\ -48000+32000 \end{pmatrix} = \frac{1}{-10}\begin{pmatrix} -36000 \\ -16000 \end{pmatrix} = \begin{pmatrix} 3600 \\ 1600 \end{pmatrix}$.<br>Harga 1 buku (b) = Rp 3.600, 1 pensil (p) = Rp 1.600. Total = Rp 5.200.</div></div>
+            <div class="soal-item"><b>10. Sifat Invers</b><br>Jika $A = \begin{pmatrix} 3 & 1 \\ 5 & 2 \end{pmatrix}$, $B = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$, dan $C=AB$, tentukan $C^{-1}$.<div class="pembahasan"><b>Teori:</b> $C^{-1}=(AB)^{-1}=B^{-1}A^{-1}$.<br><b>Invers A:</b> $|A|=1$, $A^{-1}=\begin{pmatrix} 2 & -1 \\ -5 & 3 \end{pmatrix}$.<br><b>Invers B:</b> $|B|=1$, $B^{-1}=\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}$.<br><b>$C^{-1}=B^{-1}A^{-1}$</b> = $\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}\begin{pmatrix} 2 & -1 \\ -5 & 3 \end{pmatrix}$<br>$= \begin{pmatrix} 2+5 & -1-3 \\ -2-10 & 1+6 \end{pmatrix} = \begin{pmatrix} 7 & -4 \\ -12 & 7 \end{pmatrix}$.</div></div>
+        </div>
+    </section>
+
+    <!-- Latihan Soal -->
+    <section id="latihan-soal" class="page">
+        <div class="content-wrapper">
+            <h2 id="latihan-mudah">BAB 3: Bank Soal Latihan</h2>
+            <h3>3.1 Soal Mudah (1-20)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>1.</b> Ordo dari matriks $A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$3 \times 2$</li><li data-option="B">$2 \times 3$</li><li data-option="C">$2 \times 2$</li><li data-option="D">$3 \times 3$</li><li data-option="E">$1 \times 6$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>2.</b> Transpose dari matriks $B = \begin{pmatrix} 5 & 0 \\ -1 & 2 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 5 & -1 \\ 0 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 0 \\ -1 & 5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 5 & 2 \\ 0 & -1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 5 \\ 2 & 0 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 0 \\ -1 & 2 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>3.</b> Jika $P = \begin{pmatrix} 2 & 4 \\ 6 & 8 \end{pmatrix}$, maka $1/2 P$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & 8 \\ 12 & 16 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 2 & 2 \\ 3 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 4 \\ 3 & 8 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & 4 \\ 3 & 4 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>4.</b> Hasil dari $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} + \begin{pmatrix} 5 & -1 \\ 0 & 2 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 6 & 1 \\ 3 & 6 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 6 & 3 \\ 3 & 6 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & -3 \\ 3 & 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 6 & 1 \\ 3 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & -2 \\ 0 & 8 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>5.</b> Determinan dari matriks $\begin{pmatrix} 5 & 2 \\ 4 & 3 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">7</li><li data-option="B">8</li><li data-option="C">15</li><li data-option="D">23</li><li data-option="E">1</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>6.</b> Diberikan matriks $A=\begin{pmatrix} 1 & a \\ 2 & 4 \end{pmatrix}$. Jika $|A|=0$, maka nilai $a$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">8</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>7.</b> Jika $A=\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ dan $B=\begin{pmatrix} 7 & 8 \\ 9 & 10 \end{pmatrix}$, maka $AB$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 7 & 8 \\ 9 & 10 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 7 & 0 \\ 0 & 10 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 17 & 8 \\ 9 & 7 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>8.</b> Jika $\begin{pmatrix} x \\ 5 \end{pmatrix} = \begin{pmatrix} -2 \\ y \end{pmatrix}$, maka nilai $x$ dan $y$ adalah...<ol class="pilihan-ganda"><li data-option="A">$x=5, y=-2$</li><li data-option="B">$x=-2, y=5$</li><li data-option="C">$x=2, y=-5$</li><li data-option="D">$x=-5, y=2$</li><li data-option="E">$x=0, y=0$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>9.</b> Invers dari $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} -1 & 0 \\ 0 & -1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li><li data-option="E">Tidak punya invers</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>10.</b> Matriks yang tidak memiliki invers disebut...<ol class="pilihan-ganda"><li data-option="A">Matriks singular</li><li data-option="B">Matriks identitas</li><li data-option="C">Matriks diagonal</li><li data-option="D">Matriks non-singular</li><li data-option="E">Matriks persegi</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>11.</b> Hasil dari $3 \begin{pmatrix} 2 & -1 \\ 0 & 4 \end{pmatrix} - 2 \begin{pmatrix} 1 & 3 \\ -2 & 5 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 4 & -9 \\ 4 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & -3 \\ -4 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 8 & -9 \\ 4 & 22 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 4 & -9 \\ -4 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & -8 \\ 2 & 7 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>12.</b> Diketahui $K = \begin{pmatrix} 2 & 1 \end{pmatrix}$ dan $L = \begin{pmatrix} 3 \\ 4 \end{pmatrix}$. Hasil $KL$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 6 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 10 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 6 \\ 4 \end{pmatrix}$</li><li data-option="D">24</li><li data-option="E">Tidak dapat dikalikan</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>13.</b> Jika $A=\begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix}$, maka $A^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 & -5 \\ -1 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & -5 \\ -1 & 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -3 & 5 \\ 1 & -2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 5 \\ 1 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1/2 & 1/5 \\ 1 & 1/3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>14.</b> Determinan dari $3 \times \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-6</li><li data-option="C">-12</li><li data-option="D">-18</li><li data-option="E">-20</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>15.</b> Jika $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, maka $A+A^T$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 5 \\ 5 & 8 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 4 \\ 6 & 8 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 6 \\ 4 & 8 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>16.</b> Elemen baris ke-2 kolom ke-1 dari matriks $\begin{pmatrix} 9 & 8 & 7 \\ 6 & 5 & 4 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">9</li><li data-option="B">8</li><li data-option="C">7</li><li data-option="D">6</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>17.</b> Jika $A=\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$, maka $A$ adalah matriks...<ol class="pilihan-ganda"><li data-option="A">Identitas</li><li data-option="B">Nol</li><li data-option="C">Diagonal</li><li data-option="D">Segitiga</li><li data-option="E">Baris</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>18.</b> Jika $\begin{pmatrix} a & 2 \\ 3 & b \end{pmatrix} - \begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix} = \begin{pmatrix} 4 & 1 \\ 2 & 5 \end{pmatrix}$, maka nilai $a$ dan $b$ adalah...<ol class="pilihan-ganda"><li data-option="A">$a=5, b=6$</li><li data-option="B">$a=3, b=4$</li><li data-option="C">$a=4, b=5$</li><li data-option="D">$a=6, b=5$</li><li data-option="E">$a=5, b=4$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>19.</b> Determinan dari $\begin{pmatrix} -1 & -2 \\ 3 & 4 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">-10</li><li data-option="B">-2</li><li data-option="C">2</li><li data-option="D">10</li><li data-option="E">1</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>20.</b> Jika $A$ adalah matriks ordo $2 \times 3$ dan $B$ adalah matriks ordo $3 \times 4$, maka $AB$ berordo...<ol class="pilihan-ganda"><li data-option="A">$2 \times 4$</li><li data-option="B">$4 \times 2$</li><li data-option="C">$3 \times 3$</li><li data-option="D">$3 \times 2$</li><li data-option="E">Tidak terdefinisi</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="latihan-sedang" class="page">
+        <div class="content-wrapper">
+             <h3>3.2 Soal Sedang (21-70)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>21.</b> Jika $A = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}$, maka $A^2-2A+I$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 6 & 3 \\ 4 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 11 & 4 \\ 8 & 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & 2 \\ 4 & 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 6 & 2 \\ 4 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>22.</b> Jika $A=\begin{pmatrix} 2 & 5 \\ -1 & -3 \end{pmatrix}$, maka $|A^T|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-11</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">11</li><li data-option="E">0</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>23.</b> Diberikan persamaan matriks $\begin{pmatrix} 1 & -2 \\ 3 & 4 \end{pmatrix} X = \begin{pmatrix} -3 \\ 11 \end{pmatrix}$. Matriks $X$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 \\ 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 \\ 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -1 \\ 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 \\ -2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 3 \\ 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>24.</b> Jika $\begin{pmatrix} 4 & x-2 \\ 3 & 2 \end{pmatrix} + \begin{pmatrix} -6 & 8 \\ -11 & -6 \end{pmatrix} = 2 \begin{pmatrix} -1 & 3 \\ -4 & -2 \end{pmatrix}$, maka nilai $x$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">0</li><li data-option="C">2</li><li data-option="D">4</li><li data-option="E">6</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>25.</b> Nilai $k$ yang memenuhi $\det \begin{pmatrix} k & 7 \\ 3 & 5 \end{pmatrix} = -1$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">4</li><li data-option="C">5</li><li data-option="D">6</li><li data-option="E">7</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>26.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 1 & 3 \end{pmatrix}$ dan $B=\begin{pmatrix} 3 & 2 \\ 2 & 2 \end{pmatrix}$, maka $(AB)^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & -3 \\ -3,5 & 5 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & -3 \\ -3,5 & 2,5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & -3 \\ -4,5 & 3,5 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 8 & 6 \\ 7 & 5 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & -6 \\ -7 & 8 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>27.</b> Determinan dari $\begin{pmatrix} 2 & 1 & 0 \\ 3 & -1 & 4 \\ 1 & 2 & 1 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">-17</li><li data-option="B">-13</li><li data-option="C">0</li><li data-option="D">13</li><li data-option="E">15</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>28.</b> Diberikan $A=\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$. Matriks $A^3$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 3 \\ 0 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 3 \\ 0 & 3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 9 \\ 0 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>29.</b> Jika $P = \begin{pmatrix} \cos\theta & \sin\theta \\ -\sin\theta & \cos\theta \end{pmatrix}$, maka $|P|$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\cos(2\theta)$</li><li data-option="B">$\sin(2\theta)$</li><li data-option="C">1</li><li data-option="D">-1</li><li data-option="E">0</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>30.</b> Jika $A = \begin{pmatrix} 2 & 3 \\ 1 & 4 \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$, maka $A^{-1}B$ adalah...<ol class="pilihan-ganda"><li data-option="A">$A$</li><li data-option="B">$B$</li><li data-option="C">$A^{-1}$</li><li data-option="D">$I$</li><li data-option="E">$A^T$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>31.</b> Jika $A$ ordo $3 \times 3$ dan $|A|=5$, maka $|2A|$ adalah...<ol class="pilihan-ganda"><li data-option="A">10</li><li data-option="B">20</li><li data-option="C">30</li><li data-option="D">40</li><li data-option="E">50</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>32.</b> Diketahui $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 4 \\ 6 \end{pmatrix}$ dan $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 7 \\ 10 \end{pmatrix}$. Hasil dari $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} 3 \\ 5 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 11 \\ 16 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 10 \\ 15 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 11 \\ 15 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 10 \\ 16 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 9 \\ 14 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>33.</b> Jika $A=\begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$ dan $A^2-pA+qI=O$, maka $p+q$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">5</li><li data-option="C">6</li><li data-option="D">11</li><li data-option="E">12</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>34.</b> Solusi dari sistem persamaan $2x-y=5$ dan $3x+2y=4$ adalah $x$ dan $y$. Nilai $x-y$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>35.</b> Matriks $X$ yang memenuhi $X \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} = \begin{pmatrix} -1 & 0 \\ 5 & 6 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & -1 \\ -1 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & -1 \\ -4 & 4 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 2 & -1 \\ 4 & -1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 2 \\ 4 & -1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} -1 & 2 \\ -1 & 4 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>36.</b> Jika $A=\begin{pmatrix} 4 & 2 \\ 3 & 2 \end{pmatrix}$, maka $A^2-6A+2I$ sama dengan...<ol class="pilihan-ganda"><li data-option="A">I</li><li data-option="B">O</li><li data-option="C">A</li><li data-option="D">2A</li><li data-option="E">-A</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>37.</b> Jika $A=\begin{pmatrix} x & 1 \\ -1 & x \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & x \\ 1 & -1 \end{pmatrix}$, dan $|AB|=0$, maka nilai $x$ adalah...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">-1</li><li data-option="D">2</li><li data-option="E">-2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>38.</b> Jika $A^{-1}=\begin{pmatrix} 1 & -1 \\ 2 & -3 \end{pmatrix}$, maka $(A^T)^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 2 \\ -1 & -3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} -3 & -1 \\ 2 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -3 & 2 \\ -1 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & -2 \\ 1 & -1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & -2 \\ 1 & 3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>39.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, $B=\begin{pmatrix} 2 & 3 \\ 0 & 1 \end{pmatrix}$, $C=\begin{pmatrix} 5 & 2 \\ -1 & 0 \end{pmatrix}$. Bentuk paling sederhana dari $(A+C)-(A+B)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$B-C$</li><li data-option="B">$C-B$</li><li data-option="C">$A-B$</li><li data-option="D">$A+B+C$</li><li data-option="E">$A-I$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>40.</b> Determinan matriks $K$ yang memenuhi $\begin{pmatrix} 4 & 7 \\ 3 & 5 \end{pmatrix} K = \begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>41.</b> Jika $A=\begin{pmatrix} 1 & -1 \\ 2 & -2 \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & 1 \\ 4 & -2 \end{pmatrix}$, maka $(A+B)^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 4 & 0 \\ 0 & 16 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & 0 \\ -12 & 16 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & 0 \\ 25 & 16 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 4 & 0 \\ 30 & 16 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & 0 \\ 6 & -4 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>42.</b> Jika $A^T=\begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$, maka $A$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 1 \\ 0 & 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 1 \\ 0 & 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 0 \\ 1 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1/2 & 1 \\ 0 & 1/3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>43.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 3 & 5 \end{pmatrix}$ dan $B=\begin{pmatrix} -2 & 1 \\ 1 & 0 \end{pmatrix}$, maka $|AB^T|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">-2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>44.</b> Titik potong dari dua garis $2x+y=4$ dan $x-y= -1$ adalah...<ol class="pilihan-ganda"><li data-option="A">(1,2)</li><li data-option="B">(2,1)</li><li data-option="C">(-1,2)</li><li data-option="D">(1,-2)</li><li data-option="E">(2,-1)</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>45.</b> Matriks $\begin{pmatrix} \sin\theta & \cos\theta \\ \cos\theta & \sin\theta \end{pmatrix}$ adalah singular jika...<ol class="pilihan-ganda"><li data-option="A">$\theta = \pi/4$</li><li data-option="B">$\theta = \pi/2$</li><li data-option="C">$\theta = \pi$</li><li data-option="D">$\theta = 0$</li><li data-option="E">Tidak pernah singular</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>46.</b> Jika $A=\begin{pmatrix} a & 1 \\ b & 2 \end{pmatrix}$, $B=\begin{pmatrix} a & 1 \\ b & 2 \end{pmatrix}$, dan $C=\begin{pmatrix} -1 & 3 \\ 0 & 1 \end{pmatrix}$ dan $|AB|=6$, maka $|C|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-6</li><li data-option="B">-3</li><li data-option="C">-1</li><li data-option="D">1</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>47.</b> Jika $M$ matriks $2 \times 2$ sedemikian hingga $M \begin{pmatrix} a \\ b \end{pmatrix} = \begin{pmatrix} a-b \\ -a+b \end{pmatrix}$, maka $|M|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>48.</b> Jika $A, B$ matriks persegi, maka $(A+B)^2$ sama dengan...<ol class="pilihan-ganda"><li data-option="A">$A^2+2AB+B^2$</li><li data-option="B">$A^2+AB+BA+B^2$</li><li data-option="C">$A^2+B^2$</li><li data-option="D">$2A+2B$</li><li data-option="E">$A(A+B)+B(A+B)$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>49.</b> Diberikan $A=\begin{pmatrix} 1 & -2 \\ 2 & -3 \end{pmatrix}$. Jika $A^2=pA+qI$, maka $p-q$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-2</li><li data-option="C">-1</li><li data-option="D">1</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>50.</b> Jika $P=\begin{pmatrix} 2 & 0 \\ 0 & 3 \end{pmatrix}$, maka $P^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1/2 & 0 \\ 0 & 1/3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & 0 \\ 0 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -2 & 0 \\ 0 & -3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1/3 & 0 \\ 0 & 1/2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & 1/3 \\ 1/2 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>51.</b> Jika $A=\begin{pmatrix} 1 & 0 & 2 \\ 2 & 1 & 0 \\ 0 & 2 & 1 \end{pmatrix}$, maka elemen baris 2 kolom 3 dari $A^T$ adalah...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>52.</b> Jika $A$ dan $B$ matriks $2 \times 2$ dengan $|A|=4$ dan $|B|=-1$, maka $|A^{-1}B|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-4</li><li data-option="B">-1/4</li><li data-option="C">1/4</li><li data-option="D">4</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>53.</b> Matriks $M = \begin{pmatrix} 1 & 2 & 3 \\ 0 & x & 4 \\ 0 & 0 & 5 \end{pmatrix}$ adalah singular jika $x$ sama dengan...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>54.</b> Jika $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, maka $A - A^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 & 1 \\ 4,5 & 5 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} -1 & 3 \\ 4,5 & 5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 1 \\ 4,5 & 5 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 1 \\ 4,5 & 3 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 3 & 1 \\ 1,5 & 3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>55.</b> Diberikan matriks $A = \begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix}$. Matriks $A^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 4 & 1 \\ 1 & 0 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 2 \\ -2 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 4 & 2 \\ -2 & 0 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 2 \\ -2 & -1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>56.</b> Jika $A$ adalah matriks $2 \times 2$ dan $I$ matriks identitas, dan $(A-I)^2=O$, maka $A^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$A-I$</li><li data-option="B">$2I-A$</li><li data-option="C">$A+I$</li><li data-option="D">$A-2I$</li><li data-option="E">$I-A$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>57.</b> Jika $C=\begin{pmatrix} 7 & -4 \\ -12 & 7 \end{pmatrix}$, $A = \begin{pmatrix} 3 & 1 \\ 5 & 2 \end{pmatrix}$ dan $C=B^{-1}A^{-1}$, maka matriks $B$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 2 \\ 2 & 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 2 \\ 1 & 3 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & -1 \\ -1 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>58.</b> Jika $A=\begin{pmatrix} 2 & 1 \\ 4 & 3 \end{pmatrix}$, maka nilai $k$ yang memenuhi $k |A^T| = |A^{-1}|$ adalah...<ol class="pilihan-ganda"><li data-option="A">1/4</li><li data-option="B">1/2</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>59.</b> Diberikan matriks $A=\begin{pmatrix} 3 & 2 \\ 7 & 5 \end{pmatrix}$. Jika $A^{-1}=B$, maka $B^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 5 & -2 \\ -7 & 3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & 2 \\ 7 & 5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -3 & -2 \\ -7 & -5 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1/3 & 1/2 \\ 1/7 & 1/5 \end{pmatrix}$</li><li data-option="E">$I$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>60.</b> Jika $A,B,C$ matriks $2 \times 2$ dengan $|A|=2, |B|=3, |C|=4$, maka $|2ABC|$ adalah...<ol class="pilihan-ganda"><li data-option="A">24</li><li data-option="B">48</li><li data-option="C">72</li><li data-option="D">96</li><li data-option="E">120</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>61.</b> Jika $\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 8 \\ 18 \end{pmatrix}$, maka nilai $x+y$ adalah...<ol class="pilihan-ganda"><li data-option="A">4</li><li data-option="B">5</li><li data-option="C">6</li><li data-option="D">7</li><li data-option="E">8</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>62.</b> Jika $A = \begin{pmatrix} 1 & a \\ 0 & 1 \end{pmatrix}$, maka $A^n$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & a^n \\ 0 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} n & na \\ 0 & n \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & na \\ 0 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} n & a \\ 0 & n \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & a \\ 0 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>63.</b> Jika $A$ dan $B$ adalah matriks simetris (yaitu $A=A^T, B=B^T$), maka $(AB)^T$ adalah...<ol class="pilihan-ganda"><li data-option="A">$AB$</li><li data-option="B">$BA$</li><li data-option="C">$A^{-1}B^{-1}$</li><li data-option="D">$B^{-1}A^{-1}$</li><li data-option="E">$I$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>64.</b> Jika $A=\begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}$ dan $B=\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$, maka $A(A+B)$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 4 & 2 \\ 4 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 2 \\ 2 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 3 \\ 3 & 3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>65.</b> Diberikan matriks $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, matriks $B$ memenuhi $A+B = A-B$. Matriks $B$ adalah...<ol class="pilihan-ganda"><li data-option="A">I</li><li data-option="B">A</li><li data-option="C">O</li><li data-option="D">-A</li><li data-option="E">Tidak ada</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>66.</b> Jika $A=\begin{pmatrix} 3 & 5 \\ 1 & 2 \end{pmatrix}$ dan $AB=I$, maka $B$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & -5 \\ -1 & 3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -2 & 5 \\ 1 & -3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>67.</b> Nilai $x$ dari $\det \begin{pmatrix} x & x \\ 4 & x \end{pmatrix} = 0$ adalah...<ol class="pilihan-ganda"><li data-option="A">0 atau 4</li><li data-option="B">0 atau -4</li><li data-option="C">4 atau -4</li><li data-option="D">hanya 4</li><li data-option="E">hanya 0</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>68.</b> Jika $A = \begin{pmatrix} 2 & -3 \\ 1 & 1 \end{pmatrix}$, maka $(A^{-1})^T$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\frac{1}{5}\begin{pmatrix} 1 & -1 \\ 3 & 2 \end{pmatrix}$</li><li data-option="B">$\frac{1}{5}\begin{pmatrix} 1 & 3 \\ -1 & 2 \end{pmatrix}$</li><li data-option="C">$\frac{1}{5}\begin{pmatrix} 2 & 1 \\ -3 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & -1 \\ 3 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & -1 \\ 3 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>69.</b> Jika $P(2, -1)$ dirotasikan $90^{\circ}$ berlawanan arah jarum jam, bayangannya adalah $P'$. Matriks rotasinya adalah $\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$. Koordinat $P'$ adalah...<ol class="pilihan-ganda"><li data-option="A">(1,2)</li><li data-option="B">(-1,-2)</li><li data-option="C">(2,1)</li><li data-option="D">(-2,1)</li><li data-option="E">(1,-2)</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>70.</b> Jika $A=\begin{pmatrix} \log a & \log b \\ 1 & 1 \end{pmatrix}$ singular, maka hubungan $a$ dan $b$ adalah...<ol class="pilihan-ganda"><li data-option="A">$a=b$</li><li data-option="B">$a=1/b$</li><li data-option="C">$a=10b$</li><li data-option="D">$a=b^2$</li><li data-option="E">$ab=1$</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="latihan-sulit" class="page">
+        <div class="content-wrapper">
+             <h3>3.3 Soal Sulit (71-100)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>71.</b> Jika $A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ dan $A(B-I) = A^{-1}$, maka matriks $B$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} -5 & -8 \\ 12 & 19 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 5,5 & 8,5 \\ -12,5 & -19,5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 6,5 & -2,5 \\ -3,75 & 2,75 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} -5,5 & -8,5 \\ 12,5 & 19,5 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>72.</b> Jika $A$ matriks $2 \times 2$ yang memenuhi $A\begin{pmatrix} 1 \\ 2 \end{pmatrix}=\begin{pmatrix} 1 \\ 0 \end{pmatrix}$ dan $A\begin{pmatrix} 4 \\ 6 \end{pmatrix}=\begin{pmatrix} 0 \\ 2 \end{pmatrix}$, maka $A\begin{pmatrix} 2 \\ 2 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} -1 \\ 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 \\ -1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 \\ -2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -2 \\ 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 \\ 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>73.</b> Jika $M$ adalah matriks sehingga $M \begin{pmatrix} a & b \\ c & d \end{pmatrix} = \begin{pmatrix} a+c & b+d \\ -a+c & -b+d \end{pmatrix}$, maka $M^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 0,5 & 0,5 \\ -0,5 & 0,5 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 0,5 & -0,5 \\ 0,5 & 0,5 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} -1 & 1 \\ 1 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>74.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$, maka $(A^T)^{-5}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 0 \\ -10 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & -10 \\ 0 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 0 \\ -5 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & -5 \\ 0 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 5 \\ 0 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>75.</b> Sistem persamaan $ax+y=1$ dan $x+ay=1$ tidak memiliki solusi unik jika nilai $a$ adalah...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">-1</li><li data-option="D">1 atau -1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>76.</b> Jika $A$ adalah matriks $3 \times 3$ yang memenuhi $A^3=O$, maka $|A^2-A+I|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">Tidak dapat ditentukan</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>77.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & y \\ x & 3 \end{pmatrix}$ sehingga $AB=BA$, maka $x-y$ adalah...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2/3</li><li data-option="D">3</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>78.</b> Diberikan $A$ adalah matriks $2 \times 2$. Jika $A$ adalah matriks idempoten ($A^2=A$) dan $A \neq I$, maka $|A|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">Tidak dapat ditentukan</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>79.</b> Jika $A^T B = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$ dan $B^{-1} = \begin{pmatrix} 1 & -1 \\ 2 & 0 \end{pmatrix}$, maka matriks $A$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & 6 \\ 1 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & 11 \\ -2 & -5 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 1 \\ 4 & 6 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 4 \\ 1 & 6 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>80.</b> Jika $A,B,C$ matriks $n \times n$ dan $ABC=I$, maka $B^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$AC$</li><li data-option="B">$CA$</li><li data-option="C">$A^{-1}C^{-1}$</li><li data-option="D">$C^{-1}A^{-1}$</li><li data-option="E">$A B$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>81.</b> Jika matriks $\begin{pmatrix} 1-x & 1 \\ 2 & 2-x \end{pmatrix}$ tidak memiliki invers, maka jumlah kuadrat semua nilai $x$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">5</li><li data-option="C">9</li><li data-option="D">10</li><li data-option="E">13</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>82.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ dan $B=\begin{pmatrix} 4 & 3 \\ 2 & 1 \end{pmatrix}$, maka $|A^T B A^{-1}|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-10</li><li data-option="B">-2</li><li data-option="C">2</li><li data-option="D">10</li><li data-option="E">12</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>83.</b> Jika $A$ adalah matriks $2 \times 2$ sedemikian rupa sehingga $A^2+A+I=O$, maka $A^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$A+I$</li><li data-option="B">$A-I$</li><li data-option="C">$-A-I$</li><li data-option="D">$-A+I$</li><li data-option="E">A</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>84.</b> Diketahui $A=\begin{pmatrix} 2 & 0 \\ 4 & 1 \end{pmatrix}$. Jika $A+B^{-1}=I$, maka matriks $B$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} -1 & 0 \\ -4 & 0 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 0 \\ 4 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -1 & 0 \\ 4 & 0 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 0 \\ -4 & 1 \end{pmatrix}$</li><li data-option="E">Tidak dapat ditentukan</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>85.</b> Jika $A=\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & 1 \\ 1 & 0 \end{pmatrix}$ dan $AX=B$, maka jumlah elemen-elemen matriks $X$ adalah...<ol class="pilihan-ganda"><li data-option="A">-1</li><li data-option="B">0</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>86.</b> Jumlah akar-akar persamaan $\det \begin{pmatrix} x & 1 & 2 \\ 2 & x & 1 \\ 1 & 2 & x \end{pmatrix} = 0$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">0</li><li data-option="C">3</li><li data-option="D">5</li><li data-option="E">9</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>87.</b> Jika $A$ dan $B$ adalah matriks $2 \times 2$ yang komutatif ($AB=BA$), dan $A$ punya invers, maka $A^{-1}B$ sama dengan...<ol class="pilihan-ganda"><li data-option="A">$BA^{-1}$</li><li data-option="B">$B^{-1}A$</li><li data-option="C">$(AB)^{-1}$</li><li data-option="D">$I$</li><li data-option="E">$A B$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>88.</b> Jika $A$ matriks $2 \times 2$ dan $A^2=I$, $A \neq I$, $A \neq -I$, maka trace(A) atau jumlah elemen diagonal utama A adalah...<ol class="pilihan-ganda"><li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">2</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>89.</b> Diberikan matriks $A=\begin{pmatrix} a & b \\ 0 & d \end{pmatrix}$. Jika $A^2-A = \begin{pmatrix} 0 & 3 \\ 0 & 2 \end{pmatrix}$, maka jumlah semua kemungkinan nilai $b$ adalah...<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1,5</li><li data-option="C">0</li><li data-option="D">1,5</li><li data-option="E">3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>90.</b> Jika $P$ matriks $2 \times 2$ dan $|P|=2$, maka $|-3P^T P^{-1}|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-18</li><li data-option="B">-9</li><li data-option="C">9</li><li data-option="D">18</li><li data-option="E">36</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>91.</b> Matriks $A=\begin{pmatrix} a & 4 \\ 2b & 3c \end{pmatrix}$ dan $B=\begin{pmatrix} 2c-3b & 2a+1 \\ a & b+7 \end{pmatrix}$. Jika $A=2B^T$, maka nilai $c$ adalah...<ol class="pilihan-ganda"><li data-option="A">2</li><li data-option="B">3</li><li data-option="C">5</li><li data-option="D">8</li><li data-option="E">10</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>92.</b> Jika $A$ adalah matriks $2 \times 2$ dengan $|A| \neq 0$, dan $A^2-3A+I=O$, maka $A^{-1}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$A-3I$</li><li data-option="B">$3I-A$</li><li data-option="C">$A+3I$</li><li data-option="D">$I-3A$</li><li data-option="E">$3A$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>93.</b> Diberikan matriks $A$ dan $B$. Jika $A^{-1} = \begin{pmatrix} 2 & 0 \\ 1 & 3 \end{pmatrix}$ dan $B = \begin{pmatrix} 1 & 1 \\ 0 & 2 \end{pmatrix}$, maka $|(BA)^{-1}|$ adalah...<ol class="pilihan-ganda"><li data-option="A">3</li><li data-option="B">6</li><li data-option="C">12</li><li data-option="D">1/12</li><li data-option="E">1/3</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>94.</b> Jika $A$ dan $B$ matriks $2 \times 2$ dan $(A-B)^2=A^2-B^2$, maka hubungan yang benar adalah...<ol class="pilihan-ganda"><li data-option="A">$AB=BA$</li><li data-option="B">$A=B$</li><li data-option="C">$A=O$</li><li data-option="D">$AB+BA=O$</li><li data-option="E">$A=B^{-1}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>95.</b> Jika $A=\begin{pmatrix} \cos x & -\sin x \\ \sin x & \cos x \end{pmatrix}$, maka $A^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} \cos^2 x & \sin^2 x \\ \sin^2 x & \cos^2 x \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} \cos 2x & -\sin 2x \\ \sin 2x & \cos 2x \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2\cos x & -2\sin x \\ 2\sin x & 2\cos x \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>96.</b> Jika $A$ dan $B$ adalah matriks $n \times n$ sedemikian sehingga $AB=A$ dan $BA=B$, maka $A^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$A$</li><li data-option="B">$B$</li><li data-option="C">$I$</li><li data-option="D">$O$</li><li data-option="E">$A+B$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>97.</b> Diberikan matriks $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$. Matriks $C=A+A^T$. Manakah pernyataan yang benar?<ol class="pilihan-ganda"><li data-option="A">C adalah matriks nol</li><li data-option="B">C adalah matriks identitas</li><li data-option="C">C adalah matriks simetris</li><li data-option="D">C adalah matriks skew-simetris</li><li data-option="E">C tidak punya invers</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>98.</b> Jika matriks $A=\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}$, dan $f(x)=x^2-2x+I$, maka $f(A)$ adalah...<ol class="pilihan-ganda"><li data-option="A">O</li><li data-option="B">I</li><li data-option="C">A</li><li data-option="D">A-I</li><li data-option="E">A+I</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>99.</b> Jika $A^{-1}=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$, maka $|2A|$ adalah...<ol class="pilihan-ganda"><li data-option="A">-8</li><li data-option="B">-4</li><li data-option="C">-2</li><li data-option="D">2</li><li data-option="E">4</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>100.</b> Jika $A$ adalah matriks $2 \times 2$ dan $A^T=-A$ (skew-symmetric), maka $|A|$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\ge 0$</li><li data-option="B">$\le 0$</li><li data-option="C">0</li><li data-option="D">1</li><li data-option="E">-1</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section id="pembahasan-latihan" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 4: Kunci Jawaban & Pembahasan</h2>
+             <h3>Pembahasan Soal Mudah (1-20)</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><br>Ordo adalah jumlah baris $\times$ jumlah kolom. Matriks A memiliki 2 baris dan 3 kolom.</div>
+            <div class="pembahasan"><b>2. Jawaban: A</b><br>Transpose menukar baris dan kolom. Baris pertama (5, 0) menjadi kolom pertama. Baris kedua (-1, 2) menjadi kolom kedua.</div>
+            <div class="pembahasan"><b>3. Jawaban: A</b><br>Perkalian skalar berarti setiap elemen dikalikan dengan skalar tersebut. $2 \times 1/2 = 1$, $4 \times 1/2 = 2$, dst.</div>
+            <div class="pembahasan"><b>4. Jawaban: A</b><br>Jumlahkan elemen yang seletak: $1+5=6$, $2+(-1)=1$, $3+0=3$, $4+2=6$.</div>
+            <div class="pembahasan"><b>5. Jawaban: A</b><br>Determinan ordo 2x2 adalah $ad-bc = (5)(3) - (2)(4) = 15-8=7$.</div>
+            <div class="pembahasan"><b>6. Jawaban: B</b><br>$|A|=0 \implies (1)(4)-(a)(2)=0 \implies 4-2a=0 \implies 2a=4 \implies a=2$.</div>
+            <div class="pembahasan"><b>7. Jawaban: A</b><br>$A$ adalah matriks identitas ($I$). Sifatnya $IB=B$. Jadi hasilnya adalah matriks $B$ itu sendiri.</div>
+            <div class="pembahasan"><b>8. Jawaban: B</b><br>Kesamaan matriks berarti elemen seletak sama. $x=-2$ dan $5=y$.</div>
+            <div class="pembahasan"><b>9. Jawaban: C</b><br>Matriks identitas adalah elemen netral dalam perkalian, dan inversnya adalah dirinya sendiri. $|I|=1-0=1$. $I^{-1}=\frac{1}{1}\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}=I$.</div>
+            <div class="pembahasan"><b>10. Jawaban: A</b><br>Definisi matriks singular adalah matriks yang determinannya nol, sehingga tidak memiliki invers.</div>
+            <div class="pembahasan"><b>11. Jawaban: A</b><br>$ \begin{pmatrix} 6 & -3 \\ 0 & 12 \end{pmatrix} - \begin{pmatrix} 2 & 6 \\ -4 & 10 \end{pmatrix} = \begin{pmatrix} 6-2 & -3-6 \\ 0-(-4) & 12-10 \end{pmatrix} = \begin{pmatrix} 4 & -9 \\ 4 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>12. Jawaban: B</b><br>$K_{1 \times 2} \times L_{2 \times 1}$ menghasilkan matriks $1 \times 1$. $(2)(3)+(1)(4) = 6+4=10$. Hasilnya $\begin{pmatrix} 10 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>13. Jawaban: A</b><br>$|A|=2(3)-5(1)=1$. $A^{-1}=\frac{1}{1}\begin{pmatrix} 3 & -5 \\ -1 & 2 \end{pmatrix}=\begin{pmatrix} 3 & -5 \\ -1 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>14. Jawaban: D</b><br>Gunakan sifat $|kA|=k^n|A|$. Determinan matriks aslinya adalah $1(4)-2(3)=-2$. $n=2, k=3$. Maka $|3A|=3^2|A|=9(-2)=-18$.</div>
+            <div class="pembahasan"><b>15. Jawaban: A</b><br>$A^T=\begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}$. $A+A^T = \begin{pmatrix} 1+1 & 2+3 \\ 3+2 & 4+4 \end{pmatrix}=\begin{pmatrix} 2 & 5 \\ 5 & 8 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>16. Jawaban: D</b><br>Baris ke-2 adalah (6 5 4). Kolom ke-1 dari baris tersebut adalah 6.</div>
+            <div class="pembahasan"><b>17. Jawaban: C</b><br>Matriks diagonal adalah matriks persegi dengan elemen non-diagonal nol. Karena elemen diagonalnya sama (tapi bukan 1), ia bukan matriks identitas.</div>
+            <div class="pembahasan"><b>18. Jawaban: A</b><br>$a-1=4 \implies a=5$. $b-1=5 \implies b=6$.</div>
+            <div class="pembahasan"><b>19. Jawaban: C</b><br>$(-1)(4) - (-2)(3) = -4 - (-6) = -4+6=2$.</div>
+            <div class="pembahasan"><b>20. Jawaban: A</b><br>Perkalian $A_{m \times n} \times B_{n \times p}$ menghasilkan ordo $m \times p$. Jadi $2 \times 4$.</div>
+             <h3>Pembahasan Soal Sedang (21-70)</h3>
+            <div class="pembahasan"><b>21. Jawaban: D</b><br>$A^2=\begin{pmatrix} 11 & 4 \\ 8 & 3 \end{pmatrix}$. $2A=\begin{pmatrix} 6 & 2 \\ 4 & 2 \end{pmatrix}$. $I=\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$.<br>$A^2-2A+I = \begin{pmatrix} 11-6+1 & 4-2+0 \\ 8-4+0 & 3-2+1 \end{pmatrix} = \begin{pmatrix} 6 & 2 \\ 4 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>22. Jawaban: B</b><br>Sifat: $|A^T|=|A|$. $|A|=2(-3)-5(-1)=-6+5=-1$. Jadi $|A^T|=-1$.</div>
+            <div class="pembahasan"><b>23. Jawaban: A</b><br>$AX=B \implies X=A^{-1}B$. $|A|=10$.<br>$A^{-1}=\frac{1}{10}\begin{pmatrix} 4 & 2 \\ -3 & 1 \end{pmatrix}$.<br>$X=\frac{1}{10}\begin{pmatrix} 4 & 2 \\ -3 & 1 \end{pmatrix}\begin{pmatrix} -3 \\ 11 \end{pmatrix} = \frac{1}{10}\begin{pmatrix} 10 \\ 20 \end{pmatrix}=\begin{pmatrix} 1 \\ 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>24. Jawaban: B</b><br>Samakan elemen (1,2): $(x-2)+8=2(3) \implies x+6=6 \implies x=0$.</div>
+            <div class="pembahasan"><b>25. Jawaban: B</b><br>$5k-21=-1 \implies 5k=20 \implies k=4$.</div>
+            <div class="pembahasan"><b>26. Jawaban: C</b><br>$AB = \begin{pmatrix} 7 & 6 \\ 9 & 8 \end{pmatrix}$. $|AB|=56-54=2$.<br>$(AB)^{-1} = \frac{1}{2}\begin{pmatrix} 8 & -6 \\ -9 & 7 \end{pmatrix} = \begin{pmatrix} 4 & -3 \\ -4,5 & 3,5 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>27. Jawaban: A</b><br>$|M| = (2(-1)(1)+1(4)(1)+0) - (0+2(4)(2)+1(3)(1))$<br>$= (-2+4)-(16+3) = 2-19 = -17$.</div>
+            <div class="pembahasan"><b>28. Jawaban: B</b><br>$A^2 = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$. $A^3=\begin{pmatrix} 1 & 3 \\ 0 & 1 \end{pmatrix}$. Polanya $A^n=\begin{pmatrix} 1 & n \\ 0 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>29. Jawaban: C</b><br>$|P|=\cos^2\theta - (-\sin^2\theta) = \cos^2\theta+\sin^2\theta=1$.</div>
+            <div class="pembahasan"><b>30. Jawaban: C</b><br>$B$ adalah matriks identitas $I$. $A^{-1}I=A^{-1}$.</div>
+            <div class="pembahasan"><b>31. Jawaban: D</b><br>$|2A|=2^3|A|=8 \times 5 = 40$.</div>
+            <div class="pembahasan"><b>32. Jawaban: A</b><br>$\begin{pmatrix} 3 \\ 5 \end{pmatrix}=\begin{pmatrix} 1 \\ 2 \end{pmatrix}+\begin{pmatrix} 2 \\ 3 \end{pmatrix}$. Maka hasilnya: $\begin{pmatrix} 4 \\ 6 \end{pmatrix}+\begin{pmatrix} 7 \\ 10 \end{pmatrix}=\begin{pmatrix} 11 \\ 16 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>33. Jawaban: D</b><br>$A^2=\begin{pmatrix} 4 & 5 \\ 0 & 9 \end{pmatrix}$. Dari elemen (1,2): $5 - p(1) + q(0) = 0 \implies p=5$. Dari (1,1): $4-p(2)+q=0 \implies 4-10+q=0 \implies q=6$. $p+q=11$.</div>
+            <div class="pembahasan"><b>34. Jawaban: D</b><br>$\begin{pmatrix} 2 & -1 \\ 3 & 2 \end{pmatrix}\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 5 \\ 4 \end{pmatrix}$. Solusinya $x=2, y=-1$. $x-y=2-(-1)=3$.</div>
+            <div class="pembahasan"><b>35. Jawaban: A</b><br>$XA=B \implies X=BA^{-1}$. $|A|=-2$. $A^{-1}=-\frac{1}{2}\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix}$.<br>$X=-\frac{1}{2}\begin{pmatrix} -1 & 0 \\ 5 & 6 \end{pmatrix}\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix} = -\frac{1}{2}\begin{pmatrix} -4 & 2 \\ 2 & -4 \end{pmatrix}=\begin{pmatrix} 2 & -1 \\ -1 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>36. Jawaban: B</b><br>Persamaan karakteristik: $\lambda^2-6\lambda+2=0$. Maka $A^2-6A+2I=O$.</div>
+            <div class="pembahasan"><b>37. Jawaban: C</b><br>$|AB|=|A||B|=0 \implies (x^2+1)(-1-x)=0 \implies x=-1$.</div>
+            <div class="pembahasan"><b>38. Jawaban: A</b><br>$(A^T)^{-1}=(A^{-1})^T = \begin{pmatrix} 1 & 2 \\ -1 & -3 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>39. Jawaban: B</b><br>$A+C-A-B = C-B$.</div>
+            <div class="pembahasan"><b>40. Jawaban: B</b><br>$|A||K|=|B| \implies (-1)|K|=1 \implies |K|=-1$.</div>
+            <div class="pembahasan"><b>41. Jawaban: B</b><br>$A+B=\begin{pmatrix} 2 & 0 \\ 6 & -4 \end{pmatrix}$. $(A+B)^2 = \begin{pmatrix} 4 & 0 \\ -12 & 16 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>42. Jawaban: A</b><br>$(A^T)^T=A$.</div>
+            <div class="pembahasan"><b>43. Jawaban: C</b><br>$|A|=5-6=-1$. $|B|=0-1=-1$. $|AB^T|=|A||B|=(-1)(-1)=1$.</div>
+            <div class="pembahasan"><b>44. Jawaban: A</b><br>Eliminasi: $3x=3 \implies x=1$, maka $y=2$. Titik (1,2).</div>
+            <div class="pembahasan"><b>45. Jawaban: A</b><br>Det = $\sin^2\theta - \cos^2\theta = -\cos(2\theta)=0 \implies 2\theta=\pi/2 \implies \theta=\pi/4$.</div>
+            <div class="pembahasan"><b>46. Jawaban: C</b><br>Soal hanya menanyakan $|C|$. $|C|=(-1)(1)-3(0)=-1$.</div>
+            <div class="pembahasan"><b>47. Jawaban: C</b><br>$M\begin{pmatrix} 1 \\ 0 \end{pmatrix}=\begin{pmatrix} 1 \\ -1 \end{pmatrix}$ dan $M\begin{pmatrix} 0 \\ 1 \end{pmatrix}=\begin{pmatrix} -1 \\ 1 \end{pmatrix}$. Maka $M=\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}$. $|M|=1-1=0$.</div>
+            <div class="pembahasan"><b>48. Jawaban: B & E</b><br>$(A+B)^2=(A+B)(A+B)=A^2+AB+BA+B^2$.</div>
+            <div class="pembahasan"><b>49. Jawaban: C</b><br>$A^2=\begin{pmatrix} -3 & 4 \\ -4 & 5 \end{pmatrix}$. $pA+qI=\begin{pmatrix} p+q & -2p \\ 2p & -3p+q \end{pmatrix}$. Dari (1,2): $4=-2p \implies p=-2$. Dari (1,1): $-3=p+q \implies -3=-2+q \implies q=-1$. $p-q=-2-(-1)=-1$.</div>
+            <div class="pembahasan"><b>50. Jawaban: A</b><br>Invers matriks diagonal adalah kebalikan elemen diagonalnya.</div>
+            <div class="pembahasan"><b>51. Jawaban: C</b><br>Elemen $a_{23}$ dari $A^T$ adalah elemen $a_{32}$ dari $A$, yaitu 2.</div>
+            <div class="pembahasan"><b>52. Jawaban: B</b><br>$|A^{-1}B|=|A^{-1}||B| = (1/|A|)|B| = (1/4)(-1)=-1/4$.</div>
+            <div class="pembahasan"><b>53. Jawaban: B</b><br>Determinan matriks segitiga adalah perkalian diagonalnya: $1 \cdot x \cdot 5 = 5x$. Agar singular, $5x=0 \implies x=0$.</div>
+            <div class="pembahasan"><b>54. Jawaban: A</b><br>$|A|=-2$. $A^{-1}=-\frac{1}{2}\begin{pmatrix} 4 & -2 \\ -3 & 1 \end{pmatrix} = \begin{pmatrix} -2 & 1 \\ 1,5 & -0,5 \end{pmatrix}$.<br>$A-A^{-1} = \begin{pmatrix} 1-(-2) & 2-1 \\ 3-1,5 & 4-(-0,5) \end{pmatrix} = \begin{pmatrix} 3 & 1 \\ 1,5 & 4,5 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>55. Jawaban: B</b><br>$A^2=\begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix}\begin{pmatrix} 2 & 1 \\ -1 & 0 \end{pmatrix}=\begin{pmatrix} 3 & 2 \\ -2 & -1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>56. Jawaban: B</b><br>$(A-I)^2=A^2-2A+I=O \implies I = 2A-A^2 = A(2I-A)$. Maka $A^{-1}=2I-A$.</div>
+            <div class="pembahasan"><b>57. Jawaban: B</b><br>$C=(AB)^{-1} \implies C^{-1}=AB \implies B=A^{-1}C^{-1}$. $|A|=1, |C|=1$. $A^{-1}=\begin{pmatrix} 2 & -1 \\ -5 & 3 \end{pmatrix}$. $C^{-1}=\begin{pmatrix} 7 & 4 \\ 12 & 7 \end{pmatrix}$. $B = \begin{pmatrix} 2 & -1 \\ -5 & 3 \end{pmatrix}\begin{pmatrix} 7 & 4 \\ 12 & 7 \end{pmatrix}=\begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>58. Jawaban: A</b><br>$|A|=6-4=2$. $k|A^T|=|A^{-1}| \implies k|A|=1/|A| \implies k(2)=1/2 \implies k=1/4$.</div>
+            <div class="pembahasan"><b>59. Jawaban: B</b><br>$B^{-1}=(A^{-1})^{-1}=A$.</div>
+            <div class="pembahasan"><b>60. Jawaban: D</b><br>$|2ABC|=2^2|A||B||C|=4(2)(3)(4)=96$.</div>
+            <div class="pembahasan"><b>61. Jawaban: B</b><br>Solusi SPLDV: $x=2, y=3$. Maka $x+y=5$.</div>
+            <div class="pembahasan"><b>62. Jawaban: C</b><br>$A^2=\begin{pmatrix} 1 & 2a \\ 0 & 1 \end{pmatrix}$, $A^3=\begin{pmatrix} 1 & 3a \\ 0 & 1 \end{pmatrix}$. Polanya $A^n=\begin{pmatrix} 1 & na \\ 0 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>63. Jawaban: B</b><br>$(AB)^T=B^T A^T$. Karena simetris, $B^T=B, A^T=A$. Maka $(AB)^T=BA$.</div>
+            <div class="pembahasan"><b>64. Jawaban: C</b><br>$A+B=\begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix}$. $A(A+B)=\begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}\begin{pmatrix} 1 & 2 \\ 2 & 1 \end{pmatrix}=\begin{pmatrix} 3 & 3 \\ 3 & 3 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>65. Jawaban: C</b><br>$A+B=A-B \implies 2B=O \implies B=O$.</div>
+            <div class="pembahasan"><b>66. Jawaban: A</b><br>$AB=I$ berarti $B=A^{-1}$. $|A|=6-5=1$. $A^{-1}=\frac{1}{1}\begin{pmatrix} 2 & -5 \\ -1 & 3 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>67. Jawaban: A</b><br>$x^2-4x=0 \implies x(x-4)=0 \implies x=0$ atau $x=4$.</div>
+            <div class="pembahasan"><b>68. Jawaban: A</b><br>$(A^{-1})^T=(A^T)^{-1}$. $|A|=5$. $A^{-1}=\frac{1}{5}\begin{pmatrix} 1 & 3 \\ -1 & 2 \end{pmatrix}$. $(A^{-1})^T=\frac{1}{5}\begin{pmatrix} 1 & -1 \\ 3 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>69. Jawaban: A</b><br>$\begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}\begin{pmatrix} 2 \\ -1 \end{pmatrix}=\begin{pmatrix} 1 \\ 2 \end{pmatrix}$. Koordinat $(1,2)$.</div>
+            <div class="pembahasan"><b>70. Jawaban: A</b><br>Singular berarti det=0. $\log a - \log b = 0 \implies \log(a/b)=0 \implies a/b=1 \implies a=b$.</div>
+             <h3>Pembahasan Soal Sulit (71-100)</h3>
+            <div class="pembahasan"><b>71. Jawaban: C</b><br>$B-I = (A^{-1})^2 \implies B = I + (A^{-1})^2$.<br>$|A|=-2 \implies A^{-1} = \begin{pmatrix} -2 & 1 \\ 1,5 & -0,5 \end{pmatrix}$.<br>$(A^{-1})^2=\begin{pmatrix} 5,5 & -2,5 \\ -3,75 & 1,75 \end{pmatrix}$.<br>$B = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} + \begin{pmatrix} 5,5 & -2,5 \\ -3,75 & 1,75 \end{pmatrix} = \begin{pmatrix} 6,5 & -2,5 \\ -3,75 & 2,75 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>72. Jawaban: D</b><br>Cari $a, b$ s.t. $a\begin{pmatrix} 1 \\ 2 \end{pmatrix} + b\begin{pmatrix} 4 \\ 6 \end{pmatrix} = \begin{pmatrix} 2 \\ 2 \end{pmatrix}$.<br>$a+4b=2, 2a+6b=2 \implies a+3b=1$. Solusinya $b=1, a=-2$.<br>$A\begin{pmatrix} 2 \\ 2 \end{pmatrix} = -2A\begin{pmatrix} 1 \\ 2 \end{pmatrix} + 1A\begin{pmatrix} 4 \\ 6 \end{pmatrix} = -2\begin{pmatrix} 1 \\ 0 \end{pmatrix} + \begin{pmatrix} 0 \\ 2 \end{pmatrix} = \begin{pmatrix} -2 \\ 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>73. Jawaban: D</b><br>$M\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}=\begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix}$. Jadi $M=\begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix}$.<br>$|M|=2$. $M^{-1}=\frac{1}{2}\begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}=\begin{pmatrix} 0,5 & -0,5 \\ 0,5 & 0,5 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>74. Jawaban: A</b><br>$(A^T)^{-5}=((A^T)^5)^{-1}$. $A^T=\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}$. Pola $(A^T)^n=\begin{pmatrix} 1 & 0 \\ 2n & 1 \end{pmatrix}$.<br>$(A^T)^5=\begin{pmatrix} 1 & 0 \\ 10 & 1 \end{pmatrix}$. Inversnya adalah $\begin{pmatrix} 1 & 0 \\ -10 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>75. Jawaban: D</b><br>Tidak unik jika det koefisien = 0. Matriks: $\begin{pmatrix} a & 1 \\ 1 & a \end{pmatrix}$. Det: $a^2-1=0 \implies a=\pm 1$.</div>
+            <div class="pembahasan"><b>76. Jawaban: C</b><br>$(A+I)(A^2-A+I)=A^3+I^3=O+I=I$. Maka $|A+I||A^2-A+I|=|I|=1$. Karena $|A+I|$ tidak nol (nilai eigennya 1), maka $|A^2-A+I|$ harus 1.</div>
+            <div class="pembahasan"><b>77. Jawaban: C</b><br>$2x=3y$ dan $y+6=2+4y \implies 4=3y \implies y=4/3$. Maka $x=2$. $x-y=2-4/3=2/3$.</div>
+            <div class="pembahasan"><b>78. Jawaban: B</b><br>$A^2=A \implies |A|^2=|A| \implies |A|(|A|-1)=0$. $|A|=0$ atau $|A|=1$. Jika $|A|=1$, $A$ punya invers, $A=I$. Karena $A \neq I$, maka $|A|=0$.</div>
+            <div class="pembahasan"><b>79. Jawaban: C</b><br>$A^T= (A^T B) B^{-1} = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}\begin{pmatrix} 1 & -1 \\ 2 & 0 \end{pmatrix} = \begin{pmatrix} 4 & -2 \\ 11 & -5 \end{pmatrix}$.<br>$A=(A^T)^T=\begin{pmatrix} 4 & 11 \\ -2 & -5 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>80. Jawaban: B</b><br>$ABC=I \implies BC=A^{-1} \implies B=A^{-1}C^{-1}=(CA)^{-1}$. Maka $B^{-1}=CA$.</div>
+            <div class="pembahasan"><b>81. Jawaban: C</b><br>Det = 0. $(1-x)(2-x)-2=0 \implies x^2-3x=0$. Akarnya $x_1=0, x_2=3$. Jumlah kuadrat: $0^2+3^2=9$.</div>
+            <div class="pembahasan"><b>82. Jawaban: B</b><br>$|A^T B A^{-1}|=|A||B||A^{-1}|=|B|$. $|B|=4-6=-2$.</div>
+            <div class="pembahasan"><b>83. Jawaban: C</b><br>$A^2+A+I=O$. Kalikan $A^{-1}$: $A+I+A^{-1}=O \implies A^{-1}=-A-I$.</div>
+            <div class="pembahasan"><b>84. Jawaban: E</b><br>$B^{-1}=I-A = \begin{pmatrix} -1 & 0 \\ -4 & 0 \end{pmatrix}$. Matriks ini singular (det=0), jadi tidak punya invers. Maka $B$ tidak ada.</div>
+            <div class="pembahasan"><b>85. Jawaban: C</b><br>$X=A^{-1}B$. $|A|=1$. $A^{-1}=\begin{pmatrix} 1 & -1 \\ -1 & 2 \end{pmatrix}$. $X=\begin{pmatrix} 0 & 1 \\ 1 & -1 \end{pmatrix}$. Jumlah elemen $0+1+1-1=1$.</div>
+            <div class="pembahasan"><b>86. Jawaban: B</b><br>Det = $x^3-6x+9=0$. Jumlah akar-akar polinomial $Ax^3+Bx^2+Cx+D=0$ adalah $-B/A$. Koefisien $x^2$ (B) adalah 0. Jumlah akarnya 0.</div>
+            <div class="pembahasan"><b>87. Jawaban: A</b><br>$AB=BA$. Kalikan $A^{-1}$ dari kiri: $B=A^{-1}BA$. Kalikan $A^{-1}$ dari kanan: $BA^{-1}=A^{-1}B$.</div>
+            <div class="pembahasan"><b>88. Jawaban: C</b><br>$A^2-\text{tr}(A)A+|A|I=O$. $|A|=\pm 1$. Jika $|A|=1$, maka $2I=\text{tr}(A)A \implies \text{tr}(A)=\pm 2$. $A=\pm I$, dilarang. Jika $|A|=-1$, maka $-\text{tr}(A)A=O$. Karena $A\neq O$, maka $\text{tr}(A)=0$.</div>
+            <div class="pembahasan"><b>89. Jawaban: C</b><br>$A^2-A = \begin{pmatrix} a^2-a & b(a+d-1) \\ 0 & d^2-d \end{pmatrix} = \begin{pmatrix} 0 & 3 \\ 0 & 2 \end{pmatrix}$. $a(a-1)=0 \implies a=0$ atau $a=1$. $d^2-d-2=0 \implies d=2$ atau $d=-1$. $b(a+d-1)=3$. Ada 4 kemungkinan nilai $b$: $b=3, b=-1,5, b=1,5, b=-3$. Jumlahnya $3-1,5+1,5-3=0$.</div>
+            <div class="pembahasan"><b>90. Jawaban: C</b><br>$|-3P^T P^{-1}| = (-3)^2 |P^T P^{-1}| = 9|P^T||P^{-1}| = 9|P|\frac{1}{|P|} = 9$.</div>
+            <div class="pembahasan"><b>91. Jawaban: D</b><br>$A=2B^T \implies \begin{pmatrix} a & 4 \\ 2b & 3c \end{pmatrix} = \begin{pmatrix} 4c-6b & 2a \\ 4a+2 & 2b+14 \end{pmatrix}$. $4=2a \implies a=2$. $2b=4a+2=10 \implies b=5$. $3c=2b+14=24 \implies c=8$.</div>
+            <div class="pembahasan"><b>92. Jawaban: B</b><br>$A^2-3A+I=O$. Kalikan $A^{-1}$ dari kanan: $A-3I+A^{-1}=O \implies A^{-1}=3I-A$.</div>
+            <div class="pembahasan"><b>93. Jawaban: A</b><br>$|(BA)^{-1}| = |A^{-1}B^{-1}|=|A^{-1}||B^{-1}|=\frac{|A^{-1}|}{|B|}$. $|A^{-1}|=6$. $|B|=2$. Hasilnya $6/2=3$.</div>
+            <div class="pembahasan"><b>94. Jawaban: D</b><br>$(A-B)^2=A^2-AB-BA+B^2$. Jika $=A^2-B^2$, maka $-AB-BA=O \implies AB+BA=O$.</div>
+            <div class="pembahasan"><b>95. Jawaban: C</b><br>$A^2=\begin{pmatrix} \cos^2 x-\sin^2 x & -2\sin x \cos x \\ 2\sin x \cos x & \cos^2 x-\sin^2 x \end{pmatrix} = \begin{pmatrix} \cos 2x & -\sin 2x \\ \sin 2x & \cos 2x \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>96. Jawaban: A</b><br>$A^2=(AB)A=A(BA)=AB=A$.</div>
+            <div class="pembahasan"><b>97. Jawaban: C</b><br>$C = A+A^T = \begin{pmatrix} 2 & 5 \\ 5 & 8 \end{pmatrix}$. $C^T=\begin{pmatrix} 2 & 5 \\ 5 & 8 \end{pmatrix}$. Karena $C=C^T$, C adalah matriks simetris.</div>
+            <div class="pembahasan"><b>98. Jawaban: A</b><br>Teorema Cayley-Hamilton: $A^2-\text{tr}(A)A+|A|I=O$. $\text{tr}(A)=2, |A|=1$. Maka $A^2-2A+I=O$. Jadi $f(A)=O$.</div>
+            <div class="pembahasan"><b>99. Jawaban: C</b><br>$|A^{-1}|=4-6=-2$. $|A|=1/|A^{-1}|=-1/2$. $|2A|=2^2|A|=4(-1/2)=-2$.</div>
+            <div class="pembahasan"><b>100. Jawaban: A</b><br>Jika $A^T=-A$, maka $A=\begin{pmatrix} 0 & a \\ -a & 0 \end{pmatrix}$. $|A|=0 - (-a^2)=a^2$. Karena $a^2$ selalu non-negatif, maka $|A| \ge 0$.</div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
