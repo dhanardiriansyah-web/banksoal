@@ -105,8 +105,20 @@
         }
 
         ol.pilihan-ganda { list-style-type: none; padding-left: 0; margin-top: 10px; text-align: left; }
-        ol.pilihan-ganda li { margin-bottom: 8px; }
-        ol.pilihan-ganda li::before { content: attr(data-option) ". "; font-weight: bold; margin-right: 5px; }
+        
+        ol.pilihan-ganda li {
+            margin-bottom: 8px;
+            padding-left: 25px; /* Creates space for the option letter */
+            position: relative;
+        }
+        
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
         
         .kategori-table {
             width: 100%;
