@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal - Penalaran Matematika</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #64b6ac;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #004d40;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* To contain pseudo-elements */
+      }
+       .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--header-title-color);
+        }
+        .cover-page .title {
+            font-size: 32pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--header-title-color);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .cover-page .subtitle {
+            font-size: 16pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+         .cover-page img {
+            max-width: 200px;
+            margin-bottom: 40px;
+        }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0; /* No watermark on cover page */
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #b0b0b0;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-style: italic;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: flex-start;
+      }
+      .soal-kolom {
+        display: flex;
+        flex-direction: column;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header {
+          display: block;
+          margin: -1.8cm -2.5cm 20px -2.5cm;
+          position: relative;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENALARAN MATEMATIKA</h1>
+            <p class="subtitle">Latihan Soal Berbasis Wacana UTBK-SNPMB</p>
+        </div>
+    </section>
+
+    <!-- Halaman 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 1: Kedai Kopi "Senja"</h3>
+            <div class="wacana-box">
+                <p>Kedai Kopi "Senja" menjual tiga jenis minuman utama: Kopi Susu, Americano, dan Matcha Latte. Harga pokok produksi (HPP) dan harga jual per gelasnya disajikan dalam tabel berikut:</p>
+                <table class="tabel-kuantitas">
+                    <tr><th>Minuman</th><th>HPP (Modal)</th><th>Harga Jual</th></tr>
+                    <tr><td>Kopi Susu</td><td>Rp12.000</td><td>Rp20.000</td></tr>
+                    <tr><td>Americano</td><td>Rp8.000</td><td>Rp15.000</td></tr>
+                    <tr><td>Matcha Latte</td><td>Rp14.000</td><td>Rp22.000</td></tr>
+                </table>
+                <p>Setiap hari Rabu, kedai ini mengadakan promo "Rabu Hemat" dengan diskon 20% untuk semua jenis minuman. Selain itu, setiap pembelian akan dikenakan Pajak Pertambahan Nilai (PPN) sebesar 11% yang dihitung dari harga setelah diskon (jika ada).</p>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa</div>
+                            Budi membeli satu gelas Kopi Susu dan satu gelas Matcha Latte pada hari Rabu. Berapakah total yang harus dibayar Budi setelah dikenakan diskon dan pajak?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp37.518</li>
+                                <li data-option="B">Rp33.600</li>
+                                <li data-option="C">Rp37.296</li>
+                                <li data-option="D">Rp42.000</li>
+                                <li data-option="E">Rp38.112</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q)</div>
+                            Pada hari Selasa (harga normal), kedai berhasil menjual 10 Kopi Susu. Pada hari Rabu (harga promo), kedai berhasil menjual 15 Kopi Susu.<br>
+                            <table class="tabel-kuantitas">
+                              <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                              <tr><td>Total keuntungan (profit) penjualan Kopi Susu pada hari Selasa</td><td>Total keuntungan (profit) penjualan Kopi Susu pada hari Rabu</td></tr>
+                            </table>
+                            Hubungan yang benar antara kuantitas P dan Q adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks</div>
+                            Diketahui dalam seminggu, rasio penjualan Kopi Susu : Americano : Matcha Latte adalah 5 : 3 : 2. Jika total minuman yang terjual dalam seminggu adalah 500 gelas, manakah pernyataan berikut yang benar? (Jawaban bisa lebih dari satu)
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Jumlah Americano yang terjual adalah 150 gelas.</span></div>
+                                <div><input type="checkbox"/><span>Jumlah Kopi Susu yang terjual 150 gelas lebih banyak dari Matcha Latte.</span></div>
+                                <div><input type="checkbox"/><span>Total HPP untuk seluruh Matcha Latte yang terjual adalah Rp1.400.000.</span></div>
+                                <div><input type="checkbox"/><span>Total omzet (pendapatan kotor dari harga jual normal) dari Kopi Susu lebih besar dari gabungan omzet Americano dan Matcha Latte.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- Halaman 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <h3>Wacana 2: Desain Taman Belakang Rumah</h3>
+            <div class="wacana-box">
+                <p>Pak Ali memiliki sebidang tanah di belakang rumahnya berukuran panjang 10 meter dan lebar 8 meter. Ia ingin membuat taman dengan desain sebagai berikut:</p>
+                <ul>
+                    <li>Setengah dari luas tanah akan dijadikan area rumput hijau.</li>
+                    <li>Sebuah kolam ikan berbentuk lingkaran dengan diameter 4 meter akan dibangun di tengah-tengah area rumput.</li>
+                    <li>Sisa dari area rumput (setelah dikurangi kolam) akan ditanami bunga di sekeliling kolam.</li>
+                    <li>Sisa dari total tanah (yang tidak dijadikan area rumput) akan dipasangi paving block sebagai jalan setapak.</li>
+                </ul>
+                <p>Gunakan $\pi = 3,14$.</p>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                 <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa</div>
+                            Berapakah luas area yang akan dipasangi paving block?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$80 \, m^2$</li>
+                                <li data-option="B">$40 \, m^2$</li>
+                                <li data-option="C">$27,44 \, m^2$</li>
+                                <li data-option="D">$12,56 \, m^2$</li>
+                                <li data-option="E">$52,56 \, m^2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Biasa</div>
+                            Jika biaya pemasangan rumput adalah Rp50.000 per $m^2$ dan biaya pembuatan kolam (sudah termasuk material dan jasa) adalah Rp1.500.000, berapakah total biaya yang dibutuhkan Pak Ali untuk area rumput dan kolam?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp2.000.000</li>
+                                <li data-option="B">Rp3.500.000</li>
+                                <li data-option="C">Rp2.628.000</li>
+                                <li data-option="D">Rp4.128.000</li>
+                                <li data-option="E">Rp2.750.000</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD)</div>
+                            Berapa banyak tanaman bunga yang bisa ditanam di sekeliling kolam?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(1)</span>
+                                    <span class="pernyataan-teks">Setiap tanaman bunga membutuhkan area seluas $200 \, cm^2$.</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(2)</span>
+                                    <span class="pernyataan-teks">Jarak antar tanaman bunga adalah 20 cm.</span>
+                                </div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 3 -->
+    <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <h3>Wacana 3: Sistem Skor Kompetisi Cerdas Cermat</h3>
+            <div class="wacana-box">
+                <p>Dalam sebuah kompetisi cerdas cermat, terdapat 50 soal yang harus dikerjakan. Aturan penskoran adalah sebagai berikut:</p>
+                <ul>
+                    <li>Setiap jawaban benar diberi skor 4.</li>
+                    <li>Setiap jawaban salah diberi skor -2.</li>
+                    <li>Setiap soal yang tidak dijawab diberi skor -1.</li>
+                </ul>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa</div>
+                            Tim A berhasil menjawab 38 soal, dan 30 di antaranya benar. Berapakah skor akhir yang diperoleh Tim A?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">120</li>
+                                <li data-option="B">104</li>
+                                <li data-option="C">92</li>
+                                <li data-option="D">88</li>
+                                <li data-option="E">108</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Pernyataan (Jumlah Benar)</div>
+                            Tim B mendapatkan skor akhir 100. Dari empat kemungkinan komposisi jawaban berikut, berapa banyak yang valid?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(1)</span>
+                                    <span class="pernyataan-teks">31 benar, 5 salah, 14 tidak dijawab</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(2)</span>
+                                    <span class="pernyataan-teks">30 benar, 10 salah, 10 tidak dijawab</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(3)</span>
+                                    <span class="pernyataan-teks">32 benar, 10 salah, 8 tidak dijawab</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(4)</span>
+                                    <span class="pernyataan-teks">35 benar, 15 salah, 0 tidak dijawab</span>
+                                </div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li>
+                                <li data-option="B">1</li>
+                                <li data-option="C">2</li>
+                                <li data-option="D">3</li>
+                                <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 4 -->
+     <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 4: Infografis Pengguna Internet</h3>
+            <div class="wacana-box">
+                 <p>Berikut adalah data survei mengenai penetrasi dan perilaku pengguna internet di Indonesia pada suatu tahun. Total populasi Indonesia pada tahun tersebut adalah 280 juta jiwa.</p>
+                 <p style="text-align:center;"><b>Pengguna Internet di Indonesia</b></p>
+                 <p><b>Tingkat Penetrasi Internet:</b> 75% dari total populasi.</p>
+                 <p><b>Distribusi Usia Pengguna:</b></p>
+                 <ul>
+                    <li>13-18 tahun: 20%</li>
+                    <li>19-34 tahun: 50%</li>
+                    <li>35-54 tahun: 25%</li>
+                    <li>55+ tahun: 5%</li>
+                 </ul>
+                 <p><b>Aktivitas Online Terpopuler (Durasi per Hari):</b></p>
+                 <ul>
+                    <li>Media Sosial: 3 jam</li>
+                    <li>Streaming Video/Musik: 2 jam</li>
+                    <li>Game Online: 1.5 jam</li>
+                    <li>Membaca Berita: 1 jam</li>
+                    <li>Lain-lain: 0.5 jam</li>
+                 </ul>
+            </div>
+
+            <div class="soal-container-2-kolom">
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa</div>
+                            Berapa jumlah total pengguna internet di Indonesia pada tahun tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">200 juta jiwa</li>
+                                <li data-option="B">210 juta jiwa</li>
+                                <li data-option="C">225 juta jiwa</li>
+                                <li data-option="D">250 juta jiwa</li>
+                                <li data-option="E">75 juta jiwa</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q)</div>
+                            <table class="tabel-kuantitas">
+                              <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                              <tr><td>Jumlah pengguna internet usia 13-18 tahun</td><td>Jumlah pengguna internet usia 35-54 tahun</td></tr>
+                            </table>
+                            Hubungan yang benar antara kuantitas P dan Q adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Pernyataan (Kombinasi Benar)</div>
+                            Berdasarkan wacana, manakah di antara pernyataan berikut yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(1)</span>
+                                    <span class="pernyataan-teks">Lebih dari separuh pengguna internet berusia di bawah 35 tahun.</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(2)</span>
+                                    <span class="pernyataan-teks">Total waktu yang dihabiskan untuk aktivitas hiburan (streaming dan game) lebih lama dari waktu untuk media sosial.</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(3)</span>
+                                    <span class="pernyataan-teks">Jumlah pengguna internet usia 55+ tahun adalah 10,5 juta jiwa.</span>
+                                </div>
+                                <div class="pernyataan-item">
+                                    <span class="pernyataan-nomor">(4)</span>
+                                    <span class="pernyataan-teks">Rata-rata waktu yang dihabiskan pengguna internet untuk online per hari adalah 8 jam.</span>
+                                </div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1), (2), dan (3) benar.</li>
+                                <li data-option="B">Pernyataan (1) dan (3) benar.</li>
+                                <li data-option="C">Pernyataan (2) dan (4) benar.</li>
+                                <li data-option="D">Hanya pernyataan (4) yang benar.</li>
+                                <li data-option="E">Semua pernyataan benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman 5 -->
+     <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <h3>Wacana 5: Perjalanan Antarkota</h3>
+            <div class="wacana-box">
+                <p>Sebuah mobil menempuh perjalanan dari Kota A ke Kota B yang berjarak 360 km. Konsumsi bahan bakar mobil tersebut adalah 12 km per liter. Mobil tersebut berangkat pukul 07.00 WIB dengan kecepatan rata-rata 60 km/jam dan berhenti istirahat selama 30 menit di tengah perjalanan. Harga bahan bakar adalah Rp10.000 per liter.</p>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa</div>
+                            Pukul berapa mobil tersebut tiba di Kota B?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">13.00 WIB</li>
+                                <li data-option="B">13.30 WIB</li>
+                                <li data-option="C">14.00 WIB</li>
+                                <li data-option="D">14.30 WIB</li>
+                                <li data-option="E">15.00 WIB</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa</div>
+                            Berapa total biaya bahan bakar yang dibutuhkan untuk perjalanan dari Kota A ke Kota B?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp250.000</li>
+                                <li data-option="B">Rp280.000</li>
+                                <li data-option="C">Rp300.000</li>
+                                <li data-option="D">Rp360.000</li>
+                                <li data-option="E">Rp400.000</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="soal-kolom">
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks</div>
+                            Jika mobil tersebut ingin tiba di Kota B pada pukul 12.30 WIB (dengan tetap istirahat 30 menit), manakah pernyataan berikut yang benar? (Jawaban bisa lebih dari satu)
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Total waktu perjalanan yang diinginkan adalah 5.5 jam.</span></div>
+                                <div><input type="checkbox"/><span>Waktu mengemudi bersih yang dibutuhkan adalah 5 jam.</span></div>
+                                <div><input type="checkbox"/><span>Kecepatan rata-rata yang dibutuhkan adalah 72 km/jam.</span></div>
+                                <div><input type="checkbox"/><span>Dengan kecepatan baru, konsumsi bahan bakar akan menjadi lebih boros.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+     <!-- Halaman Pembahasan -->
+    <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub">
+                        <strong>Penalaran Matematika</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp37.296</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini berkaitan dengan konsep Aritmetika Sosial, khususnya tentang perhitungan diskon (potongan harga) dan pajak (PPN). Diskon mengurangi harga yang harus dibayar, sedangkan pajak menambah harga yang harus dibayar. Penting untuk memperhatikan urutan perhitungannya: diskon dihitung terlebih dahulu dari harga asli, baru kemudian pajak dihitung dari harga setelah diskon.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Harga Setelah Diskon = Harga Awal $\times$ (100% - Persentase Diskon)</li>
+                            <li>Total Bayar = Harga Setelah Diskon $\times$ (100% + Persentase Pajak)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung total harga normal sebelum diskon.</b><br>
+                        Total Harga = Harga Kopi Susu + Harga Matcha Latte<br>
+                        Total Harga = Rp20.000 + Rp22.000 = Rp42.000.<br>
+                        <b>Langkah 2: Hitung harga setelah diskon 20%.</b><br>
+                        Harga Setelah Diskon = Rp42.000 $\times$ (100% - 20%) = Rp42.000 $\times$ 80% = Rp33.600.<br>
+                        <b>Langkah 3: Hitung total bayar setelah dikenakan PPN 11%.</b><br>
+                        Total Bayar = Rp33.600 $\times$ (100% + 11%) = Rp33.600 $\times$ 111% = Rp37.296.<br>
+                        Jadi, total yang harus dibayar Budi adalah <b>Rp37.296</b>.
+                    </div>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji pemahaman tentang konsep keuntungan (profit) dalam Aritmetika Sosial. Keuntungan adalah selisih antara pendapatan (harga jual) dengan modal (Harga Pokok Produksi/HPP). Total keuntungan didapat dari keuntungan per unit dikalikan dengan jumlah unit yang terjual.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Keuntungan per Unit = Harga Jual - HPP</li>
+                            <li>Total Keuntungan = Keuntungan per Unit $\times$ Jumlah Unit Terjual</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Analisis Kuantitas P (Selasa):</b><br>
+                        Keuntungan per gelas = Rp20.000 (Harga Jual) - Rp12.000 (HPP) = Rp8.000.<br>
+                        Total keuntungan P = Rp8.000/gelas $\times$ 10 gelas = <b>Rp80.000</b>.<br>
+                        <b>Analisis Kuantitas Q (Rabu):</b><br>
+                        Harga jual promo = Rp20.000 $\times$ (100% - 20%) = Rp16.000.<br>
+                        Keuntungan per gelas promo = Rp16.000 (Harga Jual Promo) - Rp12.000 (HPP) = Rp4.000.<br>
+                        Total keuntungan Q = Rp4.000/gelas $\times$ 15 gelas = <b>Rp60.000</b>.<br>
+                        <b>Perbandingan:</b><br>
+                        Rp80.000 (P) lebih besar dari Rp60.000 (Q). Jadi, <b>P > Q</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten">
+                     <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Semua pernyataan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan konsep Perbandingan (Rasio) untuk menentukan jumlah masing-masing item dari total keseluruhan. Setelah jumlah item diketahui, konsep Aritmetika Sosial (HPP dan Omzet) digunakan untuk memverifikasi setiap pernyataan.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Jumlah Item = $\frac{\text{Angka Rasio Item}}{\text{Total Angka Rasio}} \times$ Total Keseluruhan</li>
+                            <li>Total HPP = Jumlah Item $\times$ HPP per Item</li>
+                            <li>Total Omzet = Jumlah Item $\times$ Harga Jual per Item</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Tentukan jumlah penjualan per jenis minuman.</b><br>
+                        Total angka rasio = 5 + 3 + 2 = 10.<br>
+                        - Kopi Susu = (5/10) * 500 = 250 gelas.<br>
+                        - Americano = (3/10) * 500 = 150 gelas.<br>
+                        - Matcha Latte = (2/10) * 500 = 100 gelas.<br>
+                        <b>Langkah 2: Evaluasi setiap pernyataan.</b><br>
+                        - <b>Pernyataan 1:</b> Jumlah Americano terjual adalah 150 gelas. <b>(Benar)</b><br>
+                        - <b>Pernyataan 2:</b> Selisih Kopi Susu dan Matcha Latte = 250 - 100 = 150 gelas. <b>(Benar)</b><br>
+                        - <b>Pernyataan 3:</b> Total HPP Matcha = 100 gelas $\times$ Rp14.000 = Rp1.400.000. <b>(Benar)</b><br>
+                        - <b>Pernyataan 4:</b> Omzet Kopi Susu = 250 $\times$ Rp20.000 = Rp5.000.000. Omzet Americano + Matcha = (150 $\times$ Rp15.000) + (100 $\times$ Rp22.000) = Rp2.250.000 + Rp2.200.000 = Rp4.450.000. Omzet Kopi Susu (5jt) lebih besar dari gabungan (4,45jt). <b>(Benar)</b>.<br>
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. $40 \, m^2$</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini berkaitan dengan konsep Geometri Dasar, yaitu perhitungan luas persegi panjang dan interpretasi pembagian area berdasarkan informasi tekstual.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Luas Persegi Panjang = Panjang $\times$ Lebar</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung total luas tanah.</b><br>
+                        Luas tanah = 10 m $\times$ 8 m = 80 m².<br>
+                        <b>Langkah 2: Hitung luas area yang dialokasikan untuk rumput.</b><br>
+                        Luas area rumput = ½ $\times$ Luas total tanah = ½ $\times$ 80 m² = 40 m².<br>
+                        <b>Langkah 3: Tentukan luas paving block.</b><br>
+                        Area paving block adalah sisa dari total tanah yang tidak dijadikan area rumput. <br>
+                        Luas paving block = Luas tanah - Luas area rumput = 80 m² - 40 m² = <b>40 m²</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Pembahasan 2 -->
+    <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub">
+                        <strong>Penalaran Matematika</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                         <b class="pembahasan-title">Jawaban: B. Rp3.500.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggabungkan Aritmetika Sosial dengan pemahaman wacana. Kunci dari soal ini adalah menafsirkan bahwa biaya rumput dihitung berdasarkan total area yang dialokasikan untuk rumput (40 m²), bukan luas bersih rumput setelah dikurangi kolam. Biaya total adalah penjumlahan dari semua komponen biaya.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Total Biaya = (Luas Area Rumput $\times$ Biaya per m²) + Biaya Tetap Kolam</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung biaya pemasangan rumput.</b><br>
+                        Luas total area rumput adalah 40 m² (dari soal 4).<br>
+                        Biaya rumput = 40 m² $\times$ Rp50.000/m² = Rp2.000.000.<br>
+                        <b>Langkah 2: Hitung total biaya.</b><br>
+                        Total biaya = Biaya rumput + Biaya kolam = Rp2.000.000 + Rp1.500.000 = <b>Rp3.500.000</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                     <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan Analisis Kecukupan Data. Kita harus menentukan apakah informasi yang diberikan pada pernyataan (1) dan/atau (2) cukup untuk menjawab pertanyaan pokok. Ini memerlukan perhitungan luas area yang tersedia untuk menanam bunga, yang melibatkan Geometri (luas lingkaran).</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Luas Lingkaran = $\pi \times r^2$, dengan $r = \frac{\text{diameter}}{2}$</li>
+                            <li>Luas Area Tanam Bunga = Luas Area Rumput - Luas Kolam</li>
+                            <li>Jumlah Tanaman = $\frac{\text{Total Luas Area Tanam}}{\text{Luas per Tanaman}}$</li>
+                            <li>Konversi Satuan: 1 m² = 10.000 cm²</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung luas area tanam bunga dari informasi wacana.</b><br>
+                        - Luas area rumput = 40 m².<br>
+                        - Jari-jari kolam = 4 m / 2 = 2 m.<br>
+                        - Luas kolam = 3,14 $\times$ (2 m)² = 12,56 m².<br>
+                        - Luas area tanam bunga = 40 m² - 12,56 m² = 27,44 m².<br>
+                        <b>Langkah 2: Analisis Pernyataan (1).</b><br>
+                        Informasi: Luas per tanaman = 200 cm² = 0,02 m².<br>
+                        Dengan informasi ini, kita bisa menghitung jumlah tanaman: 27,44 m² / 0,02 m² = 1372 tanaman. Jawaban bisa ditemukan. Maka, <b>Pernyataan (1) SAJA cukup</b>.<br>
+                        <b>Langkah 3: Analisis Pernyataan (2).</b><br>
+                        Informasi: Jarak antar tanaman 20 cm.<br>
+                        Informasi ini tidak cukup karena tidak menjelaskan pola tanam (apakah membentuk grid, melingkar, dll.) dalam sebuah area. Informasi ini hanya berguna jika menanam dalam satu baris. Maka, <b>Pernyataan (2) SAJA tidak cukup</b>.
+                    </div>
+                </div>
+            </div>
+            <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 92</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah aplikasi dari operasi aljabar pada bilangan bulat. Konsepnya adalah menghitung total nilai berdasarkan aturan penskoran yang melibatkan nilai positif (untuk jawaban benar) dan nilai negatif (untuk jawaban salah dan tidak dijawab).</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Skor Akhir = (Jml Benar $\times$ 4) + (Jml Salah $\times$ (-2)) + (Jml Kosong $\times$ (-1))</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Identifikasi jumlah soal per kategori.</b><br>
+                        - Total Soal = 50<br>
+                        - Soal Dijawab = 38<br>
+                        - Jawaban Benar (B) = 30<br>
+                        - Jawaban Salah (S) = Soal Dijawab - Jawaban Benar = 38 - 30 = 8<br>
+                        - Tidak Dijawab (K) = Total Soal - Soal Dijawab = 50 - 38 = 12<br>
+                        <b>Langkah 2: Hitung skor akhir menggunakan rumus.</b><br>
+                        Skor = (30 $\times$ 4) + (8 $\times$ (-2)) + (12 $\times$ (-1))<br>
+                        Skor = 120 - 16 - 12 = <b>92</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 2</b><br>
+                         <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal penalaran yang memerlukan verifikasi terhadap beberapa kondisi. Setiap pernyataan harus memenuhi dua syarat: total soal harus 50, dan skor akhir harus 100. Ini menguji kemampuan untuk menerapkan formula secara berulang dan teliti.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Syarat 1: Jml Benar + Jml Salah + Jml Kosong = 50</li>
+                            <li>Syarat 2: (Jml Benar $\times$ 4) + (Jml Salah $\times$ (-2)) + (Jml Kosong $\times$ (-1)) = 100</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        Kita periksa setiap pernyataan:
+                        <ul>
+                        <li><b>Pernyataan (1):</b> Total soal = 31+5+14 = 50 (Benar). Skor = (31$\times$4) + (5$\times$-2) + (14$\times$-1) = 124 - 10 - 14 = 100 (Benar). <b>Pernyataan ini valid.</b></li>
+                        <li><b>Pernyataan (2):</b> Total soal = 30+10+10 = 50 (Benar). Skor = (30$\times$4) + (10$\times$-2) + (10$\times$-1) = 120 - 20 - 10 = 90 (Salah). Pernyataan ini tidak valid.</li>
+                        <li><b>Pernyataan (3):</b> Total soal = 32+10+8 = 50 (Benar). Skor = (32$\times$4) + (10$\times$-2) + (8$\times$-1) = 128 - 20 - 8 = 100 (Benar). <b>Pernyataan ini valid.</b></li>
+                        <li><b>Pernyataan (4):</b> Total soal = 35+15+0 = 50 (Benar). Skor = (35$\times$4) + (15$\times$-2) + (0$\times$-1) = 140 - 30 = 110 (Salah). Pernyataan ini tidak valid.</li>
+                        </ul>
+                        Terdapat <b>2</b> pernyataan yang valid.
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Pembahasan 3 -->
+    <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub">
+                        <strong>Penalaran Matematika</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 210 juta jiwa</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah aplikasi dasar dari konsep Persentase, yaitu mencari nilai sebagian dari suatu total yang diketahui.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Jumlah Bagian = Persentase $\times$ Jumlah Total</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Identifikasi data yang relevan dari wacana.</b><br>
+                        - Total populasi = 280 juta jiwa.<br>
+                        - Tingkat penetrasi internet = 75%.<br>
+                        <b>Langkah 2: Hitung jumlah pengguna internet.</b><br>
+                        Jumlah pengguna = 75% $\times$ 280.000.000<br>
+                        Jumlah pengguna = 0,75 $\times$ 280.000.000 = <b>210.000.000</b> jiwa.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji logika perbandingan. Jika dua kuantitas merupakan persentase dari basis total yang sama, maka perbandingan kedua kuantitas tersebut sama dengan perbandingan persentasenya. Tidak perlu menghitung nilai absolutnya.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <p>Tidak ada rumus matematis, hanya prinsip logika: Jika basis total sama, maka Persentase P < Persentase Q $\implies$ Kuantitas P < Kuantitas Q.</p>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Identifikasi persentase untuk P dan Q.</b><br>
+                        - Persentase P (usia 13-18 tahun) = 20%.<br>
+                        - Persentase Q (usia 35-54 tahun) = 25%.<br>
+                        <b>Langkah 2: Bandingkan persentasenya.</b><br>
+                        Karena basisnya sama (yaitu total pengguna internet 210 juta), kita cukup membandingkan persentasenya.<br>
+                        20% < 25%, maka dapat disimpulkan bahwa <b>Kuantitas P lebih kecil daripada kuantitas Q</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua pernyataan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini memerlukan kemampuan analisis data tekstual dan numerik. Setiap pernyataan harus diverifikasi kebenarannya dengan melakukan perhitungan sederhana (penjumlahan, persentase) berdasarkan data yang disajikan dalam wacana.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                             <li>Jumlah Bagian = Persentase $\times$ Jumlah Total</li>
+                             <li>Total = Penjumlahan semua komponen</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        Total pengguna internet = 210 juta jiwa (dari soal 9).<br>
+                        <b>Analisis Pernyataan (1):</b><br>
+                        Pengguna di bawah 35 tahun = (kelompok 13-18) + (kelompok 19-34) = 20% + 50% = 70%. Separuh adalah 50%. Karena 70% > 50%, pernyataan ini <b>benar</b>.<br>
+                        <b>Analisis Pernyataan (2):</b><br>
+                        Waktu hiburan = Waktu streaming + Waktu game = 2 jam + 1,5 jam = 3,5 jam. Waktu media sosial = 3 jam. Karena 3,5 jam > 3 jam, pernyataan ini <b>benar</b>.<br>
+                        <b>Analisis Pernyataan (3):</b><br>
+                        Jumlah pengguna 55+ = 5% $\times$ 210 juta = 0,05 $\times$ 210.000.000 = 10.500.000 jiwa. Pernyataan ini <b>benar</b>.<br>
+                        <b>Analisis Pernyataan (4):</b><br>
+                        Total waktu online = 3 + 2 + 1,5 + 1 + 0,5 = 8 jam. Pernyataan ini <b>benar</b>.<br>
+                        Karena semua pernyataan benar, maka jawaban yang tepat adalah <b>(E) Semua pernyataan benar</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 13.30 WIB</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini berkaitan dengan konsep dasar Fisika (Kinematika) yaitu hubungan antara jarak, kecepatan, dan waktu. Total durasi perjalanan adalah jumlah dari waktu tempuh (waktu bergerak) dan waktu istirahat.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Waktu Tempuh = $\frac{\text{Jarak}}{\text{Kecepatan}}$</li>
+                            <li>Waktu Tiba = Waktu Berangkat + Waktu Tempuh + Waktu Istirahat</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung waktu tempuh perjalanan (tanpa istirahat).</b><br>
+                        Waktu Tempuh = 360 km / 60 km/jam = 6 jam.<br>
+                        <b>Langkah 2: Hitung total durasi perjalanan.</b><br>
+                        Total Durasi = Waktu Tempuh + Waktu Istirahat = 6 jam + 30 menit = 6 jam 30 menit.<br>
+                        <b>Langkah 3: Tentukan waktu tiba.</b><br>
+                        Waktu Tiba = Pukul 07.00 + 6 jam 30 menit = <b>Pukul 13.30 WIB</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+     <!-- Halaman Pembahasan 4 -->
+    <section class="page">
+         <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub">
+                        <strong>Penalaran Matematika</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp300.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggabungkan konsep perbandingan (untuk menghitung konsumsi bahan bakar) dengan aritmetika sosial (untuk menghitung total biaya).</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Total Bahan Bakar (liter) = $\frac{\text{Total Jarak (km)}}{\text{Konsumsi Bahan Bakar (km/liter)}}$</li>
+                            <li>Total Biaya = Total Bahan Bakar $\times$ Harga per Liter</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Langkah 1: Hitung total bahan bakar yang dibutuhkan.</b><br>
+                        Total Bahan Bakar = 360 km / 12 km/liter = 30 liter.<br>
+                        <b>Langkah 2: Hitung total biaya bahan bakar.</b><br>
+                        Total Biaya = 30 liter $\times$ Rp10.000/liter = <b>Rp300.000</b>.
+                    </div>
+                </div>
+            </div>
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                         <b class="pembahasan-title">Jawaban: Pernyataan (1), (2), dan (3) benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini merupakan problem solving yang berbasis pada hubungan jarak, kecepatan, dan waktu. Dengan target waktu tiba yang baru, kita harus menghitung mundur untuk menemukan kecepatan rata-rata yang diperlukan.</p>
+                        <b class="pembahasan-title">2. Rumus yang Digunakan</b>
+                        <ul>
+                            <li>Total Durasi = Waktu Tiba - Waktu Berangkat</li>
+                            <li>Waktu Mengemudi = Total Durasi - Waktu Istirahat</li>
+                            <li>Kecepatan Rata-rata = $\frac{\text{Jarak}}{\text{Waktu Mengemudi}}$</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Pembahasan Soal (Langkah demi Langkah)</b>
+                        <b>Analisis Pernyataan 1:</b><br>
+                        Total waktu perjalanan yang diinginkan = 12.30 - 07.00 = 5 jam 30 menit = 5,5 jam. <b>(Benar)</b><br>
+                        <b>Analisis Pernyataan 2:</b><br>
+                        Waktu mengemudi bersih = Total waktu - Waktu istirahat = 5 jam 30 menit - 30 menit = 5 jam. <b>(Benar)</b><br>
+                        <b>Analisis Pernyataan 3:</b><br>
+                        Kecepatan rata-rata baru = Jarak / Waktu mengemudi baru = 360 km / 5 jam = 72 km/jam. <b>(Benar)</b><br>
+                        <b>Analisis Pernyataan 4:</b><br>
+                        Wacana tidak memberikan informasi tentang hubungan antara kecepatan dan efisiensi bahan bakar. Secara umum kecepatan lebih tinggi bisa lebih boros, namun hal ini tidak dapat disimpulkan hanya dari data yang ada. Pernyataan ini bersifat asumsi. <b>(Tidak dapat disimpulkan dari wacana)</b>.
+                    </div>
+                </div>
+            </div>
+        </div>
+         <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+</body>
+</html>
+
