@@ -54,6 +54,9 @@
         flex-direction: column;
         overflow: hidden; /* To contain pseudo-elements */
       }
+      .page:last-of-type {
+        page-break-after: avoid;
+      }
         .cover-page {
             display: flex;
             flex-direction: column;
@@ -284,7 +287,7 @@
     </style>
 </head>
 <body>
-    <!-- Halaman Sampul -->
+    <!-- Halaman Sampul Soal -->
     <section class="page cover-page">
         <div>
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
@@ -1013,9 +1016,16 @@
             <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
         </footer>
     </section>
-    
-    <!-- KUNCI JAWABAN & PEMBAHASAN -->
 
+    <!-- KUNCI JAWABAN & PEMBAHASAN -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">KUNCI JAWABAN &<br>PEMBAHASAN</h1>
+            <p class="subtitle">Penalaran Matematika 3</p>
+        </div>
+    </section>
+    
     <section class="page">
         <header class="page-header">
             <div class="header-top-box">
@@ -1032,37 +1042,16 @@
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: C. Rp1.800.000</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini menguji pemahaman dasar tentang aritmetika sosial, yaitu menghitung total biaya berdasarkan harga satuan dan jumlah unit. Konsep ini adalah salah satu yang paling fundamental dalam matematika sehari-hari, di mana kita sering perlu menghitung total belanjaan dari beberapa barang dengan harga yang sama.</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
-                        <p>Rumus utama yang digunakan sangat sederhana, yaitu perkalian untuk mencari nilai total.</p>
-                        $$ \text{Total Biaya} = \text{Jumlah Unit} \times \text{Harga per Unit} $$
-                        Dalam konteks soal ini:
+                        <p>Soal ini menguji kemampuan dasar aritmetika sosial, yaitu menghitung total biaya dengan mengalikan jumlah unit dengan harga per unit.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Jumlah Unit</b> adalah jumlah total anggota keluarga yang akan bepergian.</li>
-                            <li><b>Harga per Unit</b> adalah harga tiket kereta api untuk satu orang.</li>
+                            <li><b>Identifikasi jumlah orang:</b> Dari wacana, diketahui keluarga Pak Andi terdiri dari 4 orang (2 dewasa + 2 anak).</li>
+                            <li><b>Identifikasi harga per orang:</b> Biaya tiket kereta api eksekutif adalah Rp450.000 per orang.</li>
+                            <li><b>Hitung total biaya:</b> Kalikan jumlah orang dengan harga tiket per orang.</li>
                         </ul>
-
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <ol>
-                            <li><b>Identifikasi Informasi dari Wacana:</b>
-                                <ul>
-                                    <li>Keluarga Pak Andi terdiri dari 2 dewasa dan 2 anak. Maka, jumlah total anggota keluarga adalah $2 + 2 = 4$ orang.</li>
-                                    <li>Dari tabel, harga tiket Kereta Api (Eksekutif) adalah Rp450.000 per orang.</li>
-                                </ul>
-                            </li>
-                            <li><b>Terapkan Rumus:</b>
-                                <p>Kita akan mengalikan jumlah anggota keluarga dengan harga tiket per orang untuk mendapatkan total biaya transportasi.</p>
-                                $$ \text{Total Biaya Kereta Api} = \text{Jumlah Anggota Keluarga} \times \text{Harga Tiket per Orang} $$
-                            </li>
-                            <li><b>Lakukan Perhitungan:</b>
-                                $$ \text{Total Biaya Kereta Api} = 4 \text{ orang} \times \text{Rp}450.000/\text{orang} $$
-                                $$ \text{Total Biaya Kereta Api} = \text{Rp}1.800.000 $$
-                            </li>
-                            <li><b>Kesimpulan:</b>
-                                <p>Jadi, total biaya transportasi pulang-pergi yang harus dikeluarkan jika keluarga Pak Andi memilih menggunakan kereta api adalah Rp1.800.000. Ini sesuai dengan pilihan jawaban (C).</p>
-                            </li>
-                        </ol>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Total Biaya = Jumlah Orang $\times$ Harga per Orang<br>
+                        Total Biaya = $4 \text{ orang} \times \text{Rp}450.000/\text{orang} = \text{Rp}1.800.000$.
                     </div>
                 </div>
             </div>
@@ -1087,98 +1076,41 @@
                 <div class="soal-nomor">2.</div>
                 <div class="soal-konten">
                     <div class="pembahasan">
-                        <b class="pembahasan-title">Jawaban: Pilihan 1, 2, 3, dan 4 benar.</b><br>
+                        <b class="pembahasan-title">Jawaban: Semua pilihan benar.</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah tipe Pilihan Ganda Kompleks yang menguji kemampuan analisis dan perhitungan dalam konteks perencanaan anggaran. Kita harus mengevaluasi setiap kombinasi pilihan yang diberikan dan memeriksa apakah total biayanya tidak melebihi anggaran yang telah ditetapkan. Ini melibatkan penjumlahan beberapa komponen biaya yang aturannya berbeda-beda.</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal ini adalah soal analisis kombinasi biaya. Kita perlu menghitung total biaya untuk setiap pilihan yang diberikan dan membandingkannya dengan anggaran maksimal (Rp4.000.000).</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Penjumlahan:</b> Menjumlahkan biaya dari setiap komponen (transportasi, akomodasi, wisata) untuk mendapatkan total pengeluaran.</li>
-                            <li><b>Pertidaksamaan:</b> Membandingkan total pengeluaran dengan anggaran yang tersedia.
-                                $$ \text{Total Biaya} \leq \text{Anggaran Maksimal} $$
+                            <li>Hitung biaya setiap komponen terlebih dahulu:
+                                <ul>
+                                    <li>Biaya Kereta Api: $4 \times 450.000 = \text{Rp}1.800.000$</li>
+                                    <li>Biaya Mobil Pribadi: $\text{Rp}1.200.000$</li>
+                                    <li>Biaya Hotel Melati (2 malam): $(2 \times 600.000) \times (100\% - 10\%) = 1.200.000 \times 0,9 = \text{Rp}1.080.000$</li>
+                                    <li>Biaya Villa Asri (2 malam): $2 \times 700.000 = \text{Rp}1.400.000$</li>
+                                    <li>Biaya Paket A: $(2 \times 100.000) + (2 \times 0,5 \times 100.000) = 200.000 + 100.000 = \text{Rp}300.000$</li>
+                                    <li>Biaya Paket B: $4 \times 80.000 = \text{Rp}320.000$</li>
+                                </ul>
                             </li>
-                            <li><b>Perhitungan Biaya Komponen:</b> Menggunakan aturan yang ada di wacana untuk menghitung biaya setiap komponen.</li>
+                            <li>Hitung total biaya untuk setiap kombinasi dan periksa apakah $\le \text{Rp}4.000.000$.</li>
                         </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <ul>
+                           <li><b>Opsi 1:</b> Mobil (1,2 jt) + Hotel (1,08 jt) + Paket A (0,3 jt) = Rp2.580.000 (✔ Memenuhi)</li>
+                           <li><b>Opsi 2:</b> Kereta (1,8 jt) + Hotel (1,08 jt) + Paket B (0,32 jt) = Rp3.200.000 (✔ Memenuhi)</li>
+                           <li><b>Opsi 3:</b> Mobil (1,2 jt) + Villa (1,4 jt) + Paket B (0,32 jt) = Rp2.920.000 (✔ Memenuhi)</li>
+                           <li><b>Opsi 4:</b> Kereta (1,8 jt) + Villa (1,4 jt) + Paket A (0,3 jt) = Rp3.500.000 (✔ Memenuhi)</li>
+                        </ul>
+                        <p>Karena semua kombinasi menghasilkan total biaya di bawah Rp4.000.000, maka semua pilihan benar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
 
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <p>Pertama, kita harus menghitung biaya pasti untuk setiap komponen yang akan kita gunakan dalam analisis.</p>
-                        <ul>
-                            <li><b>Biaya Transportasi:</b>
-                                <ul>
-                                    <li>Mobil Pribadi: Rp1.200.000</li>
-                                    <li>Kereta Api (4 orang): $4 \times 450.000 = \text{Rp}1.800.000$</li>
-                                </ul>
-                            </li>
-                             <li><b>Biaya Akomodasi (2 malam):</b>
-                                <ul>
-                                    <li>Hotel Melati: $(2 \times 600.000) \times 90\% = \text{Rp}1.080.000$</li>
-                                    <li>Villa Asri: $2 \times 700.000 = \text{Rp}1.400.000$</li>
-                                </ul>
-                            </li>
-                             <li><b>Biaya Paket Wisata (2 dewasa, 2 anak):</b>
-                                <ul>
-                                    <li>Paket A (Candi): $(2 \times 100.000) + (2 \times 50.000) = \text{Rp}300.000$</li>
-                                    <li>Paket B (Alam): $4 \times 80.000 = \text{Rp}320.000$</li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <p>Sekarang, kita evaluasi setiap pilihan kombinasi terhadap anggaran maksimal Rp4.000.000.</p>
-                        <ol>
-                            <li><b>Opsi 1: Mobil Pribadi, Hotel Melati, Paket Wisata A</b>
-                                $$ \text{Total} = 1.200.000 + 1.080.000 + 300.000 = \text{Rp}2.580.000 $$
-                                Karena Rp2.580.000 ≤ Rp4.000.000, maka kombinasi ini <b>memungkinkan</b>.
-                            </li>
-                             <li><b>Opsi 2: Kereta Api, Hotel Melati, Paket Wisata B</b>
-                                $$ \text{Total} = 1.800.000 + 1.080.000 + 320.000 = \text{Rp}3.200.000 $$
-                                Karena Rp3.200.000 ≤ Rp4.000.000, maka kombinasi ini <b>memungkinkan</b>.
-                            </li>
-                             <li><b>Opsi 3: Mobil Pribadi, Villa Asri, Paket Wisata B</b>
-                                $$ \text{Total} = 1.200.000 + 1.400.000 + 320.000 = \text{Rp}2.920.000 $$
-                                Karena Rp2.920.000 ≤ Rp4.000.000, maka kombinasi ini <b>memungkinkan</b>.
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="page-footer">
-            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
-            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
-        </footer>
-    </section>
-    
-    <section class="page">
-        <header class="page-header">
-            <div class="header-top-box">
-                <div>
-                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
-                    <div class="header-title-sub"> <strong>Lanjutan Pembahasan Soal Nomor 2</strong> </div>
-                </div>
-            </div>
-        </header>
-        <div class="content-wrapper">
-            <div class="soal-latihan">
-                <div class="soal-nomor"></div>
-                <div class="soal-konten">
-                    <div class="pembahasan">
-                        <b class="pembahasan-title">(Lanjutan) Pembahasan Rinci</b>
-                        <ol start="4">
-                             <li><b>Opsi 4: Kereta Api, Villa Asri, Paket Wisata A</b>
-                                $$ \text{Total} = 1.800.000 + 1.400.000 + 300.000 = \text{Rp}3.500.000 $$
-                                Karena Rp3.500.000 ≤ Rp4.000.000, maka kombinasi ini <b>memungkinkan</b>.
-                            </li>
-                        </ol>
-                        <b>Kesimpulan:</b> Semua kombinasi yang ditawarkan menghasilkan total biaya di bawah Rp4.000.000, sehingga semuanya memungkinkan.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="page-footer">
-            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
-            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
-        </footer>
-    </section>
-    
     <section class="page">
         <header class="page-header">
             <div class="header-top-box">
@@ -1195,56 +1127,24 @@
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini bertipe Analisis Perbandingan Kuantitas (P dan Q). Tujuannya adalah membandingkan dua nilai tanpa harus selalu menghitung hasil akhirnya secara detail jika perbandingan sudah jelas. Soal ini melibatkan konsep aritmetika sosial, khususnya cara menghitung harga setelah diskon (potongan harga).</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal ini adalah perbandingan kuantitas yang melibatkan perhitungan biaya dengan diskon. Kita harus menghitung nilai P dan Q secara akurat lalu membandingkannya.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Menghitung Biaya Total Tanpa Diskon:</b>
-                                $$ \text{Biaya Total} = \text{Lama Menginap (malam)} \times \text{Harga per Malam} $$
-                            </li>
-                            <li><b>Menghitung Nilai Diskon:</b>
-                                $$ \text{Nilai Diskon} = \text{Persentase Diskon} \times \text{Harga Awal} $$
-                            </li>
-                            <li><b>Menghitung Harga Akhir Setelah Diskon:</b>
-                                $$ \text{Harga Akhir} = \text{Harga Awal} - \text{Nilai Diskon} $$
-                                Atau bisa juga dihitung langsung:
-                                $$ \text{Harga Akhir} = (100\% - \text{Persentase Diskon}) \times \text{Harga Awal} $$
-                            </li>
+                            <li><b>Hitung Kuantitas P:</b> Total biaya akomodasi di Hotel Melati untuk 2 malam. Ingat, ada diskon 10%.</li>
+                            <li><b>Hitung Kuantitas Q:</b> Total biaya akomodasi di Villa Asri untuk 2 malam.</li>
+                            <li><b>Bandingkan P dan Q.</b></li>
                         </ul>
-
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <p>Kita perlu menghitung nilai Kuantitas P dan Kuantitas Q secara terpisah, lalu membandingkannya.</p>
-                        <ol>
-                            <li><b>Menghitung Kuantitas P (Total biaya Hotel Melati):</b>
-                                <ul>
-                                    <li>Lama menginap: 2 malam.</li>
-                                    <li>Harga per malam: Rp600.000.</li>
-                                    <li>Harga Awal (sebelum diskon) untuk 2 malam: $2 \times \text{Rp}600.000 = \text{Rp}1.200.000$.</li>
-                                    <li>Promo: Diskon 10% untuk pemesanan 2 malam.</li>
-                                    <li>Nilai Diskon: $10\% \times \text{Rp}1.200.000 = \frac{10}{100} \times 1.200.000 = \text{Rp}120.000$.</li>
-                                    <li>Biaya Akhir (Nilai P): $\text{Rp}1.200.000 - \text{Rp}120.000 = \text{Rp}1.080.000$.</li>
-                                </ul>
-                            </li>
-                            <li><b>Menghitung Kuantitas Q (Total biaya Villa Asri):</b>
-                                <ul>
-                                    <li>Lama menginap: 2 malam.</li>
-                                    <li>Harga per malam: Rp700.000.</li>
-                                    <li>Tidak ada diskon untuk Villa Asri.</li>
-                                    <li>Biaya Akhir (Nilai Q): $2 \times \text{Rp}700.000 = \text{Rp}1.400.000$.</li>
-                                </ul>
-                            </li>
-                            <li><b>Membandingkan Kuantitas P dan Q:</b>
-                                <ul>
-                                    <li>Nilai P = Rp1.080.000</li>
-                                    <li>Nilai Q = Rp1.400.000</li>
-                                </ul>
-                                $$ \text{Rp}1.080.000 < \text{Rp}1.400.000 $$
-                                $$ P < Q $$
-                            </li>
-                             <li><b>Kesimpulan:</b>
-                                <p>Kuantitas P lebih kecil daripada kuantitas Q. Ini sesuai dengan pilihan jawaban (B).</p>
-                            </li>
-                        </ol>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Hotel Melati):</b><br>
+                        Biaya sebelum diskon = $2 \text{ malam} \times \text{Rp}600.000/\text{malam} = \text{Rp}1.200.000$.<br>
+                        Diskon = $10\% \times \text{Rp}1.200.000 = \text{Rp}120.000$.<br>
+                        Biaya P = Rp1.200.000 - Rp120.000 = Rp1.080.000.<br>
+                        <br>
+                        <b>Kuantitas Q (Villa Asri):</b><br>
+                        Biaya Q = $2 \text{ malam} \times \text{Rp}700.000/\text{malam} = \text{Rp}1.400.000$.<br>
+                        <br>
+                        <b>Perbandingan:</b><br>
+                        Rp1.080.000 (P) < Rp1.400.000 (Q).
                     </div>
                 </div>
             </div>
@@ -1254,7 +1154,7 @@
             <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
         </footer>
     </section>
-    
+
     <section class="page">
         <header class="page-header">
             <div class="header-top-box">
@@ -1269,51 +1169,30 @@
                 <div class="soal-nomor">4.</div>
                 <div class="soal-konten">
                     <div class="pembahasan">
-                        <b class="pembahasan-title">Jawaban: A. Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</b><br>
+                        <b class="pembahasan-title">Jawaban: A. Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah tipe Analisis Kecukupan Data (AKD). Tujuan utamanya bukan mencari nilai akhir (berapa sisa anggarannya), melainkan menentukan apakah informasi yang disajikan pada pernyataan (1) dan/atau (2) cukup untuk menemukan nilai tersebut. Kita harus menganalisis setiap pernyataan secara terpisah terlebih dahulu.</p>
-
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal Analisis Kecukupan Data (AKD) bertujuan untuk menentukan apakah informasi yang diberikan cukup untuk menjawab pertanyaan, bukan untuk mencari jawaban akhirnya. Pertanyaannya adalah "Berapa sisa anggaran?". Rumusnya adalah: $Sisa = Anggaran - Total Biaya$. Anggaran diketahui (Rp3.000.000), jadi kita perlu mencari tahu apakah Total Biaya bisa dihitung secara pasti.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
                         <ul>
-                            <li><b>Logika Analisis Kecukupan:</b> Sebuah pernyataan dianggap "cukup" jika ia menyediakan semua informasi yang hilang untuk menjawab pertanyaan pokok secara pasti.</li>
-                            <li><b>Rumus Sisa Anggaran:</b>
-                                $$ \text{Sisa Anggaran} = \text{Anggaran Awal} - \text{Total Pengeluaran} $$
+                            <li><b>Pernyataan (1):</b> "Pak Andi memilih kombinasi pengeluaran termurah untuk setiap kategori."
+                                <ul>
+                                    <li>Transportasi termurah: Mobil Pribadi (Rp1.200.000) < Kereta Api (Rp1.800.000).</li>
+                                    <li>Akomodasi termurah (2 malam): Hotel Melati (Rp1.080.000) < Villa Asri (Rp1.400.000).</li>
+                                    <li>Wisata termurah: Paket A (Rp300.000) < Paket B (Rp320.000).</li>
+                                </ul>
+                                Dengan informasi ini, Total Biaya bisa dihitung secara pasti: Rp1.200.000 + Rp1.080.000 + Rp300.000 = Rp2.580.000. Karena Total Biaya bisa ditentukan, maka Sisa Anggaran juga bisa dihitung. Jadi, pernyataan (1) <b>CUKUP</b>.
+                            </li>
+                            <li><b>Pernyataan (2):</b> "Total pengeluaran untuk transportasi dan akomodasi adalah Rp2.280.000."
+                                <ul>
+                                    <li>Total ini berasal dari Mobil (Rp1.200.000) + Hotel Melati (Rp1.080.000).</li>
+                                    <li>Namun, kita tidak diberi tahu paket wisata mana yang dipilih (Paket A atau Paket B).</li>
+                                    <li>Total Biaya bisa menjadi Rp2.280.000 + Rp300.000 (Paket A) atau Rp2.280.000 + Rp320.000 (Paket B).</li>
+                                </ul>
+                                Karena ada dua kemungkinan Total Biaya, maka Sisa Anggaran tidak dapat ditentukan secara pasti. Jadi, pernyataan (2) <b>TIDAK CUKUP</b>.
                             </li>
                         </ul>
-                        
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <ol>
-                            <li><b>Analisis Pertanyaan Pokok:</b>
-                                <p>Pertanyaannya adalah "Berapa sisa anggaran liburan Pak Andi?". Dari rumus di atas, kita tahu bahwa untuk menjawabnya kita perlu dua informasi:
-                                    <ol type="a">
-                                        <li>Anggaran Awal (Diketahui dari soal: Rp3.000.000)</li>
-                                        <li>Total Pengeluaran (Transportasi + Akomodasi + Wisata)</li>
-                                    </ol>
-                                Jadi, inti masalahnya adalah: <b>"Apakah kita bisa menghitung Total Pengeluaran secara pasti?"</b>
-                                </p>
-                            </li>
-                            <li><b>Analisis Pernyataan (1) SAJA:</b>
-                                <p>Pernyataan (1) berbunyi: "Pak Andi memilih kombinasi pengeluaran termurah untuk setiap kategori."
-                                Ini adalah instruksi yang jelas dan pasti. Kita bisa mencari pilihan termurah di setiap kategori dari wacana:
-                                <ul>
-                                    <li>Transportasi Termurah: Mobil Pribadi (Rp1.200.000)</li>
-                                    <li>Akomodasi Termurah (2 malam): Hotel Melati (Rp1.080.000)</li>
-                                    <li>Wisata Termurah: Paket A (Rp300.000)</li>
-                                </ul>
-                                Dengan informasi ini, kita <b>bisa</b> menghitung Total Pengeluaran: Rp1.200.000 + Rp1.080.000 + Rp300.000 = Rp2.580.000. Karena Total Pengeluaran bisa dihitung, maka Sisa Anggaran juga pasti bisa dihitung (Rp3.000.000 - Rp2.580.000).
-                                <br><b>Kesimpulan: Pernyataan (1) SAJA CUKUP.</b>
-                                </p>
-                            </li>
-                             <li><b>Analisis Pernyataan (2) SAJA:</b>
-                                <p>Pernyataan (2) berbunyi: "Total pengeluaran untuk transportasi dan akomodasi adalah Rp2.280.000."
-                                Pernyataan ini hanya memberikan total dari dua dari tiga komponen pengeluaran. Kita masih belum tahu biaya untuk komponen ketiga, yaitu Wisata. Pak Andi bisa saja memilih Paket A (Rp300.000) atau Paket B (Rp320.000). Karena ada lebih dari satu kemungkinan untuk biaya wisata, maka Total Pengeluaran tidak dapat ditentukan secara pasti.
-                                <br><b>Kesimpulan: Pernyataan (2) SAJA TIDAK CUKUP.</b>
-                                </p>
-                            </li>
-                            <li><b>Penarikan Kesimpulan Akhir:</b>
-                                <p>Karena Pernyataan (1) SAJA cukup dan Pernyataan (2) SAJA tidak cukup, maka jawaban yang sesuai dengan aturan AKD adalah (A).</p>
-                            </li>
-                        </ol>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                         Karena pernyataan (1) saja cukup dan pernyataan (2) saja tidak cukup, maka jawaban yang benar adalah A.
                     </div>
                 </div>
             </div>
@@ -1323,7 +1202,7 @@
             <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
         </footer>
     </section>
-    
+
     <section class="page">
         <header class="page-header">
             <div class="header-top-box">
@@ -1340,53 +1219,36 @@
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: E. 4</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah tipe Analisis Pernyataan (Jumlah Benar), di mana kita harus memverifikasi kebenaran dari setiap pernyataan yang diberikan satu per satu berdasarkan data dari wacana. Soal ini menuntut ketelitian dalam membaca data, melakukan perhitungan dasar (pengurangan, perkalian, diskon), dan membandingkan hasilnya.</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan matematis berdasarkan data dari wacana dan menghitung jumlah pernyataan yang benar.</p>
+                        <b class="pembahasan-title">2. Evaluasi Setiap Pernyataan</b>
                         <ul>
-                            <li><b>Perhitungan Selisih:</b> $ \text{Selisih} = \text{Nilai yang Lebih Besar} - \text{Nilai yang Lebih Kecil} $</li>
-                            <li><b>Perhitungan Biaya Total:</b> Seperti pada soal-soal sebelumnya, menggunakan perkalian dan aturan diskon.</li>
+                            <li><b>Pernyataan (1):</b> "Menggunakan mobil pribadi lebih murah Rp600.000 daripada menggunakan kereta api..."
+                                <ul>
+                                    <li>Biaya Mobil: Rp1.200.000.</li>
+                                    <li>Biaya Kereta: $4 \times \text{Rp}450.000 = \text{Rp}1.800.000$.</li>
+                                    <li>Selisih: Rp1.800.000 - Rp1.200.000 = Rp600.000. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                            <li><b>Pernyataan (2):</b> "Total biaya tiket Paket Wisata A untuk seluruh keluarga adalah Rp300.000."
+                                <ul>
+                                     <li>Biaya: $(2 \text{ dewasa} \times 100.000) + (2 \text{ anak} \times 0,5 \times 100.000) = 200.000 + 100.000 = \text{Rp}300.000$. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>Pernyataan (3):</b> "Selisih biaya akomodasi per malam antara Villa Asri dan Hotel Melati adalah Rp100.000."
+                                <ul>
+                                     <li>Biaya Villa per malam: Rp700.000.</li>
+                                     <li>Biaya Hotel per malam: Rp600.000.</li>
+                                     <li>Selisih: Rp700.000 - Rp600.000 = Rp100.000. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>Pernyataan (4):</b> "Total biaya akomodasi di Hotel Melati selama 2 malam adalah Rp1.080.000."
+                                <ul>
+                                     <li>Biaya: $(2 \times 600.000) \times (100\% - 10\%) = 1.200.000 \times 0,9 = \text{Rp}1.080.000$. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
                         </ul>
-
-                        <b class="pembahasan-title">3. Pembahasan Rinci (Evaluasi Setiap Pernyataan)</b>
-                        <p>Kita akan memeriksa setiap pernyataan untuk menentukan apakah itu "Benar" atau "Salah".</p>
-                        <ol>
-                            <li><b>Pernyataan (1): "Menggunakan mobil pribadi lebih murah Rp600.000 daripada menggunakan kereta api untuk keluarga tersebut."</b>
-                                <ul>
-                                    <li>Biaya Mobil Pribadi: Rp1.200.000.</li>
-                                    <li>Biaya Kereta Api (4 orang): $4 \times \text{Rp}450.000 = \text{Rp}1.800.000$.</li>
-                                    <li>Selisih: $\text{Rp}1.800.000 - \text{Rp}1.200.000 = \text{Rp}600.000$.</li>
-                                </ul>
-                                <b>Kesimpulan: Pernyataan (1) adalah BENAR.</b>
-                            </li>
-                            <li><b>Pernyataan (2): "Total biaya tiket Paket Wisata A untuk seluruh keluarga adalah Rp300.000."</b>
-                                <ul>
-                                    <li>Keluarga: 2 dewasa, 2 anak.</li>
-                                    <li>Harga tiket dewasa: Rp100.000.</li>
-                                    <li>Harga tiket anak: Setengah harga, jadi $\frac{1}{2} \times \text{Rp}100.000 = \text{Rp}50.000$.</li>
-                                    <li>Total Biaya: $(2 \times \text{Rp}100.000) + (2 \times \text{Rp}50.000) = \text{Rp}200.000 + \text{Rp}100.000 = \text{Rp}300.000$.</li>
-                                </ul>
-                                <b>Kesimpulan: Pernyataan (2) adalah BENAR.</b>
-                            </li>
-                            <li><b>Pernyataan (3): "Selisih biaya akomodasi per malam antara Villa Asri dan Hotel Melati adalah Rp100.000."</b>
-                                <ul>
-                                    <li>Harga Villa Asri per malam: Rp700.000.</li>
-                                    <li>Harga Hotel Melati per malam: Rp600.000.</li>
-                                    <li>Selisih: $\text{Rp}700.000 - \text{Rp}600.000 = \text{Rp}100.000$.</li>
-                                </ul>
-                                <b>Kesimpulan: Pernyataan (3) adalah BENAR.</b>
-                            </li>
-                             <li><b>Pernyataan (4): "Total biaya akomodasi di Hotel Melati selama 2 malam adalah Rp1.080.000."</b>
-                                <ul>
-                                    <li>Harga normal 2 malam: $2 \times \text{Rp}600.000 = \text{Rp}1.200.000$.</li>
-                                    <li>Diskon 10%: $10\% \times \text{Rp}1.200.000 = \text{Rp}120.000$.</li>
-                                    <li>Biaya akhir: $\text{Rp}1.200.000 - \text{Rp}120.000 = \text{Rp}1.080.000$.</li>
-                                </ul>
-                                <b>Kesimpulan: Pernyataan (4) adalah BENAR.</b>
-                            </li>
-                        </ol>
-                        <b>Penghitungan Akhir:</b>
-                        <p>Dari empat pernyataan yang diberikan, semuanya terbukti benar. Jadi, jumlah pernyataan yang benar adalah 4. Ini sesuai dengan pilihan jawaban (E).</p>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena keempat pernyataan tersebut benar, maka jumlah pernyataan yang benar adalah 4.
                     </div>
                 </div>
             </div>
@@ -1396,8 +1258,6 @@
             <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
         </footer>
     </section>
-
-    <!-- Pembahasan Wacana 2, 3, 4, 5... -->
 
     <section class="page">
         <header class="page-header">
@@ -1409,38 +1269,22 @@
             </div>
         </header>
         <div class="content-wrapper">
-             <div class="soal-latihan">
+            <div class="soal-latihan">
                 <div class="soal-nomor">6.</div>
                 <div class="soal-konten">
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: C. Rp3.000.000</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini menguji kemampuan dasar untuk membaca dan menginterpretasi data dari sebuah tabel. Setelah data ditemukan, konsep yang digunakan adalah perkalian sederhana untuk menghitung total pendapatan dari suatu komoditas.</p>
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
-                        <p>Rumus yang digunakan adalah rumus dasar untuk menghitung pendapatan:</p>
-                        $$ \text{Total Pendapatan} = \text{Jumlah Barang Terjual (kg)} \times \text{Harga Jual per Barang (Rp/kg)} $$
-                        
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <ol>
-                            <li><b>Identifikasi Data dari Tabel:</b>
-                                <p>Kita perlu mencari data yang relevan untuk "penjualan cabai selama bulan Maret".</p>
-                                <ul>
-                                    <li>Cari baris "Maret".</li>
-                                    <li>Pada baris tersebut, cari kolom "Hasil Panen (kg)" untuk "Cabai". Nilainya adalah <b>60 kg</b>.</li>
-                                    <li>Pada baris yang sama, cari kolom "Harga Jual Cabai (Rp/kg)". Nilainya adalah <b>Rp50.000</b>.</li>
-                                </ul>
-                            </li>
-                            <li><b>Terapkan Rumus:</b>
-                                $$ \text{Pendapatan Cabai Maret} = \text{Hasil Panen Cabai Maret} \times \text{Harga Jual Cabai Maret} $$
-                            </li>
-                            <li><b>Lakukan Perhitungan:</b>
-                                $$ \text{Pendapatan Cabai Maret} = 60 \text{ kg} \times \text{Rp}50.000/\text{kg} $$
-                                $$ \text{Pendapatan Cabai Maret} = \text{Rp}3.000.000 $$
-                            </li>
-                            <li><b>Kesimpulan:</b>
-                                <p>Total pendapatan dari penjualan cabai selama bulan Maret adalah Rp3.000.000. Ini sesuai dengan pilihan jawaban (C).</p>
-                            </li>
-                        </ol>
+                        <p>Soal ini adalah soal membaca data dari tabel dan melakukan perkalian sederhana untuk menemukan total pendapatan.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Cari data relevan:</b> Temukan baris "Maret" dan kolom "Hasil Panen Cabai (kg)" serta "Harga Jual Cabai (Rp/kg)" pada tabel.</li>
+                            <li><b>Identifikasi nilai:</b> Hasil panen cabai di bulan Maret adalah 60 kg. Harga jualnya adalah Rp50.000 per kg.</li>
+                            <li><b>Hitung pendapatan:</b> Kalikan jumlah panen dengan harga jual per kg.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Total Pendapatan = Hasil Panen $\times$ Harga Jual per kg<br>
+                        Total Pendapatan = $60 \text{ kg} \times \text{Rp}50.000/\text{kg} = \text{Rp}3.000.000$.
                     </div>
                 </div>
             </div>
@@ -1467,122 +1311,24 @@
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah soal perbandingan kuantitas yang melibatkan konsep statistika dasar, yaitu menghitung nilai rata-rata (mean) dari sekumpulan data. Rata-rata adalah jumlah semua nilai data dibagi dengan banyaknya data.</p>
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
-                        <p>Rumus untuk menghitung rata-rata adalah:</p>
-                        $$ \text{Rata-rata} = \frac{\text{Jumlah semua data}}{\text{Banyaknya data}} $$
-                        
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <p>Kita perlu menghitung nilai rata-rata untuk Kuantitas P (panen tomat) dan Kuantitas Q (panen timun), kemudian membandingkannya.</p>
-                        <ol>
-                            <li><b>Menghitung Kuantitas P (Rata-rata hasil panen tomat):</b>
-                                <ul>
-                                    <li>Data panen tomat: 150 kg (Jan), 180 kg (Feb), 160 kg (Mar), 200 kg (Apr).</li>
-                                    <li>Jumlah semua data: $150 + 180 + 160 + 200 = 690$ kg.</li>
-                                    <li>Banyaknya data (bulan): 4.</li>
-                                    <li>Rata-rata (Nilai P): $\frac{690}{4} = 172,5$ kg.</li>
-                                </ul>
-                            </li>
-                            <li><b>Menghitung Kuantitas Q (Rata-rata hasil panen timun):</b>
-                                <ul>
-                                    <li>Data panen timun: 200 kg (Jan), 220 kg (Feb), 180 kg (Mar), 250 kg (Apr).</li>
-                                    <li>Jumlah semua data: $200 + 220 + 180 + 250 = 850$ kg.</li>
-                                    <li>Banyaknya data (bulan): 4.</li>
-                                    <li>Rata-rata (Nilai Q): $\frac{850}{4} = 212,5$ kg.</li>
-                                </ul>
-                            </li>
-                             <li><b>Membandingkan Kuantitas P dan Q:</b>
-                                <ul>
-                                    <li>Nilai P = 172,5 kg</li>
-                                    <li>Nilai Q = 212,5 kg</li>
-                                </ul>
-                                $$ 172,5 < 212,5 $$
-                                $$ P < Q $$
-                            </li>
-                            <li><b>Kesimpulan:</b>
-                                <p>Kuantitas P lebih kecil daripada kuantitas Q. Ini sesuai dengan pilihan jawaban (B).</p>
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="page-footer">
-            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
-            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
-        </footer>
-    </section>
-
-    <section class="page">
-        <header class="page-header">
-            <div class="header-top-box">
-                <div>
-                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
-                    <div class="header-title-sub"> <strong>Soal Nomor 8</strong> </div>
-                </div>
-            </div>
-        </header>
-        <div class="content-wrapper">
-            <div class="soal-latihan">
-                <div class="soal-nomor">8.</div>
-                <div class="soal-konten">
-                    <div class="pembahasan">
-                        <b class="pembahasan-title">Jawaban: D. Hanya pernyataan (4) yang benar.</b><br>
-                        <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah tipe Analisis Pernyataan (Kombinasi Benar) yang memerlukan analisis data komprehensif dari tabel. Kita harus melakukan beberapa perhitungan untuk setiap pernyataan untuk memverifikasi kebenarannya. Konsep yang diuji meliputi perhitungan total, perbandingan, dan analisis statistika sederhana (rentang/stabilitas).</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal perbandingan kuantitas ini membutuhkan perhitungan rata-rata (mean) dari suatu set data. Rata-rata dihitung dengan menjumlahkan semua nilai data, lalu membaginya dengan banyaknya data.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Total Pendapatan:</b> $\sum (\text{Hasil Panen} \times \text{Harga Jual})$ untuk semua komoditas dalam satu bulan.</li>
-                            <li><b>Rentang (Stabilitas):</b> $\text{Pendapatan Maksimum} - \text{Pendapatan Minimum}$ selama periode waktu tertentu. Rentang yang lebih kecil menandakan stabilitas yang lebih tinggi.</li>
+                            <li><b>Hitung Kuantitas P:</b> Jumlahkan hasil panen tomat selama 4 bulan, lalu bagi 4.</li>
+                            <li><b>Hitung Kuantitas Q:</b> Jumlahkan hasil panen timun selama 4 bulan, lalu bagi 4.</li>
+                            <li><b>Bandingkan hasil P dan Q.</b></li>
                         </ul>
-
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <p>Pertama, mari kita hitung pendapatan per komoditas dan total pendapatan per bulan untuk memudahkan analisis.</p>
-                        <table class="tabel-kuantitas" style="font-size: 8pt;">
-                            <thead><tr><th>Bulan</th><th>Pendapatan Tomat</th><th>Pendapatan Cabai</th><th>Pendapatan Timun</th><th>Total Pendapatan</th></tr></thead>
-                            <tbody>
-                                <tr><td>Januari</td><td>150×12rb=1,8 jt</td><td>50×40rb=2,0 jt</td><td>200×8rb=1,6 jt</td><td><b>5,40 jt</b></td></tr>
-                                <tr><td>Februari</td><td>180×12,5rb=2,25 jt</td><td>40×45rb=1,8 jt</td><td>220×7,5rb=1,65 jt</td><td><b>5,70 jt</b></td></tr>
-                                <tr><td>Maret</td><td>160×13rb=2,08 jt</td><td>60×50rb=3,0 jt</td><td>180×8,5rb=1,53 jt</td><td><b>6,61 jt</b></td></tr>
-                                <tr><td>April</td><td>200×11rb=2,2 jt</td><td>55×42rb=2,31 jt</td><td>250×9rb=2,25 jt</td><td><b>6,76 jt</b></td></tr>
-                            </tbody>
-                        </table>
-                        <p>Sekarang, kita evaluasi setiap pernyataan:</p>
-                        <ol>
-                            <li><b>Pernyataan (1): "Pendapatan total tertinggi dari semua komoditas terjadi pada bulan April."</b>
-                                <p>Dari tabel perhitungan, total pendapatan bulan April adalah Rp6,76 juta, yang merupakan nilai tertinggi dibandingkan bulan-bulan lainnya.</p>
-                                <b>Kesimpulan: Pernyataan (1) adalah BENAR.</b>
-                            </li>
-                            <li><b>Pernyataan (2): "Komoditas yang memberikan pendapatan paling stabil (rentang pendapatan terkecil) selama empat bulan adalah tomat."</b>
-                                <ul>
-                                    <li>Rentang Tomat: 2,25 jt (max) - 1,8 jt (min) = <b>Rp450.000</b></li>
-                                    <li>Rentang Cabai: 3,0 jt (max) - 1,8 jt (min) = Rp1.200.000</li>
-                                    <li>Rentang Timun: 2,25 jt (max) - 1,53 jt (min) = Rp720.000</li>
-                                </ul>
-                                <p>Rentang pendapatan tomat adalah yang terkecil, menandakan pendapatan paling stabil.</p>
-                                <b>Kesimpulan: Pernyataan (2) adalah BENAR.</b>
-                            </li>
-                             <li><b>Pernyataan (3): "Pendapatan terendah dari penjualan tomat selama periode empat bulan terjadi pada bulan Januari."</b>
-                                <p>Dari tabel, pendapatan tomat adalah 1,8 jt (Jan), 2,25 jt (Feb), 2,08 jt (Mar), dan 2,2 jt (Apr). Nilai terendah adalah Rp1,8 juta pada bulan Januari.</p>
-                                <b>Kesimpulan: Pernyataan (3) adalah BENAR.</b>
-                            </li>
-                             <li><b>Pernyataan (4): "Bulan dengan hasil panen cabai tertinggi juga merupakan bulan dengan pendapatan cabai tertinggi."</b>
-                                <p>Hasil panen cabai tertinggi adalah 60 kg di bulan Maret. Pendapatan cabai tertinggi adalah Rp3,0 juta di bulan Maret. Keduanya terjadi di bulan yang sama.</p>
-                                <b>Kesimpulan: Pernyataan (4) adalah BENAR.</b>
-                            </li>
-                        </ol>
-                        <b>Penghitungan Akhir:</b>
-                        <p>Setelah dicek ulang, ternyata semua pernyataan (1), (2), (3), dan (4) benar. Namun, pilihan jawaban yang tersedia tidak mencakup "Semua pernyataan benar". Ini menandakan ada kesalahan pada soal atau pilihan jawaban aslinya. Mari kita asumsikan ada kesalahan ketik pada salah satu pernyataan dan cek kembali dengan sangat teliti.
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Rata-rata Tomat):</b><br>
+                        Total Panen Tomat = $150 + 180 + 160 + 200 = 690 \text{ kg}$.<br>
+                        Rata-rata P = $\frac{690}{4} = 172,5 \text{ kg}$.<br>
                         <br>
-                        <br><b>Re-evaluasi:</b>
-                        Pernyataan (1): Benar (6.76 jt di April).
-                        Pernyataan (2): Benar (Rentang tomat 450rb, terkecil).
-                        Pernyataan (3): Benar (Pendapatan tomat terendah 1.8jt di Januari).
-                        Pernyataan (4): Benar (Panen dan pendapatan cabai tertinggi sama-sama di Maret).
-                        <br><b>Kesimpulan Koreksi:</b> Karena tidak ada pilihan "Semua Benar" atau "4", maka soal ini memiliki cacat. Namun jika harus memilih yang paling mungkin, mari kita lihat kembali.
-                        Ah, maaf, saya salah membaca pilihan jawaban di file sebelumnya. Jawaban yang benar adalah (E) Semua pernyataan benar. Saya akan perbaiki ini.
-                        <br><b>Jawaban yang Seharusnya: E. Semua pernyataan benar.</b>
+                        <b>Kuantitas Q (Rata-rata Timun):</b><br>
+                        Total Panen Timun = $200 + 220 + 180 + 250 = 850 \text{ kg}$.<br>
+                        Rata-rata Q = $\frac{850}{4} = 212,5 \text{ kg}$.<br>
+                        <br>
+                        <b>Perbandingan:</b><br>
+                        $172,5$ (P) < $212,5$ (Q).
                     </div>
                 </div>
             </div>
@@ -1598,54 +1344,97 @@
             <div class="header-top-box">
                 <div>
                     <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 8</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua pernyataan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini membutuhkan analisis data yang komprehensif. Kita perlu menghitung beberapa nilai (total pendapatan, rentang, dll.) untuk memverifikasi setiap pernyataan.</p>
+                        <b class="pembahasan-title">2. Evaluasi Setiap Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Pendapatan total tertinggi terjadi pada bulan April.</b>
+                                <ul>
+                                    <li>Jan: $(150 \cdot 12) + (50 \cdot 40) + (200 \cdot 8) = 1.800 + 2.000 + 1.600 = 5.400$ (dalam ribuan Rp)</li>
+                                    <li>Feb: $(180 \cdot 12,5) + (40 \cdot 45) + (220 \cdot 7,5) = 2.250 + 1.800 + 1.650 = 5.700$</li>
+                                    <li>Mar: $(160 \cdot 13) + (60 \cdot 50) + (180 \cdot 8,5) = 2.080 + 3.000 + 1.530 = 6.610$</li>
+                                    <li>Apr: $(200 \cdot 11) + (55 \cdot 42) + (250 \cdot 9) = 2.200 + 2.310 + 2.250 = 6.760$</li>
+                                    <li>Pendapatan tertinggi memang di bulan April (Rp6.760.000). Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>(2) Komoditas paling stabil (rentang terkecil) adalah tomat.</b>
+                                <ul>
+                                    <li>Pendapatan Tomat (juta Rp): 1.8; 2.25; 2.08; 2.2. Rentang = 2.25 - 1.8 = 0.45 jt.</li>
+                                    <li>Pendapatan Cabai (juta Rp): 2.0; 1.8; 3.0; 2.31. Rentang = 3.0 - 1.8 = 1.2 jt.</li>
+                                    <li>Pendapatan Timun (juta Rp): 1.6; 1.65; 1.53; 2.25. Rentang = 2.25 - 1.53 = 0.72 jt.</li>
+                                    <li>Rentang terkecil dimiliki tomat. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                            <li><b>(3) Pendapatan terendah tomat terjadi pada bulan Januari.</b>
+                                <ul>
+                                    <li>Dari daftar pendapatan tomat di atas (1.8; 2.25; 2.08; 2.2), yang terendah adalah 1,8 juta di bulan Januari. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                            <li><b>(4) Bulan dengan panen cabai tertinggi juga bulan dengan pendapatan cabai tertinggi.</b>
+                                <ul>
+                                    <li>Panen cabai tertinggi: 60 kg (Maret).</li>
+                                    <li>Pendapatan cabai tertinggi: Rp3.000.000 (Maret). Keduanya terjadi di bulan yang sama. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena keempat pernyataan benar, jawaban yang tepat adalah E.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
                     <div class="header-title-sub"> <strong>Soal Nomor 9</strong> </div>
                 </div>
             </div>
         </header>
         <div class="content-wrapper">
-             <div class="soal-latihan">
+            <div class="soal-latihan">
                 <div class="soal-nomor">9.</div>
                 <div class="soal-konten">
                     <div class="pembahasan">
                         <b class="pembahasan-title">Jawaban: B. 29%</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini menguji kemampuan menghitung persentase kontribusi atau persentase bagian dari total. Ini adalah konsep fundamental dalam analisis data untuk memahami seberapa besar peran suatu komponen terhadap keseluruhannya.</p>
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
-                        <p>Rumus untuk menghitung persentase kontribusi adalah:</p>
-                        $$ \text{Persentase Kontribusi} = \left( \frac{\text{Nilai Bagian}}{\text{Nilai Total}} \right) \times 100\% $$
-                        Dalam soal ini:
+                        <p>Soal ini adalah tentang menghitung persentase kontribusi, yaitu membagi nilai bagian (pendapatan timun) dengan nilai total (total pendapatan bulan Februari) dan mengalikannya dengan 100%.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Nilai Bagian</b> adalah pendapatan dari penjualan timun pada bulan Februari.</li>
-                            <li><b>Nilai Total</b> adalah total pendapatan dari semua komoditas pada bulan Februari.</li>
+                           <li>Hitung pendapatan dari timun pada bulan Februari.</li>
+                           <li>Hitung total pendapatan dari semua komoditas pada bulan Februari.</li>
+                           <li>Bagi pendapatan timun dengan total pendapatan, lalu kalikan 100%.</li>
                         </ul>
-                        
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <ol>
-                            <li><b>Hitung Nilai Bagian (Pendapatan Timun Februari):</b>
-                                <ul>
-                                    <li>Hasil Panen Timun Februari: 220 kg</li>
-                                    <li>Harga Jual Timun Februari: Rp7.500/kg</li>
-                                    <li>Pendapatan Timun = $220 \times 7.500 = \text{Rp}1.650.000$</li>
-                                </ul>
-                            </li>
-                            <li><b>Hitung Nilai Total (Total Pendapatan Februari):</b>
-                                <p>Kita perlu menjumlahkan pendapatan dari semua komoditas di bulan Februari.</p>
-                                <ul>
-                                    <li>Pendapatan Tomat: $180 \text{ kg} \times \text{Rp}12.500/\text{kg} = \text{Rp}2.250.000$</li>
-                                    <li>Pendapatan Cabai: $40 \text{ kg} \times \text{Rp}45.000/\text{kg} = \text{Rp}1.800.000$</li>
-                                    <li>Pendapatan Timun: Rp1.650.000 (dari langkah 1)</li>
-                                    <li>Total Pendapatan = $2.250.000 + 1.800.000 + 1.650.000 = \text{Rp}5.700.000$</li>
-                                </ul>
-                            </li>
-                             <li><b>Hitung Persentase Kontribusi:</b>
-                                $$ \text{Persentase Timun} = \left( \frac{1.650.000}{5.700.000} \right) \times 100\% $$
-                                $$ \text{Persentase Timun} \approx 0,28947 \times 100\% $$
-                                $$ \text{Persentase Timun} \approx 28,95\% $$
-                            </li>
-                            <li><b>Kesimpulan:</b>
-                                <p>Nilai 28,95% paling mendekati 29%. Maka, jawaban yang benar adalah (B).</p>
-                            </li>
-                        </ol>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Pendapatan Timun (Februari):</b><br>
+                        $220 \text{ kg} \times \text{Rp}7.500/\text{kg} = \text{Rp}1.650.000$.<br>
+                        <br>
+                        <b>Total Pendapatan (Februari):</b><br>
+                        Tomat: $180 \times 12.500 = 2.250.000$<br>
+                        Cabai: $40 \times 45.000 = 1.800.000$<br>
+                        Timun: $1.650.000$<br>
+                        Total = $2.250.000 + 1.800.000 + 1.650.000 = \text{Rp}5.700.000$.<br>
+                        <br>
+                        <b>Persentase Kontribusi:</b><br>
+                        Persentase = $\frac{\text{Pendapatan Timun}}{\text{Total Pendapatan}} \times 100\% = \frac{1.650.000}{5.700.000} \times 100\% \approx 28,94\%$.<br>
+                        Nilai ini paling mendekati 29%.
                     </div>
                 </div>
             </div>
@@ -1670,43 +1459,22 @@
                 <div class="soal-nomor">10.</div>
                 <div class="soal-konten">
                     <div class="pembahasan">
-                        <b class="pembahasan-title">Jawaban: "Maret" dan "April" benar.</b><br>
+                        <b class="pembahasan-title">Jawaban: Maret dan April.</b><br>
                         <b class="pembahasan-title">1. Dasar Teori</b>
-                        <p>Soal ini adalah tipe Pilihan Ganda Kompleks yang menguji kemampuan analisis data dan perbandingan. Kita perlu menghitung total pendapatan untuk setiap bulan dan kemudian membandingkan setiap total tersebut dengan nilai target yang diberikan.</p>
-                        
-                        <b class="pembahasan-title">2. Konsep dan Rumus yang Digunakan</b>
+                        <p>Soal ini adalah soal analisis data dengan syarat. Kita harus menghitung total pendapatan untuk setiap bulan dan membandingkannya dengan target minimal Rp6.500.000.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
                         <ul>
-                            <li><b>Total Pendapatan Bulanan:</b>
-                                $$ \text{Total} = \text{Pendapatan Tomat} + \text{Pendapatan Cabai} + \text{Pendapatan Timun} $$
-                            </li>
-                            <li><b>Logika Perbandingan (Kondisi):</b>
-                                $$ \text{Memenuhi Target jika} \quad \text{Total Pendapatan Bulanan} \geq \text{Target} $$
-                            </li>
+                           <li>Gunakan data total pendapatan per bulan yang telah dihitung pada pembahasan soal nomor 8.</li>
+                           <li>Periksa setiap bulan apakah total pendapatannya $\ge$ Rp6.500.000.</li>
                         </ul>
-
-                        <b class="pembahasan-title">3. Pembahasan Rinci</b>
-                        <p>Kita akan menggunakan kembali tabel perhitungan total pendapatan bulanan dari pembahasan soal nomor 8, lalu memeriksa setiap bulan terhadap target Rp6.500.000.</p>
-                        
-                        <table class="tabel-kuantitas" style="font-size: 8pt;">
-                            <thead><tr><th>Bulan</th><th>Total Pendapatan</th><th>Memenuhi Target (≥ Rp6.500.000)?</th></tr></thead>
-                            <tbody>
-                                <tr><td>Januari</td><td>Rp5.400.000</td><td>Tidak</td></tr>
-                                <tr><td>Februari</td><td>Rp5.700.000</td><td>Tidak</td></tr>
-                                <tr><td>Maret</td><td>Rp6.610.000</td><td><b>Ya</b></td></tr>
-                                <tr><td>April</td><td>Rp6.760.000</td><td><b>Ya</b></td></tr>
-                            </tbody>
-                        </table>
-
-                        <p>Berdasarkan analisis tabel di atas:</p>
+                        <b class="pembahasan-title">3. Perhitungan dan Analisis</b>
                         <ul>
-                            <li><b>Januari:</b> Rp5.400.000 < Rp6.500.000 (Tidak memenuhi)</li>
-                            <li><b>Februari:</b> Rp5.700.000 < Rp6.500.000 (Tidak memenuhi)</li>
-                            <li><b>Maret:</b> Rp6.610.000 > Rp6.500.000 (<b>Memenuhi</b>)</li>
-                            <li><b>April:</b> Rp6.760.000 > Rp6.500.000 (<b>Memenuhi</b>)</li>
+                           <li>Januari: Rp5.400.000 (Tidak memenuhi)</li>
+                           <li>Februari: Rp5.700.000 (Tidak memenuhi)</li>
+                           <li>Maret: Rp6.610.000 (<b>Memenuhi</b>)</li>
+                           <li>April: Rp6.760.000 (<b>Memenuhi</b>)</li>
                         </ul>
-
-                        <b>Kesimpulan:</b>
-                        <p>Bulan yang berhasil memenuhi target pendapatan adalah Maret dan April. Oleh karena itu, pilihan yang harus dicentang adalah "Maret" dan "April".</p>
+                        Jadi, bulan yang berhasil memenuhi target adalah Maret dan April.
                     </div>
                 </div>
             </div>
@@ -1717,6 +1485,688 @@
         </footer>
     </section>
 
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 11</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 224 m²</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan konsep dasar geometri, yaitu menghitung luas bangun datar (persegi panjang dan persegi) dan operasi pengurangan untuk mencari luas sisa.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Hitung luas total lahan taman.</li>
+                           <li>Hitung luas area ayunan.</li>
+                           <li>Hitung luas area bak pasir.</li>
+                           <li>Kurangkan luas total lahan dengan total luas area ayunan dan bak pasir untuk mendapatkan luas area rumput.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Luas Total Lahan = Panjang $\times$ Lebar = $20 \text{ m} \times 15 \text{ m} = 300 \text{ m}^2$.<br>
+                        Luas Area Ayunan = $8 \text{ m} \times 5 \text{ m} = 40 \text{ m}^2$.<br>
+                        Luas Bak Pasir = Sisi $\times$ Sisi = $6 \text{ m} \times 6 \text{ m} = 36 \text{ m}^2$.<br>
+                        <br>
+                        Luas Area Rumput = Luas Total - (Luas Ayunan + Luas Bak Pasir)<br>
+                        Luas Area Rumput = $300 \text{ m}^2 - (40 \text{ m}^2 + 36 \text{ m}^2) = 300 - 76 = 224 \text{ m}^2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 12</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan kuantitas ini menggabungkan geometri (menghitung luas) dan aritmetika sosial (menghitung total biaya).</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li><b>Hitung Kuantitas P:</b> Total biaya pembelian pasir.
+                             <ul>
+                               <li>Hitung luas bak pasir.</li>
+                               <li>Kalikan luas dengan harga pasir per m².</li>
+                             </ul>
+                           </li>
+                           <li><b>Identifikasi Kuantitas Q:</b> Nilainya sudah diberikan, yaitu Rp4.500.000.</li>
+                           <li><b>Bandingkan P dan Q.</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Biaya Pasir):</b><br>
+                        Luas Bak Pasir = $6 \text{ m} \times 6 \text{ m} = 36 \text{ m}^2$.<br>
+                        Biaya P = Luas $\times$ Harga per m² = $36 \text{ m}^2 \times \text{Rp}120.000/\text{m}^2 = \text{Rp}4.320.000$.<br>
+                        <br>
+                        <b>Kuantitas Q:</b><br>
+                        Biaya Q = Rp4.500.000.<br>
+                        <br>
+                        <b>Perbandingan:</b><br>
+                        Rp4.320.000 (P) < Rp4.500.000 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 13</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Rp5.080.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal problem solving yang membutuhkan beberapa langkah perhitungan: menghitung luas, keliling, total biaya dari beberapa komponen, dan akhirnya mencari sisa dari anggaran yang diberikan.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Hitung total biaya pembelian pasir.</li>
+                           <li>Hitung total biaya pemasangan rumput.</li>
+                           <li>Hitung total biaya pembuatan pagar (berdasarkan keliling taman).</li>
+                           <li>Jumlahkan semua biaya material tersebut.</li>
+                           <li>Kurangkan anggaran total dengan total biaya material untuk mendapatkan sisa anggaran.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Biaya Pasir:</b><br>
+                        Luas = $36 \text{ m}^2$. Biaya = $36 \times 120.000 = \text{Rp}4.320.000$.<br>
+                        <br>
+                        <b>Biaya Rumput:</b><br>
+                        Luas = $224 \text{ m}^2$ (dari soal no. 11). Biaya = $224 \times 150.000 = \text{Rp}33.600.000$.<br>
+                        <br>
+                        <b>Biaya Pagar:</b><br>
+                        Keliling = $2 \times (20 + 15) = 2 \times 35 = 70 \text{ m}$.<br>
+                        Biaya = $70 \times 100.000 = \text{Rp}7.000.000$.<br>
+                        <br>
+                        <b>Total Biaya Material:</b><br>
+                        Total = Rp4.320.000 + Rp33.600.000 + Rp7.000.000 = Rp44.920.000.<br>
+                        <br>
+                        <b>Sisa Anggaran:</b><br>
+                        Sisa = Rp50.000.000 - Rp44.920.000 = Rp5.080.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 14</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 2</b><br>
+                         <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan matematis berdasarkan data dari wacana dan menghitung jumlah pernyataan yang benar.</p>
+                        <b class="pembahasan-title">2. Evaluasi Setiap Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Luas area bak pasir (36 m²) sama dengan luas area ayunan (40 m²).</b>
+                                <ul><li>$36 \neq 40$. Pernyataan <b>SALAH</b>.</li></ul>
+                            </li>
+                            <li><b>(2) Biaya rumput (> 8x biaya pasir).</b>
+                                <ul>
+                                    <li>Biaya Rumput: Rp33.600.000.</li>
+                                    <li>Biaya Pasir: Rp4.320.000.</li>
+                                    <li>Rasio: $\frac{33.600.000}{4.320.000} \approx 7,78$.</li>
+                                    <li>$7,78$ tidak lebih dari $8$. Pernyataan <b>SALAH</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>(3) Total panjang pagar yang dibutuhkan adalah 70 meter.</b>
+                                <ul>
+                                     <li>Keliling = $2 \times (20+15) = 70$ m. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>(4) Total luas area bermain (ayunan dan bak pasir) adalah 76 m².</b>
+                                <ul>
+                                     <li>Total Luas = Luas Ayunan + Luas Pasir = $40 + 36 = 76 \text{ m}^2$. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Terdapat 2 pernyataan yang benar, yaitu (3) dan (4).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 15</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal AKD ini menanyakan "Berapa total biaya pembangunan?". Total biaya terdiri dari beberapa komponen: $Biaya Total = Biaya Material + Biaya Pemasangan + Biaya Tambahan$. Dari wacana dan soal sebelumnya, kita sudah tahu Biaya Material = Rp44.920.000. Kita perlu mencari informasi tentang Biaya Pemasangan dan Biaya Tambahan.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>Pernyataan (1):</b> "Biaya pemasangan... adalah 20% dari total biaya pembelian material."
+                                <ul>
+                                    <li>Ini memungkinkan kita menghitung Biaya Pemasangan: $0,20 \times 44.920.000 = \text{Rp}8.984.000$.</li>
+                                    <li>Namun, kita tidak tahu apakah ada Biaya Tambahan (seperti harga ayunannya sendiri). Total Biaya belum bisa dipastikan. Jadi, (1) <b>TIDAK CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>Pernyataan (2):</b> "Ada biaya tambahan untuk pembelian 4 set ayunan seharga Rp2.000.000 per set."
+                                <ul>
+                                    <li>Ini memberikan nilai Biaya Tambahan: $4 \times 2.000.000 = \text{Rp}8.000.000$.</li>
+                                    <li>Namun, kita tidak tahu berapa Biaya Pemasangan materialnya. Total Biaya belum bisa dipastikan. Jadi, (2) <b>TIDAK CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                            <li><b>Pernyataan (1) dan (2) Bersama:</b>
+                                <ul>
+                                    <li>Kita tahu Biaya Material (Rp44.920.000).</li>
+                                    <li>Dari (1), kita bisa hitung Biaya Pemasangan (Rp8.984.000).</li>
+                                    <li>Dari (2), kita tahu Biaya Tambahan (Rp8.000.000).</li>
+                                    <li>Total Biaya Pembangunan dapat dihitung dengan menjumlahkan ketiganya. Jadi, bersama-sama <b>CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                         Karena kedua pernyataan dibutuhkan bersama-sama untuk menjawab pertanyaan, maka jawaban yang benar adalah C.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 16</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 6 resep</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal rasio dan proporsi sederhana yang diselesaikan dengan operasi pembagian.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Identifikasi jumlah kue yang dipesan.</li>
+                           <li>Identifikasi jumlah kue yang dihasilkan per resep.</li>
+                           <li>Bagi total pesanan dengan jumlah kue per resep untuk menemukan jumlah resep yang dibutuhkan.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Jumlah Resep = $\frac{\text{Total Kue Pesanan}}{\text{Jumlah Kue per Resep}} = \frac{150 \text{ kue}}{25 \text{ kue/resep}} = 6 \text{ resep}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 17</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan kuantitas ini memerlukan perhitungan biaya total dari beberapa resep, yang melibatkan penjumlahan dan perkalian.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li><b>Hitung Kuantitas P:</b>
+                             <ul>
+                               <li>Hitung total biaya bahan untuk satu resep.</li>
+                               <li>Hitung jumlah resep yang dibutuhkan untuk 150 kue (dari soal no. 16).</li>
+                               <li>Kalikan biaya per resep dengan jumlah resep.</li>
+                             </ul>
+                           </li>
+                           <li><b>Identifikasi Kuantitas Q:</b> Nilainya Rp185.000.</li>
+                           <li><b>Bandingkan P dan Q.</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Total Biaya Bahan):</b><br>
+                        Biaya 1 resep = Rp7.000 + Rp6.000 + Rp8.000 + Rp4.000 + Rp5.000 = Rp30.000.<br>
+                        Jumlah resep = 6 (dari soal no. 16).<br>
+                        Biaya P = $6 \text{ resep} \times \text{Rp}30.000/\text{resep} = \text{Rp}180.000$.<br>
+                        <br>
+                        <b>Kuantitas Q:</b><br>
+                        Biaya Q = Rp185.000.<br>
+                        <br>
+                        <b>Perbandingan:</b><br>
+                        Rp180.000 (P) < Rp185.000 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 18</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. Rp1.680</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah aplikasi aritmetika sosial tentang penentuan harga jual berdasarkan modal dan persentase keuntungan yang diinginkan. Rumus dasarnya: $Harga Jual Total = Modal Total + Keuntungan$.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Hitung total biaya produksi (modal) untuk 150 kue (sudah dihitung di soal no. 17).</li>
+                           <li>Hitung besar keuntungan dalam Rupiah (40% dari modal).</li>
+                           <li>Hitung total pendapatan yang harus diterima (modal + keuntungan).</li>
+                           <li>Bagi total pendapatan dengan jumlah kue (150) untuk mendapatkan harga jual per kue.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Modal Total (150 kue):</b> Rp180.000.<br>
+                        <b>Keuntungan:</b> $40\% \times \text{Rp}180.000 = 0,4 \times 180.000 = \text{Rp}72.000$.<br>
+                        <b>Total Pendapatan:</b> Rp180.000 + Rp72.000 = Rp252.000.<br>
+                        <b>Harga Jual per Kue:</b> $\frac{\text{Total Pendapatan}}{\text{Jumlah Kue}} = \frac{252.000}{150} = \text{Rp}1.680$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 19</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua pernyataan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan yang berbeda, mencakup perhitungan kebutuhan bahan, rasio, analisis biaya, dan biaya satuan.</p>
+                        <b class="pembahasan-title">2. Evaluasi Setiap Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Untuk 150 kue, diperlukan total 24 butir telur.</b>
+                                <ul><li>Dibutuhkan 6 resep. Setiap resep butuh 4 telur. Total telur = $6 \times 4 = 24$ butir. Pernyataan <b>BENAR</b>.</li></ul>
+                            </li>
+                            <li><b>(2) Rasio berat tepung terigu terhadap gula pasir adalah 5:4.</b>
+                                <ul><li>Rasio = $500 \text{ gram} : 400 \text{ gram}$. Disederhanakan dengan membagi keduanya dengan 100, menjadi $5:4$. Pernyataan <b>BENAR</b>.</li></ul>
+                            </li>
+                             <li><b>(3) Biaya telur merupakan komponen biaya terbesar dalam satu resep.</b>
+                                <ul>
+                                     <li>Biaya: Tepung (7rb), Gula (6rb), Telur (8rb), Santan (4rb), Lain-lain (5rb). Biaya telur (Rp8.000) adalah yang terbesar. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>(4) Modal per kue adalah Rp1.200.</b>
+                                <ul>
+                                     <li>Modal 1 resep = Rp30.000. Menghasilkan 25 kue. Modal per kue = $\frac{30.000}{25} = \text{Rp}1.200$. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena keempat pernyataan benar, jawaban yang tepat adalah E.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 20</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal AKD ini menanyakan "Berapa total keuntungan?". Rumus keuntungan adalah: $Keuntungan = Pendapatan Total - Modal Total$. Modal Total untuk 150 kue sudah diketahui dari wacana (Rp180.000). Jadi, kita perlu mencari tahu apakah Pendapatan Total bisa dihitung. Pendapatan Total = Jumlah Kue Terjual $\times$ Harga Jual per Kue.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>Pernyataan (1):</b> "Ibu Rina menjual semua 150 kue yang ia buat."
+                                <ul>
+                                    <li>Ini memberikan informasi 'Jumlah Kue Terjual' = 150.</li>
+                                    <li>Namun, kita tidak tahu 'Harga Jual per Kue'. Pendapatan Total tidak bisa dihitung. Jadi, (1) <b>TIDAK CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>Pernyataan (2):</b> "Harga jual per kue ditetapkan Rp2.000."
+                                <ul>
+                                    <li>Ini memberikan informasi 'Harga Jual per Kue' = Rp2.000.</li>
+                                    <li>Namun, kita tidak tahu 'Jumlah Kue Terjual' (bisa saja tidak semua laku). Pendapatan Total tidak bisa dihitung. Jadi, (2) <b>TIDAK CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                            <li><b>Pernyataan (1) dan (2) Bersama:</b>
+                                <ul>
+                                    <li>Kita tahu Jumlah Kue Terjual (150) dan Harga Jual per Kue (Rp2.000).</li>
+                                    <li>Pendapatan Total dapat dihitung: $150 \times 2.000 = \text{Rp}300.000$.</li>
+                                    <li>Karena Pendapatan Total bisa dihitung, maka Keuntungan juga bisa dihitung. Jadi, bersama-sama <b>CUKUP</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                         Karena kedua pernyataan dibutuhkan bersama-sama, jawaban yang benar adalah C.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 21</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">21.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. Rp900.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal aritmetika sederhana yang menanyakan total biaya awal. Biaya awal terdiri dari pembayaran pertama (biasanya untuk satu bulan pertama) ditambah biaya satu kali seperti biaya instalasi.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Identifikasi biaya bulanan Provider C dari tabel.</li>
+                           <li>Identifikasi biaya instalasi Provider C dari tabel.</li>
+                           <li>Jumlahkan kedua biaya tersebut.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Biaya Awal = Biaya Bulanan + Biaya Instalasi<br>
+                        Biaya Awal = Rp600.000 + Rp300.000 = Rp900.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 22</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">22.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan berdasarkan data dari tabel, yang melibatkan pembacaan data, perkalian, perbandingan, dan pengurangan.</p>
+                        <b class="pembahasan-title">2. Evaluasi Setiap Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Provider B adalah satu-satunya yang tidak mengenakan biaya instalasi.</b>
+                                <ul><li>Dari tabel, biaya instalasi A=Rp200.000, B=Gratis, C=Rp300.000. Pernyataan <b>BENAR</b>.</li></ul>
+                            </li>
+                            <li><b>(2) Dengan membayar bulanan, total biaya setahun untuk Provider B adalah Rp5.400.000.</b>
+                                <ul><li>Total biaya = $12 \text{ bulan} \times \text{Rp}450.000/\text{bulan} = \text{Rp}5.400.000$. Pernyataan <b>BENAR</b>.</li></ul>
+                            </li>
+                             <li><b>(3) Kecepatan internet GlobalConnect dua kali lipat kecepatan CepatNet.</b>
+                                <ul>
+                                     <li>Kecepatan C (GlobalConnect) = 100 Mbps. Kecepatan A (CepatNet) = 50 Mbps. $100 = 2 \times 50$. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                             <li><b>(4) Selisih biaya bulanan antara provider termahal dan termurah adalah Rp250.000.</b>
+                                <ul>
+                                     <li>Termahal: C (Rp600.000). Termurah: A (Rp350.000).</li>
+                                     <li>Selisih = Rp600.000 - Rp350.000 = Rp250.000. Pernyataan <b>BENAR</b>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena keempat pernyataan benar, jumlah pernyataan yang benar adalah 4.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 23</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">23.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan kuantitas ini membandingkan "biaya efektif per bulan". Biaya efektif dihitung dari total biaya tahunan (setelah promo) dibagi dengan 12 bulan.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li><b>Hitung Kuantitas P (Provider A):</b> Hitung total biaya promo tahunan (bayar 10 bulan), lalu bagi 12.</li>
+                           <li><b>Hitung Kuantitas Q (Provider B):</b> Hitung total biaya 12 bulan, berikan diskon 15%, lalu bagi 12.</li>
+                           <li><b>Bandingkan P dan Q.</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Provider A):</b><br>
+                        Total bayar = $10 \text{ bulan} \times \text{Rp}350.000 = \text{Rp}3.500.000$ (untuk 12 bulan).<br>
+                        Biaya efektif P = $\frac{3.500.000}{12} \approx \text{Rp}291.667$.<br>
+                        <br>
+                        <b>Kuantitas Q (Provider B):</b><br>
+                        Biaya 12 bulan = $12 \times 450.000 = \text{Rp}5.400.000$.<br>
+                        Total bayar = $5.400.000 \times (100\% - 15\%) = 5.400.000 \times 0,85 = \text{Rp}4.590.000$.<br>
+                        Biaya efektif Q = $\frac{4.590.000}{12} = \text{Rp}382.500$.<br>
+                        <br>
+                        <b>Perbandingan:</b><br>
+                        Rp291.667 (P) < Rp382.500 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 24</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">24.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Pernyataan 1, 3, dan 4 benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta evaluasi pernyataan mengenai biaya total tahun pertama. Ini berarti kita harus menghitung biaya langganan setelah promo ditambah biaya instalasi satu kali.</p>
+                        <b class="pembahasan-title">2. Perhitungan Biaya Total Tahun Pertama</b>
+                        <ul>
+                           <li><b>Provider A:</b> (Bayar 10 bulan) + Instalasi = $(10 \times 350.000) + 200.000 = 3.500.000 + 200.000 = \text{Rp}3.700.000$.</li>
+                           <li><b>Provider B:</b> (Total 12 bulan - Diskon 15%) + Instalasi = $(12 \times 450.000) \times 0,85 + 0 = 5.400.000 \times 0,85 = \text{Rp}4.590.000$.</li>
+                           <li><b>Provider C:</b> (Total 12 bulan) - Cashback + Instalasi = $(12 \times 600.000) - 500.000 + 300.000 = 7.200.000 - 500.000 + 300.000 = \text{Rp}7.000.000$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Evaluasi Pernyataan</b>
+                        <ul>
+                           <li><b>Pernyataan 1:</b> "Biaya total tahun pertama Provider A adalah Rp3.700.000." (<b>BENAR</b>)</li>
+                           <li><b>Pernyataan 2:</b> "Provider B menawarkan biaya total tahun pertama yang paling murah." (<b>SALAH</b>, Provider A lebih murah: Rp3,7 jt < Rp4,59 jt).</li>
+                           <li><b>Pernyataan 3:</b> "Penghematan terbesar didapat dari promo Provider B."
+                            <ul>
+                                <li>Hemat A = Biaya 2 bulan = $2 \times 350.000 = \text{Rp}700.000$.</li>
+                                <li>Hemat B = Diskon 15% = $0,15 \times 5.400.000 = \text{Rp}810.000$.</li>
+                                <li>Hemat C = Cashback = Rp500.000.</li>
+                                <li>Penghematan terbesar adalah Rp810.000 dari Provider B. (<b>BENAR</b>)</li>
+                            </ul>
+                           </li>
+                           <li><b>Pernyataan 4:</b> "Biaya total tahun pertama Provider C setelah cashback adalah Rp7.000.000." (<b>BENAR</b>, sesuai perhitungan di atas).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 25</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">25.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Provider B dan C sama efisien</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk menghitung rasio "biaya per Mbps" untuk menentukan efisiensi. Nilai yang lebih rendah menunjukkan efisiensi yang lebih tinggi (lebih murah untuk setiap Mbps yang didapat).</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Untuk setiap provider, bagi biaya bulanan dengan kecepatan internet yang ditawarkan.</li>
+                           <li>Bandingkan hasil dari ketiga provider untuk menemukan nilai yang terendah.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <ul>
+                           <li><b>Provider A:</b> $\frac{\text{Rp}350.000}{50 \text{ Mbps}} = \text{Rp}7.000 \text{ per Mbps}$.</li>
+                           <li><b>Provider B:</b> $\frac{\text{Rp}450.000}{75 \text{ Mbps}} = \text{Rp}6.000 \text{ per Mbps}$.</li>
+                           <li><b>Provider C:</b> $\frac{\text{Rp}600.000}{100 \text{ Mbps}} = \text{Rp}6.000 \text{ per Mbps}$.</li>
+                        </ul>
+                        <p>Provider B dan C memiliki biaya per Mbps yang sama dan merupakan yang termurah, sehingga keduanya sama-sama paling efisien.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
 </body>
 </html>
-
