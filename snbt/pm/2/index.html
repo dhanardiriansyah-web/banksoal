@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal - Penalaran Matematika 2</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #64b6ac;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #004d40;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* To contain pseudo-elements */
+      }
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--header-title-color);
+        }
+        .cover-page .title {
+            font-size: 32pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--header-title-color);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .cover-page .subtitle {
+            font-size: 16pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+          .cover-page img {
+            max-width: 200px;
+            margin-bottom: 40px;
+        }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0; /* No watermark on cover page */
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #b0b0b0;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+      .soal-gambar {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header {
+          display: block;
+          margin: -1.8cm -2.5cm 20px -2.5cm;
+          position: relative;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENALARAN MATEMATIKA 2</h1>
+            <p class="subtitle">Latihan Soal Berbasis Wacana UTBK-SNPMB</p>
+        </div>
+    </section>
+
+    <!-- Wacana 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 1: Optimisasi Biaya Proyek Renovasi Dapur</h3>
+            <div class="wacana-box">
+                <p>Pak Budi merencanakan renovasi dapur dengan anggaran maksimal Rp10.000.000. Berikut adalah rincian kebutuhan dan biaya:</p>
+                <table class="tabel-kuantitas">
+                    <thead>
+                        <tr>
+                            <th>Kebutuhan</th>
+                            <th>Pilihan</th>
+                            <th>Biaya per m² / Paket</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="2">Keramik Lantai (12 m²)</td>
+                            <td>Tipe A</td>
+                            <td>Rp150.000</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td>Tipe B</td>
+                            <td>Rp180.000</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Cat Dinding (30 m²)</td>
+                            <td>Merek X</td>
+                            <td>Rp25.000</td>
+                            <td>Perlu 2 lapisan</td>
+                        </tr>
+                        <tr>
+                            <td>Merek Y</td>
+                            <td>Rp45.000</td>
+                            <td>Cukup 1 lapisan</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Kabinet Dapur</td>
+                            <td>Paket Hemat</td>
+                            <td>Rp3.500.000</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td>Paket Premium</td>
+                            <td>Rp5.000.000</td>
+                            <td>---</td>
+                        </tr>
+                        <tr>
+                            <td>Jasa Tukang</td>
+                            <td>Borongan</td>
+                            <td>Rp2.000.000</td>
+                            <td>Termasuk pemasangan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">1.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Geometri Kontekstual</div>
+                        Berapa total biaya yang dibutuhkan untuk membeli keramik lantai Tipe A?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp1.200.000</li>
+                            <li data-option="B">Rp1.500.000</li>
+                            <li data-option="C">Rp1.800.000</li>
+                            <li data-option="D">Rp2.160.000</li>
+                            <li data-option="E">Rp2.500.000</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="soal-latihan">
+                    <div class="soal-nomor">2.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Total biaya cat dinding menggunakan Merek X</td><td>Total biaya cat dinding menggunakan Merek Y</td></tr>
+                        </table>
+                        Hubungan yang benar antara kuantitas P dan Q adalah...
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 1</h3>
+            <div class="soal-container-2-kolom">
+                <div> <!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Aritmetika Sosial</div>
+                            Pak Budi telah memutuskan untuk menggunakan Paket Kabinet Hemat. Pilihan material manakah yang memungkinkan total biaya renovasinya (termasuk jasa) tidak melebihi anggaran? (Jawaban bisa lebih dari satu)
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Keramik Tipe A & Cat Merek Y</span></div>
+                                <div><input type="checkbox"/><span>Keramik Tipe B & Cat Merek Y</span></div>
+                                <div><input type="checkbox"/><span>Keramik Tipe A & Cat Merek X</span></div>
+                                <div><input type="checkbox"/><span>Keramik Tipe B & Cat Merek X</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Kontekstual</div>
+                            Berapa sisa anggaran Pak Budi setelah renovasi selesai?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Pak Budi memilih opsi termurah untuk setiap kategori material (keramik, cat, dan kabinet).</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Total pengeluaran Pak Budi untuk material dan jasa adalah Rp8.800.000.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div> <!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Aritmetika Sosial</div>
+                            Dari empat pernyataan di bawah ini, berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Selisih total biaya antara penggunaan Keramik Tipe A dan Keramik Tipe B adalah Rp360.000.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Biaya cat Merek X lebih mahal Rp150.000 daripada Merek Y.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Kombinasi termahal (Keramik B, Cat X, Kabinet Premium) ditambah jasa tukang akan melebihi anggaran.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Porsi biaya jasa tukang adalah 25% dari total biaya jika Pak Budi memilih semua opsi material termurah.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Wacana 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 2: Langganan Platform Streaming Digital</h3>
+            <div class="wacana-box">
+                <p>Sebuah keluarga mempertimbangkan tiga platform streaming. Rincian biaya dan fitur utama disajikan dalam tabel berikut.</p>
+                <table class="tabel-kuantitas" style="font-size: 8pt; text-align:center;">
+                    <thead>
+                        <tr><th>Fitur</th><th>Netflux</th><th>Disnoy+</th><th>HGO Max</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Biaya/bulan (Dasar)</td><td>Rp54.000</td><td>Rp39.000</td><td>-</td></tr>
+                        <tr><td>Biaya/bulan (Premium)</td><td>Rp186.000</td><td>-</td><td>Rp79.000</td></tr>
+                        <tr><td>Biaya/tahun (Premium)</td><td>-</td><td>Rp199.000</td><td>Rp790.000 (Setara bayar 10 bulan)</td></tr>
+                        <tr><td>Kualitas (Premium)</td><td>4K</td><td>4K</td><td>Full HD</td></tr>
+                        <tr><td>Jumlah Profil</td><td>5</td><td>7</td><td>5</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">6.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                        Berapa total biaya yang dikeluarkan jika sebuah keluarga berlangganan Netflux Premium selama setahun penuh dengan pembayaran bulanan?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp1.860.000</li>
+                            <li data-option="B">Rp2.046.000</li>
+                            <li data-option="C">Rp2.232.000</li>
+                            <li data-option="D">Rp2.400.000</li>
+                            <li data-option="E">Rp1.990.000</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">7.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                         Keluarga tersebut terdiri dari 4 orang yang akan aktif menggunakan layanan.
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Biaya per orang per bulan untuk Disnoy+ (paket tahunan).</td><td>Biaya per orang per bulan untuk HGO Max Premium (paket bulanan).</td></tr>
+                        </table>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 2</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Aritmetika Sosial</div>
+                            Berdasarkan informasi dari wacana, manakah di antara pernyataan berikut yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Mengambil paket tahunan HGO Max Premium lebih hemat Rp158.000 dibandingkan membayar bulanan selama 12 bulan.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Disnoy+ adalah satu-satunya platform yang menawarkan kualitas 4K dengan biaya di bawah Rp200.000 per tahun.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Biaya bulanan efektif Disnoy+ (dihitung dari paket tahunan) adalah yang termurah di antara semua opsi yang ada.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Untuk 5 pengguna, Netflux Premium memiliki biaya per profil per bulan yang lebih tinggi daripada HGO Max Premium.</span></div>
+                            </div>
+                             <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1), (2), dan (3) benar.</li>
+                                <li data-option="B">Pernyataan (1) dan (3) benar.</li>
+                                <li data-option="C">Pernyataan (2) dan (4) benar.</li>
+                                <li data-option="D">Hanya pernyataan (4) yang benar.</li>
+                                <li data-option="E">Semua pernyataan benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Logika Kontekstual</div>
+                            Kebutuhan keluarga adalah sebagai berikut: minimal 4 profil, kualitas video harus 4K, dan anggaran maksimal Rp1.500.000 per tahun. Paket mana saja yang memenuhi SEMUA kriteria tersebut?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Netflux Dasar (dibayar bulanan)</span></div>
+                                <div><input type="checkbox"/><span>Netflux Premium (dibayar bulanan)</span></div>
+                                <div><input type="checkbox"/><span>Disnoy+ (paket tahunan)</span></div>
+                                <div><input type="checkbox"/><span>HGO Max Premium (paket tahunan)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                            Berapa total penghematan yang didapat dengan memilih paket tahunan HGO Max Premium dibandingkan membayar bulanan selama 12 bulan?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp79.000</li>
+                                <li data-option="B">Rp158.000</li>
+                                <li data-option="C">Rp199.000</li>
+                                <li data-option="D">Rp790.000</li>
+                                <li data-option="E">Rp948.000</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Wacana 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 3: Alokasi Anggaran Bulanan Mahasiswa</h3>
+            <div class="wacana-box">
+                <p>Budi, seorang mahasiswa, menerima uang saku bulanan sebesar Rp3.000.000. Alokasi dananya divisualisasikan dalam diagram lingkaran berikut:</p>
+                <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_avybtv_6968.png" alt="Diagram Alokasi Anggaran Budi" class="soal-gambar" style="max-width: 350px;">
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">11.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Persentase</div>
+                        Berapa besar dana yang dialokasikan Budi untuk tabungan setiap bulannya?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp100.000</li>
+                            <li data-option="B">Rp150.000</li>
+                            <li data-option="C">Rp200.000</li>
+                            <li data-option="D">Rp300.000</li>
+                            <li data-option="E">Rp450.000</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">12.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Persentase</div>
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Total dana untuk sewa kos dan makan.</td><td>Total dana untuk transportasi, hiburan, dan tabungan.</td></tr>
+                        </table>
+                         <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 3</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                            Pada suatu bulan, biaya transportasi Budi ternyata membengkak menjadi Rp400.000. Untuk menutupi kekurangan tersebut, Budi terpaksa mengambil seluruhnya dari pos hiburan. Berapa sisa dana hiburan Budi pada bulan tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Rp50.000</li>
+                                <li data-option="B">Rp150.000</li>
+                                <li data-option="C">Rp250.000</li>
+                                <li data-option="D">Rp350.000</li>
+                                <li data-option="E">Rp450.000</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Persentase</div>
+                            Berdasarkan alokasi anggaran normal, berapa banyak pernyataan yang benar dari empat pernyataan di bawah ini?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Anggaran hiburan Budi tiga kali lebih besar dari anggaran tabungannya.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Selisih antara anggaran makan dan anggaran transportasi adalah Rp600.000.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Total dana untuk kebutuhan primer (kos dan makan) adalah Rp2.100.000.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Porsi dana tabungan adalah 5% dari total uang saku.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Logika Kontekstual</div>
+                            Apakah Budi dapat membeli jaket seharga Rp500.000 di akhir bulan menggunakan dana dari tabungan dan sisa anggaran lainnya?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Bulan ini, Budi berhasil menghemat 10% dari anggaran makannya dan uang tersebut tidak digunakan untuk hal lain.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Budi tidak menggunakan anggaran hiburannya sama sekali bulan ini.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Wacana 4 -->
+     <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 4: Sistem Poin dan Peringkat Gim Online</h3>
+            <div class="wacana-box">
+                 <p>Sebuah gim online "Arena Legenda" menerapkan sistem poin sebagai berikut:</p>
+                <ul>
+                    <li>Setiap pemain memulai permainan dengan 1.000 poin.</li>
+                    <li>Menang: +25 poin.</li>
+                    <li>Kalah: -10 poin.</li>
+                    <li>Seri: +5 poin.</li>
+                    <li>Bonus "Winning Streak": Setelah menang 3 kali berturut-turut, pemain mendapatkan bonus tambahan +50 poin (bonus ini diberikan tepat setelah kemenangan ketiga).</li>
+                </ul>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">16.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa | Topik: Pola & Logika</div>
+                        Rina memainkan 5 pertandingan dengan hasil: Menang, Menang, Menang, Kalah, Seri. Berapa total poin Rina sekarang?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1.075</li>
+                            <li data-option="B">1.100</li>
+                            <li data-option="C">1.120</li>
+                            <li data-option="D">1.150</li>
+                            <li data-option="E">1.170</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">17.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Pola & Logika</div>
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Poin akhir pemain A setelah 5 laga: Menang, Kalah, Menang, Kalah, Menang.</td><td>Poin akhir pemain B setelah 5 laga: Seri, Seri, Seri, Seri, Seri.</td></tr>
+                        </table>
+                         <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 4</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Pola & Logika</div>
+                            Manakah di antara pernyataan berikut yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Untuk mendapatkan poin persis 1.100, seorang pemain bisa mencapainya dengan 4 kali menang.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Poin minimal yang bisa didapat dari 3 pertandingan adalah 970.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Total perubahan poin dari hasil Menang-Menang-Menang lebih besar daripada hasil Menang-Menang-Menang-Kalah.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Tidak mungkin seorang pemain memiliki poin akhir yang ganjil.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1), (2), dan (3) benar.</li>
+                                <li data-option="B">Pernyataan (1) dan (3) benar.</li>
+                                <li data-option="C">Pernyataan (2) dan (4) benar.</li>
+                                <li data-option="D">Hanya pernyataan (4) yang benar.</li>
+                                <li data-option="E">Semua pernyataan benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Logika Kontekstual</div>
+                            Seorang pemain memiliki 1.080 poin setelah 4 pertandingan. Manakah rekor pertandingan di bawah ini yang mungkin? (Jawaban bisa lebih dari satu)
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Menang, Menang, Menang, Seri</span></div>
+                                <div><input type="checkbox"/><span>Menang, Menang, Seri, Menang</span></div>
+                                <div><input type="checkbox"/><span>Menang, Menang, Menang, Kalah</span></div>
+                                <div><input type="checkbox"/><span>Menang, Seri, Menang, Menang</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Kontekstual</div>
+                            Berapa jumlah pertandingan yang dimenangkan oleh Budi? (Soal dimodifikasi agar memiliki solusi)
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Setelah 10 pertandingan, total poin Budi adalah 1.005 dan ia tidak pernah mendapat hasil seri.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Budi tidak pernah mendapatkan bonus "Winning Streak" selama 10 pertandingan tersebut.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+     <!-- Wacana 5 -->
+     <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 5: Pengelolaan Sampah di Kompleks Perumahan</h3>
+            <div class="wacana-box">
+                <p>Data rata-rata produksi sampah harian di Kompleks "Asri Jaya" dan harga jual sampah daur ulang adalah sebagai berikut:</p>
+                 <table class="tabel-kuantitas" style="font-size: 8pt; text-align:center;">
+                    <thead>
+                        <tr><th>Kategori Sampah</th><th>Produksi Rata-rata/Hari (kg)</th><th>Harga Jual Daur Ulang (per kg)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Organik</td><td>120</td><td>-</td></tr>
+                        <tr><td>Plastik</td><td>40</td><td>Rp2.500</td></tr>
+                        <tr><td>Kertas</td><td>25</td><td>Rp1.500</td></tr>
+                        <tr><td>Logam</td><td>5</td><td>Rp4.000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">21.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                        Berapa total potensi pendapatan dari penjualan semua sampah daur ulang selama 1 hari?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp100.000</li>
+                            <li data-option="B">Rp137.500</li>
+                            <li data-option="C">Rp157.500</li>
+                            <li data-option="D">Rp175.000</li>
+                            <li data-option="E">Rp190.000</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">22.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                        Asumsikan satu bulan adalah 30 hari.
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Total pendapatan dari sampah plastik selama satu bulan.</td><td>Total pendapatan dari sampah kertas dan logam selama satu bulan.</td></tr>
+                        </table>
+                         <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                            <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                            <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                            <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 2</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 5</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Biasa | Topik: Analisis Data</div>
+                            Pemerintah memberikan insentif sebesar Rp500.000 per bulan jika total sampah non-organik (plastik, kertas, logam) yang berhasil didaur ulang melebihi 2.000 kg per bulan (30 hari). Apakah kompleks tersebut berhak mendapatkan insentif, dan berapakah total pendapatan (penjualan + insentif) yang mereka terima bulan itu?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Ya, Rp5.225.000</li>
+                                <li data-option="B">Ya, Rp5.725.000</li>
+                                <li data-option="C">Tidak, Rp4.725.000</li>
+                                <li data-option="D">Tidak, Rp5.225.000</li>
+                                <li data-option="E">Ya, Rp4.725.000</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Analisis Data</div>
+                            Berapa banyak pernyataan yang benar dari empat pernyataan di bawah ini?
+                             <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Dalam seminggu (7 hari), total sampah organik yang dihasilkan adalah 840 kg.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Pendapatan dari sampah logam menyumbang kurang dari 15% dari total pendapatan daur ulang harian.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Total volume semua jenis sampah yang dihasilkan per hari adalah 190 kg.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Untuk mendapatkan Rp3.000.000 per bulan (30 hari) hanya dari penjualan sampah plastik, diperlukan pengumpulan rata-rata 40 kg plastik per hari.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Persentase</div>
+                            Melalui program penyuluhan, kompleks berhasil menekan produksi sampah organik sebesar 20% dan meningkatkan jumlah daur ulang plastik sebesar 10%. Manakah pernyataan berikut yang benar mengenai kondisi baru tersebut?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Total sampah harian berkurang menjadi 166 kg.</span></div>
+                                <div><input type="checkbox"/><span>Pendapatan harian dari penjualan plastik menjadi Rp110.000.</span></div>
+                                <div><input type="checkbox"/><span>Total pendapatan daur ulang harian menjadi Rp167.500.</span></div>
+                                <div><input type="checkbox"/><span>Jumlah sampah organik yang dihasilkan per hari menjadi 96 kg.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- KUNCI JAWABAN & PEMBAHASAN -->
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 1</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp1.800.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan dasar dalam menghitung luas bangun datar (persegi panjang) dan mengaplikasikannya dalam konteks aritmetika sosial untuk menghitung total biaya berdasarkan harga per satuan luas.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Identifikasi Kebutuhan:</b> Dari tabel diketahui kebutuhan keramik adalah untuk area seluas 12 m².</li>
+                            <li><b>Hitung total biaya keramik Tipe A:</b> Kalikan luas lantai dengan harga keramik Tipe A per m².</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Total Biaya = Luas Lantai $\times$ Harga per m²<br>
+                        Total Biaya = $12 \text{ m}^2 \times \text{Rp}150.000/\text{m}^2 = \text{Rp}1.800.000$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 2</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal perbandingan kuantitas yang membutuhkan perhitungan biaya berdasarkan kondisi yang berbeda. Kunci utamanya adalah memahami keterangan "Perlu 2 lapisan" untuk Merek X.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Analisis Kuantitas P (Cat Merek X):</b> Karena butuh 2 lapisan, total luas efektif yang harus dicat menjadi dua kali lipat luas dinding. Hitung biayanya.</li>
+                            <li><b>Analisis Kuantitas Q (Cat Merek Y):</b> Karena cukup 1 lapisan, luas efektif sama dengan luas dinding. Hitung biayanya.</li>
+                            <li><b>Bandingkan hasil P dan Q.</b></li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Merek X):</b><br>
+                        Luas efektif = $30 \text{ m}^2 \times 2 \text{ lapisan} = 60 \text{ m}^2$.<br>
+                        Biaya P = $60 \text{ m}^2 \times \text{Rp}25.000/\text{m}^2 = \text{Rp}1.500.000$.<br>
+                        <b>Kuantitas Q (Merek Y):</b><br>
+                        Luas efektif = $30 \text{ m}^2 \times 1 \text{ lapisan} = 30 \text{ m}^2$.<br>
+                        Biaya Q = $30 \text{ m}^2 \times \text{Rp}45.000/\text{m}^2 = \text{Rp}1.350.000$.<br>
+                        <b>Perbandingan:</b> Rp1.500.000 (P) > Rp1.350.000 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 3</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Semua pilihan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan untuk menghitung total biaya dari beberapa komponen dan membandingkannya dengan anggaran yang tersedia. Ini adalah soal analisis pilihan ganda kompleks.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung biaya tetap: Paket Kabinet Hemat + Jasa Tukang.</li>
+                            <li>Untuk setiap pilihan, hitung total biaya variabel (keramik + cat).</li>
+                            <li>Jumlahkan biaya tetap dan biaya variabel untuk setiap pilihan.</li>
+                            <li>Periksa apakah totalnya ≤ Rp10.000.000.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Biaya Tetap = Rp3.500.000 (Kabinet) + Rp2.000.000 (Jasa) = Rp5.500.000.<br>
+                        Biaya variabel: Keramik A (Rp1.800.000), Keramik B (Rp2.160.000), Cat X (Rp1.500.000), Cat Y (Rp1.350.000).
+                        <ul>
+                            <li><b>Keramik A & Cat Y:</b> Rp5.500.000 + Rp1.800.000 + Rp1.350.000 = Rp8.650.000 (✔ Memenuhi)</li>
+                            <li><b>Keramik B & Cat Y:</b> Rp5.500.000 + Rp2.160.000 + Rp1.350.000 = Rp9.010.000 (✔ Memenuhi)</li>
+                            <li><b>Keramik A & Cat X:</b> Rp5.500.000 + Rp1.800.000 + Rp1.500.000 = Rp8.800.000 (✔ Memenuhi)</li>
+                            <li><b>Keramik B & Cat X:</b> Rp5.500.000 + Rp2.160.000 + Rp1.500.000 = Rp9.160.000 (✔ Memenuhi)</li>
+                        </ul>
+                        Karena semua kombinasi menghasilkan total biaya di bawah anggaran, semua pilihan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 4</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Ini adalah soal Analisis Kecukupan Data (AKD). Tujuannya bukan untuk mencari jawaban akhir, tetapi untuk menentukan apakah informasi yang diberikan cukup untuk menjawab pertanyaan "Berapa sisa anggaran?".</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Identifikasi Pertanyaan Pokok:</b> Sisa Anggaran = Anggaran Awal - Total Pengeluaran. Anggaran awal (Rp10.000.000) diketahui dari wacana. Jadi, kita butuh nilai "Total Pengeluaran".</li>
+                            <li><b>Analisis Pernyataan (1):</b> Pernyataan ini memberikan instruksi ("pilih opsi termurah") yang memungkinkan kita menghitung Total Pengeluaran secara pasti. Karena bisa dihitung, maka (1) CUKUP.</li>
+                            <li><b>Analisis Pernyataan (2):</b> Pernyataan ini secara eksplisit memberikan nilai Total Pengeluaran (Rp8.800.000). Karena nilainya diketahui, maka (2) CUKUP.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena Pernyataan (1) SAJA cukup, dan Pernyataan (2) SAJA juga cukup, maka jawaban yang benar adalah (D).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 5</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 3</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk mengevaluasi kebenaran dari empat pernyataan terpisah dan menghitung berapa banyak yang benar. Ini memerlukan perhitungan yang teliti untuk setiap kasus.</p>
+                         <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Selisih biaya keramik:</b> Biaya Keramik B = $12 \text{ m}^2 \times \text{Rp}180.000 = \text{Rp}2.160.000$. Biaya Keramik A = Rp1.800.000. Selisih = Rp2.160.000 - Rp1.800.000 = Rp360.000. <b>(Benar)</b></li>
+                            <li><b>(2) Biaya cat X vs Y:</b> Biaya Cat X = Rp1.500.000. Biaya Cat Y = Rp1.350.000. Selisih = Rp150.000. Merek X lebih mahal. <b>(Benar)</b></li>
+                            <li><b>(3) Kombinasi termahal:</b> Keramik B (Rp2.160.000) + Cat X (Rp1.500.000) + Kabinet Premium (Rp5.000.000) + Jasa (Rp2.000.000) = Rp10.660.000. Nilai ini > Rp10.000.000. <b>(Benar)</b></li>
+                            <li><b>(4) Porsi jasa tukang:</b> Biaya termurah = Keramik A (Rp1.800.000) + Cat Y (Rp1.350.000) + Kabinet Hemat (Rp3.500.000) + Jasa (Rp2.000.000) = Rp8.650.000. Porsi jasa = $(\text{Rp}2.000.000 / \text{Rp}8.650.000) \times 100\% \approx 23,1\%$. Ini bukan 25%. <b>(Salah)</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Terdapat 3 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 6</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp2.232.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah perhitungan aritmetika dasar. Menghitung total biaya tahunan dari biaya bulanan yang diketahui.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi biaya bulanan Netflux Premium dari tabel.</li>
+                            <li>Kalikan biaya bulanan dengan 12 (jumlah bulan dalam setahun).</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Total Biaya = Biaya per Bulan $\times$ 12 Bulan<br>
+                        Total Biaya = Rp186.000 $\times$ 12 = Rp2.232.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 7</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini membandingkan biaya per unit (orang) per unit waktu (bulan) dari dua skema pembayaran yang berbeda (tahunan vs bulanan).</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Analisis Kuantitas P (Disnoy+):</b> Ubah biaya tahunan menjadi biaya bulanan, lalu bagi dengan jumlah orang.</li>
+                            <li><b>Analisis Kuantitas Q (HGO Max):</b> Bagi biaya bulanan dengan jumlah orang.</li>
+                            <li><b>Bandingkan hasilnya.</b></li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P (Disnoy+):</b><br>
+                        Biaya bulanan efektif = Rp199.000 / 12 bulan $\approx$ Rp16.583 per bulan.<br>
+                        Biaya per orang = Rp16.583 / 4 orang $\approx$ Rp4.146 per orang/bulan.<br>
+                        <b>Kuantitas Q (HGO Max):</b><br>
+                        Biaya per orang = Rp79.000 / 4 orang = Rp19.750 per orang/bulan.<br>
+                        <b>Perbandingan:</b> Rp4.146 (P) < Rp19.750 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 8</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua pernyataan benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini membutuhkan analisis kritis terhadap data tabel dan perhitungan untuk memverifikasi setiap pernyataan.</p>
+                         <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Penghematan HGO Max:</b> Biaya 12 bulan = $12 \times \text{Rp}79.000 = \text{Rp}948.000$. Biaya tahunan = Rp790.000. Hemat = Rp948.000 - Rp790.000 = Rp158.000. <b>(Benar)</b></li>
+                            <li><b>(2) Disnoy+ 4K < 200rb/tahun:</b> Biaya tahunan Disnoy+ adalah Rp199.000 (< 200rb) dan kualitasnya 4K. Netflux Premium yang 4K biayanya > 2jt/tahun. Jadi pernyataan ini benar. <b>(Benar)</b></li>
+                            <li><b>(3) Biaya efektif Disnoy+ termurah:</b> Biaya efektif Disnoy+ = Rp199.000/12 $\approx$ Rp16.583. Ini lebih murah dari semua opsi bulanan lain (Rp54rb, Rp39rb, Rp186rb, Rp79rb). <b>(Benar)</b></li>
+                            <li><b>(4) Biaya per profil Netflux vs HGO:</b> Netflux = Rp186.000/5 = Rp37.200. HGO Max = Rp79.000/5 = Rp15.800. Netflux lebih tinggi. <b>(Benar)</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena semua pernyataan benar, jawabannya adalah E.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 9</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Hanya "Disnoy+ (paket tahunan)" yang benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah soal logika dengan beberapa syarat (kriteria). Kita harus memeriksa setiap opsi terhadap semua kriteria yang diberikan.</p>
+                         <b class="pembahasan-title">2. Evaluasi Opsi Berdasarkan Kriteria</b>
+                         Kriteria: (1) Profil ≥ 4; (2) Kualitas = 4K; (3) Biaya/tahun ≤ Rp1.500.000.
+                        <ul>
+                            <li><b>Netflux Dasar:</b> Profil 5 (OK), Kualitas bukan 4K (<b>Gagal</b>).</li>
+                            <li><b>Netflux Premium:</b> Profil 5 (OK), Kualitas 4K (OK), Biaya/tahun = $12 \times 186.000 = \text{Rp}2.232.000$ (<b>Gagal</b>, > 1.5jt).</li>
+                            <li><b>Disnoy+ (tahunan):</b> Profil 7 (OK), Kualitas 4K (OK), Biaya/tahun = Rp199.000 (<b>OK</b>, < 1.5jt).</li>
+                            <li><b>HGO Max Premium:</b> Profil 5 (OK), Kualitas Full HD, bukan 4K (<b>Gagal</b>).</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Hanya paket Disnoy+ (tahunan) yang memenuhi semua kriteria.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 10</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Rp158.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta perhitungan selisih antara dua skema pembayaran untuk produk yang sama.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung total biaya jika membayar bulanan selama 12 bulan.</li>
+                            <li>Identifikasi biaya paket tahunan dari tabel.</li>
+                            <li>Hitung selisihnya.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Biaya 12 bulan = $12 \times \text{Rp}79.000 = \text{Rp}948.000$.<br>
+                        Biaya paket tahunan = Rp790.000.<br>
+                        Penghematan = Rp948.000 - Rp790.000 = Rp158.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 11</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Rp150.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk mencari nilai dari persentase sisa setelah beberapa alokasi dana.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li>Jumlahkan semua persentase alokasi yang diketahui dari diagram.</li>
+                            <li>Hitung persentase sisa untuk tabungan (100% - total alokasi).</li>
+                            <li>Hitung nilai rupiah dari persentase tabungan tersebut.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Total alokasi = 40% (Kos) + 30% (Makan) + 10% (Transportasi) + 15% (Hiburan) = 95%.<br>
+                        Persentase Tabungan = 100% - 95% = 5%.<br>
+                        Dana Tabungan = $5\% \times \text{Rp}3.000.000 = 0.05 \times 3.000.000 = \text{Rp}150.000$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 12</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan kuantitas ini dapat diselesaikan dengan efisien tanpa menghitung nilai rupiahnya, cukup dengan membandingkan total persentasenya karena basisnya (total uang saku) sama.</p>
+                         <b class="pembahasan-title">2. Perhitungan Persentase</b>
+                        <b>Kuantitas P (Sewa Kos + Makan):</b><br>
+                        Total Persentase P = 40% + 30% = 70%.<br>
+                        <b>Kuantitas Q (Transportasi + Hiburan + Tabungan):</b><br>
+                        Total Persentase Q = 10% + 15% + 5% = 30%.<br>
+                        <b class="pembahasan-title">3. Perbandingan</b>
+                        Karena 70% > 30%, maka nilai Kuantitas P pasti lebih besar daripada nilai Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 13</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. Rp350.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah problem solving aritmetika sosial, di mana ada perubahan pengeluaran pada satu pos anggaran yang harus ditutupi oleh pos anggaran lain.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                           <li>Hitung anggaran normal untuk transportasi dan hiburan.</li>
+                           <li>Hitung kekurangan dana transportasi (pengeluaran aktual - anggaran normal).</li>
+                           <li>Kurangi anggaran hiburan dengan kekurangan dana transportasi tersebut.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Anggaran Transportasi Normal = $10\% \times \text{Rp}3.000.000 = \text{Rp}300.000$.<br>
+                        Anggaran Hiburan Normal = $15\% \times \text{Rp}3.000.000 = \text{Rp}450.000$.<br>
+                        Kekurangan Dana Transportasi = Rp400.000 - Rp300.000 = Rp100.000.<br>
+                        Sisa Dana Hiburan = Anggaran Hiburan Normal - Kekurangan Transportasi<br>
+                        Sisa Dana Hiburan = Rp450.000 - Rp100.000 = Rp350.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 14</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta verifikasi empat pernyataan berdasarkan data persentase dari wacana.</p>
+                         <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Hiburan vs Tabungan:</b> Hiburan = 15%, Tabungan = 5%. $15\% = 3 \times 5\%$. <b>(Benar)</b></li>
+                            <li><b>(2) Selisih Makan vs Transportasi:</b> Selisih Persen = 30% - 10% = 20%. Nilai = $20\% \times \text{Rp}3.000.000 = \text{Rp}600.000$. <b>(Benar)</b></li>
+                            <li><b>(3) Kebutuhan primer:</b> Total Persen = 40% (Kos) + 30% (Makan) = 70%. Nilai = $70\% \times \text{Rp}3.000.000 = \text{Rp}2.100.000$. <b>(Benar)</b></li>
+                            <li><b>(4) Porsi tabungan:</b> Dari perhitungan soal no. 11, porsi tabungan adalah 5%. <b>(Benar)</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Terdapat 4 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 15</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal AKD yang menguji logika untuk menentukan apakah informasi cukup untuk mengambil kesimpulan. Pertanyaannya adalah "Apakah Budi dapat membeli jaket Rp500.000?". Ini berarti kita perlu tahu apakah total dana yang bisa dikumpulkan Budi $\geq$ Rp500.000.</p>
+                         <b class="pembahasan-title">2. Analisis</b>
+                         Dana dasar yang pasti ada adalah tabungan = Rp150.000.<br>
+                        <ul>
+                            <li><b>Analisis (1):</b> Hemat 10% dari makan. Uang tambahan = $10\% \times (30\% \times 3.000.000) = 10\% \times 900.000 = \text{Rp}90.000$. Total dana yang diketahui = Rp150.000 + Rp90.000 = Rp240.000. Karena kita tidak tahu sisa dari pos lain, kita tidak bisa pastikan totalnya mencapai Rp500.000 atau tidak. <b>(Tidak Cukup)</b>.</li>
+                            <li><b>Analisis (2):</b> Tidak menggunakan hiburan sama sekali. Uang tambahan = Anggaran Hiburan = $15\% \times 3.000.000 = \text{Rp}450.000$. Total dana = Rp150.000 + Rp450.000 = Rp600.000. Karena Rp600.000 > Rp500.000, Budi pasti dapat membeli jaket. <b>(Cukup)</b>.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                        Pernyataan (2) saja sudah cukup untuk menjawab, sedangkan (1) saja tidak.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 16</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 1.120</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan mengikuti aturan bertahap (algoritma) dan melakukan perhitungan aritmetika sederhana, termasuk penerapan bonus kondisional.</p>
+                         <b class="pembahasan-title">2. Perhitungan Poin Rina</b>
+                        <ul>
+                            <li><b>Poin Awal:</b> 1.000</li>
+                            <li><b>Laga 1 (Menang):</b> $1.000 + 25 = 1.025$</li>
+                            <li><b>Laga 2 (Menang):</b> $1.025 + 25 = 1.050$</li>
+                            <li><b>Laga 3 (Menang):</b> $1.050 + 25 (\text{biasa}) + 50 (\text{bonus 3x streak}) = 1.125$</li>
+                            <li><b>Laga 4 (Kalah):</b> $1.125 - 10 = 1.115$ (Streak terputus)</li>
+                             <li><b>Laga 5 (Seri):</b> $1.115 + 5 = 1.120$</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Poin akhir Rina adalah 1.120.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 17</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan yang meminta perhitungan total perubahan poin dari dua skenario berbeda. Tidak ada bonus yang berlaku di kedua skenario.</p>
+                         <b class="pembahasan-title">2. Perhitungan</b>
+                        <b>Kuantitas P (Pemain A: M, K, M, K, M):</b><br>
+                        Perubahan poin = $(3 \times \text{Menang}) + (2 \times \text{Kalah}) = (3 \times 25) + (2 \times -10) = 75 - 20 = +55$.<br>
+                        Poin akhir = $1.000 + 55 = 1.055$.<br>
+                        <b>Kuantitas Q (Pemain B: S, S, S, S, S):</b><br>
+                        Perubahan poin = $5 \times \text{Seri} = 5 \times 5 = +25$.<br>
+                        Poin akhir = $1.000 + 25 = 1.025$.<br>
+                        <b class="pembahasan-title">3. Perbandingan</b>
+                        1.055 (P) > 1.025 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 18</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Pernyataan (1), (2), dan (3) benar.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini membutuhkan analisis logika dan penalaran dari aturan yang ada untuk setiap pernyataan.</p>
+                         <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) 4x Menang bisa 1.100:</b> Perubahan poin yang dibutuhkan adalah +100. Jika 4 kemenangan tidak berurutan (misal: Menang-Kalah-Menang-Kalah-Menang-Menang), bonus tidak akan aktif. Perubahan poinnya adalah $4 \times 25 = +100$. Ini adalah skenario yang mungkin. <b>(Benar)</b></li>
+                            <li><b>(2) Poin minimal 3 laga:</b> Skenario terburuk adalah 3x kalah. Perubahan poin = $3 \times (-10) = -30$. Poin akhir = $1.000 - 30 = 970$. <b>(Benar)</b></li>
+                            <li><b>(3) Perubahan poin M-M-M vs M-M-M-K:</b> Perubahan M-M-M = $25+25+(25+50) = +125$. Perubahan M-M-M-K = $+125 - 10 = +115$. Jelas $+125 > +115$. <b>(Benar)</b></li>
+                            <li><b>(4) Poin akhir ganjil tidak mungkin:</b> Poin awal genap (1000). Penambah/pengurang poin adalah 25 (ganjil), -10 (genap), 5 (ganjil), 50 (genap). Genap + Ganjil = Ganjil. Contoh: 1x Menang poin menjadi 1025 (ganjil). Jadi, poin akhir ganjil sangat mungkin. <b>(Salah)</b></li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena pernyataan (1), (2), dan (3) benar, jawaban yang tepat adalah A.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 19</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: "Menang, Menang, Seri, Menang" dan "Menang, Seri, Menang, Menang".</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah "reverse engineering", di mana kita harus mencari kombinasi hasil yang cocok dengan total poin akhir. <i>Catatan: Angka soal asli (1.085) tidak memiliki solusi, sehingga telah dimodifikasi menjadi 1.080 agar dapat dikerjakan.</i></p>
+                         <b class="pembahasan-title">2. Analisis</b>
+                         Target poin akhir adalah 1.080, artinya total perubahan poin adalah +80.
+                        <ul>
+                            <li><b>M, M, M, S:</b> $+25+25+(25+50)+5 = +130$. Poin akhir 1.130. (Salah)</li>
+                            <li><b>M, M, S, M:</b> $+25+25+5+25 = +80$. Poin akhir 1.080. (<b>Benar</b>, karena 3 kemenangan tidak berurutan)</li>
+                            <li><b>M, M, M, K:</b> $+25+25+(25+50)-10 = +115$. Poin akhir 1.115. (Salah)</li>
+                            <li><b>M, S, M, M:</b> $+25+5+25+25 = +80$. Poin akhir 1.080. (<b>Benar</b>, karena 3 kemenangan tidak berurutan)</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Kesimpulan</b>
+                        Dua kombinasi menghasilkan poin akhir 1.080.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 20</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal AKD ini membutuhkan penyusunan sistem persamaan linear dari informasi yang diberikan. <i>Catatan: Soal asli tidak memiliki solusi, angka telah dimodifikasi menjadi 1.005.</i></p>
+                         <b class="pembahasan-title">2. Analisis</b>
+                         Pertanyaan: Berapa jumlah menang (w)?
+                         Total laga = 10. Perubahan poin = $1.005 - 1.000 = +5$.
+                        <ul>
+                            <li><b>Analisis (1):</b> $s=0$, jadi $w+k=10$. Perubahan poin: $25w - 10k + 50b = 5$. Kita punya 1 persamaan dengan 3 variabel (w, k, b). Tidak cukup.</li>
+                            <li><b>Analisis (2):</b> $b=0$. Kita tidak tahu jumlah seri atau kalah. Tidak cukup.</li>
+                            <li><b>Analisis (1) dan (2) Bersama:</b> Kita tahu $s=0$ dan $b=0$.
+                            Persamaan menjadi:
+                            1) $w+k=10 \implies k=10-w$
+                            2) $25w - 10k = 5$
+                            Substitusi (1) ke (2): $25w - 10(10-w) = 5 \implies 25w - 100 + 10w = 5 \implies 35w = 105 \implies w=3$.
+                            Karena nilai $w$ bisa ditemukan, maka kedua pernyataan bersama-sama cukup.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 21</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">21.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp157.500</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah aplikasi aritmetika dasar untuk menghitung total pendapatan dari beberapa sumber.</p>
+                         <b class="pembahasan-title">2. Perhitungan</b>
+                        <ul>
+                            <li><b>Pendapatan Plastik:</b> $40 \text{ kg} \times \text{Rp}2.500/\text{kg} = \text{Rp}100.000$</li>
+                            <li><b>Pendapatan Kertas:</b> $25 \text{ kg} \times \text{Rp}1.500/\text{kg} = \text{Rp}37.500$</li>
+                            <li><b>Pendapatan Logam:</b> $5 \text{ kg} \times \text{Rp}4.000/\text{kg} = \text{Rp}20.000$</li>
+                        </ul>
+                        <b>Total Pendapatan Harian</b> = Rp100.000 + Rp37.500 + Rp20.000 = Rp157.500.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 22</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">22.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal perbandingan ini dapat diselesaikan dengan membandingkan pendapatan harian karena jangka waktunya sama (30 hari).</p>
+                         <b class="pembahasan-title">2. Perhitungan Harian</b>
+                        <b>Kuantitas P (Plastik):</b><br>
+                        Pendapatan harian = $40 \text{ kg} \times \text{Rp}2.500 = \text{Rp}100.000$.<br>
+                        <b>Kuantitas Q (Kertas + Logam):</b><br>
+                        Pendapatan harian = $(25 \times 1.500) + (5 \times 4.000) = 37.500 + 20.000 = \text{Rp}57.500$.<br>
+                        <b class="pembahasan-title">3. Perbandingan</b>
+                        Rp100.000 (P) > Rp57.500 (Q).
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 23</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">23.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Ya, Rp5.225.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggabungkan perhitungan total volume dan pendapatan bulanan dengan analisis kondisi untuk mendapatkan insentif.</p>
+                         <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung total sampah non-organik harian.</li>
+                            <li>Hitung total sampah non-organik bulanan (30 hari) dan bandingkan dengan syarat insentif (2.000 kg).</li>
+                            <li>Hitung total pendapatan dari penjualan selama sebulan.</li>
+                            <li>Jika syarat terpenuhi, tambahkan insentif.</li>
+                        </ul>
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                        Total non-organik harian = $40 (\text{plastik}) + 25 (\text{kertas}) + 5 (\text{logam}) = 70 \text{ kg}$.<br>
+                        Total non-organik bulanan = $70 \text{ kg/hari} \times 30 \text{ hari} = 2.100 \text{ kg}$.<br>
+                        Karena $2.100 \text{ kg} > 2.000 \text{ kg}$, kompleks <b>berhak</b> mendapatkan insentif.<br>
+                        Pendapatan penjualan bulanan = Pendapatan harian $\times 30 = \text{Rp}157.500 \times 30 = \text{Rp}4.725.000$.<br>
+                        Total Pendapatan = Penjualan + Insentif = Rp4.725.000 + Rp500.000 = Rp5.225.000.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 24</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">24.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b><br>
+                         <b class="pembahasan-title">1. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Organik seminggu:</b> $120 \text{ kg/hari} \times 7 \text{ hari} = 840 \text{ kg}$. <b>(Benar)</b></li>
+                            <li><b>(2) Porsi logam:</b> Pendapatan logam = Rp20.000. Total pendapatan = Rp157.500. Porsi = $(\text{Rp}20.000 / \text{Rp}157.500) \times 100\% \approx 12,7\%$. Ini kurang dari 15%. <b>(Benar)</b></li>
+                            <li><b>(3) Total sampah harian:</b> $120 (\text{organik}) + 40 (\text{plastik}) + 25 (\text{kertas}) + 5 (\text{logam}) = 190 \text{ kg}$. <b>(Benar)</b></li>
+                            <li><b>(4) Target 3jt dari plastik:</b> Target bulanan Rp3.000.000. Harga per kg Rp2.500. Total kg dibutuhkan = $3.000.000 / 2.500 = 1.200 \text{ kg}$. Rata-rata harian = $1.200 \text{ kg} / 30 \text{ hari} = 40 \text{ kg/hari}$. <b>(Benar)</b></li>
+                        </ul>
+                        <b class="pembahasan-title">2. Kesimpulan</b>
+                        Terdapat 4 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 25</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">25.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: "Pendapatan harian dari penjualan plastik menjadi Rp110.000", "Total pendapatan daur ulang harian menjadi Rp167.500", dan "Jumlah sampah organik yang dihasilkan per hari menjadi 96 kg" benar.</b><br>
+                         <b class="pembahasan-title">1. Analisis Kondisi Baru</b>
+                         <ul>
+                            <li><b>Organik Baru:</b> Produksi berkurang 20%. $120 \text{ kg} \times (1 - 0,20) = 120 \times 0,8 = 96 \text{ kg}$.</li>
+                            <li><b>Plastik Baru:</b> Daur ulang meningkat 10%. $40 \text{ kg} \times (1 + 0,10) = 40 \times 1,1 = 44 \text{ kg}$.</li>
+                         </ul>
+                         <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>Total sampah baru:</b> $96 (\text{organik}) + 44 (\text{plastik}) + 25 (\text{kertas}) + 5 (\text{logam}) = 170 \text{ kg}$. Pernyataan "berkurang menjadi 166 kg" adalah <b>Salah</b>.</li>
+                            <li><b>Pendapatan plastik baru:</b> $44 \text{ kg} \times \text{Rp}2.500 = \text{Rp}110.000$. <b>(Benar)</b></li>
+                            <li><b>Total pendapatan baru:</b> Rp110.000 (plastik) + Rp37.500 (kertas) + Rp20.000 (logam) = Rp167.500. <b>(Benar)</b></li>
+                            <li><b>Jumlah organik baru:</b> Dari perhitungan di atas, hasilnya adalah 96 kg. <b>(Benar)</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+</body>
+</html>
+
