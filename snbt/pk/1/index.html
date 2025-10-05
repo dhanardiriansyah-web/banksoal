@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL PENGETAHUAN KUANTITATIF 1</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #e17070;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #e17070;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+       .page:last-of-type {
+        page-break-after: avoid;
+      }
+      .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border: 3px solid var(--primary-text);
+      }
+      .cover-page .title {
+          font-size: 32pt;
+          font-weight: 900;
+          margin: 0;
+          color: var(--header-title-color);
+          line-height: 1.2;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      }
+      .cover-page .subtitle {
+          font-size: 16pt;
+          margin-top: 15px;
+          color: var(--secondary-text);
+          font-weight: 700;
+      }
+      .cover-page img {
+          max-width: 200px;
+          margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0;
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #b0b0b0;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header, .page-footer {
+            display: block;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENGETAHUAN KUANTITATIF 1</h1>
+            <p class="subtitle">Latihan Soal Sesuai Format UTBK-SNPMB</p>
+        </div>
+    </section>
+
+    <!-- Halaman Soal Mudah -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Mudah</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Mudah (Nomor 1 - 5)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Aljabar Dasar</div>
+                            Jika $3(x - 2) = x + 10$, maka nilai dari $x - 1$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">5</li><li data-option="B">6</li><li data-option="C">7</li><li data-option="D">8</li><li data-option="E">9</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Geometri</div>
+                            Sebuah persegi panjang memiliki keliling 34 cm. Jika panjangnya 9 cm, berapa luas persegi panjang tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">63 cm²</li><li data-option="B">72 cm²</li><li data-option="C">81 cm²</li><li data-option="D">90 cm²</li><li data-option="E">153 cm²</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Bilangan</div>
+                            Diketahui $a = 25\%$ dari 120 dan $b = \frac{1}{3}$ dari 90.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$a$</td><td>$b$</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Statistika Dasar</div>
+                            Nilai ujian matematika Budi adalah 85, 90, 75, 80, dan 95. Berapakah nilai rata-rata ujian Budi?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">80</li><li data-option="B">82</li><li data-option="C">84</li><li data-option="D">85</li><li data-option="E">86</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Bilangan</div>
+                            Hasil dari $4 \frac{1}{2} - \frac{3}{4} \div \frac{1}{2}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2,5</li><li data-option="B">3</li><li data-option="C">3,25</li><li data-option="D">3,5</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sedang -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sedang (Nomor 6 - 9)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Aljabar & Fungsi</div>
+                            Grafik fungsi kuadrat $f(x) = x^2 - 6x + 5$ memiliki titik puncak di...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">(3, 5)</li><li data-option="B">(3, -4)</li><li data-option="C">(-3, 4)</li><li data-option="D">(6, 5)</li><li data-option="E">(0, 5)</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Statistika Dasar</div>
+                            Diberikan data terurut: $x, 6, 7, 8, 8, y$. Rata-rata data tersebut adalah 7 dan jangkauannya 5. Berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) Nilai $y=9$.</div><div class="pernyataan-item">(2) Nilai $x=4$.</div><div class="pernyataan-item">(3) Median data adalah 7,5.</div><div class="pernyataan-item">(4) Modus data adalah 7.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Peluang</div>
+                            Dalam sebuah kotak terdapat 5 bola merah dan 3 bola biru. Jika diambil dua bola secara acak satu per satu tanpa pengembalian, peluang terambilnya bola pertama merah dan bola kedua biru adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">15/64</li><li data-option="B">15/56</li><li data-option="C">8/28</li><li data-option="D">1/4</li><li data-option="E">5/14</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Dasar</div>
+                            Berapakah nilai $x$?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $x^2 - 9 = 0$.</div><div class="pernyataan-item">(2) $2x + 6 = 12$.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                                <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Lanjutan Soal Sedang -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sedang (Nomor 10)</h3>
+            <div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">10.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Geometri</div>
+                        Sebuah lingkaran memiliki jari-jari 14 cm.
+                        <table class="tabel-kuantitas">
+                            <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                            <tr><td>Luas juring dengan sudut pusat 45°</td><td>77 cm²</td></tr>
+                        </table>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sulit 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Sulit</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sulit (Nomor 11 - 14)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Teori Bilangan</div>
+                            Jika $n$ adalah bilangan bulat positif, berapakah sisa pembagian $7^{2n+1} + 1$ oleh 8?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">7</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aljabar Dasar</div>
+                            $x$ dan $y$ adalah bilangan bulat positif dengan $x > 1$ dan $x^2 - y^2 = 13$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$x$</td><td>7</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Geometri</div>
+                            Pada segitiga ABC, apakah sisi AB lebih panjang dari sisi AC?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) Sudut B = 50°.</div><div class="pernyataan-item">(2) Sudut C = 60°.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                               <li data-option="A">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup.</li>
+                                <li data-option="E">Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks | Topik: Statistika Dasar</div>
+                            Rata-rata dari 5 bilangan adalah 10. Jika satu bilangan, yaitu $x$, ditambahkan ke dalam kumpulan data, rata-rata menjadi 12. Manakah pernyataan yang benar?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Nilai $x$ adalah 22.</span></div><div><input type="checkbox"/><span>Median dari 6 bilangan tersebut pasti meningkat.</span></div><div><input type="checkbox"/><span>Jangkauan data yang baru pasti lebih besar.</span></div><div><input type="checkbox"/><span>Jumlah total dari 6 bilangan tersebut adalah 72.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+    
+    <!-- Halaman Soal Sulit 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Sulit</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sulit (Nomor 15 - 19)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Peluang</div>
+                            Dari 7 siswa (4 laki-laki dan 3 perempuan) akan dibentuk tim cerdas cermat 3 orang. Peluang terbentuknya tim yang memiliki paling sedikit 2 siswa laki-laki adalah...
+                            <ol class="pilihan-ganda">
+                               <li data-option="A">12/35</li><li data-option="B">18/35</li><li data-option="C">20/35</li><li data-option="D">22/35</li><li data-option="E">24/35</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Barisan & Deret</div>
+                            Suku ke-3 dan suku ke-7 suatu barisan aritmetika berturut-turut adalah 10 dan 22. Manakah pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) Suku pertama barisan adalah 4.</div><div class="pernyataan-item">(2) Beda barisan adalah 3.</div><div class="pernyataan-item">(3) Jumlah 10 suku pertama adalah 175.</div><div class="pernyataan-item">(4) Suku ke-15 adalah 46.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">(1), (2), (3) benar.</li><li data-option="B">(1) dan (3) benar.</li><li data-option="C">(2) dan (4) benar.</li><li data-option="D">Hanya (4) yang benar.</li><li data-option="E">Semua benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Matriks</div>
+                            Diketahui $A = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$ dan $B = \begin{pmatrix} 1 & -2 \\ -1 & 3 \end{pmatrix}$. Jika $C = A^{-1} + B$, maka determinan matriks C adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-2</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">2</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aljabar & Fungsi</div>
+                            Diketahui fungsi $f(x) = \frac{2x+1}{x-3}$, $x \neq 3$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$f^{-1}(3)$</td><td>10</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks | Topik: Geometri</div>
+                            Kubus ABCD.EFGH memiliki rusuk 6 cm. Titik P adalah titik tengah rusuk CG. Manakah pernyataan yang benar?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Jarak titik A ke C adalah $6\sqrt{2}$ cm.</span></div><div><input type="checkbox"/><span>Jarak titik A ke G adalah $6\sqrt{3}$ cm.</span></div><div><input type="checkbox"/><span>Jarak titik A ke P adalah 9 cm.</span></div><div><input type="checkbox"/><span>Luas segitiga APG adalah $18\sqrt{2}$ cm².</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sulit 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif 1</div>
+                    <div class="header-title-sub"><strong>Level Sulit</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sulit (Nomor 20)</h3>
+            <div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">20.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Peluang</div>
+                        Sebuah dadu seimbang dilempar dua kali. Berapa banyak pernyataan yang benar?
+                        <div class="pernyataan-list">
+                            <div class="pernyataan-item">(1) Peluang jumlah mata dadu 8 adalah 5/36.</div><div class="pernyataan-item">(2) Peluang dadu pertama ganjil dan kedua genap adalah 1/4.</div><div class="pernyataan-item">(3) Peluang kedua mata dadu prima adalah 1/4.</div><div class="pernyataan-item">(4) Peluang hasil kali mata dadu 12 adalah 1/9.</div>
+                        </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">4</li><li data-option="B">3</li><li data-option="C">2</li><li data-option="D">1</li><li data-option="E">0</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+    
+    <!-- KUNCI JAWABAN & PEMBAHASAN -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">KUNCI JAWABAN &<br>PEMBAHASAN</h1>
+            <p class="subtitle">Bank Soal Pengetahuan Kuantitatif 1</p>
+        </div>
+    </section>
+
+    <!-- Pembahasan 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 1</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 7</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan menyelesaikan persamaan linear satu variabel.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Distribusikan angka 3 ke dalam kurung.</li>
+                            <li>Kelompokkan suku-suku yang mengandung variabel $x$ di satu sisi dan konstanta di sisi lain.</li>
+                            <li>Selesaikan untuk menemukan nilai $x$.</li>
+                            <li>Hitung nilai $x - 1$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $3(x - 2) = x + 10$<br>
+                        $3x - 6 = x + 10$<br>
+                        $3x - x = 10 + 6$<br>
+                        $2x = 16$<br>
+                        $x = 8$<br>
+                        Maka, $x - 1 = 8 - 1 = 7$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 2</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 72 cm²</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan rumus keliling dan luas persegi panjang. Keliling = $2 \times (p + l)$ dan Luas = $p \times l$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Gunakan rumus keliling untuk mencari lebar ($l$).</li>
+                            <li>Setelah lebar ditemukan, gunakan rumus luas untuk mencari luasnya.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Keliling = $2 \times (p + l)$<br>
+                        $34 = 2 \times (9 + l)$<br>
+                        $17 = 9 + l$<br>
+                        $l = 17 - 9 = 8$ cm.<br>
+                        Luas = $p \times l = 9 \times 8 = 72$ cm².
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 3</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten">
+                     <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji kemampuan menghitung persentase dan pecahan dari suatu bilangan.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung nilai Kuantitas P ($a$). Ingat bahwa 25% = 1/4.</li>
+                            <li>Hitung nilai Kuantitas Q ($b$).</li>
+                            <li>Bandingkan kedua nilai tersebut.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P: $a = 25\% \times 120 = \frac{1}{4} \times 120 = 30$.<br>
+                        Kuantitas Q: $b = \frac{1}{3} \times 90 = 30$.<br>
+                        Karena $30 = 30$, maka Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 4</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 85</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Rata-rata (mean) dari sekumpulan data dihitung dengan menjumlahkan semua nilai data dan membaginya dengan banyaknya data.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Jumlahkan semua nilai ujian Budi.</li>
+                            <li>Bagi jumlah tersebut dengan banyaknya ujian (yaitu 5).</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Jumlah Nilai = $85 + 90 + 75 + 80 + 95 = 425$.<br>
+                        Rata-rata = $\frac{\text{Jumlah Nilai}}{\text{Banyak Data}} = \frac{425}{5} = 85$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 5</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten">
+                     <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 3</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menguji pemahaman tentang urutan operasi (dahulukan pembagian sebelum pengurangan) dan operasi pada pecahan.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Kerjakan operasi pembagian terlebih dahulu. Ingat bahwa membagi dengan pecahan sama dengan mengalikan dengan kebalikannya.</li>
+                            <li>Lakukan operasi pengurangan.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $4 \frac{1}{2} - (\frac{3}{4} \div \frac{1}{2})$<br>
+                        $= 4\frac{1}{2} - (\frac{3}{4} \times \frac{2}{1})$<br>
+                        $= 4\frac{1}{2} - \frac{6}{4}$<br>
+                        $= 4\frac{1}{2} - 1\frac{1}{2}$<br>
+                        $= 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 6 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 6</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. (3, -4)</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Titik puncak (vertex) dari fungsi kuadrat $f(x) = ax^2 + bx + c$ dapat ditemukan dengan rumus $x_p = -\frac{b}{2a}$ untuk absis (koordinat x) dan $y_p = f(x_p)$ untuk ordinat (koordinat y).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi nilai $a$, $b$, dan $c$ dari fungsi.</li>
+                            <li>Hitung $x_p$ menggunakan rumus.</li>
+                            <li>Substitusikan nilai $x_p$ ke dalam fungsi untuk mendapatkan $y_p$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Dari $f(x) = x^2 - 6x + 5$, kita dapatkan $a=1$, $b=-6$, $c=5$.<br>
+                        Absis puncak: $x_p = -\frac{-6}{2(1)} = \frac{6}{2} = 3$.<br>
+                        Ordinat puncak: $y_p = f(3) = (3)^2 - 6(3) + 5 = 9 - 18 + 5 = -4$.<br>
+                        Jadi, titik puncaknya adalah $(3, -4)$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 7 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 7</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 3</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini melibatkan konsep statistika dasar: rata-rata (jumlah data dibagi banyak data), jangkauan (data terbesar dikurangi data terkecil), median (nilai tengah), dan modus (nilai yang paling sering muncul).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Gunakan informasi rata-rata dan jangkauan untuk membuat sistem persamaan linear dua variabel untuk $x$ dan $y$.</li>
+                            <li>Selesaikan sistem persamaan tersebut untuk menemukan nilai $x$ dan $y$.</li>
+                            <li>Setelah data lengkap, verifikasi kebenaran setiap pernyataan.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Rata-rata: $\frac{x+6+7+8+8+y}{6} = 7 \implies x+y+29=42 \implies x+y=13$.<br>
+                        Jangkauan: $y - x = 5$ (karena data terurut, $y$ terbesar dan $x$ terkecil).<br>
+                        Eliminasi & Substitusi:<br>
+                        $(x+y) + (y-x) = 13 + 5 \implies 2y = 18 \implies y = 9$.<br>
+                        $x + 9 = 13 \implies x = 4$.<br>
+                        Data lengkap: $4, 6, 7, 8, 8, 9$.<br>
+                        <br>
+                        <b>Evaluasi Pernyataan:</b>
+                        <ul>
+                            <li>(1) Nilai $y=9$. (<b>BENAR</b>)</li>
+                            <li>(2) Nilai $x=4$. (<b>BENAR</b>)</li>
+                            <li>(3) Median = $\frac{7+8}{2} = 7,5$. (<b>BENAR</b>)</li>
+                            <li>(4) Modus adalah nilai yang paling sering muncul, yaitu 8. Pernyataan mengatakan modus 7. (<b>SALAH</b>)</li>
+                        </ul>
+                        Ada 3 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 8 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 8</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. 15/56</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah tentang peluang kejadian majemuk yang saling bergantung (tanpa pengembalian). Peluang gabungan didapat dengan mengalikan peluang masing-masing kejadian.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung total bola awal.</li>
+                            <li>Tentukan peluang terambilnya bola merah pada pengambilan pertama.</li>
+                            <li>Hitung sisa bola setelah pengambilan pertama.</li>
+                            <li>Tentukan peluang terambilnya bola biru pada pengambilan kedua.</li>
+                            <li>Kalikan kedua peluang tersebut.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Total bola awal = 5 Merah + 3 Biru = 8 bola.<br>
+                        Peluang pertama Merah (P(M1)) = $\frac{5}{8}$.<br>
+                        Setelah bola merah diambil, sisa bola = 7 (4 Merah, 3 Biru).<br>
+                        Peluang kedua Biru (P(B2|M1)) = $\frac{3}{7}$.<br>
+                        Peluang total = P(M1) $\times$ P(B2|M1) = $\frac{5}{8} \times \frac{3}{7} = \frac{15}{56}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 9 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 9</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal AKD menanyakan apakah informasi yang diberikan cukup untuk menemukan satu nilai yang pasti untuk $x$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>Pernyataan (1):</b> $x^2 - 9 = 0 \implies x^2 = 9 \implies x = 3$ atau $x = -3$. Karena ada dua kemungkinan nilai untuk $x$, pernyataan ini <b>TIDAK CUKUP</b> untuk menjawab pertanyaan secara pasti.</li>
+                            <li><b>Pernyataan (2):</b> $2x + 6 = 12 \implies 2x = 6 \implies x = 3$. Pernyataan ini memberikan satu nilai pasti untuk $x$. Jadi, pernyataan ini <b>CUKUP</b>.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Karena pernyataan (2) saja cukup dan (1) saja tidak cukup, maka jawaban yang benar adalah B.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 10 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 10</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan rumus luas juring lingkaran: Luas Juring = $\frac{\text{sudut pusat}}{360^\circ} \times \pi r^2$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung nilai Kuantitas P menggunakan rumus luas juring dengan $r=14$ cm dan sudut $45^\circ$. Gunakan $\pi \approx \frac{22}{7}$.</li>
+                            <li>Bandingkan hasilnya dengan Kuantitas Q.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P = $\frac{45^\circ}{360^\circ} \times \frac{22}{7} \times (14)^2$<br>
+                        $= \frac{1}{8} \times \frac{22}{7} \times 196$<br>
+                        $= \frac{1}{8} \times 22 \times 28$<br>
+                        $= \frac{616}{8} = 77$ cm².<br>
+                        Kuantitas Q = 77 cm².<br>
+                        Jadi, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+    
+    <!-- Pembahasan 11 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 11</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. 0</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan konsep aritmetika modular. Kunci utamanya adalah melihat pola sisa pembagian dari perpangkatan 7 terhadap 8.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Perhatikan bahwa $7 \equiv -1 \pmod{8}$. Ini berarti 7 bersisa -1 (atau 7) jika dibagi 8.</li>
+                            <li>Substitusikan properti ini ke dalam ekspresi yang diberikan.</li>
+                            <li>Gunakan sifat eksponen pada bilangan kongruen. Pangkat $2n+1$ selalu ganjil untuk $n$ bilangan bulat positif.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kita ingin mencari nilai dari $(7^{2n+1} + 1) \pmod{8}$.<br>
+                        Karena $7 \equiv -1 \pmod{8}$, maka:<br>
+                        $7^{2n+1} \equiv (-1)^{2n+1} \pmod{8}$.<br>
+                        Karena $2n+1$ adalah bilangan ganjil, maka $(-1)^{2n+1} = -1$.<br>
+                        Jadi, $7^{2n+1} \equiv -1 \pmod{8}$.<br>
+                        Maka, $7^{2n+1} + 1 \equiv (-1) + 1 \pmod{8} \equiv 0 \pmod{8}$.<br>
+                        Sisa pembagiannya adalah 0.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 12 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 12</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini memanfaatkan bentuk selisih dua kuadrat, $a^2 - b^2 = (a-b)(a+b)$, dan sifat bilangan prima.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Faktorkan persamaan $x^2 - y^2 = 13$ menjadi $(x-y)(x+y)=13$.</li>
+                            <li>Karena 13 adalah bilangan prima dan $x, y$ adalah bilangan bulat positif, maka faktor-faktor dari 13 hanyalah 1 dan 13.</li>
+                            <li>Karena $x+y > x-y$, kita dapat membentuk sistem persamaan.</li>
+                            <li>Selesaikan sistem persamaan untuk menemukan nilai $x$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $(x-y)(x+y) = 13$.<br>
+                        Kita dapatkan sistem persamaan:<br>
+                        (i) $x - y = 1$<br>
+                        (ii) $x + y = 13$<br>
+                        Jumlahkan kedua persamaan: $2x = 14 \implies x = 7$.<br>
+                        Kuantitas P = $x = 7$.<br>
+                        Kuantitas Q = 7.<br>
+                        Jadi, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 13 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 13</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Dalam sebuah segitiga, sisi yang terletak di hadapan sudut yang lebih besar memiliki panjang yang lebih besar pula. Sisi AB berhadapan dengan sudut C, dan sisi AC berhadapan dengan sudut B.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Pertanyaan "apakah AB > AC?" setara dengan "apakah $\angle C > \angle B$?".<br>
+                        <ul>
+                            <li><b>Pernyataan (1):</b> Sudut B = 50°. Kita tidak mengetahui besar sudut C untuk membandingkannya. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>Pernyataan (2):</b> Sudut C = 60°. Kita tidak mengetahui besar sudut B untuk membandingkannya. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>Pernyataan (1) dan (2) Bersama:</b> Kita tahu $\angle C = 60^\circ$ dan $\angle B = 50^\circ$. Karena $60^\circ > 50^\circ$, maka kita bisa menjawab "YA", $\angle C > \angle B$, yang berarti AB > AC. Kedua pernyataan bersama-sama <b>CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 14 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 14</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Pernyataan (1) dan (4) benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini melibatkan konsep rata-rata, median, dan jangkauan dalam statistika.</p>
+                        <b class="pembahasan-title">2. Perhitungan Dasar</b>
+                        Jumlah 5 bilangan awal = $5 \times 10 = 50$.<br>
+                        Jumlah 6 bilangan baru = $6 \times 12 = 72$.<br>
+                        Nilai bilangan yang ditambahkan, $x = 72 - 50 = 22$.<br>
+                        <b class="pembahasan-title">3. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Nilai $x$ adalah 22.</b> Sesuai perhitungan, pernyataan ini <b>BENAR</b>.</li>
+                            <li><b>(2) Median pasti meningkat.</b> Belum tentu. Jika data awal adalah {10, 10, 10, 10, 10}, mediannya 10. Data baru {10, 10, 10, 10, 10, 22}, mediannya tetap 10. Jadi pernyataan ini <b>SALAH</b>.</li>
+                            <li><b>(3) Jangkauan pasti lebih besar.</b> Belum tentu. Jika data awal adalah {1, 10, 10, 10, 29}, jangkauannya 28. Data baru {1, 10, 10, 10, 22, 29}, jangkauannya tetap 28. Jadi pernyataan ini <b>SALAH</b>.</li>
+                            <li><b>(4) Jumlah total dari 6 bilangan adalah 72.</b> Sesuai perhitungan, pernyataan ini <b>BENAR</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+    
+    <!-- Pembahasan 15 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 15</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 22/35</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini menggunakan konsep kombinasi dan peluang. Ruang sampel adalah cara memilih 3 dari 7 siswa. Kejadian yang diinginkan adalah tim dengan (2 Laki-laki, 1 Perempuan) atau (3 Laki-laki).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung ruang sampel, yaitu total cara memilih 3 siswa dari 7, menggunakan $C(7,3)$.</li>
+                            <li>Hitung cara untuk kasus pertama (2 L, 1 P): $C(4,2) \times C(3,1)$.</li>
+                            <li>Hitung cara untuk kasus kedua (3 L, 0 P): $C(4,3)$.</li>
+                            <li>Jumlahkan kedua kasus untuk mendapatkan total kejadian yang diinginkan.</li>
+                            <li>Bagi total kejadian dengan ruang sampel.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Ruang Sampel $n(S) = C(7,3) = \frac{7!}{3!(7-3)!} = \frac{7 \times 6 \times 5}{3 \times 2 \times 1} = 35$.<br>
+                        Kasus 1 (2L, 1P): $C(4,2) \times C(3,1) = 6 \times 3 = 18$.<br>
+                        Kasus 2 (3L, 0P): $C(4,3) = 4$.<br>
+                        Total kejadian $n(A) = 18 + 4 = 22$.<br>
+                        Peluang $P(A) = \frac{n(A)}{n(S)} = \frac{22}{35}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 16 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 16</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan rumus barisan aritmetika: $U_n = a + (n-1)b$ dan deret aritmetika: $S_n = \frac{n}{2}(2a+(n-1)b)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Buat sistem persamaan dari $U_3=10$ dan $U_7=22$.</li>
+                            <li>Selesaikan untuk menemukan $a$ (suku pertama) dan $b$ (beda).</li>
+                            <li>Verifikasi setiap pernyataan dengan nilai $a$ dan $b$ yang ditemukan.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $U_7 = a + 6b = 22$<br>
+                        $U_3 = a + 2b = 10$<br>
+                        Kurangkan keduanya: $4b = 12 \implies b = 3$.<br>
+                        Substitusi: $a + 2(3) = 10 \implies a = 4$.<br><br>
+                        <b>Evaluasi Pernyataan:</b>
+                        <ul>
+                            <li>(1) Suku pertama (a) adalah 4. (<b>BENAR</b>)</li>
+                            <li>(2) Beda (b) adalah 3. (<b>BENAR</b>)</li>
+                            <li>(3) $S_{10} = \frac{10}{2}(2(4) + (10-1)3) = 5(8 + 27) = 5(35) = 175$. (<b>BENAR</b>)</li>
+                            <li>(4) $U_{15} = a + 14b = 4 + 14(3) = 4 + 42 = 46$. (<b>BENAR</b>)</li>
+                        </ul>
+                        Semua pernyataan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 17 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 17</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 2</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan rumus invers matriks ordo 2x2 dan determinan. Jika $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, maka $M^{-1} = \frac{1}{ad-bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$ dan $det(M) = ad-bc$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Cari determinan matriks A.</li>
+                            <li>Cari invers matriks A ($A^{-1}$).</li>
+                            <li>Hitung matriks C dengan menjumlahkan $A^{-1}$ dan B.</li>
+                            <li>Hitung determinan matriks C.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $det(A) = (2)(3) - (1)(5) = 6 - 5 = 1$.<br>
+                        $A^{-1} = \frac{1}{1}\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix} = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}$.<br>
+                        $C = A^{-1} + B = \begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix} + \begin{pmatrix} 1 & -2 \\ -1 & 3 \end{pmatrix} = \begin{pmatrix} 4 & -3 \\ -6 & 5 \end{pmatrix}$.<br>
+                        $det(C) = (4)(5) - (-3)(-6) = 20 - 18 = 2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 18 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 18</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari invers dari fungsi $f(x) = \frac{ax+b}{cx+d}$ adalah $f^{-1}(x) = \frac{-dx+b}{cx-a}$. Cara lain adalah dengan menggunakan definisi invers: jika $f(a) = b$, maka $f^{-1}(b)=a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        Kita mencari nilai $a$ sehingga $f(a) = 3$.<br>
+                        $\frac{2a+1}{a-3} = 3$<br>
+                        $2a+1 = 3(a-3)$<br>
+                        $2a+1 = 3a-9$<br>
+                        $1+9 = 3a-2a$<br>
+                        $10 = a$<br>
+                        Karena $f(10) = 3$, maka $f^{-1}(3) = 10$.<br>
+                        <b class="pembahasan-title">3. Perbandingan</b>
+                        Kuantitas P = $f^{-1}(3) = 10$.<br>
+                        Kuantitas Q = 10.<br>
+                        Jadi, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 19 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 19</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: Pernyataan (1), (2), dan (3) benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan teorema Pythagoras pada ruang tiga dimensi, rumus diagonal sisi ($s\sqrt{2}$), dan diagonal ruang ($s\sqrt{3}$).</p>
+                        <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Jarak A ke C:</b> Ini adalah diagonal sisi kubus. Jarak = $s\sqrt{2} = 6\sqrt{2}$ cm. (<b>BENAR</b>)</li>
+                            <li><b>(2) Jarak A ke G:</b> Ini adalah diagonal ruang kubus. Jarak = $s\sqrt{3} = 6\sqrt{3}$ cm. (<b>BENAR</b>)</li>
+                            <li><b>(3) Jarak A ke P:</b> Perhatikan segitiga siku-siku ACG, lalu titik P di tengah CG. Kita bisa membuat segitiga siku-siku ACP. AC = $6\sqrt{2}$ dan CP = 3. Jarak AP = $\sqrt{AC^2 + CP^2} = \sqrt{(6\sqrt{2})^2 + 3^2} = \sqrt{72 + 9} = \sqrt{81} = 9$ cm. (<b>BENAR</b>)</li>
+                            <li><b>(4) Luas segitiga APG:</b> Kita tahu panjang sisi AP=9, AG=$6\sqrt{3}$, PG=3. Menggunakan Aturan Cosinus pada $\triangle APG$ lalu mencari sinusnya, atau dengan metode lain, didapatkan Luas = $9\sqrt{2}$ cm². (<b>SALAH</b>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+    
+    <!-- Pembahasan 20 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 20</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. 4</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Peluang suatu kejadian adalah perbandingan banyaknya kejadian yang diinginkan dengan total kemungkinan kejadian (ruang sampel). Untuk dua dadu, ruang sampelnya adalah 36.</p>
+                        <b class="pembahasan-title">2. Evaluasi Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Jumlah 8:</b> Kemungkinannya adalah {(2,6), (3,5), (4,4), (5,3), (6,2)}. Ada 5 kejadian. Peluang = 5/36. (<b>BENAR</b>)</li>
+                            <li><b>(2) Dadu 1 ganjil, Dadu 2 genap:</b> P(ganjil) = 3/6 = 1/2. P(genap) = 3/6 = 1/2. Peluang gabungan = $1/2 \times 1/2 = 1/4$. (<b>BENAR</b>)</li>
+                            <li><b>(3) Keduanya prima:</b> Bilangan prima pada dadu adalah {2, 3, 5}. P(prima) = 3/6 = 1/2. Peluang keduanya prima = $1/2 \times 1/2 = 1/4$. (<b>BENAR</b>)</li>
+                            <li><b>(4) Hasil kali 12:</b> Kemungkinannya adalah {(2,6), (3,4), (4,3), (6,2)}. Ada 4 kejadian. Peluang = 4/36 = 1/9. (<b>BENAR</b>)</li>
+                        </ul>
+                        Ada 4 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+</body>
+</html>
+
