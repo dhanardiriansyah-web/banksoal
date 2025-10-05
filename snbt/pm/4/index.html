@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Soal - Penalaran Matematika 4</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #64b6ac;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #004d40;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden; /* To contain pseudo-elements */
+      }
+      .page:last-of-type {
+        page-break-after: avoid;
+      }
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--header-title-color);
+        }
+        .cover-page .title {
+            font-size: 32pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--header-title-color);
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .cover-page .subtitle {
+            font-size: 16pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+          .cover-page img {
+            max-width: 200px;
+            margin-bottom: 40px;
+        }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0; /* No watermark on cover page */
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #b0b0b0;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+      .soal-gambar {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 10px auto;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header {
+          display: block;
+          margin: -1.8cm -2.5cm 20px -2.5cm;
+          position: relative;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul Soal -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENALARAN MATEMATIKA 4</h1>
+            <p class="subtitle">Latihan Soal Berbasis Wacana UTBK-SNPMB</p>
+        </div>
+    </section>
+
+    <!-- Wacana 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 1: Proyek Donasi Buku Komunitas "Cahaya Ilmu"</h3>
+            <div class="wacana-box">
+                <p>Komunitas "Cahaya Ilmu" mengadakan proyek penggalangan dana dan buku selama 4 minggu untuk membangun perpustakaan desa. Target donasi adalah 1.000 buku dan dana sebesar Rp15.000.000. Dana yang terkumpul akan digunakan untuk biaya operasional dan pembelian buku baru. Rata-rata harga buku baru yang akan dibeli adalah Rp45.000 per buku.</p>
+                <table class="tabel-kuantitas" style="font-size: 8pt;">
+                    <thead>
+                        <tr><th>Minggu Ke-</th><th>Buku Terkumpul (kumulatif)</th><th>Dana Terkumpul (kumulatif)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>150</td><td>Rp2.500.000</td></tr>
+                        <tr><td>2</td><td>350</td><td>Rp5.750.000</td></tr>
+                        <tr><td>3</td><td>600</td><td>Rp9.000.000</td></tr>
+                        <tr><td>4 (Akhir)</td><td>800</td><td>Rp12.000.000</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">1.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Analisis Data</div>
+                        Pada minggu ke berapa terjadi penambahan donasi dana paling besar?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Minggu ke-1</li>
+                            <li data-option="B">Minggu ke-2</li>
+                            <li data-option="C">Minggu ke-3</li>
+                            <li data-option="D">Minggu ke-4</li>
+                            <li data-option="E">Minggu ke-2 dan ke-3 sama besar</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="soal-latihan">
+                    <div class="soal-nomor">2.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Persentase</div>
+                        Di akhir proyek, berapa banyak pernyataan berikut yang benar?
+                        <div class="pernyataan-list">
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Target donasi buku tercapai sebesar 80%.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Target donasi dana tercapai sebesar 80%.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Jumlah buku yang masih kurang dari target adalah 200 buku.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Kekurangan dana dari target adalah Rp2.000.000.</span></div>
+                   </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 1</h3>
+            <div class="soal-container-2-kolom">
+                <div> <!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                            Panitia memutuskan untuk mengalokasikan 60% dari total dana terkumpul di akhir proyek untuk membeli buku baru.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Jumlah buku baru yang dapat dibeli dengan dana yang dialokasikan</td><td>165 buku</td></tr>
+                            </table>
+                            Hubungan yang benar antara kuantitas P dan Q adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div> <!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Analisis Data</div>
+                            Berdasarkan data, pernyataan mana saja yang benar? (Jawaban bisa lebih dari satu)
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Rata-rata buku yang terkumpul per minggu adalah 200 buku.</span></div>
+                                <div><input type="checkbox"/><span>Rata-rata dana yang terkumpul per minggu adalah Rp3.000.000.</span></div>
+                                <div><input type="checkbox"/><span>Persentase kenaikan jumlah buku dari minggu ke-2 ke minggu ke-3 lebih besar daripada dari minggu ke-1 ke minggu ke-2.</span></div>
+                                <div><input type="checkbox"/><span>Total buku yang terkumpul di akhir proyek sama dengan total buku yang terkumpul pada minggu ke-1, 2, dan 3 jika dijumlahkan.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Kontekstual</div>
+                            Berapa total buku di perpustakaan desa setelah proyek selesai?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Seluruh dana yang dialokasikan untuk pembelian buku digunakan sepenuhnya.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Sisa dana operasional setelah proyek selesai adalah Rp4.800.000.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Wacana 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 2: Kompetisi E-Sports Antar Universitas</h3>
+            <div class="wacana-box">
+                <p>Sebuah turnamen e-sports diikuti oleh 4 tim universitas. Setiap tim bertanding melawan tiga tim lainnya masing-masing sebanyak satu kali (sistem round-robin). Sistem poin yang digunakan adalah: Menang = 3 poin, Kalah = 0 poin. Jika skor seri, masing-masing tim mendapat 1 poin. Berikut adalah hasil pertandingan setelah semua laga selesai.</p>
+                <table class="tabel-kuantitas" style="font-size: 8pt; text-align:center;">
+                    <thead>
+                        <tr><th>Tim</th><th>Main</th><th>Menang</th><th>Seri</th><th>Kalah</th><th>Total Poin</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Universitas Ganesha</td><td>3</td><td>2</td><td>1</td><td>0</td><td>7</td></tr>
+                        <tr><td>Universitas Merdeka</td><td>3</td><td>1</td><td>1</td><td>1</td><td>4</td></tr>
+                        <tr><td>Universitas Cendekia</td><td>3</td><td>1</td><td>0</td><td>2</td><td>?</td></tr>
+                        <tr><td>Universitas Harapan</td><td>3</td><td>?</td><td>?</td><td>?</td><td>?</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">6.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Logika Kontekstual</div>
+                        Berapa total poin yang dimiliki oleh Universitas Cendekia?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">1</li>
+                            <li data-option="B">2</li>
+                            <li data-option="C">3</li>
+                            <li data-option="D">4</li>
+                            <li data-option="E">5</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">7.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Logika Kontekstual</div>
+                        Dengan melengkapi tabel, manakah di antara pernyataan berikut yang benar mengenai Universitas Harapan?
+                        <div class="pernyataan-list">
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Universitas Harapan tidak pernah menang.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Universitas Harapan mengalami 2 kali seri.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Total poin yang dimiliki Universitas Harapan adalah 2.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Universitas Harapan kalah sebanyak 1 kali.</span></div>
+                   </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Pernyataan (1), (2), dan (3) benar.</li>
+                            <li data-option="B">Pernyataan (1) dan (3) benar.</li>
+                            <li data-option="C">Pernyataan (2) dan (4) benar.</li>
+                            <li data-option="D">Hanya pernyataan (4) yang benar.</li>
+                            <li data-option="E">Semua pernyataan benar.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 2</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Analisis Data</div>
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Rata-rata poin yang diperoleh semua tim dalam turnamen.</td><td>4,5 poin</td></tr>
+                            </table>
+                             <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Logika Kontekstual</div>
+                            Panitia memberikan hadiah uang tunai dengan skema: Juara 1 mendapat Rp10.000.000, Juara 2 mendapat 60% dari hadiah Juara 1, dan Juara 3 mendapat 50% dari hadiah Juara 2. Peringkat ditentukan oleh poin tertinggi. Manakah pernyataan yang benar?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Universitas Ganesha adalah Juara 1.</span></div>
+                                <div><input type="checkbox"/><span>Universitas Merdeka mendapat hadiah Rp6.000.000.</span></div>
+                                <div><input type="checkbox"/><span>Universitas Cendekia mendapat hadiah Rp3.000.000.</span></div>
+                                <div><input type="checkbox"/><span>Universitas Harapan tidak mendapat hadiah uang tunai.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Logika Kontekstual</div>
+                            Apakah Universitas Ganesha menang melawan Universitas Cendekia?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Satu-satunya kekalahan Universitas Merdeka adalah saat melawan Universitas Ganesha.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Satu-satunya kemenangan Universitas Cendekia adalah saat melawan Universitas Harapan.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+   <!-- Wacana 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 3: Renovasi Ruang Tamu</h3>
+            <div class="wacana-box">
+                <p>Pak Budi ingin merenovasi ruang tamunya yang berbentuk persegi panjang dengan ukuran 6 meter × 4 meter. Lantai ruangan akan dipasangi keramik baru. Pak Budi memilih keramik berbentuk persegi dengan ukuran sisi 40 cm.</p>
+                <p>Berikut rincian biaya yang ia catat:</p>
+                <ul>
+                    <li>Harga keramik: Rp75.000 per dus. Satu dus berisi 6 buah keramik.</li>
+                    <li>Biaya tukang pasang keramik: Rp120.000 per meter persegi (m²).</li>
+                    <li>Pengecatan dinding: Total biaya borongan Rp1.500.000.</li>
+                </ul>
+                <p>Catatan: Pembelian keramik harus dalam satuan dus utuh (tidak bisa eceran).</p>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">11.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Geometri Kontekstual</div>
+                        Berapa buah keramik yang dibutuhkan untuk menutupi seluruh lantai ruang tamu?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">100 buah</li>
+                            <li data-option="B">120 buah</li>
+                            <li data-option="C">150 buah</li>
+                            <li data-option="D">180 buah</li>
+                            <li data-option="E">200 buah</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">12.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa | Topik: Geometri & Aritmetika Sosial</div>
+                        Berapa total biaya yang harus dikeluarkan Pak Budi untuk pembelian keramik?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp1.800.000</li>
+                            <li data-option="B">Rp1.875.000</li>
+                            <li data-option="C">Rp1.950.000</li>
+                            <li data-option="D">Rp2.025.000</li>
+                            <li data-option="E">Rp2.100.000</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 3</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Total biaya jasa tukang pasang keramik.</td><td>Total biaya pembelian keramik.</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Geometri Kontekstual</div>
+                            Berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Luas satu buah keramik adalah 0,16 m².</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Luas total keramik dalam satu dus adalah 0,96 m².</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Total biaya renovasi lantai (keramik dan tukang) lebih dari Rp4.500.000.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Biaya pengecatan dinding adalah komponen biaya termurah dalam renovasi.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Kontekstual</div>
+                            Berapa total biaya keseluruhan renovasi ruang tamu Pak Budi?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Total biaya untuk lantai, yang mencakup pembelian keramik dan jasa pemasangannya.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Total biaya untuk dinding, yaitu biaya borongan pengecatan.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Wacana 4 -->
+     <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 4: Pemasangan Panel Surya di Atap Rumah</h3>
+            <div class="wacana-box">
+                 <p>Sebuah rumah memiliki atap datar berbentuk persegi panjang dengan ukuran 10 m × 8 m. Pemilik rumah berencana memasang panel surya. Setiap panel surya berukuran 2 m × 1 m. Pemasangan panel tidak boleh melebihi 75% dari total luas atap untuk menyisakan ruang perawatan.</p>
+               <ul>
+                   <li>Biaya pemasangan satu panel surya adalah Rp2.500.000.</li>
+                   <li>Satu panel surya dapat menghasilkan listrik rata-rata 1,5 kWh per hari.</li>
+                   <li>Tarif listrik dari PLN adalah Rp1.500 per kWh.</li>
+               </ul>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">16.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Geometri Kontekstual</div>
+                        Berapa jumlah maksimum panel surya yang dapat dipasang di atap tersebut?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">20 panel</li>
+                            <li data-option="B">25 panel</li>
+                            <li data-option="C">30 panel</li>
+                            <li data-option="D">35 panel</li>
+                            <li data-option="E">40 panel</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">17.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Aritmetika Sosial</div>
+                        Jika pemilik rumah memasang panel surya dalam jumlah maksimum, berapa banyak pernyataan yang benar?
+                        <div class="pernyataan-list">
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Total biaya pemasangan adalah Rp75.000.000.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Total energi yang dihasilkan dalam sebulan (30 hari) adalah 1.350 kWh.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(3)</span><span class="pernyataan-teks">Penghematan biaya listrik dalam sebulan (30 hari) adalah Rp2.025.000.</span></div>
+                       <div class="pernyataan-item"><span class="pernyataan-nomor">(4)</span><span class="pernyataan-teks">Luas atap yang tidak terpakai adalah 20 m².</span></div>
+                   </div>
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">0</li> <li data-option="B">1</li> <li data-option="C">2</li> <li data-option="D">3</li> <li data-option="E">4</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 4</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Aritmetika Sosial</div>
+                            Waktu balik modal (Break-Even Point) dihitung dengan membagi total biaya investasi dengan penghematan bulanan.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Waktu balik modal (dalam bulan) jika dipasang panel maksimum.</td><td>3 tahun</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Geometri & Aritmetika Sosial</div>
+                                Jika pemilik rumah hanya ingin memasang 20 panel surya, manakah di antara pernyataan berikut yang benar?
+                            <div class="pilihan-ganda-kompleks">
+                               <div><input type="checkbox"/><span>Biaya investasi yang dikeluarkan adalah Rp50.000.000.</span></div>
+                               <div><input type="checkbox"/><span>Panel surya menutupi 50% dari total luas atap.</span></div>
+                               <div><input type="checkbox"/><span>Penghematan listrik per bulan (30 hari) adalah Rp1.350.000.</span></div>
+                               <div><input type="checkbox"/><span>Luas atap yang digunakan untuk panel surya adalah 40 m².</span></div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aljabar Kontekstual</div>
+                            Berapa lama waktu yang dibutuhkan agar total penghematan listrik sama dengan total biaya investasi?
+                             <div class="pernyataan-list">
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Jumlah panel surya yang dipasang adalah 25 buah.</span></div>
+                                <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Total penghematan listrik per bulan adalah Rp1.687.500.</span></div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+      <!-- Wacana 5 -->
+      <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Wacana 5: Penjualan Tiket Konser Musik "Nada Nusantara"</h3>
+            <div class="wacana-box">
+                <p>Sebuah konser musik menyediakan tiga kategori tiket dengan harga dan kapasitas yang berbeda. Penjualan tiket dibuka dalam dua fase: Presale dan Normal. Harga tiket fase Presale mendapatkan diskon 20% dari harga Normal.</p>
+                <table class="tabel-kuantitas" style="font-size: 8pt; text-align:center;">
+                    <thead>
+                        <tr><th>Kategori Tiket</th><th>Harga Normal</th><th>Kapasitas</th><th>Tiket Terjual (Presale)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>PLATINUM</td><td>Rp1.500.000</td><td>500</td><td>400</td></tr>
+                        <tr><td>GOLD</td><td>Rp900.000</td><td>1.500</td><td>1.000</td></tr>
+                        <tr><td>SILVER</td><td>Rp500.000</td><td>3.000</td><td>2.500</td></tr>
+                    </tbody>
+                </table>
+               <p>Asumsi: Semua sisa tiket yang tidak terjual di fase Presale, habis terjual pada fase Normal.</p>
+            </div>
+            <div class="soal-container-2-kolom">
+                <div class="soal-latihan">
+                    <div class="soal-nomor">21.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Mudah | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                        Berapakah harga satu tiket kategori GOLD pada fase Presale?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp180.000</li>
+                            <li data-option="B">Rp650.000</li>
+                            <li data-option="C">Rp720.000</li>
+                            <li data-option="D">Rp800.000</li>
+                            <li data-option="E">Rp900.000</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="soal-latihan">
+                    <div class="soal-nomor">22.</div>
+                    <div class="soal-konten">
+                        <div class="keterangan-soal">Level: Sedang | Tipe: Pilihan Ganda Biasa | Topik: Aritmetika Sosial</div>
+                        Berapa total pendapatan yang diperoleh dari penjualan semua tiket kategori SILVER?
+                        <ol class="pilihan-ganda">
+                            <li data-option="A">Rp1.000.000.000</li>
+                            <li data-option="B">Rp1.250.000.000</li>
+                            <li data-option="C">Rp1.350.000.000</li>
+                            <li data-option="D">Rp1.500.000.000</li>
+                            <li data-option="E">Rp1.750.000.000</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Penalaran Matematika 4</div>
+                    <div class="header-title-sub">
+                        <strong>Persiapan UTBK-SNBT</strong>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Wacana 5</h3>
+            <div class="soal-container-2-kolom">
+                <div><!-- Kolom Kiri -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Analisis Data</div>
+                             <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Total pendapatan dari seluruh tiket yang terjual di fase Presale.</td><td>Total pendapatan dari seluruh tiket yang terjual di fase Normal.</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P lebih besar daripada kuantitas Q.</li>
+                                <li data-option="B">Kuantitas P lebih kecil daripada kuantitas Q.</li>
+                                <li data-option="C">Kuantitas P sama dengan kuantitas Q.</li>
+                                <li data-option="D">Informasi yang diberikan tidak cukup untuk memutuskan.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sulit | Tipe: Pilihan Ganda Kompleks | Topik: Persentase</div>
+                            Manakah dari pernyataan berikut yang benar?
+                             <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>80% dari tiket PLATINUM terjual pada fase Presale.</span></div>
+                                <div><input type="checkbox"/><span>Kategori SILVER menyumbang lebih dari 50% dari total tiket yang terjual.</span></div>
+                                <div><input type="checkbox"/><span>Pendapatan dari tiket PLATINUM fase Normal adalah Rp150.000.000.</span></div>
+                                <div><input type="checkbox"/><span>Total seluruh pendapatan konser melebihi 3 miliar Rupiah.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><!-- Kolom Kanan -->
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Level: Sedang | Tipe: Analisis Kecukupan Data (AKD) | Topik: Aritmetika Sosial</div>
+                            Berapa keuntungan bersih dari konser tersebut?
+                            <div class="pernyataan-list">
+                               <div class="pernyataan-item"><span class="pernyataan-nomor">(1)</span><span class="pernyataan-teks">Total pendapatan dari semua tiket adalah Rp3.050.000.000.</span></div>
+                               <div class="pernyataan-item"><span class="pernyataan-nomor">(2)</span><span class="pernyataan-teks">Biaya operasional konser adalah 35% dari total pendapatan tiket.</span></div>
+                           </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, tetapi (2) SAJA tidak cukup.</li>
+                                <li data-option="B">Pernyataan (2) SAJA cukup, tetapi (1) SAJA tidak cukup.</li>
+                                <li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</li>
+                                <li data-option="D">Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</li>
+                                <li data-option="E">(1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+     <!-- KUNCI JAWABAN & PEMBAHASAN -->
+     <section class="page cover-page">
+      <div>
+          <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+          <h1 class="title">KUNCI JAWABAN &<br>PEMBAHASAN</h1>
+          <p class="subtitle">Penalaran Matematika 4</p>
+      </div>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 1</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Minggu ke-2 dan ke-3 sama besar</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk mencari interval waktu dengan perubahan nilai terbesar dari sebuah data kumulatif. Data kumulatif berarti nilai pada suatu waktu adalah total dari awal hingga waktu tersebut. Untuk mencari penambahan pada periode tertentu (misal, dari Minggu 1 ke Minggu 2), kita harus menghitung selisih antara nilai kumulatif di akhir periode dan nilai kumulatif di awal periode.</p>
+                        
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ol>
+                            <li>Pahami bahwa tabel menunjukkan dana yang terkumpul secara total hingga akhir setiap minggu.</li>
+                            <li>Hitung penambahan dana spesifik untuk setiap minggu:
+                                <ul>
+                                    <li><b>Penambahan Minggu 1:</b> Dana di akhir Minggu 1 (Rp2.500.000).</li>
+                                    <li><b>Penambahan Minggu 2:</b> Dana di akhir Minggu 2 dikurangi dana di akhir Minggu 1.</li>
+                                    <li><b>Penambahan Minggu 3:</b> Dana di akhir Minggu 3 dikurangi dana di akhir Minggu 2.</li>
+                                    <li><b>Penambahan Minggu 4:</b> Dana di akhir Minggu 4 dikurangi dana di akhir Minggu 3.</li>
+                                </ul>
+                            </li>
+                            <li>Bandingkan nilai penambahan dari setiap minggu untuk menemukan yang terbesar.</li>
+                        </ol>
+
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <ul>
+                          <li>Penambahan pada Minggu 1 = Rp2.500.000 (ini adalah dana awal yang terkumpul).</li>
+                          <li>Penambahan pada Minggu 2 = Rp5.750.000 - Rp2.500.000 = <b>Rp3.250.000</b>.</li>
+                          <li>Penambahan pada Minggu 3 = Rp9.000.000 - Rp5.750.000 = <b>Rp3.250.000</b>.</li>
+                          <li>Penambahan pada Minggu 4 = Rp12.000.000 - Rp9.000.000 = Rp3.000.000.</li>
+                        </ul>
+                        
+                        <b class="pembahasan-title">4. Kesimpulan</b>
+                        <p>Setelah membandingkan semua penambahan, nilai terbesar adalah Rp3.250.000, yang terjadi pada Minggu ke-2 dan Minggu ke-3. Keduanya memiliki nilai penambahan yang sama besar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 2</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">2.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: D. 3</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini menguji kemampuan untuk menganalisis data akhir terhadap target yang telah ditetapkan. Konsep yang digunakan adalah:
+                      <ul>
+                        <li><b>Persentase Pencapaian:</b> Dihitung dengan rumus: $ \frac{\text{Jumlah Tercapai}}{\text{Jumlah Target}} \times 100\% $.</li>
+                        <li><b>Kekurangan/Selisih:</b> Dihitung dengan rumus: $\text{Jumlah Target} - \text{Jumlah Tercapai}$.</li>
+                      </ul>
+                      Kita perlu mengevaluasi kebenaran setiap pernyataan satu per satu.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li>Identifikasi data akhir proyek dari tabel: 800 buku terkumpul dan Rp12.000.000 dana terkumpul.</li>
+                        <li>Identifikasi target dari wacana: 1.000 buku dan Rp15.000.000.</li>
+                        <li>Untuk setiap pernyataan, lakukan perhitungan yang sesuai (persentase atau selisih) dan bandingkan hasilnya dengan klaim dalam pernyataan.</li>
+                        <li>Hitung jumlah total pernyataan yang benar.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan dan Analisis Pernyataan</b>
+                      <ul>
+                        <li><b>Pernyataan (1): Target donasi buku tercapai sebesar 80%.</b><br>
+                            Persentase = $ \frac{800 \text{ buku}}{1.000 \text{ buku}} \times 100\% = 0,8 \times 100\% = 80\% $. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (2): Target donasi dana tercapai sebesar 80%.</b><br>
+                            Persentase = $ \frac{\text{Rp}12.000.000}{\text{Rp}15.000.000} \times 100\% = \frac{12}{15} \times 100\% = \frac{4}{5} \times 100\% = 80\% $. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (3): Jumlah buku yang masih kurang dari target adalah 200 buku.</b><br>
+                            Kekurangan = $1.000 \text{ buku} - 800 \text{ buku} = 200$ buku. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (4): Kekurangan dana dari target adalah Rp2.000.000.</b><br>
+                            Kekurangan = Rp15.000.000 - Rp12.000.000 = Rp3.000.000. Pernyataan ini mengklaim Rp2.000.000, jadi pernyataan ini <b>Salah</b>.
+                        </li>
+                      </ul>
+
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Terdapat 3 pernyataan yang benar, yaitu pernyataan (1), (2), dan (3). Maka, jawaban yang benar adalah 3.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 3</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">3.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini membandingkan dua kuantitas (P dan Q). Kuantitas P adalah nilai yang harus dihitung berdasarkan informasi dari wacana, sedangkan Kuantitas Q adalah nilai yang sudah diberikan. Konsep matematika yang digunakan adalah:
+                      <ul>
+                        <li><b>Menghitung Bagian dari Total:</b> Untuk mencari nilai dari persentase tertentu, gunakan rumus: $\text{Nilai Bagian} = \text{Persentase} \times \text{Nilai Total}$.</li>
+                        <li><b>Pembagian:</b> Untuk mencari jumlah unit yang bisa didapat dari sejumlah total uang, gunakan rumus: $\text{Jumlah Unit} = \frac{\text{Total Uang}}{\text{Harga per Unit}}$.</li>
+                      </ul>
+                      </p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Menghitung Kuantitas P:</b>
+                            <ul>
+                                <li>Tentukan total dana terkumpul di akhir proyek dari tabel.</li>
+                                <li>Hitung jumlah dana yang dialokasikan untuk membeli buku baru (60% dari total dana).</li>
+                                <li>Bagi jumlah dana yang dialokasikan tersebut dengan harga rata-rata per buku untuk mendapatkan jumlah buku yang dapat dibeli.</li>
+                            </ul>
+                        </li>
+                        <li><b>Identifikasi Kuantitas Q:</b> Nilai Q sudah diberikan secara eksplisit dalam soal.</li>
+                        <li><b>Bandingkan Kuantitas P dan Q:</b> Tentukan apakah P lebih besar, lebih kecil, atau sama dengan Q.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li>Total dana terkumpul (dari tabel) = Rp12.000.000.</li>
+                        <li>Dana yang dialokasikan untuk buku = $60\% \times \text{Rp}12.000.000 = 0,6 \times 12.000.000 = \text{Rp}7.200.000$.</li>
+                        <li>Harga rata-rata per buku = Rp45.000.</li>
+                        <li><b>Kuantitas P</b> = Jumlah buku yang dapat dibeli = $\frac{\text{Rp}7.200.000}{\text{Rp}45.000/\text{buku}} = \frac{7200}{45} = 160$ buku.</li>
+                        <li><b>Kuantitas Q</b> = 165 buku.</li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Membandingkan kedua nilai: $P = 160$ dan $Q = 165$. Jelas bahwa $160 < 165$. Oleh karena itu, Kuantitas P lebih kecil daripada kuantitas Q.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 4</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">4.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: Pernyataan 1 dan 2 benar.</b><br>
+                      <b class="pembahasan-title">Analisis Setiap Pernyataan:</b>
+                      <ul>
+                          <li><b>(1) Rata-rata buku per minggu adalah 200.</b><br>
+                              Rata-rata dihitung dari total akhir dibagi jumlah minggu. Perhitungan: $\frac{800 \text{ buku}}{4 \text{ minggu}} = 200$ buku/minggu. (<b>Benar</b>)
+                          </li>
+                          <li><b>(2) Rata-rata dana per minggu adalah Rp3.000.000.</b><br>
+                              Perhitungan: $\frac{\text{Rp}12.000.000}{4 \text{ minggu}} = \text{Rp}3.000.000$/minggu. (<b>Benar</b>)
+                          </li>
+                          <li><b>(3) Persentase kenaikan buku M2-M3 > M1-M2.</b><br>
+                              Kenaikan M1-M2: $\frac{350-150}{150} \approx 133,3\%$.<br>
+                              Kenaikan M2-M3: $\frac{600-350}{350} \approx 71,4\%$.<br>
+                              Karena $71,4\% < 133,3\%$, pernyataan <b>Salah</b>.
+                          </li>
+                          <li><b>(4) Total buku akhir = jumlah buku M1+M2+M3.</b><br>
+                              Data bersifat kumulatif, bukan penambahan mingguan. Total akhir (800) tidak sama dengan $150+350+600=1100$. Pernyataan <b>Salah</b>.
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 5</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">5.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: E. (1) dan (2) tidak cukup.</b><br>
+                      <b class="pembahasan-title">Analisis Kecukupan Data:</b>
+                      <p>Pertanyaan: Berapa total buku? Total buku = 800 (terkumpul) + buku baru. Untuk mengetahui jumlah buku baru, kita perlu tahu pasti berapa "Dana untuk Buku".</p>
+                      <p>Total Dana (Rp12 jt) = Dana untuk Buku + Dana Operasional. Ini adalah 1 persamaan dengan 2 variabel tidak diketahui.</p>
+                      <ul>
+                          <li><b>Pernyataan (1) SAJA:</b> Hanya menyatakan dana buku habis terpakai, tapi tidak menyebutkan berapa alokasinya. Alokasi bisa berapa saja. <b>Tidak Cukup.</b></li>
+                          <li><b>Pernyataan (2) SAJA:</b> Menyebutkan sisa dana operasional. Kita tidak tahu alokasi awal dana operasional, jadi tidak bisa menentukan berapa dana yang dialokasikan untuk buku. <b>Tidak Cukup.</b></li>
+                          <li><b>BERSAMA-SAMA:</b> Menggabungkan keduanya tetap tidak memberikan informasi tentang pembagian awal dana Rp12 jt antara alokasi buku dan alokasi operasional. Masih ada dua variabel yang tidak diketahui. <b>Tidak Cukup.</b></li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 6</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 3</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini meminta kita untuk menghitung total poin sebuah tim berdasarkan hasil pertandingannya dan sistem poin yang berlaku. Sistem poinnya adalah: Menang = 3 poin, Seri = 1 poin, Kalah = 0 poin.</p>
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ol>
+                          <li>Temukan baris data untuk "Universitas Cendekia" pada tabel.</li>
+                          <li>Catat jumlah Menang, Seri, dan Kalah tim tersebut.</li>
+                          <li>Gunakan rumus total poin: $(\text{Jumlah Menang} \times 3) + (\text{Jumlah Seri} \times 1) + (\text{Jumlah Kalah} \times 0)$.</li>
+                          <li>Hitung hasilnya.</li>
+                        </ol>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <p>Dari tabel untuk Universitas Cendekia:
+                        <ul>
+                          <li>Menang = 1</li>
+                          <li>Seri = 0</li>
+                          <li>Kalah = 2</li>
+                        </ul>
+                        Total Poin = $(1 \times 3) + (0 \times 1) + (2 \times 0)$
+                        <br>Total Poin = $3 + 0 + 0 = 3$ poin.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 7</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">7.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: E. Semua pernyataan benar.</b><br>
+                      <b class="pembahasan-title">Logika Penyelesaian:</b>
+                      <p>Dalam turnamen round-robin, Total Menang = Total Kalah, dan Total Seri harus genap.</p>
+                      <ul>
+                        <li><b>Menang vs Kalah:</b> 3 tim pertama punya total 4 menang dan 3 kalah. Agar seimbang, Tim Harapan harus punya 1 Kalah lebih banyak dari Menang ($K_H - M_H = 1$).</li>
+                        <li><b>Seri:</b> 3 tim pertama punya total 2 seri. Agar total seri seluruh tim genap, Tim Harapan harus punya jumlah seri yang genap (S=0 atau S=2).</li>
+                        <li><b>Mencari Solusi:</b> Kita tahu $M_H+S_H+K_H=3$.
+                          <ul>
+                            <li>Jika $S_H=0$, maka $M_H+K_H=3$. Dengan $K_H-M_H=1$, didapat $K_H=2, M_H=1$.</li>
+                            <li>Jika $S_H=2$, maka $M_H+K_H=1$. Dengan $K_H-M_H=1$, didapat $K_H=1, M_H=0$.</li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <p>Kita uji kasus kedua (M=0, S=2, K=1) karena pilihan jawaban mengarah ke solusi unik:
+                      <ul>
+                        <li>(1) Tidak pernah menang: Benar (M=0).</li>
+                        <li>(2) Mengalami 2 kali seri: Benar (S=2).</li>
+                        <li>(3) Total poin 2: Poin = $(0\times3) + (2\times1) + (1\times0) = 2$. Benar.</li>
+                        <li>(4) Kalah 1 kali: Benar (K=1).</li>
+                      </ul>
+                      </p>
+                      <p>Semua pernyataan konsisten, maka semuanya benar.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 8</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">8.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: B. Kuantitas P lebih kecil daripada kuantitas Q.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita untuk menghitung nilai rata-rata (mean) dari sebuah set data dan membandingkannya dengan nilai yang diberikan. Rata-rata dihitung dengan menjumlahkan semua nilai data dan membaginya dengan banyaknya data.</p>
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li>Kumpulkan data poin dari semua tim. Kita perlu nilai poin dari Universitas Cendekia dan Harapan yang sudah dihitung di soal sebelumnya.</li>
+                        <li>Jumlahkan semua poin tersebut untuk mendapatkan total poin turnamen.</li>
+                        <li>Bagi total poin dengan jumlah tim (yaitu 4) untuk mendapatkan Kuantitas P.</li>
+                        <li>Bandingkan nilai P dengan nilai Q (4,5).</li>
+                      </ol>
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li>Poin Universitas Ganesha = 7 (dari tabel).</li>
+                        <li>Poin Universitas Merdeka = 4 (dari tabel).</li>
+                        <li>Poin Universitas Cendekia = 3 (dari perhitungan soal 6).</li>
+                        <li>Poin Universitas Harapan = 2 (dari perhitungan soal 7).</li>
+                        <li>Total poin semua tim = $7 + 4 + 3 + 2 = 16$ poin.</li>
+                        <li><b>Kuantitas P</b> (Rata-rata poin) = $\frac{\text{Total Poin}}{\text{Jumlah Tim}} = \frac{16}{4} = 4$ poin.</li>
+                        <li><b>Kuantitas Q</b> = 4,5 poin.</li>
+                      </ul>
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                       <p>Membandingkan kedua nilai: $P = 4$ dan $Q = 4,5$. Jelas bahwa $4 < 4,5$. Oleh karena itu, Kuantitas P lebih kecil daripada kuantitas Q.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 9</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">9.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: Semua pernyataan benar.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini adalah soal aplikasi aritmetika sosial dan logika. Kita perlu menentukan peringkat tim berdasarkan poin, lalu menghitung hadiah berdasarkan persentase yang diberikan.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Tentukan Peringkat:</b> Urutkan tim dari poin tertinggi ke terendah menggunakan data poin yang sudah lengkap.</li>
+                        <li><b>Hitung Hadiah:</b>
+                          <ul>
+                            <li>Hadiah Juara 1 sudah diberikan.</li>
+                            <li>Hitung hadiah Juara 2 (60% dari hadiah Juara 1).</li>
+                            <li>Hitung hadiah Juara 3 (50% dari hadiah Juara 2).</li>
+                          </ul>
+                        </li>
+                        <li><b>Evaluasi Pernyataan:</b> Cocokkan setiap pernyataan dengan hasil peringkat dan perhitungan hadiah.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan dan Analisis</b>
+                      <p>Poin tim: Ganesha (7), Merdeka (4), Cendekia (3), Harapan (2).</p>
+                      <ul>
+                        <li><b>Peringkat Tim:</b>
+                          <ol>
+                            <li>Juara 1: Universitas Ganesha (7 poin)</li>
+                            <li>Juara 2: Universitas Merdeka (4 poin)</li>
+                            <li>Juara 3: Universitas Cendekia (3 poin)</li>
+                            <li>Peringkat 4: Universitas Harapan (2 poin)</li>
+                          </ol>
+                        </li>
+                        <li><b>Perhitungan Hadiah:</b>
+                          <ul>
+                            <li>Hadiah Juara 1 = Rp10.000.000.</li>
+                            <li>Hadiah Juara 2 = $60\% \times \text{Rp}10.000.000 = \text{Rp}6.000.000$.</li>
+                            <li>Hadiah Juara 3 = $50\% \times \text{Hadiah Juara 2} = 50\% \times \text{Rp}6.000.000 = \text{Rp}3.000.000$.</li>
+                          </ul>
+                        </li>
+                        <li><b>Evaluasi Pernyataan:</b>
+                          <ul>
+                            <li><b>Pernyataan 1: "Universitas Ganesha adalah Juara 1."</b> -> Sesuai peringkat. <b>Benar</b>.</li>
+                            <li><b>Pernyataan 2: "Universitas Merdeka mendapat hadiah Rp6.000.000."</b> -> Sesuai perhitungan. <b>Benar</b>.</li>
+                            <li><b>Pernyataan 3: "Universitas Cendekia mendapat hadiah Rp3.000.000."</b> -> Sesuai perhitungan. <b>Benar</b>.</li>
+                            <li><b>Pernyataan 4: "Universitas Harapan tidak mendapat hadiah uang tunai."</b> -> Karena hanya ada hadiah untuk Juara 1, 2, dan 3. <b>Benar</b>.</li>
+                          </ul>
+                        </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 10</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">10.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: D. Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal Analisis Kecukupan Data (AKD) ini unik karena jawabannya dapat ditemukan hanya dengan menggunakan informasi dari wacana awal, tanpa memerlukan pernyataan tambahan. Dalam kasus seperti ini, setiap pernyataan tambahan yang diberikan secara otomatis dianggap "cukup" karena jawabannya sudah bisa diketahui sebelumnya.</p>
+                      
+                      <b class="pembahasan-title">2. Analisis Logika dari Wacana Awal</b>
+                      <p>Pertanyaannya adalah: "Apakah Universitas Ganesha menang melawan Universitas Cendekia?" Mari kita analisis data dari tabel utama:</p>
+                      <ul>
+                          <li><b>Universitas Ganesha:</b> Memiliki 0 kekalahan. Ini berarti Ganesha tidak pernah kalah dalam 3 pertandingannya.</li>
+                          <li><b>Universitas Cendekia:</b> Memiliki 0 seri. Ini berarti dalam 3 pertandingannya, Cendekia selalu menang atau kalah, tidak pernah seri.</li>
+                      </ul>
+                      <p>Ketika Ganesha bertanding melawan Cendekia, ada tiga kemungkinan hasil: Ganesha menang, Ganesha kalah, atau seri.</p>
+                      <ul>
+                          <li>Bisakah hasilnya seri? <b>Tidak</b>, karena Cendekia tidak pernah seri.</li>
+                          <li>Bisakah Ganesha kalah? <b>Tidak</b>, karena Ganesha tidak pernah kalah.</li>
+                      </ul>
+                      <p>Satu-satunya kemungkinan yang tersisa adalah <b>Ganesha menang</b>. Jadi, pertanyaan tersebut dapat dijawab "Ya" hanya dengan informasi dari wacana.</p>
+
+                      <b class="pembahasan-title">3. Evaluasi Pernyataan</b>
+                      <ul>
+                          <li><b>Pernyataan (1) SAJA:</b> Karena kita sudah tahu jawabannya dari wacana, memberikan informasi tambahan (bahkan jika tidak relevan langsung dengan pertandingan Ganesha vs Cendekia) tidak mengubah fakta bahwa pertanyaan tersebut dapat dijawab. Oleh karena itu, pernyataan (1) dianggap <b>CUKUP</b>.</li>
+                          <li><b>Pernyataan (2) SAJA:</b> Alasan yang sama berlaku di sini. Kita sudah dapat menjawab pertanyaan, jadi pernyataan (2) juga dianggap <b>CUKUP</b>.</li>
+                      </ul>
+
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Karena pernyataan (1) saja sudah cukup, dan pernyataan (2) saja juga sudah cukup, maka jawaban yang paling tepat adalah D.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 11</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 150 buah</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mengetahui berapa banyak benda kecil (keramik) yang dibutuhkan untuk menutupi sebuah area besar (lantai), kita perlu membagi luas area besar dengan luas satu benda kecil. Konsep utamanya adalah pembagian luas. Penting untuk memastikan semua satuan ukuran sama sebelum melakukan perhitungan.</p>
+                        
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ol>
+                          <li><b>Samakan Satuan:</b> Ukuran ruang tamu dalam meter (m), sedangkan ukuran keramik dalam sentimeter (cm). Kita harus mengubah salah satunya. Lebih mudah mengubah cm ke m.</li>
+                          <li><b>Hitung Luas Lantai:</b> Gunakan rumus luas persegi panjang, $L = \text{panjang} \times \text{lebar}$.</li>
+                          <li><b>Hitung Luas Satu Keramik:</b> Gunakan rumus luas persegi, $L = \text{sisi} \times \text{sisi}$.</li>
+                          <li><b>Hitung Jumlah Keramik:</b> Bagi luas lantai dengan luas satu keramik.</li>
+                        </ol>
+                        
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                         <ul>
+                            <li><b>Langkah 1: Konversi Satuan</b><br>
+                                Sisi keramik = 40 cm. Karena 1 meter = 100 cm, maka 40 cm = $\frac{40}{100}$ m = 0,4 meter.
+                            </li>
+                            <li><b>Langkah 2: Hitung Luas Lantai</b><br>
+                                Luas Lantai = $6 \text{ m} \times 4 \text{ m} = 24 \text{ m}^2$.
+                            </li>
+                            <li><b>Langkah 3: Hitung Luas Satu Keramik</b><br>
+                                Luas Satu Keramik = $0,4 \text{ m} \times 0,4 \text{ m} = 0,16 \text{ m}^2$.
+                            </li>
+                            <li><b>Langkah 4: Hitung Jumlah Keramik</b><br>
+                                Jumlah Keramik = $\frac{\text{Luas Lantai}}{\text{Luas Satu Keramik}} = \frac{24 \text{ m}^2}{0,16 \text{ m}^2} = 150$.
+                            </li>
+                         </ul>
+                         
+                         <b class="pembahasan-title">4. Kesimpulan</b>
+                         <p>Jadi, dibutuhkan 150 buah keramik untuk menutupi seluruh lantai.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 12</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">12.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: B. Rp1.875.000</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini adalah soal aritmetika sosial. Untuk menghitung total biaya pembelian, kita perlu mengetahui berapa banyak unit kemasan (dus) yang harus dibeli, lalu mengalikannya dengan harga per kemasan. Karena keramik tidak bisa dibeli eceran, kita harus membeli dalam kelipatan dus.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Gunakan Hasil Soal Sebelumnya:</b> Dari soal nomor 11, kita tahu bahwa total keramik yang dibutuhkan adalah 150 buah.</li>
+                        <li><b>Hitung Jumlah Dus:</b> Bagi total keramik yang dibutuhkan dengan jumlah keramik per dus.</li>
+                        <li><b>Hitung Total Biaya:</b> Kalikan jumlah dus yang dibutuhkan dengan harga per dus.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li>Total keramik yang dibutuhkan = 150 buah.</li>
+                        <li>Isi per dus = 6 buah.</li>
+                        <li>Jumlah dus yang harus dibeli = $\frac{\text{Total Kebutuhan Keramik}}{\text{Isi per Dus}} = \frac{150}{6} = 25$ dus.</li>
+                        <li>Harga per dus = Rp75.000.</li>
+                        <li>Total Biaya Pembelian Keramik = Jumlah Dus $\times$ Harga per Dus = $25 \times \text{Rp}75.000 = \text{Rp}1.875.000$.</li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Total biaya yang harus dikeluarkan Pak Budi untuk pembelian keramik adalah Rp1.875.000.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 13</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">13.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini membandingkan dua kuantitas biaya. Kita perlu menghitung nilai masing-masing kuantitas terlebih dahulu sebelum dapat membandingkannya. Konsep yang digunakan adalah perhitungan biaya berdasarkan luas dan pengambilan data dari perhitungan sebelumnya.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Hitung Kuantitas P:</b> Total biaya jasa tukang.
+                            <ul>
+                                <li>Hitung luas total lantai ruang tamu.</li>
+                                <li>Kalikan luas lantai dengan biaya jasa tukang per meter persegi.</li>
+                            </ul>
+                        </li>
+                        <li><b>Identifikasi Kuantitas Q:</b> Total biaya pembelian keramik.
+                            <ul>
+                                <li>Nilai ini sudah dihitung pada soal nomor 12. Kita bisa langsung menggunakannya.</li>
+                            </ul>
+                        </li>
+                        <li><b>Bandingkan P dan Q:</b> Tentukan hubungan antara kedua nilai tersebut.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li><b>Kuantitas P (Biaya Jasa Tukang):</b>
+                            <ul>
+                                <li>Luas ruang tamu = $6 \text{ m} \times 4 \text{ m} = 24 \text{ m}^2$.</li>
+                                <li>Biaya tukang per m² = Rp120.000.</li>
+                                <li>Total Biaya Tukang (P) = $24 \text{ m}^2 \times \text{Rp}120.000/\text{m}^2 = \text{Rp}2.880.000$.</li>
+                            </ul>
+                        </li>
+                        <li><b>Kuantitas Q (Biaya Pembelian Keramik):</b>
+                            <ul>
+                                <li>Dari soal nomor 12, total biaya keramik (Q) = Rp1.875.000.</li>
+                            </ul>
+                        </li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Membandingkan kedua nilai: $P = \text{Rp}2.880.000$ dan $Q = \text{Rp}1.875.000$.
+                      <br>Karena Rp2.880.000 > Rp1.875.000, maka Kuantitas P lebih besar daripada kuantitas Q.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 14</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">14.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: E. 4</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan yang berbeda terkait dengan data renovasi. Ini membutuhkan penerapan berbagai konsep matematika dasar seperti perhitungan luas, total biaya, dan perbandingan nilai.</p>
+                      
+                      <b class="pembahasan-title">2. Analisis Setiap Pernyataan</b>
+                      <ul>
+                        <li><b>Pernyataan (1): Luas satu buah keramik adalah 0,16 m².</b>
+                            <p><u>Analisis:</u> Sisi keramik adalah 40 cm, yang setara dengan 0,4 m. Luas keramik persegi adalah sisi × sisi.</p>
+                            <u>Perhitungan:</u> Luas = $0,4 \text{ m} \times 0,4 \text{ m} = 0,16 \text{ m}^2$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (2): Luas total keramik dalam satu dus adalah 0,96 m².</b>
+                            <p><u>Analisis:</u> Satu dus berisi 6 buah keramik. Kita kalikan luas satu keramik dengan 6.</p>
+                            <u>Perhitungan:</u> Luas Total = $6 \times 0,16 \text{ m}^2 = 0,96 \text{ m}^2$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (3): Total biaya renovasi lantai (keramik dan tukang) lebih dari Rp4.500.000.</b>
+                            <p><u>Analisis:</u> Kita jumlahkan total biaya keramik (dari soal 12) dan total biaya tukang (dari soal 13).</p>
+                            <u>Perhitungan:</u> Total Biaya Lantai = Rp1.875.000 (keramik) + Rp2.880.000 (tukang) = Rp4.755.000.
+                            <br>Nilai Rp4.755.000 memang lebih dari Rp4.500.000. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (4): Biaya pengecatan dinding adalah komponen biaya termurah dalam renovasi.</b>
+                            <p><u>Analisis:</u> Kita bandingkan semua komponen biaya yang diketahui.</p>
+                            <u>Perbandingan:</u>
+                            <ul>
+                                <li>Biaya Keramik: Rp1.875.000</li>
+                                <li>Biaya Tukang: Rp2.880.000</li>
+                                <li>Biaya Pengecatan: Rp1.500.000</li>
+                            </ul>
+                            Nilai terendah adalah Rp1.500.000, yaitu biaya pengecatan. Pernyataan ini <b>Benar</b>.
+                        </li>
+                      </ul>
+
+                      <b class="pembahasan-title">3. Kesimpulan</b>
+                      <p>Keempat pernyataan tersebut semuanya benar. Jadi, jumlah pernyataan yang benar adalah 4.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 15</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">15.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: D. Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal Analisis Kecukupan Data (AKD) ini bertanya apakah informasi yang diberikan cukup untuk menjawab pertanyaan. Pertanyaannya adalah "Berapa total biaya keseluruhan renovasi?".
+                      <br>Total Biaya Keseluruhan = (Biaya Keramik + Biaya Tukang) + (Biaya Pengecatan).
+                      <br>Dari wacana awal, semua informasi yang dibutuhkan untuk menghitung ketiga komponen biaya tersebut sudah tersedia.</p>
+                      
+                      <b class="pembahasan-title">2. Analisis dari Wacana Awal</b>
+                      <ul>
+                        <li>Biaya Keramik = 25 dus × Rp75.000 = Rp1.875.000.</li>
+                        <li>Biaya Tukang = 24 m² × Rp120.000 = Rp2.880.000.</li>
+                        <li>Biaya Pengecatan = Rp1.500.000.</li>
+                      </ul>
+                      <p>Total Biaya = Rp1.875.000 + Rp2.880.000 + Rp1.500.000 = Rp6.255.000.
+                      <br>Karena total biaya dapat dihitung secara pasti hanya dari wacana, maka pertanyaan tersebut <b>sudah terjawab</b> bahkan sebelum melihat pernyataan (1) dan (2).</p>
+
+                      <b class="pembahasan-title">3. Evaluasi Pernyataan</b>
+                      <p>Dalam konteks AKD, jika sebuah pertanyaan sudah dapat dijawab dari informasi awal, maka setiap pernyataan tambahan yang memberikan informasi (baik itu informasi baru atau informasi yang mengkonfirmasi perhitungan) dianggap "cukup".</p>
+                      <ul>
+                          <li><b>Pernyataan (1) SAJA: "Total biaya untuk lantai, yang mencakup pembelian keramik dan jasa pemasangannya."</b>
+                              <p>Pernyataan ini memberi tahu kita sub-total dari biaya lantai (Rp4.755.000). Karena kita sudah tahu biaya dinding (Rp1.500.000) dari wacana, kita bisa menghitung total keseluruhan. Maka, pernyataan (1) SAJA <b>CUKUP</b>.</p>
+                          </li>
+                          <li><b>Pernyataan (2) SAJA: "Total biaya untuk dinding, yaitu biaya borongan pengecatan."</b>
+                              <p>Pernyataan ini memberi tahu kita sub-total dari biaya dinding (Rp1.500.000). Karena kita bisa menghitung biaya lantai (Rp4.755.000) dari wacana, kita bisa menghitung total keseluruhan. Maka, pernyataan (2) SAJA <b>CUKUP</b>.</p>
+                          </li>
+                      </ul>
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Karena pernyataan (1) saja cukup, dan pernyataan (2) saja juga cukup, maka jawaban yang benar adalah D.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 16</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 30 panel</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Soal ini adalah masalah optimasi ruang dengan batasan. Kita perlu mencari berapa banyak objek (panel surya) yang bisa muat dalam suatu area (atap) yang luasnya dibatasi oleh persentase.</p>
+                        
+                        <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                        <ol>
+                            <li><b>Hitung Luas Total Atap:</b> Gunakan rumus luas persegi panjang ($L = p \times l$).</li>
+                            <li><b>Hitung Luas Maksimum yang Boleh Digunakan:</b> Kalikan luas total atap dengan persentase yang diizinkan (75%).</li>
+                            <li><b>Hitung Luas Satu Panel Surya:</b> Gunakan rumus luas persegi panjang.</li>
+                            <li><b>Hitung Jumlah Panel Maksimum:</b> Bagi luas maksimum yang boleh digunakan dengan luas satu panel surya.</li>
+                        </ol>
+
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                         <ul>
+                            <li><b>Langkah 1: Luas Total Atap</b><br>
+                                Luas Total = $10 \text{ m} \times 8 \text{ m} = 80 \text{ m}^2$.
+                            </li>
+                            <li><b>Langkah 2: Luas Maksimum untuk Panel</b><br>
+                                Luas Maksimum = $75\% \times 80 \text{ m}^2 = 0,75 \times 80 \text{ m}^2 = 60 \text{ m}^2$.
+                            </li>
+                            <li><b>Langkah 3: Luas Satu Panel</b><br>
+                                Luas Satu Panel = $2 \text{ m} \times 1 \text{ m} = 2 \text{ m}^2$.
+                            </li>
+                            <li><b>Langkah 4: Jumlah Panel Maksimum</b><br>
+                                Jumlah Panel = $\frac{\text{Luas Maksimum}}{\text{Luas Satu Panel}} = \frac{60 \text{ m}^2}{2 \text{ m}^2/\text{panel}} = 30$ panel.
+                            </li>
+                         </ul>
+                         <b class="pembahasan-title">4. Kesimpulan</b>
+                         <p>Jumlah maksimum panel surya yang dapat dipasang adalah 30 buah.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 17</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">17.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: E. 4</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita untuk memverifikasi beberapa pernyataan berdasarkan skenario pemasangan panel surya dalam jumlah maksimum (30 panel, dari soal 16). Ini melibatkan perhitungan biaya, produksi energi, penghematan, dan sisa luas.</p>
+
+                      <b class="pembahasan-title">2. Analisis Setiap Pernyataan</b>
+                      <p>Kita akan menggunakan jumlah panel = 30 buah untuk semua perhitungan.</p>
+                      <ul>
+                        <li><b>Pernyataan (1): Total biaya pemasangan adalah Rp75.000.000.</b>
+                            <p><u>Analisis:</u> Biaya total adalah jumlah panel dikalikan biaya per panel.</p>
+                            <u>Perhitungan:</u> Biaya = $30 \text{ panel} \times \text{Rp}2.500.000/\text{panel} = \text{Rp}75.000.000$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (2): Total energi yang dihasilkan dalam sebulan (30 hari) adalah 1.350 kWh.</b>
+                            <p><u>Analisis:</u> Energi total adalah jumlah panel dikalikan produksi per panel per hari, lalu dikalikan jumlah hari.</p>
+                            <u>Perhitungan:</u> Energi = $30 \text{ panel} \times 1,5 \text{ kWh/hari/panel} \times 30 \text{ hari} = 45 \times 30 = 1.350$ kWh. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (3): Penghematan biaya listrik dalam sebulan (30 hari) adalah Rp2.025.000.</b>
+                            <p><u>Analisis:</u> Penghematan adalah total energi yang dihasilkan dikalikan tarif listrik per kWh.</p>
+                            <u>Perhitungan:</u> Penghematan = $1.350 \text{ kWh} \times \text{Rp}1.500/\text{kWh} = \text{Rp}2.025.000$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan (4): Luas atap yang tidak terpakai adalah 20 m².</b>
+                            <p><u>Analisis:</u> Luas tidak terpakai adalah luas total atap dikurangi luas yang dipakai oleh panel.</p>
+                            <u>Perhitungan:</u> Luas terpakai = $30 \text{ panel} \times 2 \text{ m}^2/\text{panel} = 60 \text{ m}^2$. Luas sisa = $80 \text{ m}^2 (\text{total}) - 60 \text{ m}^2 (\text{terpakai}) = 20 \text{ m}^2$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                      </ul>
+
+                      <b class="pembahasan-title">3. Kesimpulan</b>
+                      <p>Karena keempat pernyataan semuanya benar, maka jumlah pernyataan yang benar adalah 4.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 18</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">18.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita menghitung waktu balik modal atau <i>Break-Even Point (BEP)</i>, yaitu waktu yang dibutuhkan agar total keuntungan/penghematan bisa menutupi biaya investasi awal. Rumus sudah diberikan dalam soal: $\text{Waktu BEP} = \frac{\text{Total Biaya Investasi}}{\text{Penghematan Bulanan}}$. Kita juga perlu melakukan konversi satuan waktu dari tahun ke bulan.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Identifikasi Variabel:</b> Ambil data Total Biaya Investasi dan Penghematan Bulanan dari perhitungan soal nomor 17.</li>
+                        <li><b>Hitung Kuantitas P:</b> Masukkan variabel ke dalam rumus BEP untuk mendapatkan waktu dalam satuan bulan.</li>
+                        <li><b>Konversi Kuantitas Q:</b> Ubah 3 tahun menjadi satuan bulan (1 tahun = 12 bulan).</li>
+                        <li><b>Bandingkan P dan Q.</b></li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li>Dari soal 17, Total Biaya Investasi (30 panel) = Rp75.000.000.</li>
+                        <li>Dari soal 17, Penghematan Bulanan = Rp2.025.000.</li>
+                        <li><b>Kuantitas P (Waktu BEP):</b>
+                            <br>P = $\frac{\text{Rp}75.000.000}{\text{Rp}2.025.000/\text{bulan}} \approx 37,04$ bulan.
+                        </li>
+                        <li><b>Kuantitas Q:</b>
+                            <br>Q = 3 tahun = $3 \times 12 = 36$ bulan.
+                        </li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Membandingkan kedua nilai: $P \approx 37,04$ dan $Q = 36$.
+                      <br>Karena 37,04 > 36, maka Kuantitas P lebih besar daripada kuantitas Q.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 19</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">19.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: Semua pernyataan benar.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita menganalisis skenario baru, yaitu jika hanya 20 panel yang dipasang. Kita perlu menghitung ulang semua nilai (biaya, luas, penghematan) berdasarkan jumlah panel yang baru ini dan memverifikasi setiap pernyataan.</p>
+                      
+                      <b class="pembahasan-title">2. Analisis Setiap Pernyataan (untuk 20 panel)</b>
+                      <ul>
+                        <li><b>Pernyataan 1: Biaya investasi yang dikeluarkan adalah Rp50.000.000.</b>
+                            <p><u>Analisis:</u> Biaya investasi adalah jumlah panel dikalikan biaya per panel.</p>
+                            <u>Perhitungan:</u> Biaya = $20 \text{ panel} \times \text{Rp}2.500.000/\text{panel} = \text{Rp}50.000.000$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 2: Panel surya menutupi 50% dari total luas atap.</b>
+                            <p><u>Analisis:</u> Luas yang tertutup adalah jumlah panel dikalikan luas per panel. Persentasenya adalah (luas tertutup / luas total atap) x 100%.</p>
+                            <u>Perhitungan:</u> Luas terpakai = $20 \text{ panel} \times 2 \text{ m}^2/\text{panel} = 40 \text{ m}^2$.<br>
+                            Persentase = $\frac{40 \text{ m}^2}{80 \text{ m}^2} \times 100\% = 0,5 \times 100\% = 50\%$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 3: Penghematan listrik per bulan (30 hari) adalah Rp1.350.000.</b>
+                            <p><u>Analisis:</u> Penghematan adalah total energi (jumlah panel × produksi harian × jumlah hari) dikalikan tarif listrik.</p>
+                            <u>Perhitungan:</u> Total Energi = $20 \times 1,5 \text{ kWh/hari} \times 30 \text{ hari} = 900$ kWh.<br>
+                            Penghematan = $900 \text{ kWh} \times \text{Rp}1.500/\text{kWh} = \text{Rp}1.350.000$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 4: Luas atap yang digunakan untuk panel surya adalah 40 m².</b>
+                            <p><u>Analisis:</u> Luas yang digunakan adalah jumlah panel dikalikan luas per panel.</p>
+                            <u>Perhitungan:</u> Luas terpakai = $20 \text{ panel} \times 2 \text{ m}^2/\text{panel} = 40 \text{ m}^2$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 20</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">20.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: D. Pernyataan (1) SAJA cukup dan (2) SAJA cukup.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal AKD ini menanyakan "Berapa lama waktu yang dibutuhkan agar total penghematan listrik sama dengan total biaya investasi?", yang merupakan definisi lain dari waktu balik modal (BEP).
+                      <br>Rumus: $\text{Waktu BEP} = \frac{\text{Total Biaya Investasi}}{\text{Penghematan Bulanan}}$.
+                      <br>Kedua variabel (Total Biaya dan Penghematan Bulanan) bergantung pada satu variabel utama: <b>Jumlah Panel</b>. Jika kita bisa menentukan jumlah panel, maka kita bisa menjawab pertanyaan.
+                      </p>
+                      
+                      <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                      <ul>
+                          <li><b>Menganalisis Pernyataan (1) SAJA: "Jumlah panel surya yang dipasang adalah 25 buah."</b>
+                              <p><u>Analisis:</u> Pernyataan ini secara langsung memberikan nilai dari variabel utama, yaitu Jumlah Panel = 25.</p>
+                              <u>Konsekuensi:</u> Dengan nilai ini, kita dapat menghitung:
+                              <ul>
+                                <li>Total Biaya Investasi = $25 \times \text{Rp}2.500.000$.</li>
+                                <li>Penghematan Bulanan = $(25 \times 1,5 \times 30) \times \text{Rp}1.500$.</li>
+                              </ul>
+                              Karena kedua komponen yang dibutuhkan untuk rumus BEP dapat dihitung, maka waktu BEP dapat ditemukan secara pasti. Pernyataan (1) SAJA <b>CUKUP</b>.
+                          </li>
+                          <li><b>Menganalisis Pernyataan (2) SAJA: "Total penghematan listrik per bulan adalah Rp1.687.500."</b>
+                              <p><u>Analisis:</u> Pernyataan ini memberikan hasil akhir dari perhitungan penghematan bulanan. Kita bisa bekerja mundur untuk menemukan variabel utama (Jumlah Panel).</p>
+                              <u>Konsekuensi:</u> Kita tahu bahwa $\text{Penghematan Bulanan} = (\text{Jumlah Panel} \times 1,5 \times 30) \times 1.500$.
+                              <br>$\text{Rp}1.687.500 = \text{Jumlah Panel} \times 67.500$.
+                              <br>$\text{Jumlah Panel} = \frac{1.687.500}{67.500} = 25$ panel.
+                              <br>Karena kita berhasil menemukan jumlah panel secara pasti (25 panel), ini sama dengan kondisi pada Pernyataan (1). Kita bisa menghitung Total Biaya dan kemudian waktu BEP. Pernyataan (2) SAJA <b>CUKUP</b>.
+                          </li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">3. Kesimpulan</b>
+                      <p>Karena pernyataan (1) saja cukup untuk menjawab pertanyaan, dan pernyataan (2) saja juga cukup, maka jawaban yang benar adalah D.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 21</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+                <div class="soal-nomor">21.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Rp720.000</b><br>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                         <p>Soal ini meminta kita menghitung harga setelah diskon. Jika sebuah harga mendapat diskon sebesar X%, maka harga akhirnya adalah $(100\% - X\%)$ dari harga awal. Diskon 20% berarti harga yang harus dibayar adalah 80% dari harga normal.</p>
+                         
+                         <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                         <ol>
+                            <li>Cari harga normal untuk tiket kategori GOLD dari tabel.</li>
+                            <li>Hitung 80% dari harga normal tersebut untuk mendapatkan harga Presale.</li>
+                         </ol>
+
+                         <b class="pembahasan-title">3. Perhitungan</b>
+                         <ul>
+                            <li>Harga Normal tiket GOLD = Rp900.000.</li>
+                            <li>Diskon = 20%.</li>
+                            <li>Harga Presale = $(100\% - 20\%) \times \text{Harga Normal}$</li>
+                            <li>Harga Presale = $80\% \times \text{Rp}900.000 = 0,8 \times 900.000 = \text{Rp}720.000$.</li>
+                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 22</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <div class="soal-latihan">
+              <div class="soal-nomor">22.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: B. Rp1.250.000.000</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta total pendapatan dari satu kategori tiket (SILVER) yang dijual dalam dua fase harga yang berbeda (Presale dan Normal). Total pendapatan adalah jumlah dari pendapatan di setiap fase.</p>
+                      
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Hitung Pendapatan Fase Presale:</b>
+                            <ul>
+                                <li>Tentukan jumlah tiket SILVER yang terjual di fase Presale.</li>
+                                <li>Hitung harga satu tiket SILVER Presale (diskon 20% dari harga normal).</li>
+                                <li>Kalikan jumlah tiket dengan harga tiket Presale.</li>
+                            </ul>
+                        </li>
+                        <li><b>Hitung Pendapatan Fase Normal:</b>
+                            <ul>
+                                <li>Tentukan jumlah tiket SILVER yang tersisa untuk dijual di fase Normal (Kapasitas Total - Tiket Presale).</li>
+                                <li>Gunakan harga tiket Normal.</li>
+                                <li>Kalikan jumlah tiket sisa dengan harga tiket Normal.</li>
+                            </ul>
+                        </li>
+                        <li><b>Hitung Total Pendapatan:</b> Jumlahkan pendapatan dari fase Presale dan fase Normal.</li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <p><b>Data Kategori SILVER:</b> Kapasitas=3.000, Harga Normal=Rp500.000, Terjual Presale=2.500.</p>
+                      <ul>
+                        <li><b>Pendapatan Presale:</b>
+                            <ul>
+                                <li>Harga Presale = $80\% \times 500.000 = \text{Rp}400.000$.</li>
+                                <li>Pendapatan = $2.500 \text{ tiket} \times \text{Rp}400.000 = \text{Rp}1.000.000.000$.</li>
+                            </ul>
+                        </li>
+                        <li><b>Pendapatan Normal:</b>
+                            <ul>
+                                <li>Jumlah tiket sisa = $3.000 - 2.500 = 500$ tiket.</li>
+                                <li>Pendapatan = $500 \text{ tiket} \times \text{Rp}500.000 = \text{Rp}250.000.000$.</li>
+                            </ul>
+                        </li>
+                        <li><b>Total Pendapatan Kategori SILVER:</b><br>
+                            Rp1.000.000.000 + Rp250.000.000 = Rp1.250.000.000.
+                        </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 23</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">23.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: A. Kuantitas P lebih besar daripada kuantitas Q.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini membandingkan total pendapatan dari dua fase penjualan yang berbeda. Kita perlu menghitung total pendapatan dari semua kategori tiket di fase Presale (Kuantitas P) dan total pendapatan dari semua kategori tiket di fase Normal (Kuantitas Q), lalu membandingkannya.</p>
+
+                      <b class="pembahasan-title">2. Langkah-langkah Pengerjaan</b>
+                      <ol>
+                        <li><b>Hitung Kuantitas P (Total Pendapatan Presale):</b>
+                            <ul>
+                                <li>Untuk setiap kategori (PLATINUM, GOLD, SILVER), hitung pendapatan presale: (Jumlah Tiket Presale) × (Harga Normal × 80%).</li>
+                                <li>Jumlahkan pendapatan presale dari ketiga kategori tersebut.</li>
+                            </ul>
+                        </li>
+                        <li><b>Hitung Kuantitas Q (Total Pendapatan Normal):</b>
+                            <ul>
+                                <li>Untuk setiap kategori, hitung jumlah tiket sisa: (Kapasitas - Jumlah Tiket Presale).</li>
+                                <li>Hitung pendapatan normal: (Jumlah Tiket Sisa) × (Harga Normal).</li>
+                                <li>Jumlahkan pendapatan normal dari ketiga kategori tersebut.</li>
+                            </ul>
+                        </li>
+                        <li><b>Bandingkan P dan Q.</b></li>
+                      </ol>
+
+                      <b class="pembahasan-title">3. Perhitungan</b>
+                      <ul>
+                        <li><b>Kuantitas P (Pendapatan Presale):</b>
+                          <ul>
+                            <li>PLATINUM: $400 \times (0,8 \times 1.500.000) = 400 \times 1.200.000 = \text{Rp}480.000.000$</li>
+                            <li>GOLD: $1.000 \times (0,8 \times 900.000) = 1.000 \times 720.000 = \text{Rp}720.000.000$</li>
+                            <li>SILVER: $2.500 \times (0,8 \times 500.000) = 2.500 \times 400.000 = \text{Rp}1.000.000.000$</li>
+                            <li><b>Total P = 480jt + 720jt + 1.000jt = Rp2.200.000.000</b></li>
+                          </ul>
+                        </li>
+                        <li><b>Kuantitas Q (Pendapatan Normal):</b>
+                          <ul>
+                            <li>PLATINUM: $(500-400) \times 1.500.000 = 100 \times 1.500.000 = \text{Rp}150.000.000$</li>
+                            <li>GOLD: $(1.500-1.000) \times 900.000 = 500 \times 900.000 = \text{Rp}450.000.000$</li>
+                            <li>SILVER: $(3.000-2.500) \times 500.000 = 500 \times 500.000 = \text{Rp}250.000.000$</li>
+                            <li><b>Total Q = 150jt + 450jt + 250jt = Rp850.000.000</b></li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <b class="pembahasan-title">4. Kesimpulan</b>
+                      <p>Rp2.200.000.000 (P) > Rp850.000.000 (Q). Maka, Kuantitas P lebih besar daripada kuantitas Q.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 24</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">24.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: Semua pernyataan benar.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal ini meminta kita untuk memverifikasi kebenaran dari empat pernyataan yang mencakup persentase penjualan, kontribusi penjualan, pendapatan parsial, dan pendapatan total.</p>
+                      
+                      <b class="pembahasan-title">2. Analisis Setiap Pernyataan</b>
+                      <ul>
+                        <li><b>Pernyataan 1: 80% dari tiket PLATINUM terjual pada fase Presale.</b>
+                            <p><u>Analisis:</u> Kita bandingkan jumlah tiket PLATINUM presale dengan total kapasitasnya.</p>
+                            <u>Perhitungan:</u> Persentase = $\frac{\text{Terjual Presale}}{\text{Kapasitas}} \times 100\% = \frac{400}{500} \times 100\% = 0,8 \times 100\% = 80\%$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 2: Kategori SILVER menyumbang lebih dari 50% dari total tiket yang terjual.</b>
+                            <p><u>Analisis:</u> Kita bandingkan kapasitas SILVER dengan total kapasitas semua tiket.</p>
+                            <u>Perhitungan:</u> Total Tiket = $500 (\text{P}) + 1.500 (\text{G}) + 3.000 (\text{S}) = 5.000$.<br>
+                            Persentase SILVER = $\frac{3.000}{5.000} \times 100\% = 0,6 \times 100\% = 60\%$.<br>
+                            Karena 60% > 50%, pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 3: Pendapatan dari tiket PLATINUM fase Normal adalah Rp150.000.000.</b>
+                            <p><u>Analisis:</u> Kita hitung jumlah tiket PLATINUM sisa dan kalikan dengan harga normalnya.</p>
+                            <u>Perhitungan:</u> Tiket sisa = $500 - 400 = 100$.<br>
+                            Pendapatan = $100 \times \text{Rp}1.500.000 = \text{Rp}150.000.000$. Pernyataan ini <b>Benar</b>.
+                        </li>
+                        <li><b>Pernyataan 4: Total seluruh pendapatan konser melebihi 3 miliar Rupiah.</b>
+                            <p><u>Analisis:</u> Kita jumlahkan total pendapatan Presale dan Normal dari semua kategori (telah dihitung di soal 23).</p>
+                            <u>Perhitungan:</u> Total Pendapatan = Rp2.200.000.000 (Presale) + Rp850.000.000 (Normal) = Rp3.050.000.000.<br>
+                            Nilai ini melebihi 3 miliar (Rp3.000.000.000). Pernyataan ini <b>Benar</b>.
+                        </li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Kunci Jawaban & Pembahasan</div>
+                    <div class="header-title-sub"> <strong>Soal Nomor 25</strong> </div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+              <div class="soal-nomor">25.</div>
+              <div class="soal-konten">
+                  <div class="pembahasan">
+                      <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, tetapi SATU tidak cukup.</b><br>
+                      <b class="pembahasan-title">1. Dasar Teori</b>
+                      <p>Soal AKD ini menanyakan "Berapa keuntungan bersih?". Rumus dasar untuk keuntungan adalah:
+                      <br>$\text{Keuntungan Bersih} = \text{Total Pendapatan} - \text{Total Biaya Operasional}$.
+                      <br>Untuk bisa menjawab pertanyaan, kita harus mengetahui nilai pasti dari kedua variabel di sisi kanan persamaan, yaitu "Total Pendapatan" dan "Total Biaya Operasional".
+                      </p>
+                      
+                      <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                      <ul>
+                          <li><b>Menganalisis Pernyataan (1) SAJA: "Total pendapatan dari semua tiket adalah Rp3.050.000.000."</b>
+                              <p><u>Analisis:</u> Pernyataan ini memberikan kita nilai pasti untuk "Total Pendapatan". Namun, kita tidak diberi tahu berapa "Total Biaya Operasional". Biaya bisa berapa saja, sehingga keuntungan tidak bisa dihitung secara pasti.</p>
+                              <u>Kesimpulan:</u> Pernyataan (1) SAJA <b>TIDAK CUKUP</b>.
+                          </li>
+                          <li><b>Menganalisis Pernyataan (2) SAJA: "Biaya operasional konser adalah 35% dari total pendapatan tiket."</b>
+                              <p><u>Analisis:</u> Pernyataan ini memberikan hubungan matematis antara Biaya dan Pendapatan ($\text{Biaya} = 0,35 \times \text{Pendapatan}$). Namun, kita tidak tahu nilai absolut dari Pendapatan, sehingga kita juga tidak bisa menghitung nilai absolut dari Biaya. Keuntungan tidak bisa dihitung.</p>
+                              <u>Kesimpulan:</u> Pernyataan (2) SAJA <b>TIDAK CUKUP</b>.
+                          </li>
+                           <li><b>Menganalisis Pernyataan (1) dan (2) BERSAMA-SAMA:</b>
+                              <p><u>Analisis:</u> Sekarang kita memiliki dua informasi penting:
+                                  <ol>
+                                      <li>Total Pendapatan = Rp3.050.000.000 (dari Pernyataan 1).</li>
+                                      <li>Biaya = 35% dari Total Pendapatan (dari Pernyataan 2).</li>
+                                  </ol>
+                                  Dengan menggabungkan keduanya, kita bisa menghitung nilai pasti dari Biaya Operasional:
+                                  <br>Biaya = $0,35 \times \text{Rp}3.050.000.000$.
+                                  <br>Setelah mendapatkan nilai Biaya, kita bisa menghitung Keuntungan Bersih = Rp3.050.000.000 - (hasil perhitungan biaya).
+                              </p>
+                              <u>Kesimpulan:</u> Karena nilai keuntungan dapat dihitung secara pasti, maka kedua pernyataan bersama-sama <b>CUKUP</b>.
+                          </li>
+                      </ul>
+                      
+                      <b class="pembahasan-title">3. Kesimpulan Akhir</b>
+                      <p>Satu pernyataan saja tidak cukup, tetapi dua pernyataan bersama-sama cukup. Maka, jawaban yang benar adalah C.</p>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+</body>
+</html>
+
