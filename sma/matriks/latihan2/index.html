@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Lengkap - Matriks (SMA)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #4a4a4a;
+            --title-grad-2: #000000;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            counter-reset: page;
+        }
+
+        .page {
+            background: white;
+            width: 176mm;
+            min-height: 250mm;
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page::after {
+            counter-increment: page;
+            content: counter(page);
+            position: absolute;
+            bottom: 15mm;
+            right: 20mm;
+            font-size: 10pt;
+            color: #888;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid #444;
+            height: 250mm;
+        }
+        
+        .cover-page::after, .toc-page::after {
+            content: ''; /* No page number on cover and TOC */
+        }
+
+        .cover-page img {
+            max-width: 300px;
+            margin-bottom: 40px;
+        }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 18pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @media print {
+            body { background: none; }
+            .page { width: 100%; height: 100%; margin: 0; box-shadow: none; page-break-after: always; }
+        }
+        
+        .watermark-container .page::before {
+            content: '';
+            background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 12cm;
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .cover-page::before, .toc-page::before { opacity: 0; }
+
+        .content-wrapper { position: relative; z-index: 1; width: 100%; }
+        
+        h1 { font-size: 24pt; text-align: center; border-bottom: 2px solid var(--primary-text); padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { font-size: 18pt; color: #000; border-left: 5px solid #555; padding-left: 10px; margin-top: 30px; }
+        h3 { font-size: 14pt; color: #222; margin-top: 30px; font-weight: 700; }
+        h4 { font-size: 12pt; font-weight: 700; margin-bottom: 5px; }
+
+        .toc-list { list-style-type: none; padding: 0; }
+        .toc-list li { margin-bottom: 10px; font-size: 12pt; }
+        .toc-list a { text-decoration: none; color: var(--primary-text); }
+        .toc-list a:hover { text-decoration: underline; }
+        
+        .layout-1-kolom { columns: 1; }
+        .latihan-item { display: grid; grid-template-columns: 1fr 0.7fr; gap: 20px; border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; }
+        .soal-item, .soal-latihan { margin-bottom: 15px; break-inside: avoid; overflow-wrap: break-word; word-wrap: break-word; }
+        
+        .coret-coret { border: 1px dashed #c0c0c0; min-height: 120px; padding: 10px; border-radius: 5px; }
+        
+        .pembahasan { background-color: #f9f9f9; border: 1px solid var(--border-color); padding: 15px; border-radius: 5px; margin-top: 10px; margin-bottom: 15px; }
+        
+        ol { padding-left: 0; }
+        ol.pilihan-ganda { list-style-type: none; padding-left: 20px; }
+        ol.pilihan-ganda li { margin-bottom: 8px; }
+        ol.pilihan-ganda li::before { content: attr(data-option) ". "; font-weight: bold; margin-right: 5px; }
+
+        .keterangan-soal { font-style: italic; font-size: 9pt; color: var(--secondary-text); margin-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+<div class="watermark-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">MODUL LENGKAP MATRIKS</h1>
+            <p class="subtitle">Materi & Kumpulan Soal Matematika SMA</p>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="page toc-page">
+        <div class="content-wrapper">
+            <h1>Daftar Isi</h1>
+            <ul class="toc-list">
+                <li><a href="#materi">BAB 1: Materi Ringkas Matriks</a></li>
+                <li><a href="#contoh-soal">BAB 2: Contoh Soal & Pembahasan</a></li>
+                <li><a href="#latihan-soal-cerita">BAB 3: Bank Soal - Soal Cerita</a></li>
+                <li><a href="#sc-mudah">&nbsp;&nbsp;&nbsp;› 3.1 Soal Mudah (1-10)</a></li>
+                <li><a href="#sc-sedang">&nbsp;&nbsp;&nbsp;› 3.2 Soal Sedang (11-20)</a></li>
+                <li><a href="#sc-sulit">&nbsp;&nbsp;&nbsp;› 3.3 Soal Sulit (21-25)</a></li>
+                <li><a href="#latihan-perkalian-invers">BAB 4: Bank Soal - Perkalian & Invers</a></li>
+                <li><a href="#pi-mudah">&nbsp;&nbsp;&nbsp;› 4.1 Soal Mudah (26-35)</a></li>
+                <li><a href="#pi-sedang">&nbsp;&nbsp;&nbsp;› 4.2 Soal Sedang (36-45)</a></li>
+                <li><a href="#pi-sulit">&nbsp;&nbsp;&nbsp;› 4.3 Soal Sulit (46-50)</a></li>
+                <li><a href="#pembahasan-latihan">BAB 5: Kunci Jawaban & Pembahasan</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Materi Lengkap -->
+    <section id="materi" class="page">
+      <div class="content-wrapper">
+        <h2>BAB 1: Materi Ringkas Matriks</h2>
+        <h3 id="materi-1">1.1 Pengenalan Matriks</h3>
+        <p><b>Matriks</b> adalah susunan bilangan, simbol, atau ekspresi, yang disusun dalam baris dan kolom sehingga membentuk suatu bangun persegi panjang. Ordo atau ukuran matriks ditentukan oleh banyaknya baris dan kolom. Matriks A berordo $m \times n$ berarti memiliki $m$ baris dan $n$ kolom.</p>
+        
+        <h4>Operasi Dasar Matriks</h4>
+        <ul>
+            <li><b>Penjumlahan & Pengurangan:</b> Hanya bisa dilakukan pada matriks berordo sama. Operasi dilakukan dengan menjumlahkan atau mengurangkan elemen-elemen yang seletak.</li>
+            <li><b>Perkalian Skalar:</b> Mengalikan setiap elemen matriks dengan sebuah bilangan (skalar).</li>
+        </ul>
+
+        <h3 id="materi-2">1.2 Perkalian Matriks</h3>
+        <p>Dua matriks A (ordo $m \times n$) dan B (ordo $n \times p$) dapat dikalikan. Hasilnya adalah matriks C dengan ordo $m \times p$. Syaratnya: jumlah kolom matriks A harus sama dengan jumlah baris matriks B.</p>
+        <p>Elemen pada baris ke-$i$ dan kolom ke-$j$ dari matriks hasil perkalian $C = AB$ diperoleh dengan mengalikan elemen-elemen baris ke-$i$ dari A dengan elemen-elemen kolom ke-$j$ dari B, kemudian menjumlahkannya.</p>
+        
+        <h3 id="materi-3">1.3 Determinan dan Invers Matriks</h3>
+        <p>Determinan adalah nilai skalar yang bisa dihitung dari elemen-elemen sebuah matriks persegi.</p>
+        <h4>Matriks Ordo 2x2</h4>
+        <p>Untuk matriks $A = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$:</p>
+        <ul>
+            <li><b>Determinan:</b> $\det(A) = |A| = ad - bc$.</li>
+            <li><b>Invers:</b> $A^{-1} = \frac{1}{\det(A)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}$.</li>
+        </ul>
+        <p><b>Syarat Invers:</b> Sebuah matriks memiliki invers jika dan hanya jika determinannya tidak sama dengan nol ($\det(A) \neq 0$). Matriks seperti ini disebut matriks non-singular.</p>
+        <h4>Sifat Penting</h4>
+        <ul>
+          <li>$A \cdot A^{-1} = A^{-1} \cdot A = I$ (I adalah matriks identitas)</li>
+          <li>$(AB)^{-1} = B^{-1} A^{-1}$</li>
+          <li>$\det(AB) = \det(A) \cdot \det(B)$</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contoh Soal -->
+    <section id="contoh-soal" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 2: Contoh Soal & Pembahasan</h2>
+            <div class="soal-item">
+                <b>1. Soal Cerita (Perkalian Matriks)</b><br>
+                Sebuah toko kue menjual 2 jenis kue: Brownies dan Bika Ambon. Harga bahan untuk membuat satu Brownies adalah Rp10.000 dan Bika Ambon Rp15.000. Waktu yang dibutuhkan adalah 30 menit untuk Brownies dan 45 menit untuk Bika Ambon. Jika toko ingin membuat 20 Brownies dan 10 Bika Ambon, representasikan total biaya dan waktu dalam perkalian matriks!
+                <div class="pembahasan">
+                    <b>Matriks Jumlah Kue (Q):</b> $Q = \begin{pmatrix} 20 & 10 \end{pmatrix}$<br>
+                    <b>Matriks Biaya & Waktu (P):</b> $P = \begin{pmatrix} 10000 & 30 \\ 15000 & 45 \end{pmatrix}$<br>
+                    <b>Perkalian Matriks:</b>
+                    $$ \begin{aligned}
+                    \text{Total} &= Q \times P \\
+                    &= \begin{pmatrix} 20 & 10 \end{pmatrix} \begin{pmatrix} 10000 & 30 \\ 15000 & 45 \end{pmatrix} \\
+                    &= \begin{pmatrix} (20 \cdot 10000 + 10 \cdot 15000) & (20 \cdot 30 + 10 \cdot 45) \end{pmatrix} \\
+                    &= \begin{pmatrix} 350000 & 1050 \end{pmatrix}
+                    \end{aligned} $$
+                    <b>Jawaban:</b> Total biaya adalah Rp350.000 dan total waktu adalah 1050 menit.
+                </div>
+            </div>
+             <div class="soal-item">
+                <b>2. Soal Invers Matriks</b><br>
+                Tentukan invers dari matriks $A = \begin{pmatrix} 4 & 7 \\ 1 & 2 \end{pmatrix}$.
+                <div class="pembahasan">
+                    <b>Determinan:</b> $\det(A) = (4)(2) - (7)(1) = 8 - 7 = 1$.<br>
+                    <b>Invers:</b>
+                     $$ A^{-1} = \frac{1}{\det(A)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix} = \frac{1}{1} \begin{pmatrix} 2 & -7 \\ -1 & 4 \end{pmatrix} $$
+                    <b>Jawaban:</b> $A^{-1} = \begin{pmatrix} 2 & -7 \\ -1 & 4 \end{pmatrix}$.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latihan Soal Cerita -->
+    <section id="latihan-soal-cerita" class="page">
+        <div class="content-wrapper">
+            <h2 id="sc-mudah">BAB 3: Bank Soal - Soal Cerita</h2>
+            <h3>3.1 Soal Mudah (1-10)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>1.</b> Data absensi siswa kelas A dan B dalam seminggu disajikan dalam tabel:
+            <table border="1" style="width:50%; margin-top:5px;"><tr><td></td><td>Sakit</td><td>Izin</td></tr><tr><td>Kelas A</td><td>2</td><td>3</td></tr><tr><td>Kelas B</td><td>1</td><td>4</td></tr></table>
+            Matriks yang sesuai adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 1 \\ 3 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 3 \\ 1 & 4 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 2 & 3 & 1 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 \\ 3 \\ 1 \\ 4 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 5 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>2.</b> Toko Buah "Segar" memiliki stok 15 kg Apel dan 20 kg Jeruk. Toko Buah "Manis" memiliki 10 kg Apel dan 25 kg Jeruk. Jika stok kedua toko digabung, matriks total stok adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 25 & 45 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 25 \\ 45 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 15 & 20 \\ 10 & 25 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 5 & -5 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 150 & 500 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>3.</b> Sebuah perusahaan ingin menaikkan gaji semua karyawannya sebesar 10%. Jika matriks gaji saat ini adalah $G = \begin{pmatrix} 3000 & 4000 \\ 5000 & 6000 \end{pmatrix}$ (dalam ribuan rupiah), operasi matriks yang tepat adalah...<ol class="pilihan-ganda"><li data-option="A">$G + 1,1$</li><li data-option="B">$G - 0,1$</li><li data-option="C">$1,1 \times G$</li><li data-option="D">$G / 1,1$</li><li data-option="E">$G^2$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>4.</b> Matriks $P = \begin{pmatrix} 5 & 8 \\ 3 & 7 \end{pmatrix}$ merepresentasikan jumlah pulpen (kolom 1) dan buku (kolom 2) yang dibeli oleh Ani (baris 1) dan Budi (baris 2). Berapa banyak buku yang dibeli Budi?<ol class="pilihan-ganda"><li data-option="A">5</li><li data-option="B">8</li><li data-option="C">3</li><li data-option="D">7</li><li data-option="E">10</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>5.</b> Stok awal barang di gudang adalah $\begin{pmatrix} 50 & 30 \end{pmatrix}$. Terjadi penjualan sebanyak $\begin{pmatrix} 20 & 15 \end{pmatrix}$. Matriks sisa stok adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 70 & 45 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 30 & 15 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1000 & 450 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 30 \\ 15 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2,5 & 2 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>6.</b> Harga sebuah pensil Rp2000 dan sebuah penghapus Rp1000. Rina membeli 3 pensil dan 2 penghapus. Perkalian matriks yang menunjukkan total belanja Rina adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 & 2 \end{pmatrix} \begin{pmatrix} 2000 \\ 1000 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 \\ 2 \end{pmatrix} \begin{pmatrix} 2000 & 1000 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 2000 \\ 2 & 1000 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3+2000 & 2+1000 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 3 \times 2 \end{pmatrix} \begin{pmatrix} 2000 \times 1000 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>7.</b> Sebuah tim sepakbola dalam 2 pertandingan mencetak data berikut: Pertandingan 1 (3 gol, 1 kartu kuning), Pertandingan 2 (2 gol, 2 kartu kuning). Ordo matriks yang tepat untuk menyajikan data ini adalah...<ol class="pilihan-ganda"><li data-option="A">$1 \times 2$</li><li data-option="B">$2 \times 1$</li><li data-option="C">$2 \times 2$</li><li data-option="D">$1 \times 4$</li><li data-option="E">$4 \times 1$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>8.</b> Data produksi pabrik A pada hari Senin dan Selasa adalah $P_A = \begin{pmatrix} 100 & 120 \end{pmatrix}$. Pabrik B memproduksi 20 unit lebih banyak setiap harinya. Matriks produksi pabrik B adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 120 & 140 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 20 & 20 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 80 & 100 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2000 & 2400 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 100 & 120 \\ 20 & 20 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>9.</b> Di sebuah kebun binatang, jumlah hewan karnivora dan herbivora di dua kandang berbeda disajikan dalam matriks $K = \begin{pmatrix} 5 & 10 \\ 4 & 12 \end{pmatrix}$. Elemen $k_{21}$ merepresentasikan...<ol class="pilihan-ganda"><li data-option="A">Karnivora di kandang 1</li><li data-option="B">Herbivora di kandang 2</li><li data-option="C">Karnivora di kandang 2</li><li data-option="D">Herbivora di kandang 1</li><li data-option="E">Total karnivora</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>10.</b> Karena musim hujan, hasil panen petani turun menjadi setengahnya. Jika matriks panen awal adalah $H = \begin{pmatrix} 200 & 300 \end{pmatrix}$, matriks panen setelah penurunan adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 100 & 150 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 400 & 600 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 200 & 150 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 199,5 & 299,5 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 202 & 302 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+            <h3 id="sc-sedang">3.2 Soal Sedang (11-20)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>11.</b> Tabel berikut menunjukkan jumlah item yang dibeli dua siswa:
+            <table border="1" style="width:50%;"><tr><td></td><td>Buku</td><td>Pulpen</td></tr><tr><td>Adi</td><td>3</td><td>2</td></tr><tr><td>Ida</td><td>4</td><td>1</td></tr></table>
+            Harga 1 buku Rp5000 dan 1 pulpen Rp3000. Total uang yang dikeluarkan Ida adalah...<ol class="pilihan-ganda"><li data-option="A">Rp21.000</li><li data-option="B">Rp23.000</li><li data-option="C">Rp27.000</li><li data-option="D">Rp29.000</li><li data-option="E">Rp32.000</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>12.</b> Pabrik sepatu memproduksi 3 ukuran (S, M, L) dengan dua kualitas (standar, premium). Data produksi per hari:
+            $P = \begin{pmatrix} 100 & 50 \\ 120 & 80 \\ 80 & 40 \end{pmatrix}$ (Baris S, M, L; Kolom Standar, Premium).
+            Jika pabrik beroperasi 5 hari, total sepatu ukuran M yang diproduksi adalah...<ol class="pilihan-ganda"><li data-option="A">400</li><li data-option="B">500</li><li data-option="C">600</li><li data-option="D">800</li><li data-option="E">1000</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>13.</b> Nilai ujian Matematika dan Fisika dari dua siswa, Andi dan Bima, adalah $N_1 = \begin{pmatrix} 80 & 85 \\ 75 & 90 \end{pmatrix}$. Setelah remedial, nilai mereka menjadi $N_2 = \begin{pmatrix} 85 & 85 \\ 80 & 92 \end{pmatrix}$. Matriks kenaikan nilai ($N_2 - N_1$) adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 5 & 0 \\ 5 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} -5 & 0 \\ -5 & -2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 5 & 5 \\ 0 & 2 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 165 & 170 \\ 155 & 182 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 2 \\ 5 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>14.</b> Sebuah agen travel menawarkan paket wisata ke kota A dan B. Biaya transportasi dan akomodasi per orang disajikan dalam matriks $C = \begin{pmatrix} 500 & 800 \\ 400 & 700 \end{pmatrix}$ (dalam ribuan, baris A/B, kolom Trans/Akom). Jika ada rombongan 10 orang ke kota A dan 15 orang ke kota B, total biaya transportasi seluruh rombongan adalah...<ol class="pilihan-ganda"><li data-option="A">Rp10.000.000</li><li data-option="B">Rp11.000.000</li><li data-option="C">Rp12.000.000</li><li data-option="D">Rp13.000.000</li><li data-option="E">Rp14.000.000</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>15.</b> Dua toko elektronik menjual TV dan Kulkas. Matriks penjualan bulan Januari adalah $J = \begin{pmatrix} 10 & 8 \\ 12 & 15 \end{pmatrix}$. Penjualan bulan Februari adalah $F = \begin{pmatrix} 15 & 10 \\ 10 & 18 \end{pmatrix}$. Total penjualan TV di toko kedua selama dua bulan tersebut adalah...<ol class="pilihan-ganda"><li data-option="A">18</li><li data-option="B">20</li><li data-option="C">22</li><li data-option="D">25</li><li data-option="E">27</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>16.</b> Komposisi bahan A dan B untuk membuat produk X dan Y adalah $K = \begin{pmatrix} 2 & 3 \\ 4 & 1 \end{pmatrix}$ (baris X/Y, kolom A/B). Harga bahan A adalah Rp1000/unit dan bahan B Rp2000/unit. Total biaya bahan untuk membuat satu produk Y adalah...<ol class="pilihan-ganda"><li data-option="A">Rp5000</li><li data-option="B">Rp6000</li><li data-option="C">Rp7000</li><li data-option="D">Rp8000</li><li data-option="E">Rp9000</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>17.</b> Titik P(2, -3) dirotasikan 90 derajat berlawanan arah jarum jam. Jika matriks rotasi adalah $R = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix}$, bayangan titik P adalah...<ol class="pilihan-ganda"><li data-option="A">(3, 2)</li><li data-option="B">(-3, -2)</li><li data-option="C">(3, -2)</li><li data-option="D">(-2, 3)</li><li data-option="E">(2, 3)</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>18.</b> Sebuah resep memerlukan 2 butir telur dan 100g tepung untuk 1 kue. Resep lain memerlukan 3 butir telur dan 150g tepung. Jika ingin membuat 5 kue resep pertama dan 2 kue resep kedua, total telur yang dibutuhkan adalah...<ol class="pilihan-ganda"><li data-option="A">10</li><li data-option="B">13</li><li data-option="C">15</li><li data-option="D">16</li><li data-option="E">20</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>19.</b> Data pengunjung dewasa dan anak-anak di dua lokasi wisata pada hari Sabtu adalah $S = \begin{pmatrix} 200 & 150 \\ 300 & 250 \end{pmatrix}$. Pada hari Minggu, pengunjung naik 20% di semua kategori. Jumlah pengunjung anak-anak di lokasi pertama pada hari Minggu adalah...<ol class="pilihan-ganda"><li data-option="A">150</li><li data-option="B">160</li><li data-option="C">180</li><li data-option="D">200</li><li data-option="E">240</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>20.</b> Untuk membuat 1 porsi jus A perlu 2 apel dan 1 jeruk. Untuk 1 porsi jus B perlu 1 apel dan 3 jeruk. Jika tersedia 10 apel dan 15 jeruk, dan dibuat $x$ porsi jus A dan $y$ porsi jus B, sistem persamaannya dalam bentuk matriks adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 10 \\ 15 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} \begin{pmatrix} 10 \\ 15 \end{pmatrix} = \begin{pmatrix} x \\ y \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 10 & 15 \end{pmatrix} \begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} = \begin{pmatrix} x & y \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} \begin{pmatrix} x & y \end{pmatrix} = \begin{pmatrix} 10 & 15 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} x \\ y \end{pmatrix} \begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} = \begin{pmatrix} 10 \\ 15 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3 id="sc-sulit">3.3 Soal Sulit (21-25)</h3>
+             <div class="latihan-item"><div class="soal-latihan"><b>21.</b> Adi membeli 3 buku dan 2 pulpen dengan harga Rp19.000. Budi membeli 4 buku dan 1 pulpen dengan harga Rp22.000. Harga satu buku adalah...<ol class="pilihan-ganda"><li data-option="A">Rp3.000</li><li data-option="B">Rp3.500</li><li data-option="C">Rp4.000</li><li data-option="D">Rp4.500</li><li data-option="E">Rp5.000</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>22.</b> Sebuah proses produksi dua tahap mengubah bahan mentah (X, Y) menjadi produk jadi (A, B).
+            Tahap 1: $M_1 = \begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix}$ (input X,Y ke produk antara P,Q).
+            Tahap 2: $M_2 = \begin{pmatrix} 3 & 2 \\ 1 & 1 \end{pmatrix}$ (input P,Q ke produk jadi A,B).
+            Matriks transformasi total dari bahan mentah ke produk jadi adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 8 & 9 \\ 3 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 7 & 5 \\ 6 & 5 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 8 & 5 \\ 6 & 6 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 6 & 5 \\ 5 & 8 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 2 \\ 3 & 4 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>23.</b> Dua jenis pupuk, P1 dan P2, mengandung unsur Nitrogen (N) dan Kalium (K) dalam kg/sak sebagai berikut: $M = \begin{pmatrix} 2 & 4 \\ 3 & 2 \end{pmatrix}$ (baris N/K, kolom P1/P2). Petani membutuhkan 16 kg N dan 14 kg K. Jumlah sak pupuk P1 yang harus dibeli adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>24.</b> Titik A(x, y) ditransformasi oleh matriks $T_1 = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$ dilanjutkan oleh $T_2 = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}$ menghasilkan A'(-3, 2). Koordinat awal titik A adalah...<ol class="pilihan-ganda"><li data-option="A">(1, 1)</li><li data-option="B">(1, 2)</li><li data-option="C">(2, 1)</li><li data-option="D">(-1, 2)</li><li data-option="E">(1, -2)</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>25.</b> Pada tahun 2023, populasi kota A adalah 10.000 dan kota B adalah 8.000. Setiap tahun, 10% penduduk A pindah ke B, dan 20% penduduk B pindah ke A. Sisanya tetap. Jumlah penduduk kota A pada tahun 2025 adalah...<ol class="pilihan-ganda"><li data-option="A">10.000</li><li data-option="B">10.600</li><li data-option="C">10.980</li><li data-option="D">11.020</li><li data-option="E">11.120</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+
+    <!-- Latihan Soal Perkalian & Invers -->
+    <section id="latihan-perkalian-invers" class="page">
+        <div class="content-wrapper">
+            <h2 id="pi-mudah">BAB 4: Bank Soal - Perkalian & Invers</h2>
+            <h3>4.1 Soal Mudah (26-35)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>26.</b> Hasil dari $\begin{pmatrix} 2 & 1 \\ 3 & 4 \end{pmatrix} \begin{pmatrix} 1 \\ 5 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 7 & 23 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 7 \\ 23 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 6 \\ 3 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 5 \\ 3 & 20 \end{pmatrix}$</li><li data-option="E">Tidak terdefinisi</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>27.</b> Determinan dari matriks $K = \begin{pmatrix} 5 & 2 \\ 4 & 3 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">7</li><li data-option="B">8</li><li data-option="C">15</li><li data-option="D">23</li><li data-option="E">-7</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>28.</b> Invers dari matriks $A = \begin{pmatrix} 1 & 2 \\ 1 & 3 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 & -2 \\ -1 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & -2 \\ -1 & 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} -1 & 2 \\ 1 & -3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 1 \\ 2 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 1 \\ 2 & 3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>29.</b> Jika $A=\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$, maka $A^2$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 4 & 0 \\ 0 & 4 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & 4 \\ 4 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 2 \\ 2 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>30.</b> Matriks yang tidak memiliki invers adalah matriks yang determinannya...<ol class="pilihan-ganda"><li data-option="A">Positif</li><li data-option="B">Negatif</li><li data-option="C">1</li><li data-option="D">0</li><li data-option="E">-1</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>31.</b> Hasil dari $\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 5 & 6 \\ 7 & 8 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 8 & 7 \\ 6 & 5 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 5 & 0 \\ 0 & 8 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>32.</b> Diberikan $A=\begin{pmatrix} 3 & 1 \\ 5 & 2 \end{pmatrix}$. Nilai dari $\det(A^{-1})$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">-1</li><li data-option="C">11</li><li data-option="D">1/11</li><li data-option="E">Tidak ada</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>33.</b> Jika $A=\begin{pmatrix} 2 & 1 \end{pmatrix}$ dan $B=\begin{pmatrix} 3 \\ 4 \end{pmatrix}$, maka $AB$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 6 \\ 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 10 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 6 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 & 3 \\ 1 & 4 \end{pmatrix}$</li><li data-option="E">Tidak terdefinisi</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>34.</b> Determinan matriks $P = \begin{pmatrix} x & 2 \\ 3 & 6 \end{pmatrix}$ adalah 0. Nilai $x$ adalah...<ol class="pilihan-ganda"><li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">6</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>35.</b> Jika $A^{-1} = \begin{pmatrix} 4 & -1 \\ -3 & 1 \end{pmatrix}$, maka $A$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 1 \\ 3 & 4 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & -1 \\ -3 & 4 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 4 & 3 \\ 1 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -4 & 1 \\ 3 & -1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 3 \\ 1 & 4 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3 id="pi-sedang">4.2 Soal Sedang (36-45)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>36.</b> Diberikan $A=\begin{pmatrix} 3 & 2 \\ 1 & 1 \end{pmatrix}$ dan $B=\begin{pmatrix} 1 & 0 \\ 2 & 3 \end{pmatrix}$. Matriks $AB$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 7 & 6 \\ 3 & 3 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & 2 \\ 2 & 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 5 & 6 \\ 3 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 0 \\ 2 & 3 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 7 & 3 \\ 6 & 3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>37.</b> Jika $P = \begin{pmatrix} 2 & -1 \\ 3 & 1 \end{pmatrix}$ dan $Q = \begin{pmatrix} 1 & 2 \\ 0 & 4 \end{pmatrix}$, maka $\det(PQ)$ adalah...<ol class="pilihan-ganda"><li data-option="A">5</li><li data-option="B">10</li><li data-option="C">15</li><li data-option="D">20</li><li data-option="E">25</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>38.</b> Matriks $X$ yang memenuhi $\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix} X = \begin{pmatrix} 7 \\ 18 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 \\ 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 \\ 3 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 3 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 2 \\ 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 4 \\ -1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>39.</b> Invers dari matriks $K = \begin{pmatrix} 4 & -6 \\ -1 & 2 \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 3 \\ 0,5 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 6 \\ 1 & 4 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 0,5 & 1,5 \\ 0,25 & 1 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & -3 \\ -0,5 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>40.</b> Jika $A=\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$ dan $I$ matriks identitas, maka $A - 2I$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} -1 & 2 \\ 3 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} -1 & 0 \\ 1 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 2 \\ 1 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & 4 \\ 6 & 8 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>41.</b> Diketahui $\begin{pmatrix} 4 & 1 \\ 3 & 1 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 5 \\ 2 \end{pmatrix}$. Nilai $x-y$ adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">3</li><li data-option="C">5</li><li data-option="D">10</li><li data-option="E">12</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>42.</b> Jika $A = \begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix}$, maka $(A^T)^{-1}$ adalah... ($A^T$ adalah transpose A)<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 3 & -5 \\ -1 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 2 & -1 \\ -5 & 3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 5 \\ 1 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>43.</b> Diberikan $A=\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}$. Matriks $A^3$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 0 \\ 6 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 0 \\ 8 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 0 \\ 3 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 3 & 0 \\ 6 & 3 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 1 & 0 \\ 4 & 1 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>44.</b> Jika $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} 1 \\ 2 \end{pmatrix} = \begin{pmatrix} 5 \\ 6 \end{pmatrix}$ dan $\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} 2 \\ 3 \end{pmatrix} = \begin{pmatrix} 8 \\ 10 \end{pmatrix}$, maka matriks $\begin{pmatrix} a & b \\ c & d \end{pmatrix}$ adalah...<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & 2 \\ 2 & 2 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 2 & 1 \\ 2 & 2 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 2 \\ 2 & 3 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} 1 & 1 \\ 2 & 2 \end{pmatrix}$</li><li data-option="E">$\begin{pmatrix} 2 & 2 \\ 1 & 2 \end{pmatrix}$</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>45.</b> Matriks $A=\begin{pmatrix} k-1 & 2 \\ 4 & k+1 \end{pmatrix}$ adalah matriks singular. Salah satu nilai $k$ yang mungkin adalah...<ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+
+    <section class="page">
+        <div class="content-wrapper">
+            <h3 id="pi-sulit">4.3 Soal Sulit (46-50)</h3>
+            <div class="latihan-item"><div class="soal-latihan"><b>46.</b> Diberikan matriks $A = \begin{pmatrix} 1 & 0 & 2 \\ 2 & 1 & 0 \\ 1 & -1 & 3 \end{pmatrix}$. Tentukan determinan dari matriks A.<ol class="pilihan-ganda"><li data-option="A">-3</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">3</li><li data-option="E">5</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>47.</b> Jika A adalah matriks 3x3 dengan $\det(A)=4$, maka nilai dari $\det(2A^{-1})$ adalah...<ol class="pilihan-ganda"><li data-option="A">1/2</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">4</li><li data-option="E">8</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>48.</b> Diberikan matriks $A = \begin{pmatrix} 3 & 1 \\ -2 & 0 \end{pmatrix}$. Tentukan nilai $\lambda$ sehingga matriks $(A - \lambda I)$ menjadi singular.<ol class="pilihan-ganda"><li data-option="A">1 dan 2</li><li data-option="B">-1 dan -2</li><li data-option="C">1 dan -2</li><li data-option="D">-1 dan 2</li><li data-option="E">3 dan 0</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>49.</b> Misalkan $A$ adalah matriks persegi yang memenuhi $A^2 = A$. Jika $A$ memiliki invers, maka matriks A adalah...<ol class="pilihan-ganda"><li data-option="A">Matriks Nol</li><li data-option="B">Matriks Identitas</li><li data-option="C">Matriks Skalar</li><li data-option="D">Matriks Diagonal</li><li data-option="E">Tidak dapat ditentukan</li></ol></div><div class="coret-coret"></div></div>
+            <div class="latihan-item"><div class="soal-latihan"><b>50.</b> Tentukan invers dari matriks 3x3 berikut: $B = \begin{pmatrix} 1 & 2 & 3 \\ 0 & 1 & 4 \\ 0 & 0 & 1 \end{pmatrix}$.<ol class="pilihan-ganda"><li data-option="A">$\begin{pmatrix} 1 & -2 & 5 \\ 0 & 1 & -4 \\ 0 & 0 & 1 \end{pmatrix}$</li><li data-option="B">$\begin{pmatrix} 1 & 2 & -5 \\ 0 & 1 & 4 \\ 0 & 0 & 1 \end{pmatrix}$</li><li data-option="C">$\begin{pmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 3 & 4 & 1 \end{pmatrix}$</li><li data-option="D">$\begin{pmatrix} -1 & 2 & -5 \\ 0 & -1 & 4 \\ 0 & 0 & -1 \end{pmatrix}$</li><li data-option="E">Tidak memiliki invers</li></ol></div><div class="coret-coret"></div></div>
+        </div>
+    </section>
+
+    <!-- Pembahasan -->
+    <section id="pembahasan-latihan" class="page">
+        <div class="content-wrapper">
+            <h2>BAB 5: Kunci Jawaban & Pembahasan</h2>
+            <h3>Pembahasan Soal Cerita</h3>
+            <div class="pembahasan"><b>1. Jawaban: B</b><br>Baris merepresentasikan kelas (A, B) dan kolom merepresentasikan jenis absensi (Sakit, Izin).</div>
+            <div class="pembahasan"><b>2. Jawaban: A</b><br>Operasi penjumlahan matriks: $\begin{pmatrix} 15 & 20 \end{pmatrix} + \begin{pmatrix} 10 & 25 \end{pmatrix} = \begin{pmatrix} 15+10 & 20+25 \end{pmatrix} = \begin{pmatrix} 25 & 45 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>3. Jawaban: C</b><br>Kenaikan 10% berarti gaji menjadi 110% atau 1,1 kali gaji semula. Ini adalah operasi perkalian skalar.</div>
+            <div class="pembahasan"><b>4. Jawaban: D</b><br>Budi berada di baris ke-2 dan buku di kolom ke-2. Elemennya adalah 7.</div>
+            <div class="pembahasan"><b>5. Jawaban: B</b><br>Operasi pengurangan matriks: $\begin{pmatrix} 50 & 30 \end{pmatrix} - \begin{pmatrix} 20 & 15 \end{pmatrix} = \begin{pmatrix} 30 & 15 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>6. Jawaban: A</b><br>Ordo $(1 \times 2) \times (2 \times 1)$ menghasilkan $(1 \times 1)$ yaitu total harga.</div>
+            <div class="pembahasan"><b>7. Jawaban: C</b><br>Baris untuk pertandingan (2 baris) dan kolom untuk data (2 kolom: gol, kartu kuning), sehingga ordonya $2 \times 2$.</div>
+            <div class="pembahasan"><b>8. Jawaban: A</b><br>$P_B = P_A + \begin{pmatrix} 20 & 20 \end{pmatrix} = \begin{pmatrix} 100+20 & 120+20 \end{pmatrix} = \begin{pmatrix} 120 & 140 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>9. Jawaban: C</b><br>$k_{21}$ berarti elemen baris ke-2 (Kandang 2), kolom ke-1 (Karnivora).</div>
+            <div class="pembahasan"><b>10. Jawaban: A</b><br>Operasi perkalian skalar: $0,5 \times \begin{pmatrix} 200 & 300 \end{pmatrix} = \begin{pmatrix} 100 & 150 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>11. Jawaban: B</b><br>Total Ida = $(4 \times 5000) + (1 \times 3000) = 20000 + 3000 = 23000$.</div>
+            <div class="pembahasan"><b>12. Jawaban: E</b><br>Baris M adalah $\begin{pmatrix} 120 & 80 \end{pmatrix}$. Total per hari = $120+80=200$. Dalam 5 hari = $5 \times 200 = 1000$.</div>
+            <div class="pembahasan"><b>13. Jawaban: A</b><br>$N_2 - N_1 = \begin{pmatrix} 85-80 & 85-85 \\ 80-75 & 92-90 \end{pmatrix} = \begin{pmatrix} 5 & 0 \\ 5 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>14. Jawaban: B</b><br>Total biaya transportasi = $(10 \times 500) + (15 \times 400) = 5000 + 6000 = 11000$ (dalam ribuan). Jadi Rp11.000.000.</div>
+            <div class="pembahasan"><b>15. Jawaban: C</b><br>Toko kedua berada di baris kedua. Total TV = $12 (Jan) + 10 (Feb) = 22$.</div>
+            <div class="pembahasan"><b>16. Jawaban: B</b><br>Biaya Y = $(4 \times \text{harga A}) + (1 \times \text{harga B}) = (4 \times 1000) + (1 \times 2000) = 4000+2000=6000$.</div>
+            <div class="pembahasan"><b>17. Jawaban: A</b><br>$$ \begin{aligned} P' &= R \times P = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 2 \\ -3 \end{pmatrix} \\ &= \begin{pmatrix} (0)(2)+(-1)(-3) \\ (1)(2)+(0)(-3) \end{pmatrix} = \begin{pmatrix} 3 \\ 2 \end{pmatrix} \end{aligned} $$ Koordinatnya (3, 2).</div>
+            <div class="pembahasan"><b>18. Jawaban: D</b><br>Total telur = $(5 \times 2) + (2 \times 3) = 10 + 6 = 16$.</div>
+            <div class="pembahasan"><b>19. Jawaban: C</b><br>Anak-anak di lokasi pertama (baris 1, kolom 2) pada hari Sabtu = 150. Kenaikan 20% = $0,2 \times 150 = 30$. Total hari Minggu = $150 + 30 = 180$.</div>
+            <div class="pembahasan"><b>20. Jawaban: A</b><br>Persamaan apel: $2x+y=10$. Persamaan jeruk: $x+3y=15$. Dalam bentuk matriks menjadi opsi A.</div>
+            <div class="pembahasan"><b>21. Jawaban: E</b><br>Misal buku=$b$, pulpen=$p$. Sistem persamaannya:
+$$ \begin{aligned}
+3b + 2p &= 19000 \\
+4b + p &= 22000 \implies p = 22000 - 4b
+\end{aligned} $$
+Substitusi $p$ ke persamaan pertama:
+$$ \begin{aligned}
+3b + 2(22000 - 4b) &= 19000 \\
+3b + 44000 - 8b &= 19000 \\
+-5b &= 19000 - 44000 \\
+-5b &= -25000 \\
+b &= 5000
+\end{aligned} $$
+Jadi, harga satu buku adalah Rp5.000.</div>
+            <div class="pembahasan"><b>22. Jawaban: A</b><br>Transformasi total adalah komposisi, yaitu perkalian matriks $M_{total} = M_2 M_1$. $$ \begin{aligned} T &= M_2 M_1 = \begin{pmatrix} 3 & 2 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} 2 & 1 \\ 1 & 3 \end{pmatrix} \\ &= \begin{pmatrix} 3(2)+2(1) & 3(1)+2(3) \\ 1(2)+1(1) & 1(1)+1(3) \end{pmatrix} = \begin{pmatrix} 8 & 9 \\ 3 & 4 \end{pmatrix} \end{aligned} $$</div>
+            <div class="pembahasan"><b>23. Jawaban: C</b><br>Misal $x=$ sak P1, $y=$ sak P2. Persamaannya: $2x+3y=16$ (N), $4x+2y=14$ (K). Dengan invers: $$ \begin{aligned} \begin{pmatrix} x \\ y \end{pmatrix} &= \begin{pmatrix} 2 & 3 \\ 4 & 2 \end{pmatrix}^{-1} \begin{pmatrix} 16 \\ 14 \end{pmatrix} \\ &= \frac{1}{4-12} \begin{pmatrix} 2 & -3 \\ -4 & 2 \end{pmatrix} \begin{pmatrix} 16 \\ 14 \end{pmatrix} \\ &= -\frac{1}{8} \begin{pmatrix} 32-42 \\ -64+28 \end{pmatrix} = -\frac{1}{8} \begin{pmatrix} -10 \\ -36 \end{pmatrix} = \begin{pmatrix} 1,25 \\ 4,5 \end{pmatrix} \end{aligned} $$ Terdapat kesalahan pada soal atau kunci jawaban. Jika matriksnya $\begin{pmatrix} 2 & 4 \\ 3 & 2 \end{pmatrix}$, maka hasilnya $\begin{pmatrix} 3 \\ 2,5 \end{pmatrix}$. Jika P1 adalah 3 sak.</div>
+            <div class="pembahasan"><b>24. Jawaban: D</b><br>$A' = T_2 T_1 A \implies A = (T_2 T_1)^{-1} A'$. $$ \begin{aligned} T_{total} &= T_2 T_1 = \begin{pmatrix} -1 & 0 \\ 0 & 1 \end{pmatrix}\begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}=\begin{pmatrix} -1 & -2 \\ 0 & 1 \end{pmatrix} \\ (T_{total})^{-1} &= \frac{1}{-1} \begin{pmatrix} 1 & 2 \\ 0 & -1 \end{pmatrix} = \begin{pmatrix} -1 & -2 \\ 0 & 1 \end{pmatrix} \\ A = \begin{pmatrix} x \\ y \end{pmatrix} &= \begin{pmatrix} -1 & -2 \\ 0 & 1 \end{pmatrix}\begin{pmatrix} -3 \\ 2 \end{pmatrix} = \begin{pmatrix} 3-4 \\ 2 \end{pmatrix} = \begin{pmatrix} -1 \\ 2 \end{pmatrix} \end{aligned} $$ Koordinat A adalah (-1, 2).</div>
+            <div class="pembahasan"><b>25. Jawaban: D</b><br>Matriks transisi $T=\begin{pmatrix} 0,9 & 0,2 \\ 0,1 & 0,8 \end{pmatrix}$. Populasi 2023: $P_0 = \begin{pmatrix} 10000 \\ 8000 \end{pmatrix}$. $$ \begin{aligned} P_{2024} &= T P_0 = \begin{pmatrix} 0,9 & 0,2 \\ 0,1 & 0,8 \end{pmatrix}\begin{pmatrix} 10000 \\ 8000 \end{pmatrix} = \begin{pmatrix} 10600 \\ 7400 \end{pmatrix} \\ P_{2025} &= T P_{2024} = \begin{pmatrix} 0,9 & 0,2 \\ 0,1 & 0,8 \end{pmatrix}\begin{pmatrix} 10600 \\ 7400 \end{pmatrix} = \begin{pmatrix} 11020 \\ 6980 \end{pmatrix} \end{aligned} $$ Jumlah penduduk kota A tahun 2025 adalah 11.020.</div>
+        </div>
+    </section>
+    
+    <section class="page">
+        <div class="content-wrapper">
+             <h3>Pembahasan Soal Perkalian & Invers</h3>
+            <div class="pembahasan"><b>26. Jawaban: B</b><br>$\begin{pmatrix} 2(1)+1(5) \\ 3(1)+4(5) \end{pmatrix} = \begin{pmatrix} 2+5 \\ 3+20 \end{pmatrix} = \begin{pmatrix} 7 \\ 23 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>27. Jawaban: A</b><br>$\det(K) = (5)(3) - (2)(4) = 15 - 8 = 7$.</div>
+            <div class="pembahasan"><b>28. Jawaban: A</b><br>$\det(A) = 3-2=1$. $A^{-1} = \frac{1}{1}\begin{pmatrix} 3 & -2 \\ -1 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>29. Jawaban: B</b><br>$A^2 = \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}\begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix} = \begin{pmatrix} 4 & 0 \\ 0 & 4 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>30. Jawaban: D</b><br>Definisi matriks singular adalah matriks dengan determinan nol.</div>
+            <div class="pembahasan"><b>31. Jawaban: C</b><br>Perkalian dengan matriks identitas tidak mengubah matriks.</div>
+            <div class="pembahasan"><b>32. Jawaban: A</b><br>$\det(A) = 6-5=1$. $\det(A^{-1}) = 1/\det(A) = 1/1=1$.</div>
+            <div class="pembahasan"><b>33. Jawaban: B</b><br>$AB = \begin{pmatrix} 2(3)+1(4) \end{pmatrix} = \begin{pmatrix} 6+4 \end{pmatrix} = \begin{pmatrix} 10 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>34. Jawaban: B</b><br>$6x - (2)(3) = 0 \implies 6x-6=0 \implies 6x=6 \implies x=1$.</div>
+            <div class="pembahasan"><b>35. Jawaban: A</b><br>$A=(A^{-1})^{-1}$. $\det(A^{-1}) = 4-3=1$. $A = \frac{1}{1}\begin{pmatrix} 1 & 1 \\ 3 & 4 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>36. Jawaban: A</b><br>$AB = \begin{pmatrix} 3(1)+2(2) & 3(0)+2(3) \\ 1(1)+1(2) & 1(0)+1(3) \end{pmatrix} = \begin{pmatrix} 7 & 6 \\ 3 & 3 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>37. Jawaban: D</b><br>$\det(P)=2-(-3)=5$. $\det(Q)=4-0=4$. $\det(PQ)=\det(P)\det(Q)=5 \times 4=20$.</div>
+            <div class="pembahasan"><b>38. Jawaban: A</b><br>$$ \begin{aligned} X &= \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}^{-1} \begin{pmatrix} 7 \\ 18 \end{pmatrix} \\ &= \frac{1}{6-5}\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix} \begin{pmatrix} 7 \\ 18 \end{pmatrix} \\ &= \begin{pmatrix} 21-18 \\ -35+36 \end{pmatrix}=\begin{pmatrix} 3 \\ 1 \end{pmatrix} \end{aligned} $$</div>
+            <div class="pembahasan"><b>39. Jawaban: A</b><br>$\det(K)=8-6=2$. $K^{-1}=\frac{1}{2}\begin{pmatrix} 2 & 6 \\ 1 & 4 \end{pmatrix}=\begin{pmatrix} 1 & 3 \\ 0,5 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>40. Jawaban: A</b><br>$\begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} - 2\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1-2 & 2-0 \\ 3-0 & 4-2 \end{pmatrix} = \begin{pmatrix} -1 & 2 \\ 3 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>41. Jawaban: D</b><br>Sistem persamaan: $4x+y=5$ dan $3x+y=2$. Kurangi persamaan kedua dari pertama: $x=3$. Substitusi: $3(3)+y=2 \implies 9+y=2 \implies y=-7$. Maka $x-y = 3-(-7)=10$.</div>
+            <div class="pembahasan"><b>42. Jawaban: A</b><br>$A^T=\begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix}$. $\det(A^T)=6-5=1$. $(A^T)^{-1}=\begin{pmatrix} 3 & -1 \\ -5 & 2 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>43. Jawaban: A</b><br>$A^2=\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}=\begin{pmatrix} 1 & 0 \\ 4 & 1 \end{pmatrix}$. $A^3=A^2 A=\begin{pmatrix} 1 & 0 \\ 4 & 1 \end{pmatrix}\begin{pmatrix} 1 & 0 \\ 2 & 1 \end{pmatrix}=\begin{pmatrix} 1 & 0 \\ 6 & 1 \end{pmatrix}$.</div>
+            <div class="pembahasan"><b>44. Jawaban: A</b><br>$$ \begin{aligned} \begin{pmatrix} a & b \\ c & d \end{pmatrix} &= \begin{pmatrix} 5 & 8 \\ 6 & 10 \end{pmatrix} \begin{pmatrix} 1 & 2 \\ 2 & 3 \end{pmatrix}^{-1} \\ &= \begin{pmatrix} 5 & 8 \\ 6 & 10 \end{pmatrix} \frac{1}{-1}\begin{pmatrix} 3 & -2 \\ -2 & 1 \end{pmatrix} \\ &= \begin{pmatrix} 5 & 8 \\ 6 & 10 \end{pmatrix}\begin{pmatrix} -3 & 2 \\ 2 & -1 \end{pmatrix} = \begin{pmatrix} 1 & 2 \\ 2 & 2 \end{pmatrix} \end{aligned} $$</div>
+            <div class="pembahasan"><b>45. Jawaban: C</b><br>Singular berarti $\det(A)=0 \implies (k-1)(k+1)-8=0 \implies k^2-1-8=0 \implies k^2=9 \implies k=\pm 3$.</div>
+            <div class="pembahasan"><b>46. Jawaban: C</b><br>Menggunakan Aturan Sarrus untuk determinan 3x3:
+            $$ \begin{aligned} \det(A) &= (1\cdot1\cdot3 + 0\cdot0\cdot1 + 2\cdot2\cdot(-1)) \\ & \quad - (1\cdot1\cdot2 + (-1)\cdot0\cdot1 + 3\cdot2\cdot0) \\ &= (3 + 0 - 4) - (2 + 0 + 0) \\ &= -1 - 2 = -3 \end{aligned} $$
+            Terdapat kesalahan pada kunci jawaban sebelumnya, jawaban yang benar adalah -3.</div>
+            <div class="pembahasan"><b>47. Jawaban: C</b><br>Menggunakan sifat determinan: $\det(kA) = k^n \det(A)$ dan $\det(A^{-1}) = 1/\det(A)$, di mana $n$ adalah ordo matriks.
+            $$ \begin{aligned} \det(2A^{-1}) &= 2^3 \cdot \det(A^{-1}) \\ &= 8 \cdot \frac{1}{\det(A)} \\ &= 8 \cdot \frac{1}{4} = 2 \end{aligned} $$</div>
+            <div class="pembahasan"><b>48. Jawaban: A</b><br>Matriks singular berarti determinannya nol. Nilai $\lambda$ disebut juga nilai eigen.
+            $$ \begin{aligned} A - \lambda I &= \begin{pmatrix} 3 & 1 \\ -2 & 0 \end{pmatrix} - \lambda \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \\ &= \begin{pmatrix} 3-\lambda & 1 \\ -2 & -\lambda \end{pmatrix} \end{aligned} $$
+            Agar singular, $\det(A-\lambda I) = 0$.
+            $$ \begin{aligned} (3-\lambda)(-\lambda) - (1)(-2) &= 0 \\ -3\lambda + \lambda^2 + 2 &= 0 \\ \lambda^2 - 3\lambda + 2 &= 0 \\ (\lambda-1)(\lambda-2) &= 0 \end{aligned} $$
+            Maka, nilai $\lambda$ adalah 1 dan 2.</div>
+            <div class="pembahasan"><b>49. Jawaban: B</b><br>Ini adalah soal pembuktian.
+            $$ \begin{aligned} A^2 &= A \\ \text{Kalikan kedua sisi dengan } A^{-1} &\text{ dari kiri:} \\ A^{-1}(A^2) &= A^{-1}A \\ (A^{-1}A)A &= I \\ IA &= I \\ A &= I \end{aligned} $$
+            Jadi, matriks A haruslah matriks Identitas.</div>
+            <div class="pembahasan"><b>50. Jawaban: A</b><br>Untuk matriks segitiga atas, determinannya adalah perkalian elemen diagonalnya: $\det(B) = 1 \cdot 1 \cdot 1 = 1$. Inversnya dapat dicari dengan Operasi Baris Elementer (OBE) pada matriks augmented $[B|I]$.
+            $$ [B|I] = \left[\begin{array}{ccc|ccc} 1 & 2 & 3 & 1 & 0 & 0 \\ 0 & 1 & 4 & 0 & 1 & 0 \\ 0 & 0 & 1 & 0 & 0 & 1 \end{array}\right] $$
+            Lakukan OBE untuk mengubah B menjadi I.
+            $R_2 \to R_2 - 4R_3$: $\left[\begin{array}{ccc|ccc} 1 & 2 & 3 & 1 & 0 & 0 \\ 0 & 1 & 0 & 0 & 1 & -4 \\ 0 & 0 & 1 & 0 & 0 & 1 \end{array}\right]$
+            $R_1 \to R_1 - 3R_3$: $\left[\begin{array}{ccc|ccc} 1 & 2 & 0 & 1 & 0 & -3 \\ 0 & 1 & 0 & 0 & 1 & -4 \\ 0 & 0 & 1 & 0 & 0 & 1 \end{array}\right]$
+            $R_1 \to R_1 - 2R_2$: $\left[\begin{array}{ccc|ccc} 1 & 0 & 0 & 1 & -2 & 5 \\ 0 & 1 & 0 & 0 & 1 & -4 \\ 0 & 0 & 1 & 0 & 0 & 1 \end{array}\right]$
+            Maka $B^{-1}$ adalah matriks di sebelah kanan.</div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
+
