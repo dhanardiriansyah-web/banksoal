@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL PENGETAHUAN KUANTITATIF - FUNGSI KOMPOSISI & INVERS</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #e17070;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #e17070;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        page-break-after: always;
+      }
+       .page:last-of-type {
+        page-break-after: avoid;
+      }
+      .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border: 3px solid var(--primary-text);
+      }
+      .cover-page .title {
+          font-size: 32pt;
+          font-weight: 900;
+          margin: 0;
+          color: var(--header-title-color);
+          line-height: 1.2;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      }
+      .cover-page .subtitle {
+          font-size: 16pt;
+          margin-top: 15px;
+          color: var(--secondary-text);
+          font-weight: 700;
+      }
+      .cover-page img {
+          max-width: 200px;
+          margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0;
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #b0b0b0;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+        }
+        .page-header, .page-footer {
+            display: block;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENGETAHUAN KUANTITATIF</h1>
+            <p class="subtitle">Topik: Fungsi Komposisi & Invers</p>
+        </div>
+    </section>
+
+    <!-- Halaman Soal Mudah 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Mudah</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Mudah (Nomor 1 - 4)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = x + 2$ dan $g(x) = 3x$. Rumus untuk $(f \circ g)(x)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$3x + 2$</li><li data-option="B">$3x + 6$</li><li data-option="C">$x + 5$</li><li data-option="D">$3x^2 + 2$</li><li data-option="E">$x^2 + 2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = x - 5$ dan $g(x) = x^2$. Rumus untuk $(g \circ f)(x)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^2 - 5$</li><li data-option="B">$x^2 - 10x + 25$</li><li data-option="C">$x^2 - 5x + 25$</li><li data-option="D">$x^2 + 10x + 25$</li><li data-option="E">$x^2 - 25$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = 2x - 1$ dan $g(x) = x + 4$. Nilai dari $(f \circ g)(2)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">3</li><li data-option="B">7</li><li data-option="C">9</li><li data-option="D">11</li><li data-option="E">12</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Invers</div>
+                            Jika $f(x) = 2x - 7$, maka $f^{-1}(x)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$7x - 2$</li><li data-option="B">$\frac{x - 7}{2}$</li><li data-option="C">$\frac{x + 7}{2}$</li><li data-option="D">$\frac{x}{2} + 7$</li><li data-option="E">$2x + 7$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Mudah 2 & Sedang 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Mudah & Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Mudah (Nomor 5 - 6) & Soal Level Sedang (Nomor 7 - 8)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Fungsi Invers</div>
+                            Diketahui $f(x) = x + 3$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$f^{-1}(5)$</td><td>2</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = x^2$ dan $g(x) = x + 1$. Berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $(f \circ g)(x) = (x+1)^2$.</div><div class="pernyataan-item">(2) $(g \circ f)(x) = x^2 + 1$.</div><div class="pernyataan-item">(3) $(f \circ g)(1) = 4$.</div><div class="pernyataan-item">(4) $(g \circ f)(1) = 2$.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Komposisi Fungsi</div>
+                            Diketahui $g(x) = x - 1$ dan $(f \circ g)(x) = x^2 - 2x + 1$. Maka $f(x) = $...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^2$</li><li data-option="B">$x^2 + 1$</li><li data-option="C">$x^2 - 1$</li><li data-option="D">$x + 1$</li><li data-option="E">$x - 1$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = x + 2$ dan $(f \circ g)(x) = 3x + 5$. Maka $g(x) = $...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x + 3$</li><li data-option="B">$2x + 3$</li><li data-option="C">$3x + 3$</li><li data-option="D">$3x + 7$</li><li data-option="E">$2x + 5$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sedang 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sedang (Nomor 9 - 12)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Invers (Rasional)</div>
+                            Invers dari fungsi $f(x) = \frac{2x + 1}{x - 3}$, dengan $x \neq 3$ adalah $f^{-1}(x) = $...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{3x + 1}{x - 2}$</li><li data-option="B">$\frac{3x - 1}{x + 2}$</li><li data-option="C">$\frac{x - 3}{2x + 1}$</li><li data-option="D">$\frac{x + 3}{2x - 1}$</li><li data-option="E">$\frac{2x - 1}{x + 3}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = 2x$ dan $g(x) = x - 1$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$(f \circ g)(3)$</td><td>$(g \circ f)(3)$</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Invers Komposisi</div>
+                            Jika $f(x) = x - 2$ dan $g(x) = 3x$, maka $(f \circ g)^{-1}(x)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{x + 2}{3}$</li><li data-option="B">$\frac{x - 2}{3}$</li><li data-option="C">$\frac{x}{3} - 2$</li><li data-option="D">$3x + 2$</li><li data-option="E">$3x - 2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = ax + b$. Berapakah nilai $(f \circ f)(0)$?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $f(1) = 3$</div><div class="pernyataan-item">(2) $f(2) = 5$</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup, (1) SAJA tidak cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</li><li data-option="D">Pernyataan (1) SAJA cukup, dan (2) SAJA cukup.</li><li data-option="E">Pernyataan (1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sedang & Sulit -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sedang & Sulit</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sedang (Nomor 13 - 14) & Soal Level Sulit (Nomor 15 - 16)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = x+2$, $g(x) = \frac{1}{x}$, dan $h(x) = x^2$. Manakah pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $(f \circ g)(x) = \frac{1}{x} + 2$.</div><div class="pernyataan-item">(2) $(g \circ h)(x) = \frac{1}{x^2}$.</div><div class="pernyataan-item">(3) $(f \circ g \circ h)(x) = \frac{1}{x^2} + 2$.</div><div class="pernyataan-item">(4) $(h \circ g \circ f)(x) = \frac{1}{(x+2)^2}$.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">(1), (2), dan (3) benar.</li><li data-option="B">(1) dan (3) benar.</li><li data-option="C">(2) dan (4) benar.</li><li data-option="D">Hanya (4) yang benar.</li><li data-option="E">Semua benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Invers</div>
+                            Diketahui $f(x) = 5x + 1$. Nilai dari $f^{-1}(11)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">56</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Fungsi Invers (HOTS)</div>
+                            Diketahui $f(x+1) = 2x - 5$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$f(3)$</td><td>$f^{-1}(3)$</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Komposisi Fungsi</div>
+                            Diketahui $f(x) = ax+b$ dan $g(x) = cx+d$. Berapakah nilai $(f \circ g)(0)$?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $f(x) = 2x + 1$</div><div class="pernyataan-item">(2) $g(x) = x - 3$</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup, (1) SAJA tidak cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</li><li data-option="D">Pernyataan (1) SAJA cukup, dan (2) SAJA cukup.</li><li data-option="E">Pernyataan (1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sulit -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sulit (HOTS)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sulit (Nomor 17 - 20)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks | Topik: Sifat Invers & Komposisi<br><strong>(Jawaban benar lebih dari satu)</strong></div>
+                            Diketahui $f(x) = \frac{x}{x-1}$. Manakah pernyataan yang benar?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$f^{-1}(x) = \frac{x}{x-1}$.</span></div>
+                                <div><input type="checkbox"/><span>$(f \circ f)(x) = x$.</span></div>
+                                <div><input type="checkbox"/><span>Domain $f(x)$ adalah $x \neq 1$.</span></div>
+                                <div><input type="checkbox"/><span>$(f \circ f \circ f)(x) = \frac{x}{x-1}$.</span></div>
+                                <div><input type="checkbox"/><span>$f^{-1}(2) = 1$.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Sifat Invers</div>
+                            Diketahui $f(x) = 2x - 4$ dan $g(x) = \frac{1}{2}x + 2$. Manakah pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $f^{-1}(x) = g(x)$.</div><div class="pernyataan-item">(2) $g^{-1}(x) = f(x)$.</div><div class="pernyataan-item">(3) $(f \circ g)(x) = x$.</div><div class="pernyataan-item">(4) $(g \circ f)(5) = 5$.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">(1), (2), dan (3) benar.</li><li data-option="B">(1) dan (3) benar.</li><li data-option="C">(2) dan (4) benar.</li><li data-option="D">Hanya (4) yang benar.</li><li data-option="E">Semua benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Invers Komposisi</div>
+                            Diketahui $f(x) = x - 1$ dan $g(x) = x^2 + 1$. Nilai dari $(g \circ f^{-1})(10)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">82</li><li data-option="B">101</li><li data-option="C">100</li><li data-option="D">122</li><li data-option="E">145</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Invers (HOTS)</div>
+                            Diketahui $f(x - 2) = \frac{x + 3}{x - 1}$. Nilai dari $f^{-1}(2)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">4</li><li data-option="E">5</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Sampul Kunci Jawaban -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">KUNCI JAWABAN &<br>PEMBAHASAN</h1>
+            <p class="subtitle">Bank Soal PK: Fungsi Komposisi & Invers</p>
+        </div>
+    </section>
+
+    <!-- Pembahasan 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 1</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $3x + 2$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Komposisi fungsi $(f \circ g)(x)$ berarti memasukkan fungsi $g(x)$ ke dalam fungsi $f(x)$, menggantikan setiap $x$ di $f(x)$ dengan $g(x)$. Ini dibaca "f bundaran g" atau "f dari g dari x".</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$f(x) = x + 2$</li>
+                            <li>$g(x) = 3x$</li>
+                            <li>$(f \circ g)(x) = f(g(x))$</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $(f \circ g)(x) = f(g(x)) = f(3x)$<br>
+                        Ganti $x$ pada $f(x)$ dengan $3x$:<br>
+                        $f(3x) = (3x) + 2 = 3x + 2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 2</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. $x^2 - 10x + 25$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Komposisi fungsi $(g \circ f)(x)$ berarti memasukkan fungsi $f(x)$ ke dalam fungsi $g(x)$, menggantikan setiap $x$ di $g(x)$ dengan $f(x)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$f(x) = x - 5$</li>
+                            <li>$g(x) = x^2$</li>
+                            <li>$(g \circ f)(x) = g(f(x))$</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $(g \circ f)(x) = g(f(x)) = g(x - 5)$<br>
+                        Ganti $x$ pada $g(x)$ dengan $(x - 5)$:<br>
+                        $g(x - 5) = (x - 5)^2 = x^2 - 2(x)(5) + 5^2 = x^2 - 10x + 25$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 3</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 11</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari nilai $(f \circ g)(a)$, kita hitung $g(a)$ terlebih dahulu, lalu hasilnya dimasukkan ke dalam $f(x)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Cari $g(2)$.</li>
+                            <li>Gunakan hasil $g(2)$ untuk mencari $f(g(2))$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Langkah 1: $g(x) = x + 4 \implies g(2) = 2 + 4 = 6$.<br>
+                        Langkah 2: $(f \circ g)(2) = f(g(2)) = f(6)$.<br>
+                        $f(x) = 2x - 1 \implies f(6) = 2(6) - 1 = 12 - 1 = 11$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 4</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. $\frac{x + 7}{2}$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari invers $f^{-1}(x)$ dari $f(x)$, kita ubah $f(x)$ menjadi $y$, lalu selesaikan persamaan untuk $x$ dalam bentuk $y$. Setelah itu, ganti $x$ menjadi $f^{-1}(x)$ dan $y$ menjadi $x$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$f(x) = 2x - 7$</li>
+                            <li>$y = 2x - 7$</li>
+                            <li>Selesaikan untuk $x$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $y = 2x - 7$<br>
+                        $y + 7 = 2x$<br>
+                        $\frac{y + 7}{2} = x$<br>
+                        Ganti $x$ dengan $f^{-1}(x)$ dan $y$ dengan $x$:<br>
+                        $f^{-1}(x) = \frac{x + 7}{2}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 5</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari $f^{-1}(a) = b$, kita bisa menggunakan kesetaraan $f(b) = a$. Kita mencari nilai $x$ sehingga $f(x) = 5$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Kuantitas P = $f^{-1}(5)$.</li>
+                            <li>Cari $x$ sehingga $f(x) = 5$.</li>
+                            <li>$x + 3 = 5$.</li>
+                            <li>$x = 2$.</li>
+                            <li>Maka $f^{-1}(5) = 2$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P = $f^{-1}(5) = 2$.<br>
+                        Kuantitas Q = 2.<br>
+                        Jadi, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 6 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 6</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis kebenaran setiap pernyataan berdasarkan definisi komposisi fungsi $f(x) = x^2$ dan $g(x) = x + 1$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>(1) $(f \circ g)(x) = f(g(x)) = f(x+1) = (x+1)^2$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(2) $(g \circ f)(x) = g(f(x)) = g(x^2) = (x^2) + 1 = x^2 + 1$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(3) $(f \circ g)(1) = (1+1)^2 = 2^2 = 4$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(4) $(g \circ f)(1) = (1)^2 + 1 = 1 + 1 = 2$.</b> (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Semua 4 pernyataan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 7 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 7</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $x^2$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Diketahui $(f \circ g)(x) = f(g(x))$. Jika $g(x)$ dan $f(g(x))$ diketahui, kita bisa menemukan $f(x)$ dengan substitusi.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$g(x) = x - 1$</li>
+                            <li>$(f \circ g)(x) = f(g(x)) = f(x-1)$</li>
+                            <li>Kita tahu $f(x-1) = x^2 - 2x + 1$.</li>
+                            <li>Faktorkan $x^2 - 2x + 1 = (x-1)^2$.</li>
+                            <li>Jadi, $f(x-1) = (x-1)^2$.</li>
+                            <li>Misalkan $u = x - 1$. Maka $f(u) = u^2$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Jika $f(u) = u^2$, maka $f(x) = x^2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 8 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 8</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. $3x + 3$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Diketahui $(f \circ g)(x) = f(g(x))$. Jika $f(x)$ dan $f(g(x))$ diketahui, kita bisa menemukan $g(x)$ dengan aljabar.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$f(x) = x + 2$</li>
+                            <li>$(f \circ g)(x) = 3x + 5$</li>
+                            <li>$f(g(x)) = 3x + 5$</li>
+                            <li>Masukkan $g(x)$ ke dalam $f(x)$: $(g(x)) + 2 = 3x + 5$.</li>
+                            <li>Selesaikan untuk $g(x)$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $g(x) + 2 = 3x + 5$<br>
+                        $g(x) = 3x + 5 - 2$<br>
+                        $g(x) = 3x + 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 9 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 9</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $\frac{3x + 1}{x - 2}$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk fungsi rasional $f(x) = \frac{ax + b}{cx + d}$, inversnya dapat dicari dengan cepat menggunakan rumus $f^{-1}(x) = \frac{-dx + b}{cx - a}$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a, b, c, d$ dari $f(x) = \frac{2x + 1}{x - 3}$.</li>
+                            <li>$a = 2$, $b = 1$, $c = 1$, $d = -3$.</li>
+                            <li>Masukkan ke rumus cepat.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $f^{-1}(x) = \frac{-(-3)x + 1}{1x - 2} = \frac{3x + 1}{x - 2}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 10 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 10</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P < Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menghitung nilai komposisi fungsi pada titik tertentu. $(f \circ g)(x) \neq (g \circ f)(x)$ (tidak komutatif).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung Kuantitas P: $(f \circ g)(3) = f(g(3))$.</li>
+                            <li>Hitung Kuantitas Q: $(g \circ f)(3) = g(f(3))$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P:</b><br>
+                        $g(x) = x - 1 \implies g(3) = 3 - 1 = 2$.<br>
+                        $f(g(3)) = f(2) = 2(2) = 4$.<br>
+                        Kuantitas P = 4.<br>
+                        <b>Kuantitas Q:</b><br>
+                        $f(x) = 2x \implies f(3) = 2(3) = 6$.<br>
+                        $g(f(3)) = g(6) = 6 - 1 = 5$.<br>
+                        Kuantitas Q = 5.<br>
+                        <br>
+                        Karena $4 < 5$, maka Kuantitas P < Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 11 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 11</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $\frac{x + 2}{3}$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari $(f \circ g)^{-1}(x)$, kita cari $(f \circ g)(x)$ terlebih dahulu, lalu cari inversnya.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Langkah 1: Cari $h(x) = (f \circ g)(x) = f(g(x))$.</li>
+                            <li>Langkah 2: Cari $h^{-1}(x)$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Langkah 1:</b><br>
+                        $f(x) = x - 2$, $g(x) = 3x$.<br>
+                        $h(x) = f(g(x)) = f(3x) = (3x) - 2 = 3x - 2$.<br>
+                        <b>Langkah 2:</b><br>
+                        Cari invers dari $h(x) = 3x - 2$.<br>
+                        $y = 3x - 2$<br>
+                        $y + 2 = 3x$<br>
+                        $x = \frac{y + 2}{3}$.<br>
+                        Maka, $h^{-1}(x) = (f \circ g)^{-1}(x) = \frac{x + 2}{3}$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 12 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 12</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Kita perlu menentukan apakah informasi yang diberikan cukup untuk menemukan nilai $a$ dan $b$ sehingga $(f \circ f)(0)$ bisa dihitung.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Target: $(f \circ f)(0) = f(f(0))$.<br>
+                        $f(x) = ax + b \implies f(0) = a(0) + b = b$.<br>
+                        $f(f(0)) = f(b) = a(b) + b = ab + b = b(a+1)$.<br>
+                        Untuk menjawab, kita butuh nilai $a$ dan $b$.
+                        <ul>
+                            <li><b>(1) $f(1) = 3$.</b> $a(1) + b = 3 \implies a + b = 3$. Kita punya satu persamaan dengan dua variabel. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(2) $f(2) = 5$.</b> $a(2) + b = 5 \implies 2a + b = 5$. Kita punya satu persamaan dengan dua variabel. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(1) dan (2) Bersama:</b> Kita punya sistem persamaan:<br>
+                            $2a + b = 5$<br>
+                            $a + b = 3$<br>
+                            (Eliminasi) $a = 2$.<br>
+                            (Substitusi) $2 + b = 3 \implies b = 1$.<br>
+                            Kita tahu $a=2$ dan $b=1$. Kita bisa hitung $b(a+1) = 1(2+1) = 3$. <b>CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 13 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 13</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis kebenaran setiap pernyataan komposisi fungsi $f(x) = x+2$, $g(x) = \frac{1}{x}$, $h(x) = x^2$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>(1) $(f \circ g)(x) = f(g(x)) = f(\frac{1}{x}) = (\frac{1}{x}) + 2 = \frac{1}{x} + 2$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(2) $(g \circ h)(x) = g(h(x)) = g(x^2) = \frac{1}{x^2}$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(3) $(f \circ g \circ h)(x) = f(g(h(x))) = f(g(x^2)) = f(\frac{1}{x^2}) = (\frac{1}{x^2}) + 2$.</b> (<b>BENAR</b>)</li>
+                            <li><b>(4) $(h \circ g \circ f)(x) = h(g(f(x))) = h(g(x+2)) = h(\frac{1}{x+2}) = (\frac{1}{x+2})^2$.</b> (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Semua 4 pernyataan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 14 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 14</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 2</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Sifat invers: $f^{-1}(a) = b \iff f(b) = a$. Kita tidak perlu mencari $f^{-1}(x)$. Kita cukup mencari nilai $x$ sehingga $f(x) = 11$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Kita ingin mencari $f^{-1}(11)$. Misalkan $f^{-1}(11) = a$.</li>
+                            <li>Maka, $f(a) = 11$.</li>
+                            <li>Cari $a$ menggunakan $f(x) = 5x + 1$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $f(a) = 11$<br>
+                        $5a + 1 = 11$<br>
+                        $5a = 11 - 1$<br>
+                        $5a = 10$<br>
+                        $a = 2$.<br>
+                        Jadi, $f^{-1}(11) = 2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 15 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 15</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P < Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menentukan $f(x)$ dari $f(x+1)$, lalu mencari $f(a)$ dan $f^{-1}(b)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung Kuantitas P: $f(3)$.</li>
+                            <li>Tentukan $f(x)$ dari $f(x+1)$.</li>
+                            <li>Hitung Kuantitas Q: $f^{-1}(3)$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Kuantitas P: $f(3)$</b><br>
+                        Kita tahu $f(x+1) = 2x - 5$.<br>
+                        Untuk mendapatkan $f(3)$, kita set $x+1 = 3 \implies x = 2$.<br>
+                        Masukkan $x=2$ ke persamaan: $f(2+1) = 2(2) - 5 \implies f(3) = 4 - 5 = -1$.<br>
+                        Kuantitas P = -1.<br>
+                        <br>
+                        <b>Kuantitas Q: $f^{-1}(3)$</b><br>
+                        Pertama, cari $f(x)$. Misal $u = x+1 \implies x = u-1$.<br>
+                        $f(u) = 2(u-1) - 5 = 2u - 2 - 5 = 2u - 7$. Jadi, $f(x) = 2x - 7$.<br>
+                        Sekarang cari $f^{-1}(3)$. Misal $f(a) = 3$.<br>
+                        $2a - 7 = 3 \implies 2a = 10 \implies a = 5$.<br>
+                        Jadi, $f^{-1}(3) = 5$.<br>
+                        Kuantitas Q = 5.<br>
+                        <br>
+                        Karena $-1 < 5$, maka Kuantitas P < Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 16 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 16</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Mengevaluasi kecukupan data untuk menghitung $(f \circ g)(0) = f(g(0))$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Target: $(f \circ g)(0) = f(g(0))$.<br>
+                        Dari $f(x) = ax+b$ dan $g(x) = cx+d$, kita dapatkan:<br>
+                        $g(0) = c(0) + d = d$.<br>
+                        $f(g(0)) = f(d) = a(d) + b = ad + b$.<br>
+                        Untuk menjawab, kita butuh nilai $a$, $b$, dan $d$.
+                        <ul>
+                            <li><b>(1) $f(x) = 2x + 1$.</b> Kita tahu $a=2$ dan $b=1$. Target menjadi $2d + 1$. Kita tidak tahu nilai $d$. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(2) $g(x) = x - 3$.</b> Kita tahu $c=1$ dan $d=-3$. Target menjadi $a(-3) + b = -3a + b$. Kita tidak tahu $a$ dan $b$. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(1) dan (2) Bersama:</b> Dari (1), $a=2$ dan $b=1$. Dari (2), $d=-3$. Kita bisa menghitung $ad+b = (2)(-3) + 1 = -6 + 1 = -5$. <b>CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 17 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 17</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: (1), (2), (3), dan (4) benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis sifat-sifat fungsi $f(x) = \frac{x}{x-1}$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>(1) $f^{-1}(x) = \frac{x}{x-1}$.</b><br>
+                            $y = \frac{x}{x-1} \implies y(x-1) = x \implies yx - y = x \implies yx - x = y \implies x(y-1) = y \implies x = \frac{y}{y-1}$. Jadi, $f^{-1}(x) = \frac{x}{x-1}$. (<b>BENAR</b>)</li>
+                            <li><b>(2) $(f \circ f)(x) = x$.</b><br>
+                            $(f \circ f)(x) = f(f(x)) = f(\frac{x}{x-1}) = \frac{\frac{x}{x-1}}{\frac{x}{x-1} - 1} = \frac{\frac{x}{x-1}}{\frac{x - (x-1)}{x-1}} = \frac{\frac{x}{x-1}}{\frac{1}{x-1}} = x$. (<b>BENAR</b>)</li>
+                            <li><b>(3) Domain $f(x)$ adalah $x \neq 1$.</b><br>
+                            Penyebut tidak boleh nol, $x-1 \neq 0 \implies x \neq 1$. (<b>BENAR</b>)</li>
+                            <li><b>(4) $(f \circ f \circ f)(x) = \frac{x}{x-1}$.</b><br>
+                            $(f \circ f \circ f)(x) = f((f \circ f)(x))$. Dari (2), kita tahu $(f \circ f)(x) = x$.<br>
+                            Maka $f((f \circ f)(x)) = f(x) = \frac{x}{x-1}$. (<b>BENAR</b>)</li>
+                            <li><b>(5) $f^{-1}(2) = 1$.</b><br>
+                            Dari (1), $f^{-1}(x) = \frac{x}{x-1}$. $f^{-1}(2) = \frac{2}{2-1} = \frac{2}{1} = 2$. (<b>SALAH</b>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 18 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 18</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Dua fungsi $f(x)$ dan $g(x)$ saling invers jika $(f \circ g)(x) = x$ dan $(g \circ f)(x) = x$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>(1) $f^{-1}(x) = g(x)$.</b><br>
+                            Cari $f^{-1}(x)$. $y = 2x - 4 \implies y + 4 = 2x \implies x = \frac{y+4}{2} = \frac{1}{2}y + 2$.<br>
+                            $f^{-1}(x) = \frac{1}{2}x + 2$. Ini sama dengan $g(x)$. (<b>BENAR</b>)</li>
+                            <li><b>(2) $g^{-1}(x) = f(x)$.</b><br>
+                            Cari $g^{-1}(x)$. $y = \frac{1}{2}x + 2 \implies y - 2 = \frac{1}{2}x \implies x = 2(y-2) = 2y - 4$.<br>
+                            $g^{-1}(x) = 2x - 4$. Ini sama dengan $f(x)$. (<b>BENAR</b>)</li>
+                            <li><b>(3) $(f \circ g)(x) = x$.</b><br>
+                            Karena $f$ dan $g$ saling invers (dari 1 & 2), komposisi mereka pasti $x$.<br>
+                            $f(g(x)) = f(\frac{1}{2}x + 2) = 2(\frac{1}{2}x + 2) - 4 = (x + 4) - 4 = x$. (<b>BENAR</b>)</li>
+                            <li><b>(4) $(g \circ f)(5) = 5$.</b><br>
+                            Karena $f$ dan $g$ saling invers, $(g \circ f)(x) = x$. Maka $(g \circ f)(5) = 5$. (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Semua 4 pernyataan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 19 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 19</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 122</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk menghitung $(g \circ f^{-1})(10)$, kita hitung $a = f^{-1}(10)$ terlebih dahulu, lalu hitung $g(a)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Langkah 1: Cari $f^{-1}(10)$.</li>
+                            <li>Langkah 2: Hitung $g(f^{-1}(10))$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        <b>Langkah 1: Cari $f^{-1}(10)$</b><br>
+                        $f(x) = x - 1$. Misal $f(a) = 10$.<br>
+                        $a - 1 = 10 \implies a = 11$.<br>
+                        Jadi, $f^{-1}(10) = 11$.<br>
+                        <br>
+                        <b>Langkah 2: Hitung $g(11)$</b><br>
+                        $(g \circ f^{-1})(10) = g(f^{-1}(10)) = g(11)$.<br>
+                        $g(x) = x^2 + 1 \implies g(11) = (11)^2 + 1 = 121 + 1 = 122$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Pembahasan 20 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 20</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 3</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan sifat dasar invers: $f(a) = b \iff f^{-1}(b) = a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Kita ingin mencari $f^{-1}(2)$. Misalkan $f^{-1}(2) = a$.</li>
+                            <li>Berdasarkan sifat invers, ini berarti $f(a) = 2$.</li>
+                            <li>Kita punya $f(x-2) = \frac{x+3}{x-1}$. Kita cari nilai $x$ yang membuat $\frac{x+3}{x-1} = 2$.</li>
+                            <li>Nilai $a$ adalah $x-2$ dari $x$ yang kita temukan.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Set $f(x-2) = 2$ :<br>
+                        $\frac{x + 3}{x - 1} = 2$<br>
+                        $x + 3 = 2(x - 1)$<br>
+                        $x + 3 = 2x - 2$<br>
+                        $3 + 2 = 2x - x$<br>
+                        $x = 5$.<br>
+                        <br>
+                        Kita menemukan bahwa saat $x=5$, nilai fungsinya adalah 2.<br>
+                        $f(5 - 2) = 2$<br>
+                        $f(3) = 2$.<br>
+                        Karena $f(3) = 2$, maka $f^{-1}(2) = 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+</body>
+</html>
