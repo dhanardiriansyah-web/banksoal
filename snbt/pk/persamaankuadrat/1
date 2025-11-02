@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL PENGETAHUAN KUANTITATIF - PERSAMAAN KUADRAT</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #e17070;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #e17070;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        page-break-after: always;
+      }
+       .page:last-of-type {
+        page-break-after: avoid;
+      }
+      .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border: 3px solid var(--primary-text);
+      }
+      .cover-page .title {
+          font-size: 32pt;
+          font-weight: 900;
+          margin: 0;
+          color: var(--header-title-color);
+          line-height: 1.2;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      }
+      .cover-page .subtitle {
+          font-size: 16pt;
+          margin-top: 15px;
+          color: var(--secondary-text);
+          font-weight: 700;
+      }
+      .cover-page img {
+          max-width: 200px;
+          margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0;
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #b0b0b0;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      .pembahasan { background-color: #f0f8ff; border: 1px solid #cce5ff; padding: 15px; border-radius: 5px; margin-top: 10px; text-align: left; }
+      .pembahasan-title { font-weight: bold; display: block; margin-bottom: 5px; margin-top: 8px; }
+      .pembahasan ul { padding-left: 20px; margin: 5px 0; }
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+        }
+        .page-header, .page-footer {
+            display: block;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">BANK SOAL<br>PENGETAHUAN KUANTITATIF</h1>
+            <p class="subtitle">Topik: Persamaan & Pertidaksamaan Kuadrat</p>
+        </div>
+    </section>
+
+    <!-- Halaman Soal Mudah 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Mudah</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Mudah (Nomor 1 - 6)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Akar Persamaan Kuadrat</div>
+                            Akar-akar dari persamaan kuadrat $x^2 - 5x + 6 = 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2 dan 3</li><li data-option="B">-2 dan -3</li><li data-option="C">1 dan 6</li><li data-option="D">-1 dan -6</li><li data-option="E">2 dan -3</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Hasil Kali Akar</div>
+                            Jika $x_1$ dan $x_2$ adalah akar-akar dari persamaan $2x^2 - 4x + 6 = 0$, maka nilai dari $x_1 \cdot x_2$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-3</li><li data-option="B">-2</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">6</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Jumlah Akar</div>
+                            Jumlah akar-akar dari persamaan kuadrat $x^2 + 2x - 8 = 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">8</li><li data-option="B">4</li><li data-option="C">2</li><li data-option="D">-2</li><li data-option="E">-4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Diskriminan</div>
+                            Nilai diskriminan dari persamaan kuadrat $x^2 - 3x + 1 = 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">13</li><li data-option="B">9</li><li data-option="C">5</li><li data-option="D">4</li><li data-option="E">1</li>
+                            </ol>
+                        </div>
+                    </div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Jenis Akar</div>
+                            Persamaan kuadrat $x^2 + 2x + 1 = 0$ memiliki jenis akar...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Dua akar real berbeda</li><li data-option="B">Akar real kembar</li><li data-option="C">Tidak memiliki akar real</li><li data-option="D">Dua akar positif</li><li data-option="E">Dua akar negatif</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Jumlah Akar</div>
+                            Diketahui $x_1$ dan $x_2$ adalah akar-akar dari $x^2 - 4 = 0$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$x_1 + x_2$</td><td>0</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sedang 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sedang (Nomor 7 - 12)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Pertidaksamaan Kuadrat</div>
+                            Himpunan penyelesaian dari pertidaksamaan $x^2 - 9 < 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x < -3$ atau $x > 3$</li><li data-option="B">$-3 < x < 3$</li><li data-option="C">$x < 3$</li><li data-option="D">$x > -3$</li><li data-option="E">$-9 < x < 9$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Kuadrat</div>
+                            Sumbu simetri dari grafik fungsi $f(x) = x^2 - 6x + 5$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x = -6$</li><li data-option="B">$x = -3$</li><li data-option="C">$x = 0$</li><li data-option="D">$x = 3$</li><li data-option="E">$x = 6$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Sifat Akar</div>
+                            Perhatikan persamaan kuadrat $x^2 - 4x + 3 = 0$ yang memiliki akar $x_1$ dan $x_2$. Berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $x_1 + x_2 = 4$.</div><div class="pernyataan-item">(2) $x_1 \cdot x_2 = 3$.</div><div class="pernyataan-item">(3) Nilai diskriminan $D = 4$.</div><div class="pernyataan-item">(4) Persamaan memiliki 2 akar real berbeda.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Menyusun PK Baru</div>
+                            Persamaan kuadrat $x^2 - 2x + 1 = 0$ memiliki akar $x_1$ dan $x_2$. Persamaan kuadrat baru yang akar-akarnya $x_1+1$ dan $x_2+1$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^2 - 4x + 4 = 0$</li><li data-option="B">$x^2 - 2x + 2 = 0$</li><li data-option="C">$x^2 - 4x = 0$</li><li data-option="D">$x^2 + 2 = 0$</li><li data-option="E">$x^2 - 3x + 2 = 0$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Akar Persamaan Kuadrat</div>
+                            Akar-akar dari persamaan kuadrat $3x^2 + 5x - 2 = 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$1/3$ dan $-2$</li><li data-option="B">$-1/3$ dan $2$</li><li data-option="C">$2/3$ dan $-1$</li><li data-option="D">$-2/3$ dan $1$</li><li data-option="E">$1$ dan $-2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Diskriminan</div>
+                            Persamaan $x^2 + kx + 9 = 0$ memiliki akar kembar, dengan $k > 0$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$k$</td><td>6</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sedang 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sedang</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sedang (Nomor 13 - 15)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Sifat Akar</div>
+                            Persamaan kuadrat $x^2 + bx + c = 0$ memiliki akar $x_1$ dan $x_2$. Berapakah nilai $x_1^2 + x_2^2$?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $b = -5$</div><div class="pernyataan-item">(2) $c = 6$</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup, (1) SAJA tidak cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</li><li data-option="D">Pernyataan (1) SAJA cukup, dan (2) SAJA cukup.</li><li data-option="E">Pernyataan (1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Kombinasi Benar) | Topik: Sifat Akar</div>
+                            Diketahui $x^2 - (p+2)x + 2p = 0$. Manakah pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) Jumlah akarnya adalah $p+2$.</div><div class="pernyataan-item">(2) Hasil kali akarnya adalah $2p$.</div><div class="pernyataan-item">(3) Jika $p=3$, diskriminannya $1$.</div><div class="pernyataan-item">(4) Jika $p=0$, akar-akarnya $0$ dan $2$.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">(1), (2), (3) benar.</li><li data-option="B">(1) dan (3) benar.</li><li data-option="C">(2) dan (4) benar.</li><li data-option="D">Hanya (4) yang benar.</li><li data-option="E">Semua benar.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Pertidaksamaan Kuadrat</div>
+                            Himpunan penyelesaian dari $x^2 + 2x - 15 \ge 0$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-5 \le x \le 3$</li><li data-option="B">$-3 \le x \le 5$</li><li data-option="C">$x \le -5$ atau $x \ge 3$</li><li data-option="D">$x \le -3$ atau $x \ge 5$</li><li data-option="E">$x \le 3$ atau $x \ge 5$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sulit 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sulit (HOTS)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sulit (Nomor 16 - 21)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Menyusun PK Baru</div>
+                            Akar-akar $x^2 - 3x + 5 = 0$ adalah $x_1$ dan $x_2$. Persamaan kuadrat baru yang akar-akarnya $2x_1$ dan $2x_2$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^2 - 6x + 10 = 0$</li><li data-option="B">$x^2 - 6x + 20 = 0$</li><li data-option="C">$x^2 - 3x + 10 = 0$</li><li data-option="D">$x^2 + 6x + 20 = 0$</li><li data-option="E">$2x^2 - 6x + 10 = 0$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Diskriminan</div>
+                            Persamaan $2x^2 - 8x + m = 0$ memiliki dua akar real berbeda.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>Nilai $m$</td><td>8</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Sifat Akar</div>
+                            Jika akar-akar persamaan $x^2 + ax - 4 = 0$ saling berlawanan ($x_1 = -x_2$), maka nilai $a$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-4</li><li data-option="B">-2</li><li data-option="C">0</li><li data-option="D">2</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Sifat Akar</div>
+                            Jika akar-akar persamaan $x^2 - 8x + c = 0$ saling berkebalikan ($x_1 = 1/x_2$), maka nilai $c$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-8</li><li data-option="B">-1</li><li data-option="C">1</li><li data-option="D">4</li><li data-option="E">8</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Jenis Akar</div>
+                            Apakah persamaan $x^2 + bx + c = 0$ memiliki akar real?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $b > 2\sqrt{c}$</div><div class="pernyataan-item">(2) $c = 1$</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup, (1) SAJA tidak cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</li><li data-option="D">Pernyataan (1) SAJA cukup, dan (2) SAJA cukup.</li><li data-option="E">Pernyataan (1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">21.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Kuadrat</div>
+                            Nilai minimum dari fungsi $f(x) = x^2 - 4x - 12$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-16</li><li data-option="B">-12</li><li data-option="C">-8</li><li data-option="D">2</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Halaman Soal Sulit 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sulit (HOTS)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sulit (Nomor 22 - 27)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">22.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks | Topik: Sifat Akar<br><strong>(Jawaban benar lebih dari satu)</strong></div>
+                            Manakah pernyataan yang benar untuk persamaan $x^2 - 6x + 9 = 0$?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>Akar-akarnya kembar.</span></div>
+                                <div><input type="checkbox"/><span>Jumlah akarnya adalah 6.</span></div>
+                                <div><input type="checkbox"/><span>Hasil kali akarnya adalah 9.</span></div>
+                                <div><input type="checkbox"/><span>Salah satu akarnya adalah 3.</span></div>
+                                <div><input type="checkbox"/><span>Diskriminannya adalah 36.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Sifat Akar</div>
+                            $x_1$ dan $x_2$ adalah akar-akar dari $x^2 - 3x + 1 = 0$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$x_1^2 + x_2^2$</td><td>7</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Menyusun PK Baru</div>
+                            Akar-akar dari $2x^2 - 5x + 1 = 0$ adalah $x_1$ dan $x_2$. Persamaan kuadrat baru yang akar-akarnya $\frac{1}{x_1}$ dan $\frac{1}{x_2}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^2 - 5x + 2 = 0$</li><li data-option="B">$x^2 + 5x + 2 = 0$</li><li data-option="C">$2x^2 - x + 5 = 0$</li><li data-option="D">$2x^2 + x - 5 = 0$</li><li data-option="E">$x^2 - 2x + 5 = 0$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Kecukupan Data (AKD) | Topik: Pertidaksamaan Kuadrat</div>
+                            $x$ adalah bilangan real. Apakah $x > 0$?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) $x^2 - 5x + 6 > 0$</div><div class="pernyataan-item">(2) $x^2 - x - 2 < 0$</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</li><li data-option="B">Pernyataan (2) SAJA cukup, (1) SAJA tidak cukup.</li><li data-option="C">DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</li><li data-option="D">Pernyataan (1) SAJA cukup, dan (2) SAJA cukup.</li><li data-option="E">Pernyataan (1) dan (2) tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">26.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Diskriminan</div>
+                            Agar persamaan $mx^2 - (m+1)x + 1 = 0$ memiliki dua akar real berbeda, batas nilai $m$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$m > 1$</li><li data-option="B">$m < 1$</li><li data-option="C">$m \neq 1$</li><li data-option="D">$m \neq 0$</li><li data-option="E">$m \neq 0$ dan $m \neq 1$</li>
+                            </ol>
+                        </div>
+                    </div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">27.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Pernyataan (Jumlah Benar) | Topik: Sifat Akar</div>
+                            Diketahui persamaan kuadrat $x^2 - 4x + a = 0$. Berapa banyak pernyataan yang benar?
+                            <div class="pernyataan-list">
+                                <div class="pernyataan-item">(1) Punya 2 akar real jika $a < 4$.</div><div class="pernyataan-item">(2) Punya akar kembar jika $a = 4$.</div><div class="pernyataan-item">(3) Tidak punya akar real jika $a > 4$.</div><div class="pernyataan-item">(4) Jumlah akarnya selalu 4.</div>
+                            </div>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li><li data-option="B">1</li><li data-option="C">2</li><li data-option="D">3</li><li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+    
+    <!-- Halaman Soal Sulit 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Level Sulit (HOTS)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Lanjutan Soal Level Sulit (Nomor 28 - 30)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">28.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Kompleks | Topik: Pertidaksamaan Kuadrat<br><strong>(Jawaban benar lebih dari satu)</strong></div>
+                            Manakah pernyataan yang benar terkait solusi dari $\frac{x^2-3x+2}{x^2+x+6} < 0$?
+                            <div class="pilihan-ganda-kompleks">
+                                <div><input type="checkbox"/><span>$x=1.5$ adalah salah satu solusi.</span></div>
+                                <div><input type="checkbox"/><span>$x=0$ bukan solusi.</span></div>
+                                <div><input type="checkbox"/><span>$x=3$ bukan solusi.</span></div>
+                                <div><input type="checkbox"/><span>Penyebut $x^2+x+6$ selalu bernilai positif.</span></div>
+                                <div><input type="checkbox"/><span>$x=1$ adalah salah satu solusi.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">29.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Analisis Perbandingan Kuantitas (P dan Q) | Topik: Sifat Akar</div>
+                            $x_1$ dan $x_2$ adalah akar-akar dari $x^2 + x - 3 = 0$.
+                            <table class="tabel-kuantitas">
+                                <tr><th>Kuantitas P</th><th>Kuantitas Q</th></tr>
+                                <tr><td>$x_1^3 + x_2^3$</td><td>-10</td></tr>
+                            </table>
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Kuantitas P > Kuantitas Q.</li><li data-option="B">Kuantitas P < Kuantitas Q.</li><li data-option="C">Kuantitas P = Kuantitas Q.</li><li data-option="D">Informasi tidak cukup.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">30.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda Biasa | Topik: Fungsi Kuadrat</div>
+                            Grafik $f(x) = ax^2 + bx + c$ memotong sumbu-y di $(0, 3)$, memiliki sumbu simetri $x=1$, dan nilai maksimum $4$. Nilai $a+b+c$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2</li><li data-option="B">3</li><li data-option="C">4</li><li data-option="D">5</li><li data-option="E">6</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Halaman Sampul Kunci Jawaban -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">KUNCI JAWABAN &<br>PEMBAHASAN</h1>
+            <p class="subtitle">Bank Soal PK: Persamaan & Pertidaksamaan Kuadrat</p>
+        </div>
+    </section>
+
+    <!-- Pembahasan 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 1</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">1.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. 2 dan 3</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk mencari akar-akar persamaan kuadrat $ax^2 + bx + c = 0$, kita bisa menggunakan faktorisasi. Kita mencari dua bilangan yang jika dikalikan hasilnya $c$ dan jika dijumlahkan hasilnya $b$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $b$ dan $c$. Di sini $b = -5$ dan $c = 6$.</li>
+                            <li>Cari dua bilangan yang hasil kalinya 6 dan hasil jumlahnya -5.</li>
+                            <li>Dua bilangan tersebut adalah -2 dan -3.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x^2 - 5x + 6 = 0$<br>
+                        $(x - 2)(x - 3) = 0$<br>
+                        Akar-akarnya adalah $x = 2$ atau $x = 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 2</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">2.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. 3</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk persamaan kuadrat $ax^2 + bx + c = 0$, hasil kali akar-akarnya ($x_1 \cdot x_2$) diberikan oleh rumus $c/a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $c$ dari $2x^2 - 4x + 6 = 0$.</li>
+                            <li>$a = 2$, $b = -4$, $c = 6$.</li>
+                            <li>Hitung $c/a$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x_1 \cdot x_2 = \frac{c}{a} = \frac{6}{2} = 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 3</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">3.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. -2</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk persamaan kuadrat $ax^2 + bx + c = 0$, jumlah akar-akarnya ($x_1 + x_2$) diberikan oleh rumus $-b/a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $b$ dari $x^2 + 2x - 8 = 0$.</li>
+                            <li>$a = 1$, $b = 2$, $c = -8$.</li>
+                            <li>Hitung $-b/a$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x_1 + x_2 = \frac{-b}{a} = \frac{-2}{1} = -2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 4</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">4.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 5</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Nilai diskriminan ($D$) dari persamaan kuadrat $ax^2 + bx + c = 0$ diberikan oleh rumus $D = b^2 - 4ac$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$, $b$, dan $c$ dari $x^2 - 3x + 1 = 0$.</li>
+                            <li>$a = 1$, $b = -3$, $c = 1$.</li>
+                            <li>Hitung $D = b^2 - 4ac$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $D = (-3)^2 - 4(1)(1) = 9 - 4 = 5$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 5</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">5.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Akar real kembar</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Jenis akar persamaan kuadrat ditentukan oleh nilai diskriminan ($D = b^2 - 4ac$):</p>
+                        <ul>
+                            <li>$D > 0$: Dua akar real berbeda.</li>
+                            <li>$D = 0$: Dua akar real kembar (atau satu akar real).</li>
+                            <li>$D < 0$: Tidak memiliki akar real (akar imajiner).</li>
+                        </ul>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Hitung nilai $D$ untuk $x^2 + 2x + 1 = 0$.</li>
+                            <li>$a = 1$, $b = 2$, $c = 1$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $D = (2)^2 - 4(1)(1) = 4 - 4 = 0$.<br>
+                        Karena $D = 0$, persamaan ini memiliki akar real kembar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 6 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 6</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">6.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk persamaan $ax^2 + bx + c = 0$, jumlah akar-akarnya ($x_1 + x_2$) adalah $-b/a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $b$ dari $x^2 - 4 = 0$. Ini bisa ditulis sebagai $x^2 + 0x - 4 = 0$.</li>
+                            <li>$a = 1$, $b = 0$, $c = -4$.</li>
+                            <li>Hitung Kuantitas P, yaitu $x_1 + x_2 = -b/a$.</li>
+                            <li>Bandingkan P dan Q.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P = $x_1 + x_2 = \frac{-b}{a} = \frac{-0}{1} = 0$.<br>
+                        Kuantitas Q = 0.<br>
+                        Maka, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 7 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 7</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">7.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. $-3 < x < 3$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk menyelesaikan pertidaksamaan kuadrat $x^2 - a^2 < 0$, kita faktorkan menjadi $(x-a)(x+a) < 0$. Pembuat nolnya adalah $x=a$ dan $x=-a$. Kita gunakan garis bilangan untuk menentukan interval yang memenuhi.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Faktorkan $x^2 - 9 < 0$ menjadi $(x-3)(x+3) < 0$.</li>
+                            <li>Tentukan pembuat nol: $x=3$ dan $x=-3$.</li>
+                            <li>Buat garis bilangan dengan titik -3 dan 3.</li>
+                            <li>Uji titik (misal $x=0$): $(0-3)(0+3) = -9$, yang mana $< 0$ (memenuhi).</li>
+                            <li>Karena $x=0$ berada di antara -3 dan 3, maka interval inilah solusinya.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Garis bilangan: +++ (-3) --- (3) +++<br>
+                        Karena yang dicari adalah $< 0$ (negatif), solusinya adalah $-3 < x < 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 8 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 8</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">8.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: D. $x = 3$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Sumbu simetri dari grafik fungsi kuadrat $f(x) = ax^2 + bx + c$ adalah garis vertikal yang melalui titik puncaknya. Rumus sumbu simetri adalah $x = -b/2a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $b$ dari $f(x) = x^2 - 6x + 5$.</li>
+                            <li>$a = 1$, $b = -6$, $c = 5$.</li>
+                            <li>Hitung $x = -b/2a$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x = \frac{-(-6)}{2(1)} = \frac{6}{2} = 3$.<br>
+                        Jadi, sumbu simetrinya adalah $x = 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 9 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 9</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">9.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan rumus jumlah akar ($x_1+x_2 = -b/a$), hasil kali akar ($x_1 \cdot x_2 = c/a$), dan diskriminan ($D = b^2 - 4ac$) untuk persamaan $ax^2 + bx + c = 0$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Untuk $x^2 - 4x + 3 = 0$: $a=1, b=-4, c=3$.
+                        <ul>
+                            <li>(1) $x_1 + x_2 = -b/a = -(-4)/1 = 4$. (<b>BENAR</b>)</li>
+                            <li>(2) $x_1 \cdot x_2 = c/a = 3/1 = 3$. (<b>BENAR</b>)</li>
+                            <li>(3) $D = b^2 - 4ac = (-4)^2 - 4(1)(3) = 16 - 12 = 4$. (<b>BENAR</b>)</li>
+                            <li>(4) Karena $D = 4$ dan $D > 0$, maka persamaan memiliki 2 akar real berbeda. (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Ada 4 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 10 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 10</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">10.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $x^2 - 4x + 4 = 0$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Jika persamaan kuadrat baru memiliki akar $y_1$ dan $y_2$, persamaannya adalah $x^2 - (y_1+y_2)x + (y_1 \cdot y_2) = 0$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan (Cara 1: Subtitusi)</b>
+                        <ul>
+                            <li>Misal akar baru $y = x+1$, maka $x = y-1$.</li>
+                            <li>Substitusikan $x = y-1$ ke persamaan awal:</li>
+                            <li>$(y-1)^2 - 2(y-1) + 1 = 0$</li>
+                            <li>$(y^2 - 2y + 1) - (2y - 2) + 1 = 0$</li>
+                            <li>$y^2 - 4y + 4 = 0$. Ganti $y$ kembali ke $x$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan (Cara 2: Sifat Akar)</b>
+                        Dari $x^2 - 2x + 1 = 0$, kita tahu $(x-1)^2=0$, jadi $x_1 = 1$ dan $x_2 = 1$.<br>
+                        Akar-akar baru: $y_1 = x_1+1 = 1+1 = 2$ dan $y_2 = x_2+1 = 1+1 = 2$.<br>
+                        Persamaan baru: $(x-2)(x-2) = 0 \implies x^2 - 4x + 4 = 0$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 11 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 11</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">11.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $1/3$ dan $-2$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan faktorisasi untuk $ax^2 + bx + c = 0$. Kita cari dua bilangan yang jika dikali hasilnya $a \cdot c$ dan jika dijumlah hasilnya $b$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>$a=3, b=5, c=-2$. $a \cdot c = -6$.</li>
+                            <li>Cari dua bilangan: dikali = -6, dijumlah = 5. Bilangan itu adalah 6 dan -1.</li>
+                            <li>Pecah suku tengah: $3x^2 + 6x - 1x - 2 = 0$.</li>
+                            <li>Faktorkan: $3x(x + 2) - 1(x + 2) = 0$.</li>
+                            <li>$(3x - 1)(x + 2) = 0$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $3x - 1 = 0 \implies 3x = 1 \implies x = 1/3$.<br>
+                        $x + 2 = 0 \implies x = -2$.<br>
+                        Akar-akarnya adalah $1/3$ dan $-2$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 12 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 12</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">12.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Persamaan kuadrat memiliki akar kembar jika nilai diskriminannya ($D$) sama dengan 0. $D = b^2 - 4ac$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a, b, c$ dari $x^2 + kx + 9 = 0$.</li>
+                            <li>$a=1, b=k, c=9$.</li>
+                            <li>Terapkan syarat $D=0$.</li>
+                            <li>Selesaikan untuk $k$, dan ingat $k > 0$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $D = b^2 - 4ac = 0$<br>
+                        $k^2 - 4(1)(9) = 0$<br>
+                        $k^2 - 36 = 0$<br>
+                        $k^2 = 36$<br>
+                        $k = 6$ atau $k = -6$.<br>
+                        Karena $k > 0$, maka $k = 6$.<br>
+                        Kuantitas P = $k = 6$.<br>
+                        Kuantitas Q = 6.<br>
+                        Maka, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 13 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 13</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">13.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. DUA pernyataan BERSAMA-SAMA cukup, SATU tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Nilai $x_1^2 + x_2^2$ dapat diubah bentuknya menggunakan sifat jumlah dan hasil kali akar: $x_1^2 + x_2^2 = (x_1+x_2)^2 - 2(x_1 \cdot x_2)$.<br>
+                        Dari $x^2 + bx + c = 0$, kita tahu $x_1+x_2 = -b$ dan $x_1 \cdot x_2 = c$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Target: $x_1^2 + x_2^2 = (-b)^2 - 2(c) = b^2 - 2c$. Untuk menghitung nilainya, kita butuh nilai $b$ dan $c$.
+                        <ul>
+                            <li><b>(1) $b = -5$.</b> Kita tahu $b$ tapi tidak tahu $c$. Nilainya $25 - 2c$. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(2) $c = 6$.</b> Kita tahu $c$ tapi tidak tahu $b$. Nilainya $b^2 - 12$. <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(1) dan (2) Bersama:</b> $b = -5$ dan $c = 6$. Kita bisa menghitung nilainya: $(-5)^2 - 2(6) = 25 - 12 = 13$. <b>CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 14 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 14</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">14.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Semua benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan rumus jumlah akar, hasil kali akar, diskriminan, dan substitusi nilai.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Untuk $x^2 - (p+2)x + 2p = 0$: $a=1, b=-(p+2), c=2p$.
+                        <ul>
+                            <li>(1) Jumlah akar: $-b/a = -(-(p+2))/1 = p+2$. (<b>BENAR</b>)</li>
+                            <li>(2) Hasil kali akar: $c/a = 2p/1 = 2p$. (<b>BENAR</b>)</li>
+                            <li>(3) Jika $p=3$: Persamaan menjadi $x^2 - 5x + 6 = 0$. $D = (-5)^2 - 4(1)(6) = 25 - 24 = 1$. (<b>BENAR</b>)</li>
+                            <li>(4) Jika $p=0$: Persamaan menjadi $x^2 - 2x = 0 \implies x(x-2)=0$. Akar-akarnya $x=0$ dan $x=2$. (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Semua pernyataan benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 15 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 15</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">15.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. $x \le -5$ atau $x \ge 3$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk menyelesaikan pertidaksamaan kuadrat $\ge 0$, kita cari pembuat nol, letakkan di garis bilangan, dan uji interval. Jika $ax^2+... \ge 0$ dan $a>0$, solusinya adalah "atau" (di ujung-ujung).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Cari pembuat nol dari $x^2 + 2x - 15 = 0$.</li>
+                            <li>Faktorkan: $(x+5)(x-3) = 0$.</li>
+                            <li>Pembuat nol: $x=-5$ dan $x=3$.</li>
+                            <li>Buat garis bilangan: +++ [-5] --- [3] +++ (diuji dengan $x=0$, hasilnya -15, negatif).</li>
+                            <li>Karena yang dicari adalah $\ge 0$ (positif atau nol), kita ambil interval positif.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Solusinya adalah $x \le -5$ atau $x \ge 3$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 16 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 16</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">16.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. $x^2 - 6x + 20 = 0$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk menyusun PK baru yang akarnya $ky_1$ dan $ky_2$ dari $ax^2+bx+c=0$, kita bisa substitusi $x = y/k$. Cara lain adalah menggunakan rumus $x^2 - (\text{JAB})x + (\text{KAB}) = 0$ (JAB = Jumlah Akar Baru, KAB = Kali Akar Baru).</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        Dari $x^2 - 3x + 5 = 0$: $x_1+x_2 = 3$ dan $x_1 \cdot x_2 = 5$.<br>
+                        Akar-akar baru adalah $y_1 = 2x_1$ dan $y_2 = 2x_2$.
+                        <ul>
+                            <li>JAB = $y_1+y_2 = 2x_1 + 2x_2 = 2(x_1+x_2) = 2(3) = 6$.</li>
+                            <li>KAB = $y_1 \cdot y_2 = (2x_1)(2x_2) = 4(x_1 \cdot x_2) = 4(5) = 20$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Persamaan baru: $x^2 - (\text{JAB})x + (\text{KAB}) = 0$<br>
+                        $x^2 - 6x + 20 = 0$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 17 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 17</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">17.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: B. Kuantitas P < Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Persamaan kuadrat memiliki dua akar real berbeda jika $D > 0$. $D = b^2 - 4ac$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a, b, c$ dari $2x^2 - 8x + m = 0$.</li>
+                            <li>$a=2, b=-8, c=m$.</li>
+                            <li>Terapkan syarat $D > 0$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $D = (-8)^2 - 4(2)(m) > 0$<br>
+                        $64 - 8m > 0$<br>
+                        $64 > 8m$<br>
+                        $8 > m$ atau $m < 8$.<br>
+                        <br>
+                        Kuantitas P = $m$. Kita hanya tahu $m < 8$.<br>
+                        Kuantitas Q = 8.<br>
+                        Karena $m$ harus lebih kecil dari 8 (tidak bisa sama dengan 8), maka Kuantitas P pasti lebih kecil dari Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 18 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 18</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">18.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 0</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Jika akar-akar saling berlawanan, $x_1 = -x_2$. Ini berarti $x_1 + x_2 = 0$. Rumus jumlah akar adalah $x_1 + x_2 = -b/a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $b$ dari $x^2 + ax - 4 = 0$.</li>
+                            <li>$a = 1, b = a, c = -4$.</li>
+                            <li>Terapkan syarat $x_1 + x_2 = 0$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x_1 + x_2 = -b/a$<br>
+                        $0 = -a/1$<br>
+                        $0 = -a \implies a = 0$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 19 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 19</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">19.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 1</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Jika akar-akar saling berkebalikan, $x_1 = 1/x_2$. Ini berarti $x_1 \cdot x_2 = 1$. Rumus hasil kali akar adalah $x_1 \cdot x_2 = c/a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a$ dan $c$ dari $x^2 - 8x + c = 0$.</li>
+                            <li>$a = 1, b = -8, c = c$.</li>
+                            <li>Terapkan syarat $x_1 \cdot x_2 = 1$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $x_1 \cdot x_2 = c/a$<br>
+                        $1 = c/1$<br>
+                        $c = 1$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 20 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 20</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">20.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. Pernyataan (1) SAJA cukup, (2) SAJA tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Persamaan kuadrat $ax^2 + bx + c = 0$ memiliki akar real jika $D \ge 0$. $D = b^2 - 4ac$. Pertanyaan ini menanyakan apakah $b^2 - 4(1)(c) \ge 0$ atau $b^2 - 4c \ge 0$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Target: Apakah $b^2 - 4c \ge 0$?
+                        <ul>
+                            <li><b>(1) $b > 2\sqrt{c}$.</b> Karena $b$ dan $\sqrt{c}$ positif (akar kuadrat tidak mungkin negatif), kita bisa kuadratkan kedua sisi: $b^2 > (2\sqrt{c})^2 \implies b^2 > 4c$. Jika $b^2 > 4c$, maka $b^2 - 4c > 0$. Ini sudah pasti memenuhi $D \ge 0$. <b>CUKUP</b>.</li>
+                            <li><b>(2) $c = 1$.</b> Syaratnya menjadi $b^2 - 4(1) \ge 0$ atau $b^2 \ge 4$. Kita tidak tahu nilai $b$. Jika $b=3$, $9 \ge 4$ (Ya). Jika $b=1$, $1 \ge 4$ (Tidak). <b>TIDAK CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 21 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 21</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">21.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. -16</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Nilai optimum (minimum atau maksimum) dari $f(x) = ax^2 + bx + c$ terjadi di puncaknya ($y_p$). Jika $a>0$, nilainya minimum. Rumusnya $y_p = -D/4a$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a, b, c$ dari $f(x) = x^2 - 4x - 12$. $a=1, b=-4, c=-12$.</li>
+                            <li>Hitung Diskriminan $D = b^2 - 4ac$.</li>
+                            <li>Hitung $y_p = -D/4a$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        $D = (-4)^2 - 4(1)(-12) = 16 + 48 = 64$.<br>
+                        $y_p = \frac{-D}{4a} = \frac{-64}{4(1)} = -16$.<br>
+                        (Cara lain: Sumbu simetri $x = -b/2a = 4/2 = 2$. Nilai min $f(2) = (2)^2 - 4(2) - 12 = 4 - 8 - 12 = -16$)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 22 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 22</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">22.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: (1), (2), (3), dan (4) benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis sifat-sifat persamaan kuadrat $x^2 - 6x + 9 = 0$.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        <ul>
+                            <li><b>(1) Akar-akarnya kembar.</b> $D = b^2 - 4ac = (-6)^2 - 4(1)(9) = 36 - 36 = 0$. Karena $D=0$, akarnya kembar. (<b>BENAR</b>)</li>
+                            <li><b>(2) Jumlah akarnya adalah 6.</b> $x_1+x_2 = -b/a = -(-6)/1 = 6$. (<b>BENAR</b>)</li>
+                            <li><b>(3) Hasil kali akarnya adalah 9.</b> $x_1 \cdot x_2 = c/a = 9/1 = 9$. (<b>BENAR</b>)</li>
+                            <li><b>(4) Salah satu akarnya adalah 3.</b> Persamaan bisa difaktorkan: $(x-3)(x-3) = 0$. Akarnya adalah $x=3$. (<b>BENAR</b>)</li>
+                            <li><b>(5) Diskriminannya adalah 36.</b> Salah. Seperti hitungan (1), $D=0$. (<b>SALAH</b>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 23 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 23</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">23.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan identitas $x_1^2 + x_2^2 = (x_1+x_2)^2 - 2(x_1 \cdot x_2)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Dari $x^2 - 3x + 1 = 0$, cari $x_1+x_2$ dan $x_1 \cdot x_2$.</li>
+                            <li>$x_1+x_2 = -(-3)/1 = 3$.</li>
+                            <li>$x_1 \cdot x_2 = 1/1 = 1$.</li>
+                            <li>Hitung Kuantitas P.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P = $x_1^2 + x_2^2 = (x_1+x_2)^2 - 2(x_1 \cdot x_2)$<br>
+                        P = $(3)^2 - 2(1) = 9 - 2 = 7$.<br>
+                        Kuantitas Q = 7.<br>
+                        Maka, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 24 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 24</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">24.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: A. $x^2 - 5x + 2 = 0$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Jika persamaan $ax^2 + bx + c = 0$ memiliki akar $x_1$ dan $x_2$, maka persamaan baru yang akar-akarnya $1/x_1$ dan $1/x_2$ adalah $cx^2 + bx + a = 0$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Identifikasi $a, b, c$ dari $2x^2 - 5x + 1 = 0$.</li>
+                            <li>$a=2, b=-5, c=1$.</li>
+                            <li>Tukar posisi $a$ dan $c$ untuk mendapatkan persamaan baru.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Persamaan baru: $1x^2 + (-5)x + 2 = 0$<br>
+                        $x^2 - 5x + 2 = 0$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 25 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 25</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">25.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. Pernyataan (1) dan (2) tidak cukup.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis irisan dari dua himpunan penyelesaian pertidaksamaan.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Target: Apakah $x > 0$?
+                        <ul>
+                            <li><b>(1) $x^2 - 5x + 6 > 0 \implies (x-2)(x-3) > 0$.</b> Solusinya $x < 2$ atau $x > 3$. Nilai $x$ bisa $4$ (Ya, $x>0$) atau $x = -1$ (Tidak, $x<0$). <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(2) $x^2 - x - 2 < 0 \implies (x-2)(x+1) < 0$.</b> Solusinya $-1 < x < 2$. Nilai $x$ bisa $1$ (Ya, $x>0$) atau $x = -0.5$ (Tidak, $x<0$). <b>TIDAK CUKUP</b>.</li>
+                            <li><b>(1) dan (2) Bersama:</b> Kita mencari irisan dari ($x < 2$ or $x > 3$) DAN ($-1 < x < 2$). Irisannya adalah $-1 < x < 2$. Interval ini masih memuat nilai positif (misal $x=1$) dan nilai negatif (misal $x=-0.5$). <b>TIDAK CUKUP</b>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 26 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 26</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">26.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. $m \neq 0$ dan $m \neq 1$</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Sebuah persamaan kuadrat memiliki dua akar real berbeda jika $D > 0$. Selain itu, agar menjadi persamaan kuadrat, $a \neq 0$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>Syarat 1 (Kuadrat):</b> $a \neq 0 \implies m \neq 0$.</li>
+                            <li><b>Syarat 2 (Akar Beda):</b> $D > 0$. $a=m, b=-(m+1), c=1$.</li>
+                            <li>$D = (-(m+1))^2 - 4(m)(1) > 0$</li>
+                            <li>$(m^2 + 2m + 1) - 4m > 0$</li>
+                            <li>$m^2 - 2m + 1 > 0$</li>
+                            <li>$(m-1)^2 > 0$.</li>
+                            <li>Kuadrat dari suatu bilangan selalu $\ge 0$. Agar $> 0$, maka nilainya tidak boleh 0.</li>
+                            <li>$(m-1)^2 \neq 0 \implies m-1 \neq 0 \implies m \neq 1$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kita harus menggabungkan kedua syarat: $m \neq 0$ DAN $m \neq 1$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 27 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 27</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">27.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: E. 4</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menganalisis jenis akar berdasarkan diskriminan ($D = b^2 - 4ac$) dan rumus jumlah akar ($x_1+x_2 = -b/a$).</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Untuk $x^2 - 4x + a = 0$: $a=1, b=-4, c=a$. Diskriminan $D = (-4)^2 - 4(1)(a) = 16 - 4a$.
+                        <ul>
+                            <li>(1) 2 akar real $\implies D > 0 \implies 16 - 4a > 0 \implies 16 > 4a \implies 4 > a$ atau $a < 4$. (<b>BENAR</b>)</li>
+                            <li>(2) Akar kembar $\implies D = 0 \implies 16 - 4a = 0 \implies 16 = 4a \implies a = 4$. (<b>BENAR</b>)</li>
+                            <li>(3) Tidak punya akar real $\implies D < 0 \implies 16 - 4a < 0 \implies 16 < 4a \implies 4 < a$ atau $a > 4$. (<b>BENAR</b>)</li>
+                            <li>(4) Jumlah akar: $x_1+x_2 = -b/a = -(-4)/1 = 4$. Nilai ini konstan (tidak bergantung $a$). (<b>BENAR</b>)</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Kesimpulan</b>
+                        Ada 4 pernyataan yang benar.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 28 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 28</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">28.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: (1), (2), (3), dan (4) benar.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Untuk menyelesaikan pertidaksamaan pecahan, kita analisis penyebut dan pembilang. Sebuah bentuk $f(x)$ disebut definit positif jika $a>0$ dan $D<0$, artinya $f(x)$ selalu positif untuk $x$ berapapun.</p>
+                        <b class="pembahasan-title">2. Analisis Pernyataan</b>
+                        Pertidaksamaan: $\frac{x^2-3x+2}{x^2+x+6} < 0$.
+                        <ul>
+                            <li><b>Analisis Penyebut ($x^2+x+6$):</b> $a=1$ ($>0$), $D = 1^2 - 4(1)(6) = 1 - 24 = -23$ ($<0$). Karena $a>0$ dan $D<0$, penyebut bersifat definit positif (selalu positif). (<b>Pernyataan 4 BENAR</b>)</li>
+                            <li><b>Solusi:</b> Karena penyebut selalu positif, agar pecahan < 0, pembilang harus < 0.</li>
+                            <li>$x^2-3x+2 < 0 \implies (x-1)(x-2) < 0$. Solusinya adalah $1 < x < 2$.</li>
+                            <li><b>(1) $x=1.5$ adalah solusi.</b> $1.5$ berada di antara 1 dan 2. (<b>BENAR</b>)</li>
+                            <li><b>(2) $x=0$ bukan solusi.</b> $0$ tidak berada di antara 1 dan 2. (<b>BENAR</b>)</li>
+                            <li><b>(3) $x=3$ bukan solusi.</b> $3$ tidak berada di antara 1 dan 2. (<b>BENAR</b>)</li>
+                            <li><b>(5) $x=1$ adalah salah satu solusi.</b> Salah. Solusinya adalah $1 < x < 2$, tidak termasuk $x=1$. (<b>SALAH</b>)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 29 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 29</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">29.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. Kuantitas P = Kuantitas Q.</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Menggunakan identitas $x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1x_2(x_1+x_2)$.</p>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li>Dari $x^2 + x - 3 = 0$, cari $x_1+x_2$ dan $x_1 \cdot x_2$.</li>
+                            <li>$x_1+x_2 = -1/1 = -1$.</li>
+                            <li>$x_1 \cdot x_2 = -3/1 = -3$.</li>
+                            <li>Hitung Kuantitas P.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Kuantitas P = $x_1^3 + x_2^3 = (x_1+x_2)^3 - 3x_1x_2(x_1+x_2)$<br>
+                        P = $(-1)^3 - 3(-3)(-1)$<br>
+                        P = $-1 - 9 = -10$.<br>
+                        Kuantitas Q = -10.<br>
+                        Maka, Kuantitas P = Kuantitas Q.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+
+    <!-- Pembahasan 30 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box"><div><div class="header-title-main">Kunci Jawaban & Pembahasan</div><div class="header-title-sub"><strong>Soal Nomor 30</strong></div></div></div>
+        </header>
+        <div class="content-wrapper">
+             <div class="soal-latihan">
+                <div class="soal-nomor">30.</div>
+                <div class="soal-konten">
+                    <div class="pembahasan">
+                        <b class="pembahasan-title">Jawaban: C. 4</b>
+                        <b class="pembahasan-title">1. Dasar Teori</b>
+                        <p>Memanfaatkan informasi kunci dari grafik fungsi kuadrat $f(x) = ax^2 + bx + c$:</p>
+                        <ul>
+                            <li>Memotong sumbu-y di $(0, y) \implies c = y$.</li>
+                            <li>Sumbu simetri $\implies x_p = -b/2a$.</li>
+                            <li>Nilai maksimum/minimum $\implies y_p = f(x_p)$.</li>
+                        </ul>
+                        <b class="pembahasan-title">2. Langkah Pengerjaan</b>
+                        <ul>
+                            <li><b>(1) Memotong sumbu-y di (0, 3):</b> $f(0) = c \implies c = 3$.</li>
+                            <li><b>(2) Sumbu simetri $x=1$:</b> $x_p = -b/2a = 1 \implies -b = 2a \implies b = -2a$.</li>
+                            <li><b>(3) Nilai maksimum 4:</b> Puncak ada di $(x_p, y_p) = (1, 4)$. Titik ini dilalui grafik, jadi $f(1) = 4$.</li>
+                            <li>$f(1) = a(1)^2 + b(1) + c = 4 \implies a+b+c=4$.</li>
+                            <li><b>(4) Selesaikan sistem:</b> Kita sudah tahu $a+b+c=4$. Pertanyaan menanyakan nilai $a+b+c$.</li>
+                        </ul>
+                        <b class="pembahasan-title">3. Perhitungan</b>
+                        Berdasarkan poin (3), kita tahu bahwa $f(1) = 4$.<br>
+                        $f(1) = a(1)^2 + b(1) + c = a+b+c$.<br>
+                        Maka, $a+b+c = 4$.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Bank Soal PK - Persamaan & Pertidaksamaan Kuadrat</span></footer>
+    </section>
+</body>
+</html>
+
