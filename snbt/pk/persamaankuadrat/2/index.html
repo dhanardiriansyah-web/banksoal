@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BANK SOAL PENGETAHUAN KUANTITATIF - PERSAMAAN KUADRAT (SBMPTN)</title>
+    <!-- Script untuk memuat MathJax -->
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    
+    <!-- CSS Styles dari template asli -->
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #e17070;
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #e17070;
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        page-break-after: always;
+      }
+       .page:last-of-type {
+        page-break-after: avoid;
+      }
+      .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border: 3px solid var(--primary-text);
+      }
+      .cover-page .title {
+          font-size: 32pt;
+          font-weight: 900;
+          margin: 0;
+          color: var(--header-title-color);
+          line-height: 1.2;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      }
+      .cover-page .subtitle {
+          font-size: 16pt;
+          margin-top: 15px;
+          color: var(--secondary-text);
+          font-weight: 700;
+      }
+      .cover-page img {
+          max-width: 200px;
+          margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0;
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #b0b0b0;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .pilihan-ganda-kompleks div {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      .pilihan-ganda-kompleks input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .pernyataan-list {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+      }
+      .pernyataan-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+      .pernyataan-nomor {
+        flex-shrink: 0;
+      }
+      .pernyataan-teks {
+        flex-grow: 1;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .tabel-kuantitas {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 8.5pt;
+      }
+      .tabel-kuantitas th, .tabel-kuantitas td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .tabel-kuantitas th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+      .page-footer {
+        text-align: left;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        position: relative;
+        z-index: 2;
+      }
+      .footer-logo {
+          max-height: 40px;
+      }
+      /* Sembunyikan pembahasan */
+      .pembahasan { 
+        display: none; 
+      }
+
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+        }
+        .page-header, .page-footer {
+            display: block;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">SOAL-SOAL SBMPTN</h1>
+            <p class="subtitle">Topik: Persamaan & Pertidaksamaan Kuadrat</p>
+        </div>
+    </section>
+
+    <!-- Halaman Soal 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 1 - 5)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2006/Dasar/4</div>
+                            Jika $x_1$ dan $x_2$ adalah akar-akar persamaan kuadrat $x^{2}-3x+1=0$ maka persamaan kuadrat yang akar-akarnya $x_{1}+\frac{1}{x_{1}}$ dan $x_{2}+\frac{1}{x_{2}}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^{2}+9x-6=0$</li>
+                                <li data-option="B">$x^{2}-6x-6=0$</li>
+                                <li data-option="C">$x^{2}-6x+9=0$</li>
+                                <li data-option="D">$x^{2}+6x+9=0$</li>
+                                <li data-option="E">$x^{2}-6x-9=0$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2006/Dasar/2</div>
+                            Persamaan kuadrat $x^{2}-x+b=0$ mempunyai akar-akar $x_{1}$ dan $x_2$. Jika $\frac{x_{1}^{3}}{x_{2}}$ dan $\frac{x_{2}^{3}}{x_{1}}$ adalah akar-akar persamaan $px^{2}+qx+b^{3}=0$, maka $q=...$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-2b^{2}+4b-1$</li>
+                                <li data-option="B">$-2b^{2}-4b-1$</li>
+                                <li data-option="C">$2b^{2}+4b-1$</li>
+                                <li data-option="D">$2b^{2}+4b+1$</li>
+                                <li data-option="E">$2b^{2}-4b+1$</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2006/IPA/4</div>
+                            Syarat agar akar-akar persamaan kuadrat $(p-2)x^{2}+2px+p-1=0$ negatif dan berlainan adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$p>2$</li>
+                                <li data-option="B">$p<0$ atau $p>\frac{2}{3}$</li>
+                                <li data-option="C">$0<p<\frac{2}{3}$</li>
+                                <li data-option="D">$\frac{2}{3}<p<1$</li>
+                                <li data-option="E">$\frac{2}{3}<p<2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2007/Dasar/3</div>
+                            Persamaan kuadrat $4x^{2}+p=-1$ mempunyai akar $x_1$ dan $x_2$. Jika $x_{1}=\frac{1}{2},$ maka $p(x_{1}^{2}+x_{2}^{2})=..$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-1\frac{1}{2}$</li>
+                                <li data-option="B">$-1\frac{1}{4}$</li>
+                                <li data-option="C">-1</li>
+                                <li data-option="D">$-\frac{1}{2}$</li>
+                                <li data-option="E">$-\frac{1}{4}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2007/Dasar/4</div>
+                            Persamaan kuadrat $x^{2}+(a-2)x-3a+8=0$ mempunyai akar-akar $x_{1}$ dan $x_{2}$, maka nilai minimum dari $x_{1}^{2}+x_{2}^{2}$ tercapai untuk $a=\cdot\cdot\cdot$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-2</li>
+                                <li data-option="B">-1</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">1</li>
+                                <li data-option="E">2</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 6 - 10)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB 2007/Dasar/5</div>
+                            Persamaan kuadrat $x^{2}+px+q=0$ mempunyai akar-akar $x_1$ dan $x_{2}$ dengan $x_{1}-x_{2}=-1$. Jika $x_{1}+1$ dan $x_{2}$ juga akar-akar persamaan kuadrat $x^{2}+(p-1)x+q+2=0$, maka $p+q=\cdot\cdot\cdot$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-1</li>
+                                <li data-option="B">1</li>
+                                <li data-option="C">2</li>
+                                <li data-option="D">-1 atau 2</li>
+                                <li data-option="E">-1 atau -2</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SPMB2007/ΙΡΑ/11</div>
+                            Jika $\alpha$ dan $\beta$ adalah akar-akar persamaan $x^{2}-ax+b=0$ serta $\alpha^{2}+\beta^{2}=6$ dan $\alpha+\beta^{-1}=\frac{3}{2},$ maka nilai $a^{2}-b^{2}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-7</li>
+                                <li data-option="B">-5</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">5</li>
+                                <li data-option="E">7</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2008/Dasar/201/5</div>
+                            Persamaan kuadrat $x^{2}-ax+1=0$ mempunyai akar-akar $x_{1}$ dan $x_2$. Jika persamaan kuadrat $x^{2}+px+q=0$ mempunyai akar $\frac{x_{1}^{3}}{x_{2}}$ dan $\frac{x_{2}^{3}}{x_{1}}$, maka $p=$...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$-a^{4}+4a^{2}-2$</li>
+                                <li data-option="B">$-a^{4}-4a^{2}-2$</li>
+                                <li data-option="C">$a^{4}-4a^{2}-2$</li>
+                                <li data-option="D">$a^{4}+4a^{2}-2$</li>
+                                <li data-option="E">$a^{4}+4a^{2}+2$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2008/IPA/1</div>
+                            Jumlah akar-akar persamaan $|x|^{2}-2|x|-3=0$ sama dengan...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-10</li>
+                                <li data-option="B">-3</li>
+                                <li data-option="C">-1</li>
+                                <li data-option="D">0</li>
+                                <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2008/IPA/13</div>
+                            Jumlah nilai-nilai $m$ yang mengakibatkan persamaan kuadrat $mx^{2}-(3m+1)x+(2m+2)=0$ mempunyai akar-akar dengan perbandingan 3: 4 adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$7/6$</li>
+                                <li data-option="B">$13/5$</li>
+                                <li data-option="C">$11/3$</li>
+                                <li data-option="D">$3/2$</li>
+                                <li data-option="E">$5/6$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 3 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 11 - 15)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2008/IPA/15</div>
+                            Jika $a^{2}$ dan $b$ adalah akar-akar persamaan kuadrat $x^{2}-(b^{2}-1)x+b=0$. Himpunan nilai-nilai $a+b$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">{-3, 0, 1, 2}</li>
+                                <li data-option="B">{-2, 0, 1, 3}</li>
+                                <li data-option="C">{-1, 0, 2, 3}</li>
+                                <li data-option="D">{0, 1, 2, 3}</li>
+                                <li data-option="E">{-2, -1, 0, 3}</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2009/Dasar/383/1</div>
+                            Jika $1+\frac{6}{x}+\frac{9}{x^{2}}=0,$ maka $\frac{3}{x}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-2</li>
+                                <li data-option="B">-1</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">1</li>
+                                <li data-option="E">2</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2009/Dasar/385/2</div>
+                            Jika kedua akar persamaan $\frac{x^{2}-bx}{ax-c}=\frac{m-1}{m+1}$ saling berlawanan tanda, tetapi mempunyai nilai mutlak yang sama, maka nilai $m=\cdot\cdot\cdot$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-5</li>
+                                <li data-option="B">-1</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">1</li>
+                                <li data-option="E">6</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2009/Dasar/183/1</div>
+                            Jika $1-\frac{1}{x}+\frac{1}{x^{2}}=0$, maka $\frac{8}{x^{2}}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{1}{2}\sqrt{2}$</li>
+                                <li data-option="B">$\sqrt{2}$</li>
+                                <li data-option="C">$\frac{1}{2}$</li>
+                                <li data-option="D">$\frac{1}{4}$</li>
+                                <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2010/Dasar/346/3</div>
+                            Persamaan $x^{2}+(1-a)x-a=0$ mempunyai akar-akar $x_{1}>1$ dan $x_{2}<1$ untuk...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$a<-1$</li>
+                                <li data-option="B">$a>1$</li>
+                                <li data-option="C">$a<1$</li>
+                                <li data-option="D">$a\ne1$</li>
+                                <li data-option="E">$-1<a<1$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 4 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 16 - 20)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2010/ΙΡΑ/528/4</div>
+                            Persamaan kuadrat yang mempunyai akar $a$ dan $b$ sehingga $\frac{1}{a}+\frac{1}{b}=\frac{7}{10}$ adalah.....
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$x^{2}-10x+7=0$</li>
+                                <li data-option="B">$x^{2}+7x+10=0$</li>
+                                <li data-option="C">$x^{2}+7x-10=0$</li>
+                                <li data-option="D">$x^{2}-7x+10=0$</li>
+                                <li data-option="E">$x^{2}-7x-10=0$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2010/ΙΡΑ/546/1</div>
+                            Diketahui $a$ dan $b$ dua bilangan bulat positif yang memenuhi $\frac{1}{a}+\frac{1}{b}=\frac{13}{36}$. Nilai $ab(a+b)$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">468</li>
+                                <li data-option="B">448</li>
+                                <li data-option="C">368</li>
+                                <li data-option="D">49</li>
+                                <li data-option="E">36</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2011/Dasar/179</div>
+                            Jika 2 adalah satu-satunya akar persamaan kuadrat $\frac{1}{4}x^{2}+bx+a=0,$ maka nilai $a+b$ adalah ...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">32</li>
+                                <li data-option="B">2</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">-2</li>
+                                <li data-option="E">-32</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SNMPTN 2012/DASAR/623/3</div>
+                            Jika $p+1$ dan $p-1$ adalah akar-akar persamaan $x^{2}-4x+a=0$, maka nilai $a$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">0</li>
+                                <li data-option="B">1</li>
+                                <li data-option="C">2</li>
+                                <li data-option="D">3</li>
+                                <li data-option="E">4</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2013/Dasar/128/3</div>
+                            Persamaan kuadrat $x^{2}-2x+(c-4)=0$ mempunyai akar-akar $x_{1}$ dan $x_2$ jika $x_{1}>-1$ dan $x_{2}>-1$ maka ...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$c<1$ atau $c\ge5$</li>
+                                <li data-option="B">$1<c\le5$</li>
+                                <li data-option="C">$-1\le c\le5$</li>
+                                <li data-option="D">$c>1$</li>
+                                <li data-option="E">$c\le5$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 5 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 21 - 25)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">21.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2013/Dasar/323/3</div>
+                            Jika selisih akar-akar $x^{2}+2cx+(19+c)=0$ adalah 2, maka nilai $30+c-c^{2}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-20</li>
+                                <li data-option="B">-10</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">10</li>
+                                <li data-option="E">20</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">22.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2014/SAINTEK/591/9</div>
+                            Jika $p$ dan $q$ merupakan akar-akar persamaan kuadrat $x^{2}-(a+1)x+(-a-\frac{5}{2})=0$. Maka nilai minimum $p^{2}+q^{2}$ adalah ...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{5}{2}$</li>
+                                <li data-option="B">2</li>
+                                <li data-option="C">1</li>
+                                <li data-option="D">$\frac{1}{2}$</li>
+                                <li data-option="E">0</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2014/ΤΚΡΑ/601/3</div>
+                            Persamaan kuadrat $2x^{2}-px+1=0$ dengan $p>0$ mempunyai akar-akar $\alpha$ dan $\beta$. Jika $x^{2}-5x+q=0$ mempunyai akar-akar $\frac{1}{\alpha^{2}}$ dan $\frac{1}{\beta^{2}}$, maka $q-p=\cdot\cdot\cdot$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-2</li>
+                                <li data-option="B">$-\frac{1}{2}$</li>
+                                <li data-option="C">$\frac{1}{2}$</li>
+                                <li data-option="D">1</li>
+                                <li data-option="E">2</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2015/ΓΚΡΑ/622/57</div>
+                            Jika akar-akar $x^{2}-ax-b=0$ saling berkebalikan dan salah satu akar tersebut merupakan bilangan bulat positif, maka nilai terkecil yang mungkin untuk $a-b$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-3</li>
+                                <li data-option="B">-1</li>
+                                <li data-option="C">1</li>
+                                <li data-option="D">2</li>
+                                <li data-option="E">3</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2016/ΤΚΡΑ/321/46</div>
+                            Misalkan $m$ dan $n$ adalah bilangan bulat dan merupakan akar-akar persamaan $x^{2}+ax-30=0$, maka nilai $a$ agar $m+n$ maksimum adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">30</li>
+                                <li data-option="B">29</li>
+                                <li data-option="C">13</li>
+                                <li data-option="D">-19</li>
+                                <li data-option="E">-31</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 6 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 26 - 30)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">26.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2016/ΤΚΡΑ/345/46</div>
+                            Diketahui $7-\sqrt{7}$ adalah salah satu akar $x^{2}+ax+b=0$ dengan $b$ bilangan real negatif dan $a$ suatu bilangan bulat. Nilai terkecil $a$ adalah ...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-5</li>
+                                <li data-option="B">-4</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">4</li>
+                                <li data-option="E">5</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">27.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2018/ΓΚΡΑ/534/55</div>
+                            Diketahui $p>0$, serta $p$ dan $p^{2}-2$ merupakan akar $x^{2}-10x+c=0$. Jika $c$ merupakan salah satu akar $x^{2}+ax+42=0$ maka nilai $a$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-23</li>
+                                <li data-option="B">-21</li>
+                                <li data-option="C">-12</li>
+                                <li data-option="D">21</li>
+                                <li data-option="E">23</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">28.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2019/UTBK I/MTK SOSHUM/06</div>
+                            Jika $a$ dan $b$ akar-akar persamaan kuadrat $x^{2}-(a+3)x+c=0$ dan $b^{2}=a+10$ maka $c^{2}+c$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2</li>
+                                <li data-option="B">6</li>
+                                <li data-option="C">12</li>
+                                <li data-option="D">20</li>
+                                <li data-option="E">30</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">29.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: SBMPTN 2019/UTBK II/MTK SOSHUM/06</div>
+                            Jika $a$ dan $b$ akar-akar persamaan kuadrat $x^{2}-13ax+p+13=0$ dan $p+2b=-25$, maka $a-b=...$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">-11</li>
+                                <li data-option="B">-5</li>
+                                <li data-option="C">0</li>
+                                <li data-option="D">5</li>
+                                <li data-option="E">11</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">30.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: UTBK 2020/MTK SOSHUM</div>
+                            Jika $a$ dan $b$ akar-akar persamaan kuadrat $x^{2}-(a+3)x+p=0$ dengan $a>0$ dan $a^{2}+b^{2}=13$. maka $ab=...$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2</li>
+                                <li data-option="B">3</li>
+                                <li data-option="C">4</li>
+                                <li data-option="D">5</li>
+                                <li data-option="E">6</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+    <!-- Halaman Soal 7 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Bank Soal Pengetahuan Kuantitatif</div>
+                    <div class="header-title-sub"><strong>Soal-Soal SBMPTN/SNMPTN</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Latihan (Nomor 31)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">31.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Sumber: UTBK 2020/MTK IPA</div>
+                            Himpunan bilangan $k$ sehingga persamaan $x^{2}+2(k-1)x+k+5=0$ memiliki setidaknya satu akar riil positif adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\{k\in R \mid k\le-1\}$</li>
+                                <li data-option="B">$\{k\in R \mid -\infty<k<\infty\}$</li>
+                                <li data-option="C">$\{k\in R \mid 0<k\le1\}$</li>
+                                <li data-option="D">$\frac{1}{2}(-1)^{n}+\frac{1}{2}$</li>
+                                <li data-option="E">$\frac{1}{2}(-1)^{n}-\frac{1}{2}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                    <!-- Kolom kanan kosong karena hanya 1 soal tersisa -->
+                </div>
+            </div>
+        </div>
+        <footer class="page-footer"><img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" /><span>Mau belajar untuk persiapan SNBT? Hubungi Mathspecialist 081381374712</span></footer>
+    </section>
+
+</body>
+</html>
+
