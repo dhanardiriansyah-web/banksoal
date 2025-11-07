@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LATIHAN SOAL OSN-K MATEMATIKA SD 2025 (Level Sulit)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-text: #333333;
+        --secondary-text: #555555;
+        --border-color: #dddddd;
+        --header-top-bg: #D9534F; /* Warna Merah OSN */
+        --header-bottom-bg: #f0f0f0;
+        --header-title-color: #D9534F; /* Warna Merah OSN */
+        --grey-text: #8d8e8d;
+      }
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 9pt;
+        line-height: 1.6;
+        color: var(--primary-text);
+        background-color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        background: white;
+        width: 21cm;
+        min-height: 29.7cm;
+        height: auto;
+        padding: 1.8cm 2.5cm 1.5cm 2.5cm;
+        margin: 1cm auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+       .page:last-of-type {
+        page-break-after: avoid;
+      }
+      .cover-page {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border: 3px solid var(--primary-text);
+      }
+      .cover-page .title {
+          font-size: 32pt;
+          font-weight: 900;
+          margin: 0;
+          color: var(--header-title-color);
+          line-height: 1.2;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      }
+      .cover-page .subtitle {
+          font-size: 16pt;
+          margin-top: 15px;
+          color: var(--secondary-text);
+          font-weight: 700;
+      }
+      .cover-page img {
+          max-width: 200px;
+          margin-bottom: 40px;
+      }
+      .page-header {
+        margin: -1.8cm -2.5cm 20px -2.5cm;
+        width: 21cm;
+        position: relative;
+        z-index: 2;
+      }
+      .header-top-box {
+        background-color: var(--header-top-bg);
+        padding: 15px 2.5cm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2px;
+      }
+      .header-title-main {
+        font-size: 18pt;
+        font-weight: 700;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      }
+      .header-title-sub {
+        font-size: 9pt;
+        font-weight: 400;
+        color: white;
+      }
+      .content-wrapper {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .page::before {
+        content: '';
+        background-image: url('https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14cm;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        opacity: 0.05;
+        z-index: 1;
+      }
+      .cover-page::before {
+          opacity: 0;
+      }
+      h3 { font-size: 14pt; color: #222; margin-top: 10px; margin-bottom: 15px; font-weight: 700; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+      .wacana-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #b0b0b0;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+      .soal-container-2-kolom {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 20px;
+        align-items: start;
+      }
+      .soal-latihan {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 15px;
+        break-inside: avoid;
+      }
+      .soal-nomor {
+        font-weight: bold;
+        flex-shrink: 0;
+        min-width: 20px;
+      }
+      .soal-konten {
+        flex-grow: 1;
+        text-align: justify;
+      }
+      ol.pilihan-ganda {
+        list-style-type: none;
+        padding-left: 0;
+        margin-top: 10px;
+        text-align: left;
+      }
+      ol.pilihan-ganda li {
+        margin-bottom: 8px;
+        padding-left: 25px;
+        text-indent: -25px;
+      }
+      ol.pilihan-ganda li::before {
+        content: attr(data-option) ". ";
+        font-weight: bold;
+        padding-right: 5px;
+      }
+      .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      .deskripsi-gambar {
+        font-style: italic;
+        color: #555;
+        background-color: #f9f9f9;
+        border-left: 3px solid #ccc;
+        padding: 8px 12px;
+        margin-bottom: 10px;
+      }
+      .page-footer {
+        /* PERUBAHAN: Mengembalikan flexbox untuk menata logo & teks */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center; /* Membuat logo & teks di tengah */
+        gap: 15px;
+        font-size: 8pt;
+        font-weight: bold;
+        color: var(--secondary-text);
+        padding-top: 10px;
+        margin-top: auto;
+        border-top: 2px solid var(--header-title-color);
+        position: relative;
+        z-index: 2;
+      }
+      
+      /* PERUBAHAN: Mengembalikan CSS untuk logo footer */
+      .footer-logo {
+          max-height: 40px;
+      }
+      
+      @media print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        body {
+          background-color: white;
+          margin: 0;
+        }
+        .page {
+          width: 100%;
+          min-height: 29.7cm;
+          height: 100%;
+          margin: 0;
+          box-shadow: none;
+          page-break-after: always;
+        }
+        .page:last-child {
+          page-break-after: avoid;
+        }
+        .page-header, .page-footer {
+            display: block;
+        }
+         /* Pastikan footer di-print dengan benar */
+        .page-footer {
+            display: flex;
+        }
+        .header-top-box {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+</head>
+<body>
+    <!-- Halaman Sampul -->
+    <section class="page cover-page">
+        <div>
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
+            <h1 class="title">LATIHAN SOAL<br>OSN-K MATEMATIKA SD 2025</h1>
+            <p class="subtitle">Persiapan Menghadapi OSN-K</p>
+        </div>
+    </section>
+
+    <!-- Halaman Soal Mudah (Ditingkatkan) -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Latihan Soal OSN-K Matematika SD</div>
+                    <div class="header-title-sub"><strong>Level Mudah (8 Soal)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Mudah (Nomor 1 - 8)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">1.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika</div>
+                            Hitunglah: $25 \times (15 + 5) \div (20 - 10)$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">25</li><li data-option="B">50</li><li data-option="C">75</li><li data-option="D">100</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">2.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (KPK & FPB)</div>
+                            Berapakah jumlah dari FPB dan KPK dari tiga bilangan: 18, 24, dan 36?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">42</li><li data-option="B">78</li><li data-option="C">80</li><li data-option="D">108</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">3.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Sudut)</div>
+                            Sudut $\angle A$ dan $\angle B$ saling berpelurus. Jika besar $\angle A = 65^\circ$, berapakah besar $\angle B$?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$25^\circ$</li><li data-option="B">$35^\circ$</li><li data-option="C">$115^\circ$</li><li data-option="D">$295^\circ$</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">4.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Statistika (Mean)</div>
+                            Data nilai ulangan Dika adalah: 8, 7, 9, 8, 7, 9, 8. Berapakah nilai rata-rata ulangan Dika?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">7</li><li data-option="B">7.5</li><li data-option="C">8</li><li data-option="D">8.5</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">5.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Rasional)</div>
+                            Hasil dari $\frac{3}{5} + 0.25 - \frac{1}{4}$ adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$0.6$</li><li data-option="B">$0.5$</li><li data-option="C">$0.75$</li><li data-option="D">$1.1$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">6.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Pengukuran (Kecepatan)</div>
+                            Sebuah bus menempuh jarak 90 km dalam waktu 2 jam. Kecepatan rata-rata bus tersebut adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">40 km/jam</li><li data-option="B">45 km/jam</li><li data-option="C">50 km/jam</li><li data-option="D">180 km/jam</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">7.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Luas & Keliling)</div>
+                            Keliling sebuah persegi panjang adalah 40 cm. Jika panjangnya 12 cm, berapakah luas persegi panjang tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">28 cm²</li><li data-option="B">96 cm²</li><li data-option="C">112 cm²</li><li data-option="D">480 cm²</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">8.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Pola)</div>
+                            Perhatikan barisan bilangan: 5, 10, 8, 13, 11, ...
+                            Suku berikutnya dari barisan tersebut adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">16</li><li data-option="B">14</li><li data-option="C">9</li><li data-option="D">19</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Soal Sedang 1 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Latihan Soal OSN-K Matematika SD</div>
+                    <div class="header-title-sub"><strong>Level Sedang (14 Soal)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sedang (Nomor 9 - 16)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">9.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Adaptasi G4A No 1)</div>
+                            Hitunglah nilai dari: $9 + 99 + 999 + 9999 + 4$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">11106</li><li data-option="B">11110</li><li data-option="C">11010</li><li data-option="D">11111</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">10.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Adaptasi G4A No 8)</div>
+                            Sebuah kertas persegi panjang berukuran 105 cm $\times$ 60 cm. Gunting persegi terbesar yang mungkin dari kertas itu. Dari sisa kertasnya, gunting lagi persegi terbesar yang mungkin. Berapakah luas sisa kertas terakhir?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">450 cm²</li><li data-option="B">675 cm²</li><li data-option="C">900 cm²</li><li data-option="D">2025 cm²</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">11.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Pola) (Adaptasi G5A No 12)</div>
+                            Maria menghias ruangan dengan balon Merah (M) dan Putih (P). Ia menyusunnya dengan pola berulang: P, M, P, P, M, P, P, M, ...
+                            Jika ia terus menyusun pola tersebut, balon ke-96 berwarna apa?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Merah</li><li data-option="B">Putih</li><li data-option="C">Biru</li><li data-option="D">Tidak bisa ditentukan</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">12.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Statistika (Mean)</div>
+                            Rata-rata tinggi 4 siswa adalah 150 cm. Siswa kelima bergabung sehingga rata-rata tinggi mereka menjadi 152 cm. Berapakah tinggi siswa kelima?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">152 cm</li><li data-option="B">155 cm</li><li data-option="C">158 cm</li><li data-option="D">160 cm</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">13.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Volume)</div>
+                            Sebuah akuarium berukuran 80 cm $\times$ 50 cm $\times$ 40 cm. Akuarium itu diisi air sebanyak $\frac{3}{4}$ dari tingginya. Berapa volume air dalam liter?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">120 liter</li><li data-option="B">12.000 liter</li><li data-option="C">160 liter</li><li data-option="D">120.000 liter</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">14.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Logika) (Adaptasi G4A No 13)</div>
+                            Diketahui bahwa harga 5 buku tulis sama dengan harga 2 tas. Harga 3 tas sama dengan harga 30 pensil. Berapa pensil yang bisa didapat jika ditukar dengan 10 buku tulis?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">20</li><li data-option="B">30</li><li data-option="C">40</li><li data-option="D">50</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">15.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Kombinatorik (Adaptasi G4A No 12)</div>
+                            Ada 300 kelereng (Hitam dan Putih) dibagi dalam 100 tumpukan, masing-masing 3 kelereng. Diketahui:
+                            - 27 tumpukan hanya memiliki 1 kelereng putih.
+                            - 52 tumpukan memiliki 2 atau 3 kelereng hitam.
+                            - Banyak tumpukan (3 Putih) = Banyak tumpukan (3 Hitam).
+                            Berapa total kelereng putih?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">148</li><li data-option="B">152</li><li data-option="C">168</li><li data-option="D">144</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">16.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Pola) (Adaptasi G5B No 2)</div>
+                            <div class="deskripsi-gambar">Gambar menunjukkan angka '2024' yang dibentuk dari susunan segitiga-segitiga kecil. Angka '2' terdiri dari 16 segitiga. Angka '0' terdiri dari 20 segitiga (sebagai bingkai). Angka '4' terdiri dari 19 segitiga.</div>
+                            Berapa banyak total segitiga kecil yang dibutuhkan untuk membentuk angka '2024' seperti pada gambar?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">71</li><li data-option="B">75</li><li data-option="C">77</li><li data-option="D">80</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+    
+    <!-- Halaman Soal Sedang 2 -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Latihan Soal OSN-K Matematika SD</div>
+                    <div class="header-title-sub"><strong>Level Sedang (Lanjutan)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sedang (Nomor 17 - 22)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">17.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Logika Kalender) (Adaptasi G5A No 4)</div>
+                            Di suatu bulan, terdapat lebih banyak hari Kamis daripada hari Senin, dan lebih banyak hari Selasa daripada hari Minggu. Hari apakah tanggal 5 di bulan tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">Senin</li><li data-option="B">Selasa</li><li data-option="C">Rabu</li><li data-option="D">Kamis</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">18.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Statistika (Mean) (Adaptasi G5A No 13)</div>
+                            Pilih 2 atau 3 angka dari {3, 4, 5, 6, 7, 8, 9} sehingga rata-ratanya adalah 5. Berapa banyak cara berbeda untuk memilih kelompok angka tersebut?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">3</li><li data-option="B">4</li><li data-option="C">5</li><li data-option="D">6</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">19.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Sudut) (Adaptasi G5A No 6)</div>
+                            <div class="deskripsi-gambar">Diberikan $\triangle ABC$ sama kaki dengan $AB=AC$. Titik $D$ terletak pada $BC$ dan $E$ pada $AC$. $\angle C = 80^\circ$. $\angle BDE = 100^\circ$ dan $\angle AED = 125^\circ$.</div>
+                            Berapakah besar sudut $\angle A$?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$20^\circ$</li><li data-option="B">$25^\circ$</li><li data-option="C">$30^\circ$</li><li data-option="D">$35^\circ$</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">20.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Keterbagian) (Adaptasi G6B No 1)</div>
+                            Bilangan 10-digit $2024A4202B$ habis dibagi oleh 8 dan 9. Jika $A$ dan $B$ adalah angka, berapakah nilai $A+B$?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">5</li><li data-option="B">6</li><li data-option="C">14</li><li data-option="D">15</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">21.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Logika (Puzzle) (Adaptasi G5B No 5)</div>
+                            <div class="deskripsi-gambar">Empat pohon berbaris. Statusnya: (Hidup), (Mati), (Mati), (Hidup).</div>
+                            Satu mantra sihir dapat mengubah status 1 pohon yang ditarget (dari Hidup jadi Mati, atau Mati jadi Hidup) dan juga pohon tetangga di kiri dan kanannya (jika ada). Berapa mantra sihir minimal agar semua pohon menjadi (Hidup)?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">2</li><li data-option="B">3</li><li data-option="C">4</li><li data-option="D">5</li>
+                            </ol>
+                        </div>
+                    </div>
+                     <div class="soal-latihan">
+                        <div class="soal-nomor">22.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Volume) (Adaptasi G6A No 12)</div>
+                            <div class="deskripsi-gambar">Sebuah jaring-jaring balok (model "tanda tambah") memiliki total panjang dari ujung ke ujung 75 cm, dan total lebar 42 cm. Persegi panjang tengah (alas) memiliki lebar 32 cm.</div>
+                            Berdasarkan jaring-jaring tersebut, volume balok yang terbentuk adalah...
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">4375 cm³</li><li data-option="B">4725 cm³</li><li data-option="C">7700 cm³</li><li data-option="D">7150 cm³</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+    <!-- Halaman Soal Sulit -->
+    <section class="page">
+        <header class="page-header">
+            <div class="header-top-box">
+                <div>
+                    <div class="header-title-main">Latihan Soal OSN-K Matematika SD</div>
+                    <div class="header-title-sub"><strong>Level Sulit (8 Soal)</strong></div>
+                </div>
+            </div>
+        </header>
+        <div class="content-wrapper">
+            <h3>Soal Level Sulit (Nomor 23 - 30)</h3>
+            <div class="soal-container-2-kolom">
+                <!-- Kolom Kiri -->
+                <div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">23.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Logika (Himpunan) (Adaptasi G6B No 3)</div>
+                            Dalam sebuah kompetisi, 24 siswa BUKAN dari Kelas 3, dan 30 siswa BUKAN dari Kelas 4. Jika total siswa dari Kelas 3 dan Kelas 4 yang ikut adalah 18 siswa, berapa total seluruh siswa yang ikut kompetisi?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">32</li><li data-option="B">36</li><li data-option="C">42</li><li data-option="D">72</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">24.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Logika) (Adaptasi G6A No 13)</div>
+                            Misalkan $AB$ adalah bilangan 2-digit, dimana $A$ dan $B$ adalah angka berbeda. Hasil dari $AB \times AB = PQRS$. Diketahui $P, R,$ dan $S$ adalah bilangan prima. Tentukan nilai dari $P + Q \times R + S$.
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">11</li><li data-option="B">16</li><li data-option="C">22</li><li data-option="D">7</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">25.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Rasio Luas) (Adaptasi G6A No 2)</div>
+                            <div class="deskripsi-gambar">Persegi $ABCD$ dibagi menjadi 4 persegi kecil yang sama. Tiga daerah segitiga diarsir. Segitiga 1: titik sudut di A, alasnya 1/2 sisi persegi kecil. Segitiga 2: alas 1 sisi persegi kecil, tinggi 1 sisi persegi kecil. Segitiga 3: alas 1 sisi persegi kecil, tinggi 1 sisi persegi kecil.</div>
+                            Berapakah rasio (Perbandingan) antara total luas daerah yang diarsir dan luas daerah yang putih?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">$\frac{3}{5}$</li><li data-option="B">$\frac{5}{8}$</li><li data-option="C">$\frac{5}{11}$</li><li data-option="D">$\frac{5}{12}$</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">26.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Kombinatorik (Adaptasi G6B No 6)</div>
+                            Sebuah sandi 4-digit dibentuk menggunakan angka 1, 2, dan 3. Angka 1 boleh digunakan paling banyak 1 kali. Angka 2 boleh digunakan paling banyak 2 kali. Angka 3 boleh digunakan paling banyak 3 kali. Ada berapa banyak sandi berbeda yang bisa dibuat?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">24</li><li data-option="B">36</li><li data-option="C">38</li><li data-option="D">40</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kolom Kanan -->
+                <div>
+                   <div class="soal-latihan">
+                        <div class="soal-nomor">27.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Logika Aljabar) (Adaptasi G6B No 7)</div>
+                            <div class="deskripsi-gambar">Tiga balok kayu identik dan satu meja. Di sisi kiri, 2 balok ditumpuk di lantai, tingginya 106 cm dari puncak meja. Di sisi kanan, 1 balok di lantai, tingginya 98 cm dari puncak meja. Panjang sisi balok adalah 3 kali lebarnya.</div>
+                            Berapakah keliling sisi balok (sisi panjang $\times$ lebar)?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">24 cm</li><li data-option="B">28 cm</li><li data-option="C">32 cm</li><li data-option="D">40 cm</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">28.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Kombinatorik (Jalur) (Adaptasi G5B No 9)</div>
+                            <div class="deskripsi-gambar">Terdapat 10 kamar. Alur jalan: (1) -> (2 atau 3) -> (4 atau 5 atau 6) -> (7 atau 8 atau 9 atau 10). Seseorang hanya bisa berjalan dari kamar bernomor kecil ke kamar bernomor besar yang terhubung.</div>
+                            Jika kamar nomor 4 kuncinya rusak dan tidak bisa dilewati, ada berapa banyak cara berbeda untuk berjalan dari kamar 1 ke kamar 10?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">14</li><li data-option="B">15</li><li data-option="C">17</li><li data-option="D">18</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">29.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Pola) (Adaptasi G6B No 9)</div>
+                            Hitunglah: $100 \times 99 - 99 \times 98 + 98 \times 97 - 97 \times 96 + \dots + 4 \times 3 - 3 \times 2 + 2 \times 1$
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">4950</li><li data-option="B">5000</li><li data-option="C">5050</li><li data-option="D">4500</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="soal-latihan">
+                        <div class="soal-nomor">30.</div>
+                        <div class="soal-konten">
+                            <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Selisih Luas) (Adaptasi G6A No 10)</div>
+                            <div class="deskripsi-gambar">Persegi panjang $ABCD$ (dengan sisi $BC=18$) tumpang tindih dengan segitiga siku-siku $CEF$ (siku-siku di $C$, $CE=9$, $CF=8$). Titik $G$ ada di $AD$ sehingga $AG=15$.</div>
+                            Berapakah selisih antara luas trapesium $ABCG$ dan luas trapesium $FGDE$?
+                            <ol class="pilihan-ganda">
+                                <li data-option="A">99</li><li data-option="B">138</li><li data-option="C">174</li><li data-option="D">198</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <footer class="page-footer">
+            <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
+            <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
+        </footer>
+    </section>
+
+</body>
+</html>
