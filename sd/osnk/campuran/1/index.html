@@ -179,6 +179,7 @@
         padding-right: 5px;
       }
       .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 10px; text-align: left; }
+      
       .deskripsi-gambar {
         font-style: italic;
         color: #555;
@@ -187,24 +188,42 @@
         padding: 8px 12px;
         margin-bottom: 10px;
       }
+      
+      /* CSS untuk gambar soal yang baru */
+      .soal-gambar {
+        margin: 5px 0 10px 0;
+      }
+      .soal-gambar img {
+        width: 100%;
+        max-width: 300px; /* Batas agar tidak terlalu besar */
+        height: auto;
+        border: 1px solid #eee;
+        border-radius: 4px;
+      }
+
+      /* CSS untuk mengecilkan font math */
+      .small-math {
+        font-size: 0.9em;
+        line-height: 1.3;
+      }
+      
+      /* CSS Footer yang diperbarui */
       .page-footer {
-        /* PERUBAHAN: Mengembalikan flexbox untuk menata logo & teks */
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center; /* Membuat logo & teks di tengah */
-        gap: 15px;
+        text-align: center; /* Mengatur teks ke tengah */
         font-size: 8pt;
         font-weight: bold;
         color: var(--secondary-text);
         padding-top: 10px;
         margin-top: auto;
         border-top: 2px solid var(--header-title-color);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center; /* Menengahkan konten footer */
+        gap: 10px; /* Jarak antara logo dan teks */
         position: relative;
         z-index: 2;
       }
-      
-      /* PERUBAHAN: Mengembalikan CSS untuk logo footer */
       .footer-logo {
           max-height: 40px;
       }
@@ -232,10 +251,6 @@
         .page-header, .page-footer {
             display: block;
         }
-         /* Pastikan footer di-print dengan benar */
-        .page-footer {
-            display: flex;
-        }
         .header-top-box {
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
@@ -249,6 +264,7 @@
         <div>
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Math Specialist Logo">
             <h1 class="title">LATIHAN SOAL<br>OSN-K MATEMATIKA SD 2025</h1>
+            <!-- PERUBAHAN: Subtitle diganti -->
             <p class="subtitle">Persiapan Menghadapi OSN-K</p>
         </div>
     </section>
@@ -355,7 +371,7 @@
                 </div>
             </div>
         </div>
-        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <!-- PERUBAHAN: Footer diganti -->
         <footer class="page-footer">
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
             <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
@@ -455,21 +471,24 @@
                             </ol>
                         </div>
                     </div>
+                     <!-- PERUBAHAN: Soal 16 diganti -->
                      <div class="soal-latihan">
                         <div class="soal-nomor">16.</div>
                         <div class="soal-konten">
                             <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Bilangan (Pola) (Adaptasi G5B No 2)</div>
-                            <div class="deskripsi-gambar">Gambar menunjukkan angka '2024' yang dibentuk dari susunan segitiga-segitiga kecil. Angka '2' terdiri dari 16 segitiga. Angka '0' terdiri dari 20 segitiga (sebagai bingkai). Angka '4' terdiri dari 19 segitiga.</div>
-                            Berapa banyak total segitiga kecil yang dibutuhkan untuk membentuk angka '2024' seperti pada gambar?
+                            <div class="soal-gambar">
+                                <img src="https://images2.imgbox.com/4f/98/8TQZxSgW_o.png" alt="Pola Angka 2024">
+                            </div>
+                            Ada berapa banyak segitiga pada gambar berikut? Jangan lewatkan segitiga yang besar.
                             <ol class="pilihan-ganda">
-                                <li data-option="A">71</li><li data-option="B">75</li><li data-option="C">77</li><li data-option="D">80</li>
+                                <li data-option="A">128</li><li data-option="B">127</li><li data-option="C">125</li><li data-option="D">124</li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <!-- PERUBAHAN: Footer diganti -->
         <footer class="page-footer">
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
             <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
@@ -511,14 +530,17 @@
                             </ol>
                         </div>
                     </div>
+                    <!-- PERUBAHAN: Soal 19 diganti -->
                     <div class="soal-latihan">
                         <div class="soal-nomor">19.</div>
                         <div class="soal-konten">
                             <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Geometri (Sudut) (Adaptasi G5A No 6)</div>
-                            <div class="deskripsi-gambar">Diberikan $\triangle ABC$ sama kaki dengan $AB=AC$. Titik $D$ terletak pada $BC$ dan $E$ pada $AC$. $\angle C = 80^\circ$. $\angle BDE = 100^\circ$ dan $\angle AED = 125^\circ$.</div>
-                            Berapakah besar sudut $\angle A$?
+                            <div class="soal-gambar">
+                                <img src="https://images2.imgbox.com/58/54/w0M3BrPj_o.png" alt="Gambar Soal Geometri 19">
+                            </div>
+                            Diberikan $\triangle ABC$ adalah segitiga sama kaki seperti pada gambar, dengan $\angle A$ adalah sudut puncaknya. Jika $ABDE$ adalah sebuah segiempat, tentukan besar $\angle A$.
                             <ol class="pilihan-ganda">
-                                <li data-option="A">$20^\circ$</li><li data-option="B">$25^\circ$</li><li data-option="C">$30^\circ$</li><li data-option="D">$35^\circ$</li>
+                                <li data-option="A">$85^\circ$</li><li data-option="B">$90^\circ$</li><li data-option="C">$95^\circ$</li><li data-option="D">$80^\circ$</li>
                             </ol>
                         </div>
                     </div>
@@ -535,14 +557,17 @@
                             </ol>
                         </div>
                     </div>
+                    <!-- PERUBAHAN: Soal 21 diganti -->
                     <div class="soal-latihan">
                         <div class="soal-nomor">21.</div>
                         <div class="soal-konten">
                             <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Logika (Puzzle) (Adaptasi G5B No 5)</div>
-                            <div class="deskripsi-gambar">Empat pohon berbaris. Statusnya: (Hidup), (Mati), (Mati), (Hidup).</div>
-                            Satu mantra sihir dapat mengubah status 1 pohon yang ditarget (dari Hidup jadi Mati, atau Mati jadi Hidup) dan juga pohon tetangga di kiri dan kanannya (jika ada). Berapa mantra sihir minimal agar semua pohon menjadi (Hidup)?
+                            <div class="soal-gambar">
+                                <img src="https://images2.imgbox.com/00/e8/1mVyk3Wo_o.png" alt="Gambar Soal Pohon">
+                            </div>
+                            Sita mempelajari mantra untuk mengubah pohon dari "mati" menjadi "hidup" atau dari "hidup" menjadi "mati". Suatu hari, ia melihat empat pohon di jalan, dan dua pohon di tengah "mati". Dia ingin menyelamatkan pohon-pohon itu sehingga keempatnya "hidup", tetapi dia belum terbiasa dengan mantranya. Setiap kali dia mengucapkan mantra, itu bekerja pada pohon target dan pohon-pohon yang berdekatan di kiri dan kanan pohon target, yang berarti setiap mantra dapat mengubah paling banyak tiga pohon. Berapa mantra minimal yang harus dia ucapkan untuk menyelamatkan pohon-pohon itu?
                             <ol class="pilihan-ganda">
-                                <li data-option="A">2</li><li data-option="B">3</li><li data-option="C">4</li><li data-option="D">5</li>
+                                <li data-option="A">4</li><li data-option="B">5</li><li data-option="C">6</li><li data-option="D">9</li>
                             </ol>
                         </div>
                     </div>
@@ -560,7 +585,7 @@
                 </div>
             </div>
         </div>
-        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <!-- PERUBAHAN: Footer diganti -->
         <footer class="page-footer">
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
             <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
@@ -619,7 +644,7 @@
                             <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Kombinatorik (Adaptasi G6B No 6)</div>
                             Sebuah sandi 4-digit dibentuk menggunakan angka 1, 2, dan 3. Angka 1 boleh digunakan paling banyak 1 kali. Angka 2 boleh digunakan paling banyak 2 kali. Angka 3 boleh digunakan paling banyak 3 kali. Ada berapa banyak sandi berbeda yang bisa dibuat?
                             <ol class="pilihan-ganda">
-                                <li data-option="A">24</li><li data-option="B">36</li><li data-option="C">38</li><li data-option="D">40</li>
+                                <li data-option="A">24</li><li data-option="B">36</li><li data-option("C")>38</li><li data-option="D">40</li>
                             </ol>
                         </div>
                     </div>
@@ -648,11 +673,17 @@
                             </ol>
                         </div>
                     </div>
+                    <!-- PERUBAHAN: Soal 29 dipecah 2 baris -->
                     <div class="soal-latihan">
                         <div class="soal-nomor">29.</div>
                         <div class="soal-konten">
                             <div class="keterangan-soal">Tipe: Pilihan Ganda | Topik: Aritmatika (Pola) (Adaptasi G6B No 9)</div>
-                            Hitunglah: $100 \times 99 - 99 \times 98 + 98 \times 97 - 97 \times 96 + \dots + 4 \times 3 - 3 \times 2 + 2 \times 1$
+                            Hitunglah:
+                            <div class="small-math">
+                                $100 \times 99 - 99 \times 98 + 98 \times 97 - 97 \times 96 + \dots$
+                                <br>
+                                $\!+ 4 \times 3 - 3 \times 2 + 2 \times 1$
+                            </div>
                             <ol class="pilihan-ganda">
                                 <li data-option="A">4950</li><li data-option="B">5000</li><li data-option="C">5050</li><li data-option="D">4500</li>
                             </ol>
@@ -672,7 +703,7 @@
                 </div>
             </div>
         </div>
-        <!-- PERUBAHAN: Menambahkan <img> logo di footer -->
+        <!-- PERUBAHAN: Footer diganti -->
         <footer class="page-footer">
             <img src="https://imgix3.ruangguru.com/assets/miscellaneous/png_tiy3nf_6017.png" alt="Logo" class="footer-logo" />
             <span>Mau belajar untuk persiapan OSN-K? Hubungi Mathspecialist 081381374712</span>
