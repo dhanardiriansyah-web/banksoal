@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal TKA - Lingkaran (Lengkap Materi & Gambar)</title>
+    <script>
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global',
+            linebreaks: { automatic: true }
+          }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-text: #333333;
+            --secondary-text: #555555;
+            --border-color: #dddddd;
+            --title-grad-1: #00857c;
+            --title-grad-2: #005f59;
+        }
+        
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: var(--primary-text);
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-container { counter-reset: page; }
+
+        .page {
+            background: white;
+            width: 176mm; 
+            padding: 20mm;
+            margin: 1cm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            break-after: page;
+        }
+
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 3px solid var(--title-grad-1);
+            height: 250mm;
+        }
+        
+        .cover-page img { max-width: 200px; margin-bottom: 40px; }
+
+        .cover-page .title {
+            font-size: 42pt;
+            font-weight: 900;
+            margin: 0;
+            color: var(--title-grad-2);
+            background: -webkit-linear-gradient(45deg, var(--title-grad-1), var(--title-grad-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .cover-page .subtitle {
+            font-size: 24pt;
+            margin-top: 15px;
+            color: var(--secondary-text);
+            font-weight: 700;
+        }
+
+        @page { size: B5; margin: 0; }
+        @media print {
+            body { background: none; }
+            .page { width: 100%; height: auto; margin: 0; box-shadow: none; break-after: page; }
+        }
+
+        h2 {
+            font-size: 18pt;
+            color: #000;
+            border-left: 5px solid var(--title-grad-1);
+            padding-left: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 14pt;
+            color: #222;
+            margin-top: 30px;
+            font-weight: 700;
+            background-color: #f0f0f0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .latihan-item {
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 10px; 
+            border-bottom: 1px dashed var(--border-color); 
+            padding-bottom: 15px; 
+            margin-bottom: 15px; 
+            break-inside: avoid; 
+        }
+
+        .soal-latihan { margin-bottom: 10px; }
+
+        .pilihan-ganda-container { padding-left: 20px; }
+
+        ol.pilihan-ganda { list-style-type: none; padding-left: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;}
+        ol.pilihan-ganda li::before {
+            content: attr(data-option) ". ";
+            font-weight: bold;
+            margin-right: 5px;
+            color: var(--title-grad-1);
+        }
+
+        .pembahasan { 
+            background-color: #f9f9f9; 
+            border-left: 3px solid var(--title-grad-1); 
+            padding: 10px; 
+            border-radius: 0 5px 5px 0; 
+            margin-top: 5px; 
+            font-size: 9pt;
+        }
+
+        .keterangan-soal { font-style: italic; font-size: 8pt; color: var(--secondary-text); margin-bottom: 5px; }
+        .box-materi { background: #fff; border: 2px solid var(--title-grad-1); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        
+        /* Styling Gambar Materi */
+        .materi-img {
+            display: block;
+            margin: 10px auto;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .soal-img {
+            display: block;
+            margin: 10px 0;
+            max-width: 250px;
+            height: auto;
+        }
+
+        .kunci-jawaban-section {
+            background-color: #e0f2f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="book-container">
+
+    <!-- Cover Page -->
+    <section class="page cover-page">
+        <div class="content-wrapper">
+            <h1 class="title">Bank Soal TKA Matematika</h1>
+            <p class="subtitle">Lingkaran</p>
+            <p style="margin-top: 30px;"><b>80 Soal Scaffolded</b><br>Lengkap dengan Materi & Gambar</p>
+        </div>
+    </section>
+
+    <!-- ############################## BAGIAN 1: DEFINISI & UNSUR DASAR ############################## -->
+    <section class="page">
+        <h2>Bagian 1: Definisi, Luas, Keliling, & Unsur Dasar</h2>
+        
+        <h3>A. Materi Pembelajaran</h3>
+        <div class="box-materi">
+            <p><b>1. Definisi Lingkaran</b><br>
+            Lingkaran adalah himpunan titik-titik yang berjarak sama terhadap suatu titik tertentu. Titik tertentu itu disebut <b>Titik Pusat</b> dan jarak yang sama itu disebut <b>Jari-jari ($r$)</b>.</p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEiA6GBNMUig30Hl4_aupy4Ik6-eBXImWbwDnKitCzoXe8mn4TVhK8LJiOlWI3zM4nPNzMqvzqAEcP1hlBNM0SC8dMScLgeDkxrwCEohoY9cHtzf7DDqHOdcBqXAMLq2xh0a2efmRhJ-iTpD5ddRK0TV75g3OoEtHR7daIOZK8oihqDrciJOlhbomJV64w" alt="Definisi Lingkaran">
+
+            <p><b>2. Luas dan Keliling</b><br>
+            Rumus utama:
+            <ul>
+                <li><b>Luas ($L$):</b> $L = \pi r^2$</li>
+                <li><b>Keliling ($K$):</b> $K = 2 \pi r$ atau $K = \pi d$</li>
+            </ul>
+            </p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEji6osQyBeW2rgEujCKMol7-3p36Tryn1ggYB9GFsRgjPN3iyYwHKt6tfaZnmqMCHV0G9YmpJqEfidb0BXmSgrCbVMa7zqg6mOHugCluzcP8FldHXYbB4n_WsZJhba4GiaPzhc_27YAUL3830S-FF46GKvXoHS-PM93D2Xp6BYgoPVHdHVT0BQ2LzOsUg" alt="Rumus Luas dan Keliling">
+
+            <p><b>3. Diameter dan Tali Busur</b><br>
+            <b>Tali Busur</b> adalah ruas garis yang menghubungkan dua titik pada lingkaran. <b>Diameter</b> adalah tali busur terpanjang yang melalui titik pusat ($d=2r$).</p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEjEsiGdXSSc2hQnCnDwBh2OsTW-xDAnP_R8eT8K4uKdikr1Tzq54BAK1DRzPvaxvEC6PbGe-Eb62W91POVGo4a5svxdzjmU85tKiiEw692YmTrQnSyd38G4uOarNl2Dvvz9VzIQg2gR4Tr4H3YhhGHaVDpEvVFNzyRylbfqXfF7Jh3BA7QSGH82ELYJUA" alt="Diameter dan Tali Busur">
+        </div>
+
+        <h3>B. Contoh Soal</h3>
+        <div class="latihan-item">
+            <b>Contoh 1:</b> Hitung keliling lingkaran jika jari-jari $r=14$ cm.<br>
+            <b>Jawab:</b> $K = 2 \times \frac{22}{7} \times 14 = 88$ cm.
+        </div>
+
+        <h3>C. Latihan Soal (Level 1)</h3>
+        
+        <!-- Soal Baru 1 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>1.</b> Garis lurus yang menghubungkan titik pusat dengan sembarang titik pada lingkaran disebut...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Tali busur</li><li data-option="B">Diameter</li><li data-option="C">Jari-jari</li><li data-option="D">Apotema</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 16 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2017 | Level: Mudah</div>
+                <b>2.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgA-bCquBEJu2jUERIcvN0wiDyc1fZjRdS92D0ju_tneMI2misraqmDzB2XO86L14yDMJMcDeegZzfPUZun1YcId-5d3SEZkxkaZDw2saiUg_ezSxdt_1Csj3zYABEL9OtnCvoJ_038LrnEmuxH6SgNBNyG1L_9wZ6BWOfa4fyZHJ_9JPnWsuX4wqi4WA/s1600/lingkaran%20garis%20ab.jpg" alt="Soal 16">
+                Garis AB disebut...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Busur</li><li data-option="B">Juring</li><li data-option="C">Apotema</li><li data-option="D">Tali busur</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 2 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>3.</b> Rumus luas lingkaran adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$2\pi r$</li><li data-option="B">$\pi r^2$</li><li data-option="C">$\pi d$</li><li data-option="D">$\frac{1}{4}\pi r^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 3 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>4.</b> Jika panjang diameter sebuah lingkaran adalah 28 cm, maka panjang jari-jarinya adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7 cm</li><li data-option="B">14 cm</li><li data-option="C">28 cm</li><li data-option="D">56 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 15 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2017 | Level: Sedang</div>
+                <b>5.</b> Keliling sebuah lingkaran adalah 66 dm. Luas lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">314,0 dm$^2$</li><li data-option="B">346,5 dm$^2$</li><li data-option="C">628,0 dm$^2$</li><li data-option="D">693,0 dm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 37 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>6.</b> Suatu lingkaran memiliki luas $16\pi$ cm$^2$. Keliling lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$4\pi$ cm</li><li data-option="B">$8\pi$ cm</li><li data-option="C">$16\pi$ cm</li><li data-option="D">$32\pi$ cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 4 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>7.</b> Diketahui keliling lingkaran adalah 88 cm. Jari-jari lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7 cm</li><li data-option="B">14 cm</li><li data-option="C">21 cm</li><li data-option="D">28 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 5 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>8.</b> Perbandingan luas dua lingkaran jika perbandingan jari-jarinya 1:3 adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 : 3</li><li data-option="B">1 : 6</li><li data-option="C">1 : 9</li><li data-option="D">1 : 12</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 6 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>9.</b> Sebuah roda memiliki diameter 50 cm. Jika roda berputar 100 kali, jarak yang ditempuh adalah... ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">157 m</li><li data-option="B">314 m</li><li data-option="C">1.570 m</li><li data-option="D">3.140 m</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 25 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2010 | Level: Aplikasi</div>
+                <b>10.</b> Seorang pelari mengelilingi lapangan berbentuk lingkaran dengan diameter 140 meter sebanyak 10 kali. Jarak yang ditempuh adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1.400 m</li><li data-option="B">2.200 m</li><li data-option="C">2.800 m</li><li data-option="D">4.400 m</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 7 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>11.</b> Luas setengah lingkaran dengan jari-jari 14 cm adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">154 cm$^2$</li><li data-option="B">308 cm$^2$</li><li data-option="C">616 cm$^2$</li><li data-option="D">1.232 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 6 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2009 | Level: Aplikasi</div>
+                <b>12.</b> Keempat sisi persegi disinggung oleh sebuah lingkaran di dalamnya (lingkaran dalam) seperti gambar.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgzErevnyw1SfPPxs1zgwd8ArLb3r8xhT-LIZTTunkrrgeBMSNAFYgT3mqmtm67a501mh2AUMqFjIprjYmW1-e3XcyNEEJNkis8KAy1eqDeH1VPERZOc8cw9LwnbP2982SkQnmr3HbLLQ9f/s1600/Persegi+dan+Lingkaran.jpg" alt="Soal 6">
+                Jika keliling lingkaran 44 cm, maka panjang sisi persegi adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7 cm</li><li data-option="B">14 cm</li><li data-option="C">18 cm</li><li data-option="D">22 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 8 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>13.</b> Selisih keliling lingkaran dengan jari-jari 10 cm dan 5 cm adalah... ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">15,7 cm</li><li data-option="B">31,4 cm</li><li data-option="C">47,1 cm</li><li data-option="D">62,8 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 12 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2020 | Level: HOTS</div>
+                <b>14.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEih4oV-Cwg11voNCgNyKQLft8Tztyt0DdVNuUX8V0YfF9D63EOfZbG28dBl9dA6vgNFmxFE-H1e4tKO42X_qcZUVvdkmNnVMbvMhyphenhyphenmgAVLGbYUekYxxOQDuqd8lEl9GZQkWSsh9Xd8AB_F1/s1600/Soal+Ujian+Masuk+SMA+DEL+2020.jpg" alt="Soal 12">
+                Luas daerah yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\pi \sqrt{T}$</li><li data-option="B">$\pi T^3$</li><li data-option="C">$\pi T^2$</li><li data-option="D">Tidak dapat ditentukan</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 9 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>15.</b> Jika keliling lingkaran bertambah menjadi 2 kali lipat, maka luas lingkaran akan bertambah menjadi...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2 kali lipat</li><li data-option="B">3 kali lipat</li><li data-option="C">4 kali lipat</li><li data-option="D">8 kali lipat</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 2 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UNBK 2019 | Level: Aplikasi</div>
+                <b>16.</b> Pak Anton membuat taman persegi panjang $6m \times 5m$. Di tengah taman dibuat kolam lingkaran berdiameter 2,8 m. Sisa taman ditanami rumput. Luas taman yang ditanami rumput adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">23,84 m$^2$</li><li data-option="B">25,60 m$^2$</li><li data-option="C">30,88 m$^2$</li><li data-option="D">36,16 m$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 10 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>17.</b> Sebuah ban mobil memiliki jari-jari 30 cm. Berapa kali ban harus berputar untuk menempuh jarak 1,884 km? ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">100 kali</li><li data-option="B">500 kali</li><li data-option="C">1000 kali</li><li data-option="D">2000 kali</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 11 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>18.</b> Jarak dari pusat lingkaran ke sembarang titik pada keliling lingkaran selalu...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Berbeda-beda</li><li data-option="B">Sama</li><li data-option="C">Setengah diameter</li><li data-option="D">B dan C benar</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 12 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>19.</b> Jika luas lingkaran adalah $1.256$ cm$^2$, maka diameternya adalah... ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">20 cm</li><li data-option="B">40 cm</li><li data-option="C">60 cm</li><li data-option="D">80 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 13 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>20.</b> Dua buah lingkaran memiliki keliling masing-masing 44 cm dan 88 cm. Selisih jari-jari kedua lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7 cm</li><li data-option="B">14 cm</li><li data-option="C">21 cm</li><li data-option="D">28 cm</li></ol></div>
+            </div>
+        </div>
+
+        <div class="kunci-jawaban-section">
+            <h4>Kunci Jawaban Bagian 1</h4>
+            1.C | 2.D | 3.B | 4.B | 5.B | 6.B | 7.B | 8.C | 9.A | 10.A<br>
+            11.B | 12.B | 13.B | 14.C | 15.C | 16.A | 17.C | 18.D | 19.B | 20.A
+        </div>
+    </section>
+
+    <!-- ############################## BAGIAN 2: HUBUNGAN SUDUT, BUSUR, JURING ############################## -->
+    <section class="page">
+        <h2>Bagian 2: Busur, Juring, Tembereng & Apotema</h2>
+        
+        <h3>A. Materi Pembelajaran</h3>
+        <div class="box-materi">
+            <p><b>1. Busur dan Panjang Busur</b><br>
+            <b>Busur</b> adalah garis lengkung yang menghubungkan dua titik pada lingkaran.
+            Rumus Panjang Busur:
+            $$\text{Panjang Busur} = \frac{\theta}{360^{\circ}} \times 2 \pi r$$
+            </p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCcECns-akQMWk4BZirvl3x4ENKH2CHuDuBTsL55H2jdz84Il1Qhu_TbKu87GromSI580Jf29_R8d40RCd2npbFIicX-W2sRsEVkwlGuF2T26hELkpTzxqyZZSXoDJd2OAVCf0gZONFxlFbCglzW6ZxXTNNDGnSMxmD5z_CqpluX1vm77MrzqkWWoNnQ" alt="Busur Lingkaran">
+
+            <p><b>2. Juring dan Luas Juring</b><br>
+            <b>Juring</b> adalah daerah yang dibatasi oleh dua jari-jari dan sebuah busur.
+            Rumus Luas Juring:
+            $$\text{Luas Juring} = \frac{\theta}{360^{\circ}} \times \pi r^2$$
+            </p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEgFHyzy9LcxFcSyvU0Jn6QRl2LBQGKTX37iZIKK-5_FGRGqd_7Q8MMIWytPesFbc6vvvSRrbNs8gztyD6C0RYz0G8eAolv97ldTQb9z-BUylLccnmbhVEl7ne2hzcLAtTL6cR7qsL1J4y_SV6qaFMPtjL9nai6SwThc0Nf3_4IS5UMK5t6Ew3Os27PzBQ" alt="Juring Lingkaran">
+
+            <p><b>3. Apotema dan Tembereng</b><br>
+            <b>Tembereng</b> adalah daerah yang dibatasi tali busur dan busur. <b>Apotema</b> adalah ruas garis dari pusat ke tali busur (tegak lurus).
+            </p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEggFn2Te3KkO2_A8sBtc_M96OK8nWsfVLeHzTHn8eTmUh3Y66jOhDMcDb4OxzRFoi5EeXTEtD3SSZqxbPhK5APq_084zDOq3GflUGG0so158Cc9DL-DQz47KlmSUVbTOHuNrfluC8TjCgsStwxztlCp1Uo67CKARBWkt8T0jiD7X47S4rD2RTSdtc3kFg" alt="Apotema dan Tembereng">
+
+            <p><b>4. Sudut Pusat dan Sudut Keliling</b><br>
+            Jika menghadap busur yang sama:
+            $$\text{Sudut Pusat} = 2 \times \text{Sudut Keliling}$$
+            </p>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEgKigJZfdph0xaH7dEZJ5JUgfZ8OfIZtFzHdkPvyJuDq9NlTZs49rWC6ig6ae1XKy-rOtl7P1wG04D3ZK93a4HPtvW9MLlDXLo64U9pPXshNJLPjAUsBPGlPrGY_HJ2sOec7JtpPgDv5j_oVUSAKbx5Bj_TP40rSRjSAPm9tB1P1hZITZaE1jt5hlk2qg" alt="Sudut Pusat dan Keliling">
+        </div>
+
+        <h3>B. Latihan Soal (Level 2)</h3>
+
+        <!-- Soal Baru 14 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>21.</b> Bagian lingkaran yang dibatasi oleh dua jari-jari dan sebuah busur disebut...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Tembereng</li><li data-option="B">Juring</li><li data-option="C">Apotema</li><li data-option="D">Tali busur</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 15 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>22.</b> Jika sudut pusat adalah $80^\circ$, maka besar sudut keliling yang menghadap busur yang sama adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">160$^\circ$</li><li data-option="B">80$^\circ$</li><li data-option="C">40$^\circ$</li><li data-option="D">20$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 24 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2018 | Level: Mudah</div>
+                <b>23.</b> Perhatikan gambar! Diketahui O adalah titik pusat lingkaran.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEihvQaJ6dNN75MfNxVfaHmfuhLPZ8ztujUrOTf4Dap2OSIvqtlcbZNWtfLlUSczAEYQiZpwBnpHTEsmThTM5LqrJ9W8Zz3myRghLZjKk7x-ihOfg4W9gw3Bd9c6nGQ2uVrJkDQb7qupCB64P3mK_9tenRyktdwWPiyX69Gsth36bzL45qs1eh4626S_fg" alt="Soal 24">
+                Besar sudut $AOB$ adalah... (Diketahui $\angle ACB = 30^\circ$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">15$^\circ$</li><li data-option="B">30$^\circ$</li><li data-option="C">45$^\circ$</li><li data-option="D">60$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 17 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2017 | Level: Sedang</div>
+                <b>24.</b> Perhatikan gambar lingkaran dengan pusat O.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_pDl4jYChYbZtDELRc4UOKUaaUroypMaBCB3r3aVwvuneK9yESqOrUNppN5ZY0L-p8cLHVa6LHCHckWR1SnC7yec6AZWIYWwmKzVTiWwnpDQGZkRI-v8HKwhtbdlaGv7tkF-lKKp6BIK09yRZ3oPVY9HT2nE7e4R90GJQekcxqYkQ5nzYb6N4Iuxv9A/s1600/lingkaran%20sudut%20acb.jpg" alt="Soal 17">
+                Jika $\angle AOD=80^\circ$, besar $\angle ACB=...$
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">80$^\circ$</li><li data-option="B">50$^\circ$</li><li data-option="C">40$^\circ$</li><li data-option="D">35$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 3 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UNBK 2018 | Level: Sedang</div>
+                <b>25.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgToyyvMvco7YmtItjG6Gts2fLN4Aq_RAsoum7fEkb0W9-Z9t9Z_t5Nv19GKal1c6Q6zIeTt8bZfzKj2mRsvDqaALLxcMidSeszr_eiUAGXYewX2k3Wyolig2ETRnXTtWNxfj1-1mh4rAt8/s1600/UNBK+Matematika+SMP+Lingkaran+Sudut.jpg" alt="Soal 3">
+                Jika besar $\angle BOA = 100^\circ$, maka $\angle CDB = ...$
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">80$^\circ$</li><li data-option="B">60$^\circ$</li><li data-option="C">50$^\circ$</li><li data-option="D">40$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 29 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal US-UM SMP 2023 | Level: Mudah</div>
+                <b>26.</b> Perhatikan gambar berikut.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiClXgtBj6SbXHsni-DlsG6gSXNOpiWL9MrxDd2IqhG-WmncXlekv0rStXpNmGOT9TGkGvCsoSK08i_5fIHsvTkLcQVl3nACwxCADSj7YQ1xh_idEoBFc_SMFCkqKZQuFEfqZDI6ohP7qAwb_oXWaGx7P-M53FeSLyP41NCbDESZgKprxKefPyyju9DTQ/s1600/sudut_pusat_keliling_lingkaran.jpg" alt="Soal 29">
+                Jika $\angle ACB = 55^\circ$, besar sudut pusat $\angle AOB$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">55$^\circ$</li><li data-option="B">110$^\circ$</li><li data-option="C">135$^\circ$</li><li data-option="D">180$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 34 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>27.</b> Perhatikan gambar lingkaran dengan titik pusat O.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTIFePdrn_24N6gyKyGyvh9ZUt6_cSEJYvjW_IlZjm-Mzn22hloXbfNGSitpnZHRyBq5bFZx93tjXDtcAXChj1q-_GMZXTKADj7oPivvaHjRiy_dgNEUHS1pjgHYmNn2b-ZmZRp0Ma65eJGAF_fJ3SZsa6kbJrX_nTQCghhxK6J145e5ToeenOgIIG8w/s1600/sudut%20pusat%20lingkaran%20matematika%20smp%281%29.jpg" alt="Soal 34">
+                Diketahui besar $\angle BOD = 110^\circ$. Besar $\angle BCD$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">55$^\circ$</li><li data-option="B">125$^\circ$</li><li data-option="C">220$^\circ$</li><li data-option="D">225$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 21 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2013 | Level: HOTS</div>
+                <b>28.</b> Perhatikan gambar! Titik O adalah pusat lingkaran.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEjf0Sco1SGjM-Epg7dvnqXxLsy7HgHLcDf5N6ZCRwAkUPrt1fWnNkwSt0Bhbo6syvEFW5-IrKNKnlVz268xyfmG57Fg4hl8GknpBrdst27BOmJqHo5p5fuMmXte-pvFqiNO2_ZOuRCcU8_Bv8r7bQBS6wYgjRymbIs2LzvYw1C_uemtBLL7DlRKmQmCxw" alt="Soal 21">
+                Diketahui $\angle ABE + \angle ACE + \angle ADE = 96^\circ$. Besar $\angle AOE$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">32$^\circ$</li><li data-option="B">48$^\circ$</li><li data-option="C">64$^\circ$</li><li data-option="D">84$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 9 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2007 | Level: HOTS</div>
+                <b>29.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6h0fyqmnXVwnveThC_n10EHsxeFVIkTVeI-x4yPU6gfTEeEJhtGEM5WlwySLCTStuAkrCn3GwmUhj4hyphenhyphenQfpakYi7F1fuoPpui25kX_rCWCteqywRjjGmu9c3GchNpRjDg5AuCcNJE4okZ/s1600/Lingkaran+soal+yasop+2007.jpg" alt="Soal 9">
+                AOB adalah garis tengah. Jika $\angle ABC = 63^\circ$ dan $\angle ABD = 49^\circ$, maka besar $\angle CAD = ...$
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">27$^\circ$</li><li data-option="B">41$^\circ$</li><li data-option="C">68$^\circ$</li><li data-option="D">90$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 10 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2005 | Level: HOTS</div>
+                <b>30.</b> Titik-titik A, B, dan C terletak pada lingkaran yang berpusat di P. Jika AB adalah diameter dan $\angle CAB = 30^\circ$, maka $\angle CPB = ...$
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">50$^\circ$</li><li data-option="B">60$^\circ$</li><li data-option="C">70$^\circ$</li><li data-option="D">80$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 14 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2018 | Level: Sedang</div>
+                <b>31.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFDa0u34C_qFt_WC_OsxZUDNHJYMh2oPZNYGYPih4ESXWkLCrxXJnATy_sXTBzXT6c1g5FNlX-uxZ_nk6Cg45RldN24VsBjMvIyAglQHK78gCC89R2v9QFihDXllsuZbcT1BSJvUFvGSKG7mrHmhQBz8JdQs4DNm3Z8iWGLHt_NfKOgcr5RbZGuDyX4g/s1600/lingkaran%20sudut%20adb.jpg" alt="Soal 14">
+                Titik O pusat lingkaran. AC diameter. Jika $\angle BOC = 74^\circ$, besar $\angle ADB$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">37$^\circ$</li><li data-option="B">53$^\circ$</li><li data-option="C">74$^\circ$</li><li data-option="D">106$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 40 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP | Level: Aljabar</div>
+                <b>32.</b> Pada lingkaran pusat O, $\angle KOL = 5x^\circ$ dan $\angle MON = (3x+2)^\circ$. Jika panjang busur KL = MN, nilai $x$ adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1</li><li data-option="B">2</li><li data-option="C">3</li><li data-option="D">5</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 1 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UNBK 2019 | Level: Sedang</div>
+                <b>33.</b> Panjang busur lingkaran dengan sudut pusat $72^\circ$ dan jari-jari 10 cm adalah... ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">62,80 cm</li><li data-option="B">31,40 cm</li><li data-option="C">12,56 cm</li><li data-option="D">6,280 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 19 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2014 | Level: Sedang</div>
+                <b>34.</b> Sudut pusat $\angle AOB = 108^\circ$. Jari-jari 7 cm. Panjang busur AB adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">132 cm</li><li data-option="B">52,8 cm</li><li data-option="C">26,4 cm</li><li data-option="D">13,2 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 32 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>35.</b> Diketahui panjang busur adalah 22 cm. Jika sudut pusatnya $120^\circ$, panjang jari-jarinya adalah... ($\pi=22/7$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7,5 cm</li><li data-option="B">10,5 cm</li><li data-option="C">12,5 cm</li><li data-option="D">15,5 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 33 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>36.</b> Panjang busur 16,5 cm. Diameter 42 cm. Ukuran sudut pusatnya adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">45$^\circ$</li><li data-option="B">90$^\circ$</li><li data-option="C">135$^\circ$</li><li data-option="D">180$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 30 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal US-UM 2023 | Level: Sedang</div>
+                <b>37.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSBG7JQXSZmF8ZAOLXmah6-U9OOb8GJPRBkEDW7N7-2TVrFMzE3JFp5JBzZxZjg_LAqJl86zbfv-SxdUd_DUigGk2ThKlIbbqWCgNzPbLSqin-Q5aPW5zwKf7P70Mhr29v2ZcPX5_ZLqUbhLe8uDAinoSl_V7_7Aiw0vEuqNR0yAIiOt0D9d3E8FNOBA/s1600/luas_juring_lingkaran.jpg" alt="Soal 30">
+                Jika $O$ pusat lingkaran dan $\pi=3,14$, luas daerah yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">25,12 cm$^2$</li><li data-option="B">50,24 cm$^2$</li><li data-option="C">125,6 cm$^2$</li><li data-option="D">251,2 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 20 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2013 | Level: Perbandingan</div>
+                <b>38.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEjWcmKBlEOaCE9rLWW5j8ka1FxUWwcNJeyk7Drm01ceHsnPU9B4KQt-e2rPFtVPtwnmJcXPNAdCuac7VxMO3FEnUM9R-5r9_Xt2HmuyQLBxYWaTSpYcV1_8lTTu5B0LFg6Uz6u8Itn6ZUT7gP3ONuH-BXKpuh3PwXxttbTOlFduYBbOVLv4GrpXOwV13A" alt="Soal 20">
+                Luas juring BOC = 50 cm$^2$. Luas juring AOD adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">20 cm$^2$</li><li data-option="B">25 cm$^2$</li><li data-option="C">30 cm$^2$</li><li data-option="D">40 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 22 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2012 | Level: Perbandingan</div>
+                <b>39.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEiDsP-HCrug2s3txjjVPFuPazRVlZsHcTk5JWpZdwpR3NduQiKTzzjwtyeH8LN1a8vH3BhqXNq_UHO8DEDsgaEEIDRzfYEGG2TjBMlC4WNcRT2AYJcnU_XQk8JJ1G0gLFsi6RXzNlQCP5KmwCTd97s070RCjgvnuMhiK-cLe2X8Gv9OKbouLPAc9n-UTA" alt="Soal 22">
+                Luas juring OPQ = 24 cm$^2$. Luas juring OQR adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">26 cm$^2$</li><li data-option="B">30 cm$^2$</li><li data-option="C">32 cm$^2$</li><li data-option="D">36 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 23 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2011 | Level: Sedang</div>
+                <b>40.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEiQLt4a15pjeE9FD26FsI25pFoHXmtwAML2yMobS7sx2N_a8ErYYl0sAt-PimXasw3GvC-WkiOd3PGd0nXJTHGJlPAufg7oTRra5nTVIaybu-f__PNttq5gXwXGxzYIlQwIIInTcwqSNHKM6vwson74vZujskW1TqMxncJKgJjgEtoH666xR2xNYmIjsQ" alt="Soal 23">
+                Jika $O$ adalah pusat lingkaran, dan $\pi = \frac{22}{7}$, maka luas daerah yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">77 cm$^2$</li><li data-option="B">154 cm$^2$</li><li data-option="C">231 cm$^2$</li><li data-option="D">308 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <div class="kunci-jawaban-section">
+            <h4>Kunci Jawaban Bagian 2</h4>
+            21.B | 22.C | 23.D | 24.B | 25.D | 26.B | 27.B | 28.C | 29.C | 30.B<br>
+            31.B | 32.A | 33.C | 34.D | 35.B | 36.A | 37.D | 38.A | 39.D | 40.B
+        </div>
+    </section>
+
+    <!-- ############################## BAGIAN 3: GARIS SINGGUNG ############################## -->
+    <section class="page">
+        <h2>Bagian 3: Garis Singgung & Dua Lingkaran</h2>
+        
+        <h3>A. Materi Pembelajaran</h3>
+        <div class="box-materi">
+            <p><b>1. Garis Singgung Persekutuan Luar (GSPL)</b><br>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEixj_eFZxRS3In0QxBj57z5gVFRMMUk7zpV3aczAVQULjVedhpR55al2t-5w6GryslJmDHZEr9e3SO4oCjDtLthytz8QdpWPKdeYBFSPRPv0u9vD7l3o_mryrb7Xd2fIRPw-E03j5Ua_V32ZG0CTGNshwPv7o4PKg5tpDw91FQtkcDshzsFfA3iwGzr-w" alt="GSPL">
+            Rumus: $l = \sqrt{p^2 - (R - r)^2}$<br>
+            $p$: Jarak pusat, $R$: jari-jari besar, $r$: jari-jari kecil.
+            </p>
+
+            <p><b>2. Garis Singgung Persekutuan Dalam (GSPD)</b><br>
+            <img class="materi-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEhhhXGwsrjzQ6ZnliYrD0AoPhSysng3wrLWiFME5CNVe1le8w67yVl9wG9A-tOu1P_rnaRuVG_sccDGREH9Fu4MoyloPp55YWKlVkF0M2VkF5KNXkJy1XxkmVSS0-9FlYCMnvF81abxmSWvsDsX5aC2kZ4v3rn1rBgoS3eVezvl771oQEO5hYe4mc6vCQ" alt="GSPD">
+            Rumus: $d = \sqrt{p^2 - (R + r)^2}$
+            </p>
+        </div>
+
+        <h3>B. Contoh Soal</h3>
+        <div class="latihan-item">
+            <b>Contoh 3:</b> Jarak pusat dua lingkaran 26 cm. Jari-jari masing-masing 12 cm dan 2 cm. Hitung GSPL.<br>
+            <b>Jawab:</b> $l = \sqrt{26^2 - (12-2)^2} = \sqrt{676 - 100} = \sqrt{576} = 24$ cm.
+        </div>
+
+        <h3>C. Latihan Soal (Level 3)</h3>
+
+        <!-- Soal Baru 16 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Mudah</div>
+                <b>41.</b> Sebuah garis ditarik dari titik luar P menyinggung lingkaran di titik A. Jika jari-jari 5 cm dan jarak OP = 13 cm, panjang garis singgung PA adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">8 cm</li><li data-option="B">10 cm</li><li data-option="C">12 cm</li><li data-option="D">18 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 17 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>42.</b> Dua lingkaran memiliki jari-jari 14 cm dan 4 cm. Jarak kedua pusatnya 30 cm. Panjang garis singgung persekutuan luar adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">16 cm</li><li data-option="B">20 cm</li><li data-option="C">24 cm</li><li data-option="D">28 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 7 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2009 | Level: Sedang</div>
+                <b>43.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhncSlF1j_TgfwAHicvSBFNBxzLi4fSaIlHbZSxtBebxr8nkBA35hOK6MSjIUZ9NfbxxsiOkAKvpgr2Knjwrw4Vf-HTlaH0VJX-z6Q80zvE1biXGbSHDrzog8OKxGwqfKOOKFn4tXiOwXUu/s1600/Garis+Singgung+Persekutuan+Dalam.jpg" alt="Soal 7">
+                Jika diketahui $OA=4$ cm, $PB=2$ cm, dan $OP=10$ cm. Panjang garis singgung persekutuan dalam dua lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">6 cm</li><li data-option="B">8 cm</li><li data-option="C">10 cm</li><li data-option="D">12 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 38 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>44.</b> Diketahui dua lingkaran berjari-jari 2,5 cm dan 4,5 cm. Jika panjang garis singgung persekutuan dalam kedua lingkaran tersebut adalah 24 cm, maka jarak pusat kedua lingkaran adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">25 cm</li><li data-option="B">27 cm</li><li data-option="C">29 cm</li><li data-option="D">31 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 39 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Sedang</div>
+                <b>45.</b> Diketahui dua lingkaran berjari-jari 13 cm dan $r$ cm. Jarak kedua pusat lingkaran tersebut adalah 20 cm. Jika panjang garis singgung persekutuan luar kedua lingkaran tersebut adalah 16 cm, maka panjang $r$ yang mungkin dan tepat adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 cm</li><li data-option="B">2 cm</li><li data-option="C">26 cm</li><li data-option="D">27 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 18 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>46.</b> Dua lingkaran bersinggungan luar. Jari-jari 16 cm dan 9 cm. Panjang garis singgung persekutuan luar adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">20 cm</li><li data-option="B">24 cm</li><li data-option="C">25 cm</li><li data-option="D">30 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 19 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>47.</b> Layang-layang garis singgung dibentuk oleh dua jari-jari dan dua garis singgung dari titik luar P. Jika jari-jari 6 cm dan panjang garis singgung 8 cm, luas layang-layang tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">24 cm$^2$</li><li data-option="B">48 cm$^2$</li><li data-option="C">60 cm$^2$</li><li data-option="D">96 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 20 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>48.</b> Panjang tali busur $AB = 24$ cm. Jika diameter lingkaran 26 cm, maka panjang apotema dari pusat ke tali busur adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">5 cm</li><li data-option="B">10 cm</li><li data-option="C">12 cm</li><li data-option="D">13 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 21 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>49.</b> Sebuah rantai melilit dua roda gigi dengan jari-jari 15 cm dan 5 cm. Jarak kedua pusat roda 26 cm. Panjang rantai lurus (GSPL) di antara kedua roda adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">20 cm</li><li data-option="B">24 cm</li><li data-option="C">25 cm</li><li data-option="D">26 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 22 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>50.</b> Dua lingkaran saling lepas. Jarak pusat 25 cm. R = 11 cm, r = 4 cm. Selisih panjang GSPL dan GSPD adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">2 cm</li><li data-option="B">3 cm</li><li data-option="C">4 cm</li><li data-option="D">5 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 8 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2009 | Level: HOTS</div>
+                <b>51.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi26o-Mi7ScFcDhUSf-0H8GcJ9Ywps4X5-LYIWhPaTK7R_BwKCSPqo3WpOtHiCw2IeZinlPJ0Y3h0at_8z36lozAHGbBy_yiCj-onGYCQ0EeOsahUctayiuvtmcERwUmOFiEYWhChaTL63T/s1600/Tembereng+soal+yasop.jpg" alt="Soal 8">
+                Luas tembereng yang diarsir pada gambar ($r=21$ cm) adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">154 cm$^2$</li><li data-option="B">128 cm$^2$</li><li data-option="C">132 cm$^2$</li><li data-option="D">126 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 23 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>52.</b> Luas daerah yang dibatasi oleh tali busur dan busur disebut...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Juring</li><li data-option="B">Tembereng</li><li data-option="C">Apotema</li><li data-option="D">Sektor</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 24 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>53.</b> Sudut antara garis singgung dan tali busur yang melalui titik singgung besarnya sama dengan...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">Sudut pusat</li><li data-option="B">Sudut keliling di depan busur</li><li data-option="C">90 derajat</li><li data-option="D">180 derajat</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 18 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP 2017 | Level: Aplikasi</div>
+                <b>54.</b> Anton akan membuat 100 buah teralis berbentuk juring lingkaran terbuat dari besi. Panjang jari-jari lingkaran 18 cm dan besar sudut pusat $60^\circ$. Panjang besi minimal adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">169,56 m</li><li data-option="B">54,84 m</li><li data-option="C">36,00 m</li><li data-option="D">18,84 m</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 4 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP | Level: HOTS</div>
+                <b>55.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPXpcCEoJKWPtVm151Cg2Q5a-TMmeDxC07Hv8mDHk08FNOxHqFhaS9C5nV5Dx_wWfknWD3K750Ckro3n50aJqyLG5BMvVLZcyyUAYn8NrSSajKFd2pgZdQiAGM8hQOdlocmChu5VI-KlPt/s1000/Sudut+Refleks+Lingkaran.jpg" alt="Soal 4">
+                Jika sudut $ABC=60^\circ$ dan titik O adalah pusat lingkaran maka sudut refleks $AOC = ...$
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">240$^\circ$</li><li data-option="B">220$^\circ$</li><li data-option="C">200$^\circ$</li><li data-option="D">180$^\circ$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 11 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2004 | Level: HOTS</div>
+                <b>56.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOWnFu_G95ZvtTac0Fp3Kll0cBUOPlfxf7p91zlYy1mLZQwDt4octFuQHjEdaf9S9ubm6WSIddJGrC6RDn0C2spVn_YZG9HS1wLbzXfrZAdJv9hSOxaeDLZ-E6J6w5uigj5OtjBELKAEOu/s1600/Lingkaran.jpg" alt="Soal 11">
+                P adalah pusat lingkaran yang kelilingnya $4\pi$ cm, dan $\angle APB=50^\circ$. Luas daerah di arsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">4/3 $\pi$</li><li data-option="B">13/9 $\pi$</li><li data-option="C">1/3 $\pi$</li><li data-option="D">17/9 $\pi$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 25 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>57.</b> Garis singgung persekutuan dalam dari dua lingkaran dengan jari-jari 3 cm dan 2 cm adalah 12 cm. Jarak kedua pusatnya adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">10 cm</li><li data-option="B">13 cm</li><li data-option="C">15 cm</li><li data-option="D">17 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 26 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>58.</b> Jarak pusat dua lingkaran 17 cm. Jari-jari lingkaran A adalah 10 cm, lingkaran B adalah 2 cm. Panjang garis singgung persekutuan luar adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">9 cm</li><li data-option="B">12 cm</li><li data-option="C">15 cm</li><li data-option="D">16 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 27 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>59.</b> Dua lingkaran saling bersinggungan dalam. Jari-jari 10 cm dan 6 cm. Jarak kedua pusatnya adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">4 cm</li><li data-option="B">8 cm</li><li data-option="C">16 cm</li><li data-option="D">60 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 28 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Sedang</div>
+                <b>60.</b> Panjang busur di hadapan sudut $60^\circ$ pada lingkaran diameter 42 cm adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">11 cm</li><li data-option="B">22 cm</li><li data-option="C">33 cm</li><li data-option="D">44 cm</li></ol></div>
+            </div>
+        </div>
+
+        <div class="kunci-jawaban-section">
+            <h4>Kunci Jawaban Bagian 3</h4>
+            41.C | 42.D | 43.B | 44.A | 45.A | 46.B | 47.B | 48.A | 49.B | 50.C<br>
+            51.D | 52.B | 53.B | 54.B | 55.A | 56.B | 57.B | 58.C | 59.A | 60.B
+        </div>
+    </section>
+
+    <!-- ############################## BAGIAN 4: APLIKASI & HOTS ############################## -->
+    <section class="page">
+        <h2>Bagian 4: Aplikasi & Penalaran (HOTS)</h2>
+        
+        <h3>A. Materi Pembelajaran</h3>
+        <div class="box-materi">
+            <p><b>1. Panjang Tali Pengikat ($L_{tali}$):</b><br>
+            Untuk $n$ lingkaran dengan diameter $d$ disusun berderet:<br>
+            $L_{tali} = n \cdot d + \pi \cdot d$.</p>
+            <p><b>2. Aplikasi Lain:</b> Masalah arsiran gabungan bangun datar, roda berputar, dan pipa air.</p>
+        </div>
+
+        <h3>B. Latihan Soal (Level 4)</h3>
+
+        <!-- Soal Original 5 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2009 | Level: HOTS</div>
+                <b>61.</b> Perhatikan gambar!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj5L1qGibetBY02K0M_nEcQhMSfpLbol9MBrunUpRbv9EkOR8VeZVxunABLL4UVuMtDTM_dcEyomxwXGu8nrz6bD8xPBtct9cTALmZzXvL7p68SQxK02xhI42WEcj4JJSsD3ZlrhR5d2qJc/s1600/Lingkaran+Berimpit+soal+yasop+2009.jpg" alt="Soal 5">
+                Panjang tali yang dibutuhkan untuk mengikat 3 batang kayu bila diameter kayu 14 dm adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">8.600 cm</li><li data-option="B">860 cm</li><li data-option="C">86 cm</li><li data-option="D">8,6 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 29 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: HOTS</div>
+                <b>62.</b> Enam buah pipa air berdiameter 10 cm diikat menjadi satu bendel (bentuk segitiga: bawah 3, tengah 2, atas 1). Panjang tali minimal untuk sekali ikat adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">60 + 10$\pi$</li><li data-option="B">60 + 20$\pi$</li><li data-option="C">90 + 10$\pi$</li><li data-option="D">90 + 20$\pi$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 27 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2022 | Level: HOTS</div>
+                <b>63.</b> Dua buah roda dililit seperti gambar berikut.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEi2zzwJ5nx521IiJDOpDJVe9fcDO4Yo2EhM-L6O6ADTIaW_gMbwP5MM_jBuhUPbCda9cWA0l0OGif0H6zWM4uWss7FFkn11HBRAowNyAf_90XJM9M8kUCUXgTBiR4Q1ZFkf1xVpML_VO2U4uQI-5Op8_XqwvuUBWoi9ybgZY9Mb5jrhUCPrWUJvoCrMQA" alt="Soal 27">
+                Panjang tali yang melilit dua roda tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">216 cm</li><li data-option="B">156 cm</li><li data-option="C">96 cm</li><li data-option="D">72 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 6 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal YASOP 2009 | Level: Penalaran</div>
+                <b>64.</b> Keempat sisi persegi disinggung oleh sebuah lingkaran di dalamnya. Keliling lingkaran 44 cm. Panjang sisi persegi adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">7 cm</li><li data-option="B">14 cm</li><li data-option="C">18 cm</li><li data-option="D">22 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 36 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Aplikasi</div>
+                <b>65.</b> Perhatikan gambar berikut.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh3hlT_Ok2_3eWcpW18_GvAqCI6YMT2BRHpUN1ECo6r9Sjn4gZKOi_SzTopyym8vTDAhGslc0zw3VheDvwWFulnMxWtet2UWhdfCCUpOStaBavhBTweKn7Q_bGnmtUdacR1UysgBJs7kZ0nZ2gCcxVA8zzGv5-YkkH0iZQsea-HuVpEohY4njv31jJriA/s1600/matematika%20smp%20persegi%20dan%20lingkaran.jpg" alt="Soal 36">
+                Luas daerah yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">77 cm$^2$</li><li data-option="B">196 cm$^2$</li><li data-option="C">273 cm$^2$</li><li data-option="D">372 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 35 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal PAS SMP | Level: Aplikasi</div>
+                <b>66.</b> Perhatikan gambar berikut.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEimbz4IEJ5mu8FwQ3K7TU4_sF6nt_OZPzs00aRbFxDCy6VuBlFkLZOlWJbH-IEQAnuOw2ZqHYSGibsZQPuMCCpynSrlhzexJqmS4jZFCsBXK5Q91e-jfjKGMpy6v3jERSu2Bbf9B-DjKTw0GwvjCkXnSB7RV_yhgKSG3NoECA-UwlGh31YIgsZV6dsmDw/s1600/persegi%20dan%20lingkaran%20matematika%20smp.jpg" alt="Soal 35">
+                Keliling bagian yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">132 cm</li><li data-option="B">148 cm</li><li data-option="C">178 cm</li><li data-option="D">192 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 31 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal UN SMP | Level: Aplikasi</div>
+                <b>67.</b> Gambar dibawah ini adalah sebuah penampang pipa yang berisi air.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh27Q1W6VNGLlRBot2ZNZhaWVBlluPKhAKroONjE95jUzkM9dhdZ961C1L3lbJa7RVZqq4UXjJgW4Xj473zS7E4oNs2_uz41Hxx1eeUxiGqTYBruunzZdnwslapu110cH3ioKLqsIjgtoDb0BhF-dSRN1uPT1xLIK6C2W2EUTsgJOXXFnDRdkhSUYUCog/s1600/pipa%20dan%20permukaan%20air%20yang%20rata.jpg" alt="Soal 31">
+                Jika kedalaman air pada pipa adalah 9 cm dan diameter pipa 34 cm, maka lebar permukaan air adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">15 cm</li><li data-option="B">20 cm</li><li data-option="C">25 cm</li><li data-option="D">30 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 26 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2022 | Level: HOTS</div>
+                <b>68.</b> Dua buah lingkaran masing-masing yang berjari-jari 10 cm diletakkan pada sebuah bidang datar dengan kedua lingkaran saling bersinggungan satu sama lain.<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEiYrR1b9S0bQHdZG1-DSlnOeMSCRXaeoirKlM88HaHjRksxfXT_689dVFcUhE5aQMSV-fDgWxROfTYnJqARWBXO20kuUq3USC3IPv6cFBSD2VVwi0ovADluTy5vmET0VtuTFpNyjdC_fMApuqsnwkTDrIhtVUdWV1UcJSumpcjI_EhJxo_qLsHG2M9LZw" alt="Soal 26">
+                Sebuah lingkaran kecil diletakkan diantara kedua lingkaran besar tersebut sedemikian hingga lingkaran kecil menyinggung kedua lingkaran besar dan bidang datar. Maka jari-jari lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">1 cm</li><li data-option="B">2 cm</li><li data-option="C">2,5 cm</li><li data-option="D">4 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 12 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2020 | Level: HOTS</div>
+                <b>69.</b> Perhatikan gambar berikut!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi9OOxaYYbgiIFw2MN4ZjBcoZflrTCCw7NW3NT7UnnMXkvlLMTUMTY15Cd_Y2SwhKSJgHYzS1Y1RDzs4yya-ltY_ViwERkgFFE3V8KPdCFS_XhelcUKBNdelxJGnLJmbi9PR6qwEPBfeZyg/s250/soal+simulasi+masuk+sma+del+2020+keliling+lingkaran+%25281%2529.jpg" alt="Soal 13">
+                Jika setiap lingkaran melewati pusat dari lingkaran lain, keliling (tidak termasuk bagian yang terkandung dalam gambar) adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">3 $\pi r$</li><li data-option="B">4 $\pi r$</li><li data-option="C">5 $\pi r$</li><li data-option="D">6 $\pi r$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 28 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2022 | Level: HOTS</div>
+                <b>70.</b> Perhatikan gambar berikut!<br>
+                <img class="soal-img" src="https://blogger.googleusercontent.com/img/a/AVvXsEh-sDEhElY8B_F9ieNLvDEK9Fjs4SRX8f_7XANk3h0a9qotbbTqKebyb-JIPkENmOzwU5rn3-LvdmYqsO96Vo26aqxZtYA42Cwxx56l47bKvPj5jjPtgKfPLr69hmraJkjkw9xZ4VPYpi66tcppncZmjIU0yf009THXNqtfnV4HaDN_WVGC0bIAkC76CQ" alt="Soal 28">
+                Diketahui $QA:AP=3:1$. Luas juring $AOB = 36\ \text{cm}$. Luas daerah yang diarsir adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">28 cm$^2$</li><li data-option="B">30 cm$^2$</li><li data-option="C">32 cm$^2$</li><li data-option="D">34 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 30 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>71.</b> Sebuah persegi berada di dalam lingkaran (titik sudut menyentuh lingkaran). Jika sisi persegi 10 cm, luas lingkaran adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">50$\pi$</li><li data-option="B">100$\pi$</li><li data-option="C">25$\pi$</li><li data-option="D">200$\pi$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 31 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>72.</b> Luas daerah yang diarsir pada gambar persegi dengan sisi 14 cm yang di dalamnya terdapat 4 buah seperempat lingkaran (membentuk "bintang" di tengah) adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">42 cm$^2$</li><li data-option="B">84 cm$^2$</li><li data-option="C">112 cm$^2$</li><li data-option="D">154 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 32 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>73.</b> Jarum panjang sebuah jam bergerak dari angka 12 ke angka 3. Jika panjang jarum 14 cm, luas daerah yang disapu jarum adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">154 cm$^2$</li><li data-option="B">308 cm$^2$</li><li data-option="C">616 cm$^2$</li><li data-option="D">44 cm$^2$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 33 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>74.</b> Keliling bangun setengah lingkaran padat (termasuk diameter) dengan jari-jari 7 cm adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">22 cm</li><li data-option="B">36 cm</li><li data-option="C">44 cm</li><li data-option="D">58 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 34 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>75.</b> Dua lingkaran masing-masing berjari-jari 10 cm. Jika kedua lingkaran saling berpotongan di pusat masing-masing, keliling daerah irisannya adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$\frac{20}{3}\pi$</li><li data-option="B">$\frac{40}{3}\pi$</li><li data-option="C">20$\pi$</li><li data-option="D">40$\pi$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 35 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>76.</b> Sebuah lintasan lari terdiri dari dua bagian lurus sejajar sepanjang 100 m dan dua setengah lingkaran di ujungnya. Jika diameter setengah lingkaran 60 m, panjang lintasan dalam satu putaran adalah... ($\pi=3,14$)
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">388,4 m</li><li data-option="B">400 m</li><li data-option="C">328,4 m</li><li data-option="D">514 m</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 36 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>77.</b> Tiga koin identik dengan jari-jari $r$ disusun saling bersinggungan membentuk segitiga. Luas daerah kosong di antara ketiga koin tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$r^2(\sqrt{3} - \frac{\pi}{2})$</li><li data-option="B">$r^2(\sqrt{3} - \pi)$</li><li data-option="C">$r^2(2\sqrt{3} - \pi)$</li><li data-option="D">$r^2(\frac{1}{2}\sqrt{3} - \frac{\pi}{6})$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 37 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>78.</b> Jika luas juring adalah $40$ cm$^2$ dan panjang busurnya 10 cm, maka jari-jari lingkaran tersebut adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">4 cm</li><li data-option="B">8 cm</li><li data-option="C">10 cm</li><li data-option="D">16 cm</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Baru 38 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal Baru | Level: Penalaran</div>
+                <b>79.</b> Sebuah busur lingkaran panjangnya $4\pi$. Jika keliling lingkarannya $12\pi$, luas juring yang dibentuk busur tersebut jika jari-jari 6 adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$6\pi$</li><li data-option="B">$12\pi$</li><li data-option="C">$18\pi$</li><li data-option="D">$24\pi$</li></ol></div>
+            </div>
+        </div>
+
+        <!-- Soal Original 12 -->
+        <div class="latihan-item">
+            <div class="soal-latihan">
+                <div class="keterangan-soal">Soal SMA DEL 2020 | Level: HOTS</div>
+                <b>80.</b> Luas daerah di antara dua lingkaran sepusat dengan jari-jari $R$ dan $r$ (dimana $R>r$) adalah $\pi T^2$. Maka hubungan T dengan jari-jari adalah...
+                <div class="pilihan-ganda-container"><ol class="pilihan-ganda"><li data-option="A">$T = R-r$</li><li data-option="B">$T^2 = R^2 - r^2$</li><li data-option="C">$T^2 = R^2 + r^2$</li><li data-option="D">$T = \sqrt{R+r}$</li></ol></div>
+            </div>
+        </div>
+
+        <div class="kunci-jawaban-section">
+            <h4>Kunci Jawaban Bagian 4</h4>
+            61.A | 62.C | 63.A | 64.B | 65.C | 66.B | 67.D | 68.C | 69.A | 70.A<br>
+            71.A | 72.A | 73.A | 74.A | 75.B | 76.B | 77.A | 78.D | 79.B | 80.B
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
