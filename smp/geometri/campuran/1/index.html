@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TPS-UTBK SBMPTN 2019 - mtkbarengkakdhanar</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax Configuration and Script -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      touch-action: pan-y;
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+
+    /* Screen Canvas for Scratchpad / Corat-coret */
+    #drawingCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 40;
+      pointer-events: none;
+      cursor: default;
+    }
+    #drawingCanvas.active-draw {
+      pointer-events: auto;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* Card styling & relative positioning for Watermark */
+    .question-card {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border-radius: 1rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .question-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    /* TikZ based SVG watermark in the background of each question card */
+    .card-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      opacity: 0.06;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      width: 250px;
+      height: 280px;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Radio button options styling */
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.65rem;
+      border: 1.5px solid #e2e8f0;
+      background-color: #ffffff;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      margin-bottom: 0.5rem;
+    }
+    .option-label:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .option-label.selected-correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d;
+    }
+    .option-label.selected-wrong {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c;
+    }
+
+    details summary {
+      cursor: pointer;
+      user-select: none;
+    }
+    details[open] summary {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-xs">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <!-- SVG Vector replica of the TikZ Logo -->
+        <svg class="w-10 h-10 text-teal-700 shrink-0" viewBox="0 0 200 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="16" y="16" width="168" height="168" rx="20" stroke="currentColor" stroke-width="14" stroke-linejoin="round" />
+          <line x1="100" y1="16" x2="100" y2="184" stroke="currentColor" stroke-width="12" />
+          <line x1="16" y1="100" x2="184" y2="100" stroke="currentColor" stroke-width="12" />
+          <!-- Plus -->
+          <line x1="58" y1="38" x2="58" y2="78" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <line x1="38" y1="58" x2="78" y2="58" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <!-- Minus -->
+          <line x1="122" y1="58" x2="162" y2="58" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <!-- Times -->
+          <line x1="44" y1="128" x2="72" y2="156" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <line x1="72" y1="128" x2="44" y2="156" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <!-- Division -->
+          <line x1="122" y1="142" x2="162" y2="142" stroke="currentColor" stroke-width="11" stroke-linecap="round" />
+          <circle cx="142" cy="124" r="6.6" fill="currentColor" />
+          <circle cx="142" cy="160" r="6.6" fill="currentColor" />
+          <text x="100" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-weight="bold" font-size="20" fill="currentColor">mtkbarengkakdhanar</text>
+        </svg>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-800 tracking-tight leading-tight">TPS-UTBK SBMPTN 2019</h1>
+          <p class="text-xs text-teal-700 font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-graduation-cap text-xs"></i> Kemampuan Kuantitatif & Matematika
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline-block text-xs bg-teal-50 text-teal-800 px-3 py-1 rounded-full border border-teal-200 font-medium">
+          <i class="fa-solid fa-list-check mr-1 text-teal-600"></i> 50 Soal Lengkap (No. 1 - 50)
+        </span>
+        <button onclick="toggleAllSolutions()" id="btnToggleAll" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-lg transition border border-slate-300">
+          <i class="fa-solid fa-eye mr-1"></i> Buka Semua Pembahasan
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <canvas id="drawingCanvas"></canvas>
+
+  <!-- Floating Scratchpad Control Dock -->
+  <aside class="fixed bottom-4 right-4 z-50 flex flex-wrap items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-xl border border-slate-300">
+    <button id="toggleDrawBtn" onclick="toggleDrawingMode()" class="px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
+      <i class="fa-solid fa-pen-nib"></i> <span id="drawStatusText">Mode Coret: MATI</span>
+    </button>
+
+    <div id="drawControls" class="hidden flex items-center gap-1.5 border-l border-slate-200 pl-2">
+      <!-- Color Picker -->
+      <button onclick="setColor('#ef4444')" class="w-6 h-6 rounded-full bg-red-500 ring-2 ring-transparent focus:ring-offset-1 focus:ring-red-400" title="Merah"></button>
+      <button onclick="setColor('#2563eb')" class="w-6 h-6 rounded-full bg-blue-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-blue-400" title="Biru"></button>
+      <button onclick="setColor('#0d9488')" class="w-6 h-6 rounded-full bg-teal-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-teal-400" title="Teal"></button>
+      <button onclick="setColor('#1e293b')" class="w-6 h-6 rounded-full bg-slate-800 ring-2 ring-transparent focus:ring-offset-1 focus:ring-slate-600" title="Hitam"></button>
+      <button onclick="setEraser()" id="eraserBtn" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs border border-slate-300" title="Penghapus">
+        <i class="fa-solid fa-eraser"></i>
+      </button>
+      <button onclick="clearCanvas()" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-xs border border-rose-200" title="Hapus Semua Coretan">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- SVG Watermark Symbol Template definition -->
+  <svg style="display:none;">
+    <g id="dhanar-logo-mark">
+      <rect x="16" y="16" width="168" height="168" rx="20" stroke="#0f766e" stroke-width="12" fill="none" stroke-linejoin="round" />
+      <line x1="100" y1="16" x2="100" y2="184" stroke="#0f766e" stroke-width="10" />
+      <line x1="16" y1="100" x2="184" y2="100" stroke="#0f766e" stroke-width="10" />
+      <line x1="58" y1="38" x2="58" y2="78" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <line x1="38" y1="58" x2="78" y2="58" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <line x1="122" y1="58" x2="162" y2="58" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <line x1="44" y1="128" x2="72" y2="156" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <line x1="72" y1="128" x2="44" y2="156" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <line x1="122" y1="142" x2="162" y2="142" stroke="#0f766e" stroke-width="9" stroke-linecap="round" />
+      <circle cx="142" cy="124" r="5.5" fill="#0f766e" />
+      <circle cx="142" cy="160" r="5.5" fill="#0f766e" />
+      <text x="100" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="19" fill="#0f766e">mtkbarengkakdhanar</text>
+    </g>
+  </svg>
+
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- SOAL 1 -->
+    <article class="question-card p-5 sm:p-6" id="soal-1">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 1 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Segitiga & Aturan Cosinus</span>
+        </div>
+        <p class="font-medium text-slate-800 mb-3">Perhatikan gambar di bawah ini!</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWvklqRstFnig6Nnc38SmfE_krq1rV02kMqkbTqmVNjO8wnFRzZi6oBMSMCecd70N7CmEnAc7GbhDNaA9UxFfz6JuNTuEUFF-CKjauPsKLsddbBippZJMKi4ejbLgwxQyaugfQ4w53OdbO/s1600/UTBK+2019+berapakah+nilai+x.jpg" alt="Soal 1 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 font-medium mb-3">Pada segitiga di atas, jika diketahui perbandingan panjang sisi $7AB = 5BC = 5CA$, maka nilai dari $\cos x^{\circ}$ adalah...</p>
+        
+        <!-- Pilihan Ganda Biasa -->
+        <div class="space-y-2 mt-4 text-sm" data-question="q1">
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{3}{14}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="correct" class="mt-1 mr-3"><span>$(B)\ \dfrac{5}{14}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(C)\ \dfrac{1}{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(D)\ \dfrac{9}{14}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{11}{14}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <!-- Pembahasan -->
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-3 leading-relaxed">
+            <p>Dari perbandingan $7AB = 5BC = 5CA$, misalkan $AB = t$. Maka diperoleh:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$BC = \dfrac{7}{5}t \quad \text{dan} \quad CA = \dfrac{7}{5}t$</p>
+            <p>Dengan menerapkan <b>aturan cosinus</b> pada sudut $x^\circ$ yang diapit oleh sisi $AB$ dan $CA$ serta berhadapan dengan sisi $BC$:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\begin{align}
+              \cos x^{\circ} &amp; = \dfrac{AB^{2} + CA^{2} - BC^{2}}{2 \cdot AB \cdot CA} \\
+              \cos x^{\circ} &amp; = \dfrac{(t)^{2} + \left(\dfrac{7}{5}t\right)^{2} - \left(\dfrac{7}{5}t\right)^{2}}{2 \cdot t \cdot \left(\dfrac{7}{5}t\right)} = \dfrac{t^{2}}{\dfrac{14}{5}t^{2}} = \dfrac{5}{14}
+              \end{align}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) $\dfrac{5}{14}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 2 -->
+    <article class="question-card p-5 sm:p-6" id="soal-2">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 2 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Trigonometri & Garis Tinggi</span>
+        </div>
+        <p class="font-medium text-slate-800 mb-3">Perhatikan gambar di bawah ini!</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjwM3AR0QsHiU1m7fPH1iq8r4om5XsyTf-M53jR3Q1h4ZOXZoL-VhhAkmxriOPqsVnxOtZoQeB77LUFQmEIrlUuiPZ2rf-G0qjk5_EKn9pmlAW-lQvVix5NB__YBNh4bP8pKlzCVR3XJuLW/s1600/UTBK+2019+berapakah+panjang+CD.jpg" alt="Soal 2 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui segitiga $ABC$ siku-siku di $C$ dengan panjang $AC=7$ dan $BC=5$. Jika $CD$ merupakan garis tinggi yang ditarik dari titik $C$ tegak lurus ke sisi hipotenusa $AB$, maka panjang $CD$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q2">
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{24}{\sqrt{74}}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{30}{\sqrt{74}}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="correct" class="mt-1 mr-3"><span>$(C)\ \dfrac{35}{\sqrt{74}}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(D)\ \dfrac{35}{12}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{7}{5}\sqrt{74}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-3 leading-relaxed">
+            <p>Berdasarkan teorema Pythagoras pada segitiga siku-siku $ABC$:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$AB = \sqrt{AC^2 + BC^2} = \sqrt{7^2 + 5^2} = \sqrt{49 + 25} = \sqrt{74}$</p>
+            <p>Melalui perbandingan luas segitiga $\triangle ABC$:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\begin{align}
+              \text{Luas } \triangle ABC = \dfrac{1}{2} \cdot AB \cdot CD &amp; = \dfrac{1}{2} \cdot AC \cdot BC \\
+              CD \cdot \sqrt{74} &amp; = 7 \cdot 5 \\
+              CD &amp; = \dfrac{35}{\sqrt{74}}
+              \end{align}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $\dfrac{35}{\sqrt{74}}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 3 -->
+    <article class="question-card p-5 sm:p-6" id="soal-3">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 3 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Kesebangunan Segitiga</span>
+        </div>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRIWULcpupWdAeeM0vmu4gUAklP75g230mTed_3vpNGcuNwcjsHpYZP_0J8K6e2AwCV09ENr10gisRuVm7Xqk7i0GJJLO4L5opDIIsGpvOzRPzZa3jJ8fvgcFVx1KdR4ywyPqETUB5RR7u/s1600/Jarak+E+ke+AB+UTBK+2019+%25282%2529.jpg" alt="Soal 3 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Segilima $ABCED$ terbentuk dari dua segitiga siku-siku $ABC$ dan $BAD$ dengan $AD=3$ dan $BC=5$. Sisi $\overline{AC}$ dan $\overline{BD}$ berpotongan di titik $E$. Jika luas $\triangle AEB=12$, maka jarak titik $E$ dari garis $\overline{AB}$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q3">
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{8}{15}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{11}{8}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="correct" class="mt-1 mr-3"><span>$(C)\ \dfrac{15}{8}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(D)\ \dfrac{24}{11}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{24}{5}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-3 leading-relaxed">
+            <p>Tarik garis tinggi $EF \perp AB$, sehingga jarak $E$ ke $AB$ adalah panjang ruas $EF$.</p>
+            <div class="flex justify-center my-2">
+              <img class="rounded border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLSStLdUxdUfADhhW_MbOuiqfq3jCllWNdq2oc74UKUtZU84lYhppMcaz0QVpBVIGVGC2m828Pg0IUqbs_-ZlHGkHn_lEHScO24G2tYS9pz9mpqAJD0ur9OopepkuRd2WSHfYsVOdGisBR/s1600/Jarak+E+ke+AB+UTBK+2019+%25283%2529.jpg" alt="Pembahasan Soal 3">
+            </div>
+            <p><b>Cara 1 (Sifat Garis Sejajar & Rumus Optik Kesebangunan):</b></p>
+            <p>Karena $AD \perp AB$ dan $BC \perp AB$, maka $AD \parallel EF \parallel BC$. Pada perpotongan diagonal trapesium berlaku hubungan:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $$\begin{aligned}
+              \dfrac{1}{EF} &= \dfrac{1}{AD} + \dfrac{1}{BC} \\
+              \dfrac{1}{EF} &= \dfrac{1}{3} + \dfrac{1}{5} = \dfrac{8}{15} \implies EF = \dfrac{15}{8}
+              \end{aligned}$$
+            </div>
+            <p><b>Cara 2 (Verifikasi Luas $\triangle AEB = 12$):</b></p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200 text-xs sm:text-sm">
+              $$\begin{aligned}
+              \text{Luas } \triangle AEB &= \dfrac{1}{2} \cdot AB \cdot EF = 12 \implies AB \cdot EF = 24 \\
+              \triangle AFE \sim \triangle ABC &\implies \dfrac{EF}{5} = \dfrac{AF}{AB} \implies AF = \dfrac{24}{5} \\
+              \triangle BFE \sim \triangle BAD &\implies \dfrac{EF}{3} = \dfrac{BF}{AB} \implies BF = \dfrac{24}{3} = 8 \\
+              AB &= AF + BF = \dfrac{24}{5} + 8 = \dfrac{64}{5} \\
+              EF &= \dfrac{24}{AB} = \dfrac{24}{\frac{64}{5}} = \dfrac{120}{64} = \dfrac{15}{8}
+              \end{aligned}$$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $\dfrac{15}{8}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 4 -->
+    <article class="question-card p-5 sm:p-6" id="soal-4">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 4 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Bidang Trapesium</span>
+        </div>
+        <p class="font-medium text-slate-800 mb-3">Perhatikan gambar di bawah ini!</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjhJkBS5D4ViezdSGraLPk-R_XgQHU2QVbi_EhtzP7ETC_UWSHk3d-WZ1LlRhg-4UuHujUfVxytWJe8eOYvVoBcjpfAzSNzutz_5jcJkblm1CxylCzSHtwF0I_L3FUAL4K0TE3Yn8Y6Jnwa/s1600/trapesium+soal+tps+utbk+sbmptn+2019.jpg" alt="Soal 4 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Pada trapesium siku-siku $ABCD$ di atas, panjang diagonal $AC=9$, panjang sisi alas $AB=4$, dan luas $\triangle ABC=10$. Panjang sisi atas $\overline{DC}$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q4">
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(A)\ \sqrt{45}$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="correct" class="mt-1 mr-3"><span>$(B)\ 2\sqrt{14}$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(C)\ 2\sqrt{15}$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(D)\ 7$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(E)\ \sqrt{65}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-3 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7LUB7HbP4mDh7Uiouc2F3IcBQmeieHUhy1reauxg6m7oAA-HDIhTCo9Z1IWXoKSUdaDv8JxxN68r0zUKzAaiWJdW3wX9INwxRwSmGjWtu6cWe4Q3V9dfggzpfanZRdsA9BlAm3PkKRPn3/s1600/trapesium+soal+tps+utbk+sbmptn+2019+pembahasan.jpg" alt="Pembahasan Soal 4">
+            </div>
+            <p>Tinggi trapesium adalah $AD$. Luas segitiga $ABC$ dengan alas $AB$ dan tinggi $AD$:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\text{Luas } \triangle ABC = \dfrac{1}{2} \cdot AB \cdot AD \implies 10 = \dfrac{1}{2} \cdot 4 \cdot AD \implies AD = 5$
+            </div>
+            <p>Pada segitiga siku-siku $ADC$ (siku-siku di $D$):</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $DC = \sqrt{AC^2 - AD^2} = \sqrt{9^2 - 5^2} = \sqrt{81 - 25} = \sqrt{56} = 2\sqrt{14}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) $2\sqrt{14}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 5 -->
+    <article class="question-card p-5 sm:p-6" id="soal-5">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 5 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Sudut</span>
+        </div>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSftLvmSEMfoWZEmKT7E2eHAV28LtdtjB4dNXWSou-vJ4YsfT2LxroYyuC-EicOdA8c1dDENZX__oBgx0nCnbPndzpvmt6j82gegtxAHNstKlSHkxQDFVFL2PLtg4fmfkzpgTbKGcF1Dgo/s1600/berapakah+x-y+UTBK+2019.jpg" alt="Soal 5 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Pada bangun di atas, $\overline{AE}$ berpotongan dengan $\overline{BD}$ di titik $C$. Jika segitiga $ABC$ merupakan segitiga sama sisi ($AB=BC=AC$), maka nilai dari $x - y$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q5">
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(A)\ -30^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="correct" class="mt-1 mr-3"><span>$(B)\ 0^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(C)\ 30^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(D)\ 45^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(E)\ 60^{\circ}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Karena $\triangle ABC$ sama sisi ($AB=BC=AC$), maka semua sudut dalamnya sama besar:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$x^{\circ} = 60^{\circ} \quad \text{dan} \quad \angle ACB = 60^{\circ}$</p>
+            <p>Sudut $\angle ACB$ bertolak belakang dengan $y^{\circ}$, sehingga besarnya sama:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$y^{\circ} = \angle ACB = 60^{\circ}$</p>
+            <p>Maka diperoleh:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $x - y = 60^{\circ} - 60^{\circ} = 0^{\circ}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) $0^{\circ}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 6 -->
+    <article class="question-card p-5 sm:p-6" id="soal-6">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 6 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Aljabar & Persamaan Kuadrat</span>
+        </div>
+        <p class="text-slate-800 mb-3">Misalkan $(x,y)$ menyatakan koordinat suatu titik pada bidang-$xy$ dengan $x-y \neq 0$. Jika berlaku persamaan $x^{2}-2xy+y^{2}=4(x-y)$, maka nilai dari $x-y$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q6">
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(A)\ -4$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(B)\ -2$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(C)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="correct" class="mt-1 mr-3"><span>$(D)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(E)\ 8$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Bentuk ruas kiri dapat difaktorkan menjadi kuadrat sempurna:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\begin{align}
+              x^{2}-2xy+y^{2} &amp; = 4(x-y) \\
+              (x-y)^{2} &amp; = 4(x-y)
+              \end{align}$
+            </div>
+            <p>Karena disyaratkan bahwa $x-y \neq 0$, kita dapat membagi kedua ruas dengan $(x-y)$:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200 font-mono text-center">
+              $x - y = 4$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 4</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 7 -->
+    <article class="question-card p-5 sm:p-6" id="soal-7">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 7 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Sistem Persamaan Linear</span>
+        </div>
+        <p class="text-slate-800 mb-3">Misalkan $(x,y)$ memenuhi sistem persamaan $y+2x=x-y$ dan $(x-y)^{2}=x-y$ dengan syarat $x \neq y$. Nilai dari $x+y$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q7">
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(A)\ -\dfrac{2}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(B)\ -\dfrac{1}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="correct" class="mt-1 mr-3"><span>$(D)\ \dfrac{1}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{2}{3}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Dari persamaan $(x-y)^{2} = x-y$ dan karena $x-y \neq 0$, bagi kedua ruas dengan $(x-y)$:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$x - y = 1 \implies x = y + 1$</p>
+            <p>Sederhanakan persamaan pertama:</p>
+            <p class="bg-white p-2 rounded border border-slate-200 font-mono text-center">$y + 2x = x - y \implies x + 2y = 0$</p>
+            <p>Substitusikan $x = y + 1$ ke dalam persamaan tersebut:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $(y + 1) + 2y = 0 \implies 3y = -1 \implies y = -\dfrac{1}{3}$
+            </div>
+            <p>Maka $x = -\dfrac{1}{3} + 1 = \dfrac{2}{3}$. Sehingga:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $x + y = \dfrac{2}{3} + \left(-\dfrac{1}{3}\right) = \dfrac{1}{3}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) $\dfrac{1}{3}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 8 -->
+    <article class="question-card p-5 sm:p-6" id="soal-8">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 8 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Ketaksamaan Segitiga</span>
+        </div>
+        <p class="font-medium text-slate-800 mb-3">Perhatikan gambar di bawah ini!</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhb0hI6QN4wWotlg6Xj_6Hqn0rgQmNu7c55mjgrO_hkTOnMtOclPQLU8d29ztvTWrocqmsylcDeJR1cEh-Jqht4vEsEAnP23tP4SgvgS_uphaP0Ua7hEzC1azkJGgE2TDPnrk7FQRJ9r4gX/s1600/UTBK+2019+berapakah+nilai+x.jpg" alt="Soal 8 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Pada segitiga di atas, jika diketahui panjang sisi $BC=3$ dan sisi $AC=2$, maka semua kemungkinan nilai panjang sisi $AB$ berada pada rentang...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q8">
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(A)\ 0 \lt AB \lt 5$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="correct" class="mt-1 mr-3"><span>$(B)\ 1 \lt AB \lt 5$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(C)\ 2 \lt AB \lt 5$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(D)\ 1 \lt AB \lt 3$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(E)\ 3 \lt AB \lt 5$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Berdasarkan <b>teorema ketaksamaan segitiga</b> (*Triangle Inequality Theorem*), panjang sisi ketiga segitiga harus berada di antara selisih mutlak dan jumlah dari dua sisi lainnya:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\begin{align}
+              |BC - AC| &amp; \lt AB \lt BC + AC \\
+              |3 - 2| &amp; \lt AB \lt 3 + 2 \\
+              1 &amp; \lt AB \lt 5
+              \end{align}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) $1 \lt AB \lt 5$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 9 -->
+    <article class="question-card p-5 sm:p-6" id="soal-9">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 9 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Analitik & Kuadran</span>
+        </div>
+        <p class="text-slate-800 mb-3">Titik $P(x,y)$ merupakan titik potong antara garis $x+4=0$ dan garis $2x+y=6$. Koordinat titik $P$ tersebut terletak pada...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q9">
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(A)$ Kuadran I</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="correct" class="mt-1 mr-3"><span>$(B)$ Kuadran II</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(C)$ Kuadran III</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(D)$ Kuadran IV</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(E)$ Tepat pada sumbu koordinat</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Dari persamaan garis pertama: $x + 4 = 0 \implies x = -4$.</p>
+            <p>Substitusikan $x = -4$ ke dalam persamaan garis kedua:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $2(-4) + y = 6 \implies -8 + y = 6 \implies y = 14$
+            </div>
+            <p>Maka titik potongnya adalah $P(-4, 14)$. Karena absis $x \lt 0$ (negatif) dan ordinat $y \gt 0$ (positif), titik $P$ berada pada <b>Kuadran II</b>.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) Kuadran II</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 10 -->
+    <article class="question-card p-5 sm:p-6" id="soal-10">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 10 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Kesebangunan Segitiga</span>
+        </div>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEipykJMKOgO6L6_93gRt45AP5NEQN6kaVG9fq3zooQIGLu-iAJyBxE-qrcRCdzw-01-cK877eWj0j4EFpqIwy8Jp1KdU8vikyj1baTuYWrNxKTkxat1XVYDMCPYwIFTnOMApGO_6p98j11C/s1600/Segitiga+Siku-siku+ABC+UTBK+2019.jpg" alt="Soal 10 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3">Pada segitiga siku-siku $ABC$, titik $D$ terletak pada sisi $AC$ sehingga $AC=2AD$ dan ruas $DE$ sejajar dengan $BC$. Jika $DE+BC=12$, maka panjang ruas $DE$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q10">
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(B)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="correct" class="mt-1 mr-3"><span>$(C)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(D)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(E)\ 8$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Karena $DE \parallel BC$, maka segitiga $\triangle ADE$ sebangun dengan segitiga $\triangle ACB$ ($\triangle ADE \sim \triangle ACB$).</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $\dfrac{DE}{BC} = \dfrac{AD}{AC} = \dfrac{AD}{2AD} = \dfrac{1}{2} \implies BC = 2 \cdot DE$
+            </div>
+            <p>Substitusikan ke dalam persamaan $DE + BC = 12$:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $DE + 2 \cdot DE = 12 \implies 3 \cdot DE = 12 \implies DE = 4$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 4</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 11 -->
+    <article class="question-card p-5 sm:p-6" id="soal-11">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 11 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Garis Sejajar & Sudut</span>
+        </div>
+        <p class="text-slate-800 mb-2">Dua garis sejajar dipotong oleh dua garis berbeda yang tidak sejajar seperti pada gambar di bawah ini.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjUTchT6m-UhQWwF02MIhgvfRk0XQuAtz3P1RGc8XfDY8pPOPXcRF_UKrjn5VajBstXAi1p7gv8E3XLxZFfZCRKv9OD1x9KDTHWH1AeXodePC3if_8J25uUf7RlCyvaVdVEOnvYhrw875yn/s1600/dua+garis+sejajar+soal+tps+utbk+sbmptn+2019.jpg" alt="Soal 11 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-3 font-medium">Jika diketahui nilai sudut $x=110^{\circ}$ dan $z=135^{\circ}$, maka nilai $y$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q11">
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(A)\ 105^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(B)\ 110^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="correct" class="mt-1 mr-3"><span>$(C)\ 115^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(D)\ 120^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(E)\ 125^{\circ}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-3 leading-relaxed">
+            <p>Perhatikan segitiga yang dibentuk oleh dua garis pemotong dan salah satu garis sejajar:</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 my-2">
+              <img class="rounded border" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4f-v6NMUmZw7pDmp9_WARGyEMeBubR1yHqlmeJaNzoThRDOg96gCTty8tNZWUhM3N4hMaBCRKIq8nIf6EpnDG3VOgcCL27g1O6ulxoD7h_U2wWxTBeJhNx6GT-gHFZFmF1AGDDexrJ7U9/s1600/dua+garis+sejajar+soal+tps+utbk+sbmptn+2019+Pembahasan+x.jpg" alt="11a">
+              <img class="rounded border" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZ24l-3IgsgFm3CaNkx9VXyDFR-KBHqdB02uP2BO7x60leQHBEBTE9PSWqrgQ4z7TqwYb44FFa82rTcLxHdwH3NcKEMiCYe9ikN0t3wzjmwJ5uxK5U15RSnAeGQcd1qsZvcIloq6j5JVO5/s1600/dua+garis+sejajar+soal+tps+utbk+sbmptn+2019+Pembahasan+z.jpg" alt="11b">
+              <img class="rounded border" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiM2zo82EPIQ_cPpIGP5m7OMIjHTkTwadP77vgqu7hBB1sXR_vaY1yXxtnfXvhdMkVqNmN7hV5IPDR_QUJ_MdlMWzrb3NWa45mzr28tVuKulpBlLdpbLZ0TSXmHIiIz8DpIOeAas3C0pBTc/s1600/dua+garis+sejajar+soal+tps+utbk+sbmptn+2019+Pembahasan+xz.jpg" alt="11c">
+            </div>
+            <p>1. Sudut dalam sepihak dengan $x=110^{\circ}$ adalah $180^{\circ} - 110^{\circ} = 70^{\circ}$.</p>
+            <p>2. Sudut dalam yang berpelurus dengan $z=135^{\circ}$ adalah $180^{\circ} - 135^{\circ} = 45^{\circ}$.</p>
+            <p>3. Sudut $y$ merupakan <b>sudut luar segitiga</b> tersebut yang nilainya sama dengan jumlah dua sudut dalam yang tidak bersisian dengannya:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $y = 70^{\circ} + 45^{\circ} = 115^{\circ}$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $115^{\circ}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 12 -->
+    <article class="question-card p-5 sm:p-6" id="soal-12">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 12 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Relasi dan Fungsi</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Jika $A=\left \{ 1,2,3 \right \}$ dan $B=\left \{ a,b,c \right \}$, maka himpunan pasangan terurut $R=\left \{ (1,a),(2,b),(3,c),(a,1),(b,2),(c,3) \right \}$ menyatakan...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q12">
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(A)$ fungsi dari $A$ ke $B$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(B)$ relasi dari $A$ ke $B$ tetapi BUKAN fungsi dari $A$ ke $B$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(C)$ fungsi dari $B$ ke $A$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(D)$ relasi dari $B$ ke $A$ tetapi BUKAN fungsi dari $B$ ke $A$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="correct" class="mt-1 mr-3"><span>$(E)$ BUKAN relasi dari $A$ ke $B$ dan BUKAN relasi dari $B$ ke $A$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Relasi dari $A$ ke $B$ adalah himpunan bagian dari $A \times B$, di mana semua pasangan $(x,y)$ harus memenuhi $x \in A$ dan $y \in B$.</p>
+            <p>Himpunan di atas memuat pasangan $(a,1)$ di mana $a \notin A$, sehingga bukan relasi dari $A$ ke $B$. Begitu pula memuat $(1,a)$ di mana $1 \notin B$, sehingga bukan relasi dari $B$ ke $A$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) BUKAN relasi dari A ke B dan BUKAN relasi dari B ke A.</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 13 -->
+    <article class="question-card p-5 sm:p-6" id="soal-13">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 13 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Definisi Pemetaan</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $y=f(x)$, manakah pemetaan berikut yang tepat?</p>
+        <div class="flex justify-center my-4 overflow-x-auto">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhxcpePVlJ403_V3lsjPOl8HJ43O2FGAzo5eHMfvkFz8hmGrhiWdiEG7v_9d1a0rh7AiaFNCXkod0TJ4TxKGTVlKhsQ1ONfkxuVwEZKCi-MgEvxdHUgLL3UG6mnWhjLAU_Az5xV2VzKAV8Y/s1600/UTBK+2019+yang+merupakan+pemetaan+adalah+ABC.jpg" alt="Soal 13 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4 text-sm" data-question="q13">
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q13" value="wrong" class="mr-2"><span>(A)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q13" value="wrong" class="mr-2"><span>(B)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q13" value="wrong" class="mr-2"><span>(C)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q13" value="correct" class="mr-2"><span>(D)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q13" value="wrong" class="mr-2"><span>(E)</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Syarat suatu fungsi $y=f(x)$ adalah setiap elemen domain $x$ harus berpasangan tepat dengan satu elemen kodomain $y$ (tidak boleh ada $x$ yang bercabang).</p>
+            <p>Pada tabel (D), setiap nilai $x$ berpasangan tepat satu kali: $(0,1)$, $(1,2)$, $(-1,-1)$, $(2,1)$, $(-2,0)$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D)</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 14 -->
+    <article class="question-card p-5 sm:p-6" id="soal-14">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 14 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Uji Garis Vertikal</span>
+        </div>
+        <p class="text-slate-800 mb-3">Di antara grafik berikut yang <b>TIDAK</b> menyatakan $y$ sebagai fungsi dari $x$ adalah...</p>
+        <div class="flex justify-center my-4 overflow-x-auto">
+          <img class="rounded-lg border border-slate-200 max-h-80 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFObgYwD6o_DIutcv2TyocbJmdgP3Ov2IctQk9AnUZxcfpilaklb-Qio_Q7MqGnCTMdLDPGQABykJgvuJNJ0S8-MzxO1eWA6N6lDV32jjAVaWBJreqeNOwto2c8ZBodfZJ0DgXALC7Uigw/s1600/UTBK+2019+yang+bukan+merupakan+y%253Df%2528x%2529+ABCDE.jpg" alt="Soal 14 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4 text-sm" data-question="q14">
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q14" value="wrong" class="mr-2"><span>(A)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q14" value="wrong" class="mr-2"><span>(B)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q14" value="correct" class="mr-2"><span>(C)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q14" value="wrong" class="mr-2"><span>(D)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q14" value="wrong" class="mr-2"><span>(E)</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Gunakan tes garis vertikal (*Vertical Line Test*). Jika ditarik garis tegak dan memotong kurva di lebih dari 1 titik, maka grafik tersebut BUKAN fungsi dari $x$.</p>
+            <p>Grafik (C) adalah kurva lingkaran, di mana satu nilai $x$ memiliki dua nilai $y$, sehingga bukan fungsi.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C)</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 15 -->
+    <article class="question-card p-5 sm:p-6" id="soal-15">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 15 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Grafik Fungsi</span>
+        </div>
+        <p class="text-slate-800 mb-3">Di antara grafik berikut yang menyatakan $y$ sebagai fungsi dari $x$ adalah...</p>
+        <div class="flex justify-center my-4 overflow-x-auto">
+          <img class="rounded-lg border border-slate-200 max-h-80 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia-N6NOpwFhVwYn04tlGqAMZAicMqn9zcB1thTQXlksnpSmPpU3iSp6nq9RcNf85vTmT2JqSO1JngG7cPlgqPDNb-WDdFi97sBgS7xcoJF9crkitirug-GoZapDuK5tILaivKZIBA1AO0M/s1600/UTBK+2019+yang+merupakan+fungsi+y%253Df%2528x%2529+ABCDE.jpg" alt="Soal 15 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4 text-sm" data-question="q15">
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q15" value="wrong" class="mr-2"><span>(A)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q15" value="wrong" class="mr-2"><span>(B)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q15" value="wrong" class="mr-2"><span>(C)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q15" value="correct" class="mr-2"><span>(D)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q15" value="wrong" class="mr-2"><span>(E)</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Dengan *Vertical Line Test*, kurva (D) adalah garis mendatar (fungsi konstan $y=c$). Setiap garis vertikal memotong tepat pada satu titik.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D)</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 16 -->
+    <article class="question-card p-5 sm:p-6" id="soal-16">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 16 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Uji Garis Vertikal</span>
+        </div>
+        <p class="text-slate-800 mb-3">Di antara grafik berikut yang <b>TIDAK</b> menyatakan $y$ sebagai fungsi dari $x$ adalah...</p>
+        <div class="flex justify-center my-4 overflow-x-auto">
+          <img class="rounded-lg border border-slate-200 max-h-80 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkcVu2bH9Lx3gfnb8XM5QFkxDgnrKoWW3xEBwUWiojqNiP4K5RpxwEsLaR7rdQU7Rd75FbZ5V-fyEotEzcZ3mfNmCl2vQL7qZR9L6wqSlbTYKaNEAjyqFrElVZ5-v6qpbmqjvR1E-fW-mg/s1600/UTBK+2019+yang+tidak+merupakan+fungsi+y%253Df%2528x%2529+ABCDE.jpg" alt="Soal 16 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4 text-sm" data-question="q16">
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q16" value="wrong" class="mr-2"><span>(A)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q16" value="wrong" class="mr-2"><span>(B)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q16" value="wrong" class="mr-2"><span>(C)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q16" value="correct" class="mr-2"><span>(D)</span></label>
+          <label class="option-label justify-center font-semibold"><input type="radio" name="q16" value="wrong" class="mr-2"><span>(E)</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Pada grafik (D), kurva hiperbola horizontal $\frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1$ memiliki nilai $x$ yang memetakan ke 2 nilai $y$ berbeda.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D)</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 17 -->
+    <article class="question-card p-5 sm:p-6" id="soal-17">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 17 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Sudut</span>
+        </div>
+        <p class="text-slate-800 mb-2">Segitiga $BDC$ sama kaki dengan $BC=DC$. Titik $A$ terletak pada garis perpanjangan $\overline{CB}$. Jika $p=36^{\circ}$ dan $q=50^{\circ}$, maka nilai $x$ adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjdK_11hwFDkNI6iH9UafoLHrvbnIUlEF84_rU_0JTUPUsd19QsTc1z50M35eSZVifgvjcnNrDMkdBdSBdg_KGczkf2-r4JCY4DvR9x3iFPv4hgPTHDZ3LYUDcwRKDanujAvqEcVcNNt_fG/s1600/UTBk+2019+segitiga+BDC.jpg" alt="Soal 17 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q17">
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(A)\ 27$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="correct" class="mt-1 mr-3"><span>$(B)\ 29$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(C)\ 31$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(D)\ 33$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(E)\ 35$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj4DbGd6bxn7Ym6nquTB7iSZNGdBzKf_roKXpwiMcDKAW49TvX1tOppmG4gCmLWXsEvJ0yEX2jtv-rA5yGcGAOONhygR3b9hJTn2Z6FVmTDiZBA03SV-OOJWcAgdapjkXgZY-xqk168_Shs/s1600/UTBk+2019+segitiga+BDC+%2528jawab%2529.jpg" alt="Pembahasan 17">
+            </div>
+            <p>Dari segitiga sama kaki $BDC$ dan sudut-sudut yang bersesuaian, diperoleh nilai $x = 29^{\circ}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) 29</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 18 -->
+    <article class="question-card p-5 sm:p-6" id="soal-18">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 18 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Sudut</span>
+        </div>
+        <p class="text-slate-800 mb-2">Segitiga $BEA$ sama kaki dengan $BA=EA$. Titik $C$ terletak pada garis perpanjangan $AB$. Titik $F$ terletak pada $AE$. Titik $D$ adalah titik potong antara $FC$ dan $BE$. Jika $\angle A=54^{\circ}$ dan $\angle EFD=68^{\circ}$, maka nilai $x$ adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi74liDVs-grecraUrqhO1Ddy5-YEG73eXN7vXIXnWW_CwXYK8-wDwQ9lu_TUh3FCB0U4uF_I35hd7XjZ8MqmJqv-BqwhsdFqaa6vdrti7TWhy3k8Ed74dpQHweF0-nSXOZM_aB5nKhIWvP/s1600/UTBK+2019+berapakah+besar+sudut+x.jpg" alt="Soal 18 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q18">
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(A)\ 23$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(B)\ 29$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(C)\ 37$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(D)\ 43$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="correct" class="mt-1 mr-3"><span>$(E)\ 49$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$\triangle BEA$ sama kaki dengan $BA=EA$ dan $\angle A=54^{\circ}$. Maka $\angle ABE = \angle AEB = \frac{180^{\circ}-54^{\circ}}{2} = 63^{\circ}$.</p>
+            <p>Pada $\triangle EFD$, sudut $\angle EDF = 180^{\circ} - (68^{\circ} + 63^{\circ}) = 49^{\circ}$. Karena sudut bertolak belakang, $x = \angle EDF = 49^{\circ}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) 49</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 19 -->
+    <article class="question-card p-5 sm:p-6" id="soal-19">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 19 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Sudut</span>
+        </div>
+        <p class="text-slate-800 mb-2">Segitiga $ADC$ sama kaki dengan $AC=DC$. Titik $B$ terletak pada $\overline{AC}$. Jika $p=65^{\circ}$ dan $q=20^{\circ}$, maka nilai $x$ adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjT-jhyaFkPBGDN0CbVqUkvoi2BQddNJ-83maWjsL7qAfEuhiQwBO6xjFJ0vrrY4qlpFS6kgBAheQ_McpjI-NZ0EhCfdm2_5ZE0q7h5zwsl87m1TN0leaKBGtnwL2N7jXcGORLYUE8GIDD/s1600/UTBk+2019+segitiga+ADC+sama+kaki.jpg" alt="Soal 19 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q19">
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(A)\ 95$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(B)\ 100$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(C)\ 105$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="correct" class="mt-1 mr-3"><span>$(D)\ 110$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(E)\ 115$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEisiO2yY9NQh0sUC3b0dQtFv7bidFvmTdX7vx1hQyrHQxhXYpMuLMH7fjnubD7M2DmZCylcoVg28_Vr8FNsCXtF57I_C2P18siZrHX6iqdisJvozry0fFeTI3AOKm88-8DWawuKNSjpE7yE/s1600/UTBk+2019+segitiga+ADC+sama+kaki+%2528jawab%2529.jpg" alt="Pembahasan 19">
+            </div>
+            <p>Melalui penjumlahan sudut luar segitiga dan sifat segitiga sama kaki, diperoleh besar sudut $x = 110^{\circ}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 110</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 20 -->
+    <article class="question-card p-5 sm:p-6" id="soal-20">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 20 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Garis Sejajar & Perbandingan</span>
+        </div>
+        <p class="text-slate-800 mb-2">Perhatikan gambar di bawah. Dua tiang tegak $AD=8$ dan $BC=3$ berdiri tegak lurus pada garis tanah $AB$. Garis $AC$ dan $BD$ berpotongan di titik $E$. Jarak titik $E$ ke garis $AB$ adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_far8DMdgk-aZfet0og4FPemBv59DTZnrFdCKHeQF-VnPWYE5I66tfjZu9SrP99xL3LZJcCCsUv-lgEZIQC3ScqM6m4CsWL40Kmr80LGPh48yK2bu6QRGo_ieYohN9iU_FdvH5l5CI17D/s1600/Jarak+E+ke+AB+UTBK+2019.jpg" alt="Soal 20 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q20">
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{8}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{11}{8}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(C)\ \dfrac{11}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="correct" class="mt-1 mr-3"><span>$(D)\ \dfrac{24}{11}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{33}{24}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Misalkan $EF \perp AB$ adalah jarak dari titik $E$ ke garis $AB$. Karena $AD \parallel EF \parallel BC$, maka berlaku rumus kesebangunan:</p>
+            <div class="overflow-x-auto p-2 bg-white rounded border border-slate-200">
+              $$\begin{aligned}
+              \dfrac{1}{EF} &= \dfrac{1}{BC} + \dfrac{1}{AD} \\
+              \dfrac{1}{EF} &= \dfrac{1}{3} + \dfrac{1}{8} = \dfrac{8+3}{24} = \dfrac{11}{24} \implies EF = \dfrac{24}{11}
+              \end{aligned}$$
+            </div>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) $\dfrac{24}{11}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 21 -->
+    <article class="question-card p-5 sm:p-6" id="soal-21">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 21 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Luas Lingkaran</span>
+        </div>
+        <p class="text-slate-800 mb-2">Di dalam lingkaran besar terdapat dua lingkaran kecil identik yang saling bersinggungan di pusat lingkaran besar seperti pada gambar.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhEouCCqU3u-AI2WRWxvFJloLDfVQVu9I70psRMW_6BWLW74T2mDilryzoheZnU_pmSlZR7SsLM9lB-iTUeSTpV2fa4TAGwFnqDI0UeA-NKAT6nl6dDwKJX8qE80gzEb5oRMfW5zMgF8svp/s1600/UTBK+2019+berapakah+luas+yang+di+arsir+pada+lingkaran.jpg" alt="Soal 21 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-2">Kedua lingkaran kecil menyinggung lingkaran besar, jika jari-jari lingkaran kecil adalah $2\ \text{cm}$, maka luas daerah yang diarsir adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q21">
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2 \pi\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(B)\ 4 \pi\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="correct" class="mt-1 mr-3"><span>$(C)\ 8 \pi\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(D)\ 16 \pi\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(E)\ 18 \pi\ \text{cm}^{2}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Jari-jari lingkaran besar $r_B = 2 \times r_K = 2 \times 2 = 4\ \text{cm}$.</p>
+            <p>$\text{Luas arsir} = \text{Luas } \bigcirc_B - 2 \times \text{Luas } \bigcirc_K = \pi(4^2) - 2\pi(2^2) = 16\pi - 8\pi = 8\pi\ \text{cm}^2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $8\pi\ \text{cm}^{2}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 22 -->
+    <article class="question-card p-5 sm:p-6" id="soal-22">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 22 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Persegi</span>
+        </div>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiar60RJX2ybN_Ui3Ayx45ljh1E6bunqgBsvkRFRnBkKntHJtHoFKGGmA-psxtHMf_NmQxIOKeMpsa8fsRNGyrOg7W7dHXeVK-863jocIlXGpt6yfJsuDDhx8pLF5FUp2uuaHUnb-ByHJsT/s1600/persegi+ABCD+soal+tps+utbk+sbmptn+2019.jpg" alt="Soal 22 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-2">Pada persegi $ABCD$,</p>
+        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs sm:text-sm mb-4">
+          $\begin{align} (i)\ &amp; AE=EF=FB=AG=GH=HD,\\ (ii)\ &amp; \overline{EK}\ \text{dan}\ \overline{FL}\ \text{tegak lurus terhadap}\ \overline{AB} \text{ dan} \\ (iii)\ &amp; \overline{GK}\ \text{dan}\ \overline{HL}\ \text{tegak lurus terhadap}\ \overline{AD} \end{align}$
+        </div>
+        <p class="text-slate-800 mb-2 font-medium">Rasio antara luas daerah yang tidak diarsir dan daerah yang diarsir adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q22">
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(A)\ 4 : 5$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(B)\ 4 : 7$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="correct" class="mt-1 mr-3"><span>$(C)\ 1 : 2$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(D)\ 1 : 3$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(E)\ 2 : 1$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgvqeq57cDzrhv-3-P-80dO4MG0Zpy1399I-JHDWVT4drs8ccZzYMUNnrkaHkjHNlcPQfAYoUMX8VgQMM_zpN0Nx79teeGpYkq7sef-GN2S8cDMKDW8QCP4fYtMgC38GJka11NL89s9JZJ6/s1600/persegi+ABCD+soal+tps+utbk+sbmptn+2019+pembahasan.jpg" alt="Pembahasan 22">
+            </div>
+            <p>Membagi persegi menjadi $3 \times 3 = 9$ petak sama besar. Daerah putih = 3 petak, daerah diarsir = 6 petak. Rasio = $3 : 6 = 1 : 2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 1 : 2</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 23 -->
+    <article class="question-card p-5 sm:p-6" id="soal-23">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 23 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Luas Layang-layang</span>
+        </div>
+        <p class="text-slate-800 mb-2">Segi empat $ABCD$ merupakan layang-layang seperti pada gambar. Jika $AB=1$ dan $AD=\sqrt{5}$, maka luas layang-layang tersebut dalam satuan luas adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgN1d52e5LBiO5UpUymIrrW8JTj7r1V8I8hMy6BSz316PA7w6bSCeoyTpDUpTrqi1wIe1V2DvZQ2j-ag-mDI9I_ZpJTu1u9RyCl01kyEzQNOEwVtwaaJImbQYC01-Ev2Z0B0zwDJQ7cRoF-/s1600/UTBK+2019+Luas+layang-layang.jpg" alt="Soal 23 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q23">
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{3}{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="correct" class="mt-1 mr-3"><span>$(B)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(C)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(D)\ \sqrt{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(E)\ 2\sqrt{5}+2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg67hvxORlIEcTeUv0dzVlVqfoiBY41Xi-3QAR8d6abxsK79LqpUp2OUHCSzBCYHublzm0txz_7g-JxkYT-Z83KQ6-d7LcG5sMA2AmtH2CU1e-z0GP73pOXeLUi3X6yre0CUAddlXBsCrln/s1600/UTBK+2019+Luas+layang-layang+Pembahasan.jpg" alt="Pembahasan 23">
+            </div>
+            <p>$\text{Luas layang-layang} = [ABC] + [ACD] = \dfrac{1}{2} + \dfrac{3}{2} = 2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) 2</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 24 -->
+    <article class="question-card p-5 sm:p-6" id="soal-24">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 24 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Geometri Sudut</span>
+        </div>
+        <p class="text-slate-800 mb-2">Perhatikan gambar berikut:</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4jE0ukYajKtRsaLqd5kMfB7wjZRKtlqh_N8grl2QN7BQj0Akfi28dYEN2diBH5piwY0z463fGLmg7oj-FpD9cZAD4GQxctAO06orboJerOVV0E9vY6YP5dkgRQ8dOW_PlHCTXp4aISugV/s1600/UTBK+2019+berapa+sudut+x.jpg" alt="Soal 24 UTBK 2019" loading="lazy">
+        </div>
+        <p class="text-slate-800 mb-2">Jika $AD=BD$, $\angle P=55^{\circ}$, $\angle Q=48^{\circ}$, maka sudut $x$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q24">
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(A)\ 20^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="correct" class="mt-1 mr-3"><span>$(B)\ 22^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(C)\ 24^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(D)\ 28^{\circ}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(E)\ 30^{\circ}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <div class="flex justify-center my-2">
+              <img class="rounded border max-h-56 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvGtNEsKvUee_JaFQ3R9z7PmFlVrZ-b1BpExmRZTteJHSmjAUwJ6nx5BrrZZpvXFxj3zJk60z_p-91CLY8jmZIfQmTc4eBoFW_bvOzLkIMtH2sc1Lua-uFqR5PF3OkjAqfSkZDlU3kE4Z9/s1600/UTBK+2019+berapa+sudut+x+pembahasan.jpg" alt="Pembahasan 24">
+            </div>
+            <p>Sudut $x^{\circ} = 180^{\circ} - (110^{\circ} + 48^{\circ}) = 22^{\circ}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) $22^{\circ}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 25 -->
+    <article class="question-card p-5 sm:p-6" id="soal-25">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 25 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Luas Segitiga</span>
+        </div>
+        <p class="text-slate-800 mb-2">Jika panjang $QT = TU = UR = 6\ \text{cm}$ dan panjang $SW = WV = VR = 4\ \text{cm}$, maka luas daerah yang diarsir adalah...</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfrnLsq6IBQsPFnGGo8ldOh-ZT8K2YzaMjGIJcg2yTEb8OTD6q4_bmOIZW9NRi73CEsEsqbOAiEn-KiE5v4Ui2c5JAAde9890aQcLGl0PxsYNXY4dgfx2hX1wKFrBv8FikILzmti7IOpWY/s1600/UTBK+2019+berapakah+luas+yang+diarsir.jpg" alt="Soal 25 UTBK 2019" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q25">
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(A)\ 36\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(B)\ 54\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="correct" class="mt-1 mr-3"><span>$(C)\ 72\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(D)\ 90\ \text{cm}^{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(E)\ 108\ \text{cm}^{2}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$[PTU] = \frac{1}{2} \cdot TU \cdot PQ = \frac{1}{2} \cdot 6 \cdot 12 = 36\ \text{cm}^2$.</p>
+            <p>$[PVW] = \frac{1}{2} \cdot VW \cdot PS = \frac{1}{2} \cdot 4 \cdot 18 = 36\ \text{cm}^2$.</p>
+            <p>$\text{Total} = 36 + 36 = 72\ \text{cm}^2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $72\ \text{cm}^{2}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 26 -->
+    <article class="question-card p-5 sm:p-6" id="soal-26">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 26 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Aritmatika Sosial</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Harga dua pensil $\text{Rp}5.000,00$ dan harga satu buku $b$ rupiah. Amir membeli $5$ buku dan $10$ pensil. Jika ia membayar $\text{Rp}100.000,00$, maka jumlah uang kembalian yang diterimanya adalah... rupiah</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q26">
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(A)\ 25000-5b$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(B)\ 50000+b$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="correct" class="mt-1 mr-3"><span>$(C)\ 75000-5b$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(D)\ 35000-5b$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(E)\ 75000+5b$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Harga 1 pensil $= 5000/2 = 2500$. Biaya belanja $= 5b + 10(2500) = 5b + 25.000$.</p>
+            <p>Kembalian $= 100.000 - (5b + 25.000) = 75.000 - 5b$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) $75000-5b$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 27 -->
+    <article class="question-card p-5 sm:p-6" id="soal-27">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 27 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Operasi Simbol Khusus</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Operasi $\odot$ pada himpunan bilangan bulat didefinisikan dengan aturan $a \odot b = a(b-1)-a$. Nilai $3 \odot (2 \odot 4)$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q27">
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(A)\ -6$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(B)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(C)\ 5$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="correct" class="mt-1 mr-3"><span>$(D)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(E)\ 11$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$2 \odot 4 = 2(4-1)-2 = 2(3)-2 = 4$.</p>
+            <p>$3 \odot 4 = 3(4-1)-3 = 3(3)-3 = 6$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 6</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 28 -->
+    <article class="question-card p-5 sm:p-6" id="soal-28">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 28 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Operasi Simbol Khusus</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Operasi $\odot$ pada himpunan bilangan bulat didefinisikan dengan aturan $a \odot b = (a+b)b+2$. Nilai $-2 \odot ((-1) \odot 2)$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q28">
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(A)\ 7$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(B)\ 12$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="correct" class="mt-1 mr-3"><span>$(C)\ 10$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(D)\ 16$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(E)\ 25$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$(-1) \odot 2 = ((-1)+2)(2)+2 = (1)(2)+2 = 4$.</p>
+            <p>$-2 \odot 4 = ((-2)+4)(4)+2 = (2)(4)+2 = 10$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 10</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 29 -->
+    <article class="question-card p-5 sm:p-6" id="soal-29">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 29 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Operasi Simbol Khusus</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Operasi $\odot$ pada himpunan bilangan bulat didefinisikan dengan aturan $x \odot y = x^{y}-y$. Nilai $2 \odot (2 \odot 3)$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q29">
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(A)\ 22$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(B)\ 23$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(C)\ 25$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="correct" class="mt-1 mr-3"><span>$(D)\ 27$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(E)\ 29$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$2 \odot 3 = 2^{3}-3 = 8-3 = 5$.</p>
+            <p>$2 \odot 5 = 2^{5}-5 = 32-5 = 27$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 27</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 30 -->
+    <article class="question-card p-5 sm:p-6" id="soal-30">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 30 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Operasi Simbol Khusus</span>
+        </div>
+        <p class="text-slate-800 mb-3 leading-relaxed">Operasi $\odot$ pada himpunan bilangan bulat didefinisikan dengan aturan $a \odot b = b(a+1)-a$. Nilai $2 \odot (1 \odot 3)$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q30">
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(A)\ 5$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(B)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(C)\ 7$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(D)\ 10$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="correct" class="mt-1 mr-3"><span>$(E)\ 13$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$1 \odot 3 = 3(1+1)-1 = 3(2)-1 = 5$.</p>
+            <p>$2 \odot 5 = 5(2+1)-2 = 5(3)-2 = 13$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) 13</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 31 -->
+    <article class="question-card p-5 sm:p-6" id="soal-31">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 31 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Penyederhanaan Aljabar</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $a \neq 2$, maka bentuk $\dfrac{4-a^{2}}{3a-6}$ senilai dengan...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q31">
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(A)\ \dfrac{-a-3}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{3-a}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(C)\ \dfrac{a+2}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="correct" class="mt-1 mr-3"><span>$(D)\ \dfrac{-a-2}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{a-2}{3}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$\dfrac{4-a^2}{3a-6} = \dfrac{-(a-2)(a+2)}{3(a-2)} = \dfrac{-(a+2)}{3} = \dfrac{-a-2}{3}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) $\dfrac{-a-2}{3}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 32 -->
+    <article class="question-card p-5 sm:p-6" id="soal-32">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 32 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pecahan Aljabar</span>
+        </div>
+        <p class="text-slate-800 mb-3">Hasil pengurangan $\dfrac{3x+y}{3}$ oleh $\dfrac{y-2x}{2}$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q32">
+          <label class="option-label"><input type="radio" name="q32" value="correct" class="mt-1 mr-3"><span>$(A)\ \dfrac{12x-y}{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{12x+y}{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(C)\ \dfrac{-12x+y}{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(D)\ \dfrac{3x+8y}{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(E)\ \dfrac{3x-2y}{6}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$\dfrac{3x+y}{3} - \dfrac{y-2x}{2} = \dfrac{2(3x+y) - 3(y-2x)}{6} = \dfrac{6x+2y - 3y + 6x}{6} = \dfrac{12x-y}{6}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (A) $\dfrac{12x-y}{6}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 33 -->
+    <article class="question-card p-5 sm:p-6" id="soal-33">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 33 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Perkalian Aljabar</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika diketahui $x \neq 0$ dan $x \neq 2$ maka nilai dari perkalian $\dfrac{4x-8}{x}$ dengan $\dfrac{3x}{x-2}$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q33">
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(A)\ 8$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(B)\ 10$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="correct" class="mt-1 mr-3"><span>$(C)\ 12$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(D)\ 14$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(E)\ 16$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$\left(\dfrac{4(x-2)}{x}\right)\left(\dfrac{3x}{x-2}\right) = \dfrac{12x(x-2)}{x(x-2)} = 12$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 12</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 34 -->
+    <article class="question-card p-5 sm:p-6" id="soal-34">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 34 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Bentuk Akar & Eksponen</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui $a,b,c$ adalah bilangan real positif. Jika $\dfrac{\sqrt{bc}}{\sqrt{a^{4} \cdot b^{5}}}=ab$, maka $c=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q34">
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(A)\ a^{5}b^{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(B)\ a^{6}b^{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(C)\ a^{6}b^{7}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(D)\ a^{7}b^{6}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="correct" class="mt-1 mr-3"><span>$(E)\ a^{6}b^{6}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$\sqrt{bc} = ab \sqrt{a^4 b^5} \implies bc = (ab)^2 (a^4 b^5) = a^2 b^2 a^4 b^5 = a^6 b^7 \implies c = \dfrac{a^6 b^7}{b} = a^6 b^6$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) $a^{6}b^{6}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 35 -->
+    <article class="question-card p-5 sm:p-6" id="soal-35">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 35 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Logaritma</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $xy=50$ dan ${}^2\!\log x - {}^2\!\log y=1$, maka nilai $x-y=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q35">
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(A)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(B)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(C)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(D)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="correct" class="mt-1 mr-3"><span>$(E)\ 5$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>${}^2\!\log \left(\frac{x}{y}\right) = 1 \implies \frac{x}{y} = 2 \implies x = 2y$.</p>
+            <p>Substitusi ke $xy=50 \implies 2y^2 = 50 \implies y^2 = 25 \implies y=5$, maka $x=10$. Sehingga $x-y = 10-5 = 5$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) 5</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 36 -->
+    <article class="question-card p-5 sm:p-6" id="soal-36">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 36 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Eksponen</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $x$ memenuhi persamaan $3^{x+2}-3^{x}=32$, maka nilai $\dfrac{45^{x}}{5^{x-1}}=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q36">
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(A)\ 50$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(B)\ 60$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(C)\ 70$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="correct" class="mt-1 mr-3"><span>$(D)\ 80$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(E)\ 90$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$3^x(3^2-1) = 32 \implies 3^x(8) = 32 \implies 3^x = 4$.</p>
+            <p>$\dfrac{45^x}{5^{x-1}} = \dfrac{9^x \cdot 5^x}{5^x \cdot 5^{-1}} = 9^x \cdot 5 = (3^x)^2 \cdot 5 = 4^2 \cdot 5 = 16 \cdot 5 = 80$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 80</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 37 -->
+    <article class="question-card p-5 sm:p-6" id="soal-37">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 37 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Persamaan Eksponen</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $x$ memenuhi persamaan $\sqrt{3^{8x^{5}}}=\dfrac{1}{81}$, maka nilai $x^{3}+x=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q37">
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(B)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(D)\ -1$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="correct" class="mt-1 mr-3"><span>$(E)\ -2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$3^{4x^5} = 3^{-4} \implies 4x^5 = -4 \implies x^5 = -1 \implies x = -1$.</p>
+            <p>$x^3 + x = (-1)^3 + (-1) = -2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) -2</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 38 -->
+    <article class="question-card p-5 sm:p-6" id="soal-38">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 38 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Bentuk Pangkat</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $\sqrt[3]{4^{x+1}}=2\sqrt{8^{x}}$ maka nilai $x=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q38">
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(A)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(B)\ \dfrac{2}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(C)\ \dfrac{1}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(D)\ -\dfrac{1}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="correct" class="mt-1 mr-3"><span>$(E)\ -\dfrac{2}{5}$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$2^{\frac{2x+2}{3}} = 2^{1 + \frac{3x}{2}} \implies \dfrac{2x+2}{3} = \dfrac{3x+2}{2} \implies 4x + 4 = 9x + 6 \implies 5x = -2 \implies x = -\dfrac{2}{5}$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (E) $-\dfrac{2}{5}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 39 -->
+    <article class="question-card p-5 sm:p-6" id="soal-39">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 39 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Persamaan Kuadrat Eksponen</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $x_{1}$ dan $x_{2}$ memenuhi $2^{x^{2}}\ 4^{-2x}=\dfrac{1}{8}$ dengan $x_{1} \gt x_{2}$, maka $x_{1}-x_{2}=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q39">
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(A)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="correct" class="mt-1 mr-3"><span>$(B)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(C)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(D)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(E)\ 5$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$2^{x^2 - 4x} = 2^{-3} \implies x^2 - 4x + 3 = 0 \implies (x-1)(x-3) = 0$.</p>
+            <p>Maka $x_1 = 3$ dan $x_2 = 1$. Selisih $x_1 - x_2 = 3 - 1 = 2$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) 2</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 40 -->
+    <article class="question-card p-5 sm:p-6" id="soal-40">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 40 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Teorema Vieta</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $a$ dan $b$ akar-akar persamaan kuadrat $x^{2}-(a+3)x+c=0$ dan $b^{2}=a+10$ maka $c^{2}+c=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q40">
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(B)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="correct" class="mt-1 mr-3"><span>$(C)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(D)\ 8$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(E)\ 10$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Jumlah akar: $a+b = a+3 \implies b = 3$.</p>
+            <p>$b^2 = a+10 \implies 9 = a+10 \implies a = -1$.</p>
+            <p>Hasil kali akar: $c = ab = (-1)(3) = -3$.</p>
+            <p>$c^2 + c = (-3)^2 + (-3) = 9 - 3 = 6$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 6</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 41 -->
+    <article class="question-card p-5 sm:p-6" id="soal-41">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 41 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Akar-Akar Persamaan Kuadrat</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $a$ dan $b$ akar-akar persamaan kuadrat $x^{2}-13ax+p+13=0$ dan $p+2b=-25$ maka $a-b=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q41">
+          <label class="option-label"><input type="radio" name="q41" value="wrong" class="mt-1 mr-3"><span>$(A)\ 13$</span></label>
+          <label class="option-label"><input type="radio" name="q41" value="correct" class="mt-1 mr-3"><span>$(B)\ 11$</span></label>
+          <label class="option-label"><input type="radio" name="q41" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q41" value="wrong" class="mt-1 mr-3"><span>$(D)\ -11$</span></label>
+          <label class="option-label"><input type="radio" name="q41" value="wrong" class="mt-1 mr-3"><span>$(E)\ -13$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$a+b = 13a \implies b = 12a$.</p>
+            <p>$p = -25 - 2b = -25 - 24a$. Dari $ab = p+13 \implies a(12a) = -24a - 25 + 13 \implies 12a^2 + 24a + 12 = 0 \implies (a+1)^2 = 0 \implies a = -1$.</p>
+            <p>Maka $b = 12(-1) = -12$. Jadi $a - b = -1 - (-12) = 11$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) 11</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 42 -->
+    <article class="question-card p-5 sm:p-6" id="soal-42">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 42 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Kuadrat</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui grafik fungsi kuadrat $f$ memotong garis $y=4$ di titik $(1,4)$ dan $(5,4)$. Jika grafik fungsi $f$ menyinggung sumbu-$x$, maka grafik fungsi $f$ memotong garis $x=2$ di...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q42">
+          <label class="option-label"><input type="radio" name="q42" value="wrong" class="mt-1 mr-3"><span>$(A)\ (2,-2)$</span></label>
+          <label class="option-label"><input type="radio" name="q42" value="wrong" class="mt-1 mr-3"><span>$(B)\ (2,-1)$</span></label>
+          <label class="option-label"><input type="radio" name="q42" value="wrong" class="mt-1 mr-3"><span>$(C)\ (2,0)$</span></label>
+          <label class="option-label"><input type="radio" name="q42" value="correct" class="mt-1 mr-3"><span>$(D)\ (2,1)$</span></label>
+          <label class="option-label"><input type="radio" name="q42" value="wrong" class="mt-1 mr-3"><span>$(E)\ (2,2)$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Sumbu simetri: $x_p = \frac{1+5}{2} = 3$. Karena menyinggung sumbu-$x$, puncak berada di $(3,0)$.</p>
+            <p>Bentuk fungsi: $y = a(x-3)^2$. Melalui $(1,4) \implies 4 = a(1-3)^2 = 4a \implies a=1$.</p>
+            <p>Persamaan fungsi $f(x) = (x-3)^2$. Untuk $x=2 \implies y = (2-3)^2 = 1$. Titik potong $(2,1)$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) (2,1)</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 43 -->
+    <article class="question-card p-5 sm:p-6" id="soal-43">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 43 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Kuadrat</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui grafik fungsi kuadrat $f$ mempunyai sumbu simetri $x=4$. Jika grafik fungsi $f$ melalui titik $(2,0)$ dan $(0,3)$, maka ordinat titik puncak grafik fungsi $f$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q43">
+          <label class="option-label"><input type="radio" name="q43" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q43" value="wrong" class="mt-1 mr-3"><span>$(B)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q43" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q43" value="correct" class="mt-1 mr-3"><span>$(D)\ -1$</span></label>
+          <label class="option-label"><input type="radio" name="q43" value="wrong" class="mt-1 mr-3"><span>$(E)\ -2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$y = a(x-4)^2 + y_p$.</p>
+            <p>Titik $(2,0) \implies 0 = 4a + y_p \implies y_p = -4a$.</p>
+            <p>Titik $(0,3) \implies 3 = 16a + y_p = 16a - 4a = 12a \implies a = \frac{1}{4}$.</p>
+            <p>Maka $y_p = -4 \cdot \frac{1}{4} = -1$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) -1</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 44 -->
+    <article class="question-card p-5 sm:p-6" id="soal-44">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 44 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Komposisi</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $f(x-1) = 5x^{2}+6x-6$, $g(x)=ax+1$, dan $(g \circ f)(1)=-51$ maka nilai $f(a+1)=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q44">
+          <label class="option-label"><input type="radio" name="q44" value="wrong" class="mt-1 mr-3"><span>$(A)\ -2$</span></label>
+          <label class="option-label"><input type="radio" name="q44" value="correct" class="mt-1 mr-3"><span>$(B)\ -6$</span></label>
+          <label class="option-label"><input type="radio" name="q44" value="wrong" class="mt-1 mr-3"><span>$(C)\ -7$</span></label>
+          <label class="option-label"><input type="radio" name="q44" value="wrong" class="mt-1 mr-3"><span>$(D)\ -11$</span></label>
+          <label class="option-label"><input type="radio" name="q44" value="wrong" class="mt-1 mr-3"><span>$(E)\ -13$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Untuk $x=2 \implies f(1) = 5(4) + 6(2) - 6 = 26$.</p>
+            <p>$(g \circ f)(1) = g(26) = 26a + 1 = -51 \implies 26a = -52 \implies a = -2$.</p>
+            <p>Maka $f(a+1) = f(-2+1) = f(-1)$. Untuk $x-1 = -1 \implies x = 0$.</p>
+            <p>$f(-1) = 5(0)^2 + 6(0) - 6 = -6$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) -6</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 45 -->
+    <article class="question-card p-5 sm:p-6" id="soal-45">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 45 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Invers</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui $f\left(\dfrac{1}{x}\right) = \dfrac{x}{2+3x}$ dan $f^{-1}(a)=-1$, maka nilai $a=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q45">
+          <label class="option-label"><input type="radio" name="q45" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q45" value="correct" class="mt-1 mr-3"><span>$(B)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q45" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q45" value="wrong" class="mt-1 mr-3"><span>$(D)\ -1$</span></label>
+          <label class="option-label"><input type="radio" name="q45" value="wrong" class="mt-1 mr-3"><span>$(E)\ -2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$f^{-1}(a) = -1 \iff f(-1) = a$.</p>
+            <p>Untuk $\dfrac{1}{x} = -1 \implies x = -1$.</p>
+            <p>$a = f(-1) = \dfrac{-1}{2+3(-1)} = \dfrac{-1}{-1} = 1$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (B) 1</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 46 -->
+    <article class="question-card p-5 sm:p-6" id="soal-46">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 46 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Invers</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui $f(2x) = -\dfrac{1}{x+2}$ dan $f^{-1}\left(\dfrac{2}{a}\right)=3a$, maka nilai $a=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q46">
+          <label class="option-label"><input type="radio" name="q46" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q46" value="wrong" class="mt-1 mr-3"><span>$(B)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q46" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q46" value="correct" class="mt-1 mr-3"><span>$(D)\ -1$</span></label>
+          <label class="option-label"><input type="radio" name="q46" value="wrong" class="mt-1 mr-3"><span>$(E)\ -2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$f^{-1}\left(\dfrac{2}{a}\right) = 3a \iff f(3a) = \dfrac{2}{a}$.</p>
+            <p>Karena $f(2x) = -\dfrac{1}{x+2}$, untuk input $3a$, pilih $x = \dfrac{3a}{2}$.</p>
+            <p>$f(3a) = -\dfrac{1}{\frac{3a}{2} + 2} = -\dfrac{2}{3a+4} = \dfrac{2}{a} \implies -a = 3a + 4 \implies 4a = -4 \implies a = -1$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) -1</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 47 -->
+    <article class="question-card p-5 sm:p-6" id="soal-47">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 47 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Komposisi Fungsi</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $f(x) = 3x+a$ dan $(f \circ f)(x)=9x+a+3$, maka nilai $f(a)=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q47">
+          <label class="option-label"><input type="radio" name="q47" value="wrong" class="mt-1 mr-3"><span>$(A)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q47" value="wrong" class="mt-1 mr-3"><span>$(B)\ 5$</span></label>
+          <label class="option-label"><input type="radio" name="q47" value="correct" class="mt-1 mr-3"><span>$(C)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q47" value="wrong" class="mt-1 mr-3"><span>$(D)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q47" value="wrong" class="mt-1 mr-3"><span>$(E)\ 2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$(f \circ f)(x) = 3(3x+a) + a = 9x + 4a$.</p>
+            <p>Diketahui $(f \circ f)(x) = 9x + a + 3 \implies 4a = a + 3 \implies 3a = 3 \implies a = 1$.</p>
+            <p>Maka $f(x) = 3x+1 \implies f(a) = f(1) = 3(1)+1 = 4$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 4</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 48 -->
+    <article class="question-card p-5 sm:p-6" id="soal-48">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 48 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Komposisi Fungsi</span>
+        </div>
+        <p class="text-slate-800 mb-3">Jika $f(x) = ax+3$ dan $(f \circ f)(x)=4x-3$, maka nilai $f(a)=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q48">
+          <label class="option-label"><input type="radio" name="q48" value="wrong" class="mt-1 mr-3"><span>$(A)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q48" value="wrong" class="mt-1 mr-3"><span>$(B)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q48" value="wrong" class="mt-1 mr-3"><span>$(C)\ 5$</span></label>
+          <label class="option-label"><input type="radio" name="q48" value="correct" class="mt-1 mr-3"><span>$(D)\ 7$</span></label>
+          <label class="option-label"><input type="radio" name="q48" value="wrong" class="mt-1 mr-3"><span>$(E)\ 9$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$(f \circ f)(x) = a(ax+3)+3 = a^2 x + 3a + 3 = 4x - 3$.</p>
+            <p>Maka $a^2 = 4 \implies a = \pm 2$. Konstanta: $3a+3 = -3 \implies 3a = -6 \implies a = -2$.</p>
+            <p>Fungsi $f(x) = -2x+3 \implies f(a) = f(-2) = -2(-2)+3 = 7$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) 7</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 49 -->
+    <article class="question-card p-5 sm:p-6" id="soal-49">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 49 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Invers Komposisi</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui $(f \circ f)^{-1}(11)=2p$ dan $f(2x-4)=3x-7$, maka nilai $p=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q49">
+          <label class="option-label"><input type="radio" name="q49" value="wrong" class="mt-1 mr-3"><span>$(A)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q49" value="wrong" class="mt-1 mr-3"><span>$(B)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q49" value="correct" class="mt-1 mr-3"><span>$(C)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q49" value="wrong" class="mt-1 mr-3"><span>$(D)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q49" value="wrong" class="mt-1 mr-3"><span>$(E)\ 5$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$f(2x-4) = 3x-7 \iff f^{-1}(3x-7) = 2x-4$.</p>
+            <p>Untuk $3x-7 = 11 \implies 3x = 18 \implies x = 6 \implies f^{-1}(11) = 2(6)-4 = 8$.</p>
+            <p>Untuk $3x-7 = 8 \implies 3x = 15 \implies x = 5 \implies f^{-1}(8) = 2(5)-4 = 6$.</p>
+            <p>$(f \circ f)^{-1}(11) = f^{-1}(f^{-1}(11)) = f^{-1}(8) = 6 = 2p \implies p = 3$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (C) 3</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 50 -->
+    <article class="question-card p-5 sm:p-6" id="soal-50">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 50 • UTBK 2019
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Fungsi Invers</span>
+        </div>
+        <p class="text-slate-800 mb-3">Diketahui $f\left(\dfrac{1}{2x}\right) = \dfrac{x}{3+x}$ dan $f^{-1}(a)=-\dfrac{1}{3}$, maka nilai $a=\cdots$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q50">
+          <label class="option-label"><input type="radio" name="q50" value="wrong" class="mt-1 mr-3"><span>$(A)\ 2$</span></label>
+          <label class="option-label"><input type="radio" name="q50" value="wrong" class="mt-1 mr-3"><span>$(B)\ 1$</span></label>
+          <label class="option-label"><input type="radio" name="q50" value="wrong" class="mt-1 mr-3"><span>$(C)\ 0$</span></label>
+          <label class="option-label"><input type="radio" name="q50" value="correct" class="mt-1 mr-3"><span>$(D)\ -1$</span></label>
+          <label class="option-label"><input type="radio" name="q50" value="wrong" class="mt-1 mr-3"><span>$(E)\ -2$</span></label>
+        </div>
+
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>$f^{-1}(a) = -\dfrac{1}{3} \iff f\left(-\dfrac{1}{3}\right) = a$.</p>
+            <p>Untuk $\dfrac{1}{2x} = -\dfrac{1}{3} \implies 2x = -3 \implies x = -\dfrac{3}{2}$.</p>
+            <p>$a = f\left(-\dfrac{1}{3}\right) = \dfrac{-\frac{3}{2}}{3 + \left(-\frac{3}{2}\right)} = \dfrac{-\frac{3}{2}}{\frac{3}{2}} = -1$.</p>
+            <p class="font-bold text-teal-800">$\therefore$ Pilihan yang sesuai adalah (D) -1</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+  </main>
+
+  <script>
+    // --- Interactive Quiz Radio Checkers ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const radioInputs = document.querySelectorAll('input[type="radio"]');
+      radioInputs.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const groupName = e.target.name;
+          const container = document.querySelector(`[data-question="${groupName}"]`);
+          const card = container.closest('.question-card');
+          const feedback = card.querySelector('.feedback-msg');
+          const labels = container.querySelectorAll('.option-label');
+
+          labels.forEach(lbl => {
+            lbl.classList.remove('selected-correct', 'selected-wrong');
+          });
+
+          const currentLabel = e.target.closest('.option-label');
+          if (e.target.value === 'correct') {
+            currentLabel.classList.add('selected-correct');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> Jawaban Anda Benar! Hebat!';
+          } else {
+            currentLabel.classList.add('selected-wrong');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 text-sm"></i> Kurang tepat, silakan coba lagi atau cek Pembahasan.';
+          }
+          feedback.classList.remove('hidden');
+        });
+      });
+    });
+
+    // --- Toggle all solutions at once ---
+    let allOpen = false;
+    function toggleAllSolutions() {
+      const detailsList = document.querySelectorAll('details');
+      const btn = document.getElementById('btnToggleAll');
+      allOpen = !allOpen;
+      detailsList.forEach(det => det.open = allOpen);
+      btn.innerHTML = allOpen 
+        ? '<i class="fa-solid fa-eye-slash mr-1"></i> Tutup Semua Pembahasan' 
+        : '<i class="fa-solid fa-eye mr-1"></i> Buka Semua Pembahasan';
+    }
+
+    // --- Scratchpad Canvas Drawing Engine ---
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let isDrawingModeActive = false;
+    let currentColor = '#ef4444';
+    let currentLineWidth = 3;
+    let isEraser = false;
+
+    function resizeCanvas() {
+      // Save canvas contents when resizing
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCtx.drawImage(canvas, 0, 0);
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      ctx.drawImage(tempCanvas, 0, 0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function toggleDrawingMode() {
+      isDrawingModeActive = !isDrawingModeActive;
+      const btn = document.getElementById('toggleDrawBtn');
+      const text = document.getElementById('drawStatusText');
+      const controls = document.getElementById('drawControls');
+
+      if (isDrawingModeActive) {
+        canvas.classList.add('active-draw');
+        btn.classList.replace('bg-teal-600', 'bg-rose-600');
+        btn.classList.replace('hover:bg-teal-700', 'hover:bg-rose-700');
+        text.innerText = 'Mode Coret: AKTIF';
+        controls.classList.remove('hidden');
+      } else {
+        canvas.classList.remove('active-draw');
+        btn.classList.replace('bg-rose-600', 'bg-teal-600');
+        btn.classList.replace('hover:bg-rose-700', 'hover:bg-teal-700');
+        text.innerText = 'Mode Coret: MATI';
+        controls.classList.add('hidden');
+      }
+    }
+
+    function setColor(color) {
+      isEraser = false;
+      currentColor = color;
+      currentLineWidth = 3;
+      document.getElementById('eraserBtn').classList.remove('bg-teal-200');
+    }
+
+    function setEraser() {
+      isEraser = true;
+      currentLineWidth = 24;
+      document.getElementById('eraserBtn').classList.add('bg-teal-200');
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Coordinate helper for both Mouse & Touch
+    function getCoords(e) {
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY
+        };
+      }
+      return {
+        x: e.clientX,
+        y: e.clientY
+      };
+    }
+
+    function startDrawing(e) {
+      if (!isDrawingModeActive) return;
+      isDrawing = true;
+      const { x, y } = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+
+    function draw(e) {
+      if (!isDrawing || !isDrawingModeActive) return;
+      e.preventDefault();
+      const { x, y } = getCoords(e);
+
+      ctx.save();
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = currentLineWidth;
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentLineWidth;
+      }
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function stopDrawing() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      ctx.closePath();
+    }
+
+    // Event Listeners for drawing
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDrawing);
+
+    canvas.addEventListener('touchstart', startDrawing, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDrawing);
+  </script>
+</body>
+</html>
