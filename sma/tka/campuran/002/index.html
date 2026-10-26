@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soal TO TKA Matematika SMA/SMK - Interaktif</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax Configuration and Script -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      touch-action: pan-y;
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+
+    /* Screen Canvas for Scratchpad */
+    #drawingCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 40;
+      pointer-events: none;
+      cursor: default;
+    }
+    #drawingCanvas.active-draw {
+      pointer-events: auto;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* Card styling */
+    .question-card {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border-radius: 1rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .question-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      opacity: 0.04;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      width: 260px;
+      height: 290px;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Multiple choice options */
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.65rem;
+      border: 1.5px solid #e2e8f0;
+      background-color: #ffffff;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      margin-bottom: 0.5rem;
+    }
+    .option-label:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .option-label.selected-correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d;
+    }
+    .option-label.selected-wrong {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c;
+    }
+
+    /* True/False Radio Buttons */
+    .tf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background-color: #f8fafc;
+      transition: all 0.15s ease;
+    }
+    .tf-btn:hover {
+      background-color: #f1f5f9;
+    }
+    .tf-btn.selected-correct {
+      background-color: #dcfce7 !important;
+      border-color: #22c55e !important;
+      color: #15803d !important;
+    }
+    .tf-btn.selected-wrong {
+      background-color: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+    }
+
+    details summary {
+      cursor: pointer;
+      user-select: none;
+    }
+    details[open] summary {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+
+  <!-- Watermark Template (Identik dengan mtkbarengkakdhanar) -->
+  <svg style="display:none;">
+    <g id="dhanar-logo-mark">
+      <rect x="16" y="16" width="168" height="168" rx="32" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="100" y1="16" x2="100" y2="184" stroke="currentColor" stroke-width="12"/>
+      <line x1="16" y1="100" x2="184" y2="100" stroke="currentColor" stroke-width="12"/>
+      <line x1="58" y1="38" x2="58" y2="78" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <line x1="38" y1="58" x2="78" y2="58" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <line x1="122" y1="58" x2="162" y2="58" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <line x1="44" y1="128" x2="72" y2="156" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <line x1="72" y1="128" x2="44" y2="156" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <line x1="122" y1="142" x2="162" y2="142" stroke="currentColor" stroke-width="11" stroke-linecap="round"/>
+      <circle cx="142" cy="124" r="6.5" fill="currentColor"/>
+      <circle cx="142" cy="160" r="6.5" fill="currentColor"/>
+      <text x="100" y="212" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="17" fill="currentColor" letter-spacing="-0.4">mtkbarengkakdhanar</text>
+    </g>
+  </svg>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-xs">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <svg class="w-10 h-10 text-teal-700 shrink-0" viewBox="0 0 200 225" fill="none">
+          <use href="#dhanar-logo-mark"/>
+        </svg>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-800 tracking-tight leading-tight">Soal TO TKA Matematika SMA/SMK</h1>
+          <p class="text-xs text-teal-700 font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-graduation-cap text-xs"></i> 30 Soal Terstruktur &amp; Evaluasi Interaktif
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline-block text-xs bg-teal-50 text-teal-800 px-3 py-1.5 rounded-full border border-teal-200 font-medium">
+          <i class="fa-solid fa-list-check mr-1 text-teal-600"></i> Lengkap Soal No. 1 - 30
+        </span>
+        <button onclick="document.getElementById('btn-periksa').click()" class="text-xs bg-teal-600 hover:bg-teal-700 text-white font-medium px-3 py-2 rounded-lg transition shadow-xs">
+          <i class="fa-solid fa-calculator mr-1"></i> Evaluasi Skor
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <canvas id="drawingCanvas"></canvas>
+
+  <!-- Scratchpad Floating Controls -->
+  <aside class="fixed bottom-4 right-4 z-50 flex flex-wrap items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-xl border border-slate-300">
+    <button id="toggleDrawBtn" onclick="toggleDrawingMode()" class="px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
+      <i class="fa-solid fa-pen-nib"></i> <span id="drawStatusText">Mode Coret: MATI</span>
+    </button>
+
+    <div id="drawControls" class="hidden flex items-center gap-1.5 border-l border-slate-200 pl-2">
+      <button onclick="setColor('#ef4444')" class="w-6 h-6 rounded-full bg-red-500 ring-2 ring-transparent focus:ring-offset-1 focus:ring-red-400" title="Merah"></button>
+      <button onclick="setColor('#2563eb')" class="w-6 h-6 rounded-full bg-blue-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-blue-400" title="Biru"></button>
+      <button onclick="setColor('#0d9488')" class="w-6 h-6 rounded-full bg-teal-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-teal-400" title="Teal"></button>
+      <button onclick="setColor('#1e293b')" class="w-6 h-6 rounded-full bg-slate-800 ring-2 ring-transparent focus:ring-offset-1 focus:ring-slate-600" title="Hitam"></button>
+      <button onclick="setEraser()" id="eraserBtn" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs border border-slate-300" title="Penghapus">
+        <i class="fa-solid fa-eraser"></i>
+      </button>
+      <button onclick="clearCanvas()" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-xs border border-rose-200" title="Hapus Semua Coretan">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+  </aside>
+
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- SOAL 1 -->
+    <article class="question-card p-5 sm:p-6" id="soal-1">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 1 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Hasil dari $\frac{7}{8} : 12,5\% \times \frac{18}{35} - 1\frac{1}{10} = \dots.$</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q1">
+          <label class="option-label"><input type="radio" name="q1" value="corect" class="mt-1 mr-3"><span>$(A)$ $2\frac{1}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="correct" class="mt-1 mr-3"><span>$(B)$ $2\frac{1}{2}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="corect" class="mt-1 mr-3"><span>$(C)$ $3\frac{1}{10}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="corect" class="mt-1 mr-3"><span>$(D)$ $3\frac{3}{5}$</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="corect" class="mt-1 mr-3"><span>$(E)$ $4\frac{7}{10}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 2 -->
+    <article class="question-card p-5 sm:p-6" id="soal-2">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 2 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui $a = 32$, $b = \frac{8}{27}$, dan $c = \frac{1}{81}$.<br>Nilai dari $\left(\frac{a^{\frac{3}{5}} + c^{-\frac{1}{4}}}{\sqrt[3]{b^2}}\right)$ adalah ....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q2">
+          <label class="option-label"><input type="radio" name="q2" value="correct" class="mt-1 mr-3"><span>$(A)$ $\frac{99}{4}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="corect" class="mt-1 mr-3"><span>$(B)$ $\frac{33}{4}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="corect" class="mt-1 mr-3"><span>$(C)$ $\frac{9}{4}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="corect" class="mt-1 mr-3"><span>$(D)$ $\frac{4}{99}$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="corect" class="mt-1 mr-3"><span>$(E)$ $\frac{1}{33}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 3 -->
+    <article class="question-card p-5 sm:p-6" id="soal-3">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 3 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Umur Pak Andi $28$ tahun lebih tua dari umur Amira. Umur Bu Sinta $6$ tahun lebih muda dari umur Pak Andi. Jika jumlah umur Pak Andi, Bu Sinta, dan Amira $119$ tahun, maka jumlah umur Bu Sinta dan Amira adalah ....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q3">
+          <label class="option-label"><input type="radio" name="q3" value="corect" class="mt-1 mr-3"><span>$(A)$ $86\text{ tahun}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="corect" class="mt-1 mr-3"><span>$(B)$ $74\text{ tahun}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="correct" class="mt-1 mr-3"><span>$(C)$ $68\text{ tahun}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="corect" class="mt-1 mr-3"><span>$(D)$ $64\text{ tahun}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="corect" class="mt-1 mr-3"><span>$(E)$ $58\text{ tahun}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 4 -->
+    <article class="question-card p-5 sm:p-6" id="soal-4">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 4 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Pak Samsul berjualan buah di pasar dengan modal awal $\text{Rp}8.000.000{,}00$. Harga beli buah apel $\text{Rp}20.000{,}00$ per kg dan dijual dengan keuntungan $35\%$. Sedangkan, harga beli buah jeruk $\text{Rp}15.000{,}00$ per kg dan dijual kembali dengan keuntungan $40\%$. Keranjang yang tersedia hanya mampu menampung maksimal $500\text{ kg}$ buah setiap harinya.<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q401">
+            <span class="text-sm font-medium">1. Untuk mendapatkan keuntungan maksimum, Pak Samsul harus membeli $200\text{ kg}$ buah jeruk.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q401" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q401" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q402">
+            <span class="text-sm font-medium">2. Pak Samsul mendapatkan keuntungan maksimum saat ia menyediakan $100\text{ kg}$ buah jeruk dan $400\text{ kg}$ buah apel.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q402" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q402" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q403">
+            <span class="text-sm font-medium">3. Keuntungan maksimum yang diperoleh Pak Samsul adalah $\text{Rp}3.100.000{,}00$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q403" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q403" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 5 -->
+    <article class="question-card p-5 sm:p-6" id="soal-5">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 5 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui persamaan kuadrat $x^2 + bx - 15 = 0$ memiliki akar-akar penyelesaian $x_1$ dan $x_2$. Nilai diskriminan dari persamaan kuadrat tersebut adalah $64$.<br>Jika $b \lt 0$ dan $x_1 \lt x_2$, maka tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q501">
+            <span class="text-sm font-medium">1. $x_1 - x_2 = -2$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q501" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q501" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q502">
+            <span class="text-sm font-medium">2. $x_1 + x_2 = 2$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q502" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q502" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q503">
+            <span class="text-sm font-medium">3. $x_1 \cdot x_2 = 15$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q503" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q503" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q504">
+            <span class="text-sm font-medium">4. $x_1^2 - x_2^2 = -16$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q504" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q504" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q505">
+            <span class="text-sm font-medium">5. $\frac{1}{x_1} + \frac{1}{x_2} = -\frac{2}{15}$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q505" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q505" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 6 -->
+    <article class="question-card p-5 sm:p-6" id="soal-6">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 6 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui fungsi kuadrat $f(x) = x^2 - (m + 2)x + (2m + 1)$. Agar fungsi kuadrat tersebut menyinggung sumbu X, maka nilai $m$ yang memenuhi adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q6">
+          <label class="option-label"><input type="radio" name="q6" value="corect" class="mt-1 mr-3"><span>$(A)$ $-4\text{ dan } 1$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="corect" class="mt-1 mr-3"><span>$(B)$ $2\text{ dan } 4$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="corect" class="mt-1 mr-3"><span>$(C)$ $-3\text{ dan } 1$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="correct" class="mt-1 mr-3"><span>$(D)$ $0\text{ dan } 4$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="corect" class="mt-1 mr-3"><span>$(E)$ $-1\text{ dan } 2$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 7 -->
+    <article class="question-card p-5 sm:p-6" id="soal-7">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 7 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui $f(x) = \frac{-2x+4}{2}$.<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q701">
+            <span class="text-sm font-medium">1. $f(1) = 1$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q701" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q701" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q702">
+            <span class="text-sm font-medium">2. $(f \circ f)(1) = -1$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q702" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q702" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q703">
+            <span class="text-sm font-medium">3. $(f \circ f \circ f \circ f)(1) = 1$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q703" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q703" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q704">
+            <span class="text-sm font-medium">4. $(f \circ f \circ f \circ f \circ f)(3) = 1$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q704" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q704" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q705">
+            <span class="text-sm font-medium">5. $(f \circ f \circ f \circ f \circ f)(3) = -1$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q705" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q705" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 8 -->
+    <article class="question-card p-5 sm:p-6" id="soal-8">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 8 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Fungsi $f : \mathbb{R} \to \mathbb{R}$ dan $g : \mathbb{R} \to \mathbb{R}$. Jika $(f \circ g)(x) = x^3 - 6x^2 + 10x - 3$ dan $g(x) = x - 2$, maka nilai dari $f(2)$ adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q8">
+          <label class="option-label"><input type="radio" name="q8" value="corect" class="mt-1 mr-3"><span>$(A)$ $0$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="corect" class="mt-1 mr-3"><span>$(B)$ $1$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="corect" class="mt-1 mr-3"><span>$(C)$ $4$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="correct" class="mt-1 mr-3"><span>$(D)$ $5$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="corect" class="mt-1 mr-3"><span>$(E)$ $8$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 9 -->
+    <article class="question-card p-5 sm:p-6" id="soal-9">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 9 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Sebuah bola menggelinding diperlambat dengan kecepatan tertentu. Pada detik pertama jarak yang ditempuh adalah $10\text{ meter}$, pada detik kedua jarak yang ditempuh adalah $8\text{ meter}$, pada detik ketiga jarak tempuhnya $6{,}4\text{ meter}$, dan seterusnya mengikuti pola barisan geometri.<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q901">
+            <span class="text-sm font-medium">1. Rasio dari barisan geometri tersebut adalah $-\frac{4}{5}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q901" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q901" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q902">
+            <span class="text-sm font-medium">2. Rasio dari barisan geometri tersebut adalah $\frac{4}{5}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q902" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q902" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q903">
+            <span class="text-sm font-medium">3. Bola berhenti setelah menempuh jarak $45\text{ meter}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q903" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q903" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q904">
+            <span class="text-sm font-medium">4. Bola tidak dapat menggelinding lagi setelah menempuh jarak $50\text{ meter}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q904" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q904" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q905">
+            <span class="text-sm font-medium">5. Pada detik kelima jarak yang ditempuh sekitar $5\text{ meter}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q905" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q905" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 10 -->
+    <article class="question-card p-5 sm:p-6" id="soal-10">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 10 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan daftar suku bunga majemuk di Bank Sejahtera berikut.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg2uHUspNOcLSDxSEmCWqJPzDAYtNdF0shMWQsN9UNYJj4PpX-wp4lj0P7Z7y0Wo-OM_ZpSpRkZJgp9vkYF35Nr1ZCSp79rIEY81xE62xfHE_gAA0h_7QnqtjES0UJMekUF1sfFqfQXEJyNQF4OhgHyJcjmsaH8gsMH-gMppjXVzLr_LmFT4FEpwapH7PER/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Tabel Suku Bunga Majemuk" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Baihaqi menabung di Bank Sejahtera sebesar $\text{Rp}15.000.000{,}00$ dan dipotong biaya administrasi $\text{Rp}2.500{,}00$ per bulan.<br>Jumlah tabungan Baihaqi setelah $3$ tahun adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q10">
+          <label class="option-label"><input type="radio" name="q10" value="corect" class="mt-1 mr-3"><span>$(A)$ $15 \cdot (1{,}035)^3 \text{ juta rupiah}$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="corect" class="mt-1 mr-3"><span>$(B)$ $15 \cdot (0{,}035)^3 \text{ juta rupiah} - (3 \times \text{Rp}2.50000)$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="corect" class="mt-1 mr-3"><span>$(C)$ $15 \cdot (1{,}035)^3 \text{ juta rupiah} - (3 \times \text{Rp}2.50000)$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="corect" class="mt-1 mr-3"><span>$(D)$ $15 \cdot (1{,}035)^3 \text{ juta rupiah} - (3 \times \text{Rp}2.50000)$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="correct" class="mt-1 mr-3"><span>$(E)$ $15 \cdot (1{,}035)^3 \text{ juta rupiah} - (36 \times \text{Rp}2.50000)$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 11 -->
+    <article class="question-card p-5 sm:p-6" id="soal-11">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 11 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Abida mendapat tugas mengukur lebar sungai yang ada di dekat rumahnya. Ia pergi ke tepi sungai dengan membawa tiga tongkat dan alat-alat lain yang diperlukan. Di seberang sungai terdapat sebuah pohon. Abida menancapkan tongkat pada posisi $P$, $Q$, $R$, sedemikian hingga besar $\angle QPS + \angle QRS = 90^{\circ}$ dengan ukuran seperti pada gambar.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgh5ngh5b2juPoE0cJwNXmF8bUmaqeDL9eXvr7gjqGXj8Dpx5i4J1U-71t0Ay4UaLwRVgEA0IInL9hGEnM2qWrqiVe6_U_893CuJr0Yj6qTFGOFNaY8hZMY_pqj6rr8tMCcwn9Cz48rQ2Swl0TnU0pw_nMSZNiOvZiQiClvyTEZ65uds1qcpLunChFfDXSP/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Lebar Sungai Abida" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berdasarkan ukuran di atas, maka perkiraan lebar sungai yang diukur oleh Abida adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q11">
+          <label class="option-label"><input type="radio" name="q11" value="corect" class="mt-1 mr-3"><span>$(A)$ $15\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="corect" class="mt-1 mr-3"><span>$(B)$ $16\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="correct" class="mt-1 mr-3"><span>$(C)$ $18\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="corect" class="mt-1 mr-3"><span>$(D)$ $20\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="corect" class="mt-1 mr-3"><span>$(E)$ $24\text{ meter}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 12 -->
+    <article class="question-card p-5 sm:p-6" id="soal-12">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 12 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Kecukupan Data</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan gambar berikut.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiigKo1Olk0EWGBjkRsDpikanz69rbPjcWX2GZ2Y8i-nOl2OE1N1xy72p9XG0meX4Z_2QowUCLOhsoS7gZL3LOnt1ZTXyh-k0dTZIIp7uV059grYtpBOm2vxOLCj-Mcg_ajP8eqQLpWHNYrsqUxpYSbQHTgnrBzefybW8TlGQx7CnZejjhTzPswKo7U5FQK/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Segitiga dan Lingkaran" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Jika segitiga $ABC$ adalah segitiga siku-siku, berapa luas seluruh bangun tersebut?<br>Putuskan apakah pernyataan $(1)$ atau $(2)$ berikut cukup untuk menjawab pertanyaan di atas?</p>
+        <ul class="list-disc ml-5 mb-4 text-sm font-semibold text-slate-800 space-y-1">
+          <li>$(1)$ Jari-jari lingkaran $= 7\text{ cm}$</li>
+          <li>$(2)$ $BC = 7\sqrt{2}\text{ cm}$</li>
+        </ul>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q12">
+          <label class="option-label"><input type="radio" name="q12" value="corect" class="mt-1 mr-3"><span>$(A)$ Pernyataan $(1)$ SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan $(2)$ SAJA tidak cukup</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="corect" class="mt-1 mr-3"><span>$(B)$ Pernyataan $(2)$ SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan $(1)$ SAJA tidak cukup</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="corect" class="mt-1 mr-3"><span>$(C)$ DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan tetapi SATU pernyataan tidak cukup untuk menjawab pertanyaan.</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="correct" class="mt-1 mr-3"><span>$(D)$ Pernyataan $(1)$ atau $(2)$ CUKUP untuk menjawab pertanyaan.</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="corect" class="mt-1 mr-3"><span>$(E)$ Pernyataan $(1)$ dan $(2)$ TIDAK CUKUP untuk menjawab pertanyaan.</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 13 -->
+    <article class="question-card p-5 sm:p-6" id="soal-13">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 13 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan gambar berikut.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiu4OluH9dNBWkd7IDMIhdHSG8hDtZksZzW5kkNME_aP-k-WgAqQyTNTC84GaUYgOp0ltGjcfMb2zh87tBLsMV7UIgtiE49QM_vJC0pVlVssGOspyFW3SKxzFt5NXdqB6ncqUCLJAwzHXtbJSjb5BuPglSpjya_0-1gaiX4omIq2RIXGjH7GoDpDtkqM-sy/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Sketsa Konstruksi Jembatan" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Gambar di atas adalah sketsa konstruksi jembatan. Jika diketahui panjang $AB = 1\text{ m}$, panjang $BC = 5\text{ m}$, panjang $BE = 13\text{ m}$, dan panjang $AD = 10\text{ m}$.<br>Panjang $DF$ adalah.....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q13">
+          <label class="option-label"><input type="radio" name="q13" value="corect" class="mt-1 mr-3"><span>$(A)$ $1{,}00\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="correct" class="mt-1 mr-3"><span>$(B)$ $1{,}67\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="corect" class="mt-1 mr-3"><span>$(C)$ $2{,}00\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="corect" class="mt-1 mr-3"><span>$(D)$ $2{,}33\text{ meter}$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="corect" class="mt-1 mr-3"><span>$(E)$ $2{,}50\text{ meter}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 14 -->
+    <article class="question-card p-5 sm:p-6" id="soal-14">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 14 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Bhilal merupakan salah satu murid di SMA Sejahtera yang sedang belajar materi transformasi geometri. Untuk mengamati pantulan sebuah objek, ia menggambar titik $A(3,2)$ di sebuah papan koordinat kartesius. Selanjutnya ia mencoba memantulkan titik tersebut terhadap dua cermin datar yang diletakkan sejajar dengan ketentuan:</p>
+        <ul class="list-disc ml-5 mb-3 text-sm space-y-1">
+          <li>sumbu cermin pertama berada pada garis $x = 0$;</li>
+          <li>sumbu cermin kedua berada pada garis $x = 2$.</li>
+        </ul>
+        <p class="text-slate-800 leading-relaxed mb-3">Bhilal ingin memantulkan titik $A$ pertama terhadap cermin pertama, lalu hasilnya dipantulkan kembali terhadap cermin kedua.<br>Setelah dua refleksi dilakukan oleh Bhilal, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1401">
+            <span class="text-sm font-medium">1. Koordinat hasil akhir refleksi adalah $A''(1,2)$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1401" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1401" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1402">
+            <span class="text-sm font-medium">2. Komposisi dua refleksi terhadap dua garis sejajar setara dengan sebuah translasi.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1402" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1402" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1403">
+            <span class="text-sm font-medium">3. Jarak antara titik awal dengan titik akhir refleksi adalah $2$ satuan.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1403" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1403" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1404">
+            <span class="text-sm font-medium">4. Refleksi terhadap garis $x = 0$ menghasilkan titik $A'(-3,2)$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1404" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1404" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1405">
+            <span class="text-sm font-medium">5. Refleksi terhadap garis $x = 2$ dari titik $A'(-3,2)$ menghasilkan titik $A''(7,2)$..</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1405" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1405" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 15 -->
+    <article class="question-card p-5 sm:p-6" id="soal-15">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 15 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Amir dan Beni memandang puncak sebuah pohon kelapa. Sudut elevasil yang terbentuk antara pandangan mata Amir dengan puncak pohon kelapa adalah $30^{\circ}$. Jika Beni berada tepat $6\text{ m}$ di depan Amir, tinggi mata dengan tanah keduanya sama yaitu $1{,}5\text{ m}$, dan tinggi pohon kelapa $11{,}5\text{ m}$.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj5twT2CJCrrY9aLzEe2pk0CzVlITi1JgFUjKIvwAined1b8S1o1L3SSfJ9wdjodVD1poJFvUCJN6VcnfrhKdsCIZqentWawlomfS6V5OaO8HzDurC8scn9SIxcZarPpD1oEwHeH2L6zAOSmwbivUycgJ3Crdi29sXbXrLMnSlMcDrFW3CulJGl0lN39rH3/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Elevasi Pengamatan Pohon Kelapa" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1501">
+            <span class="text-sm font-medium">1. Jarak Amir ke pohon kelapa adalah $(10\sqrt{3} + 6)\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1501" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1501" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1502">
+            <span class="text-sm font-medium">2. Jarak Beni ke pohon kelapa adalah $(10\sqrt{3} - 6)\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1502" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1502" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1503">
+            <span class="text-sm font-medium">3. Jarak pandang Amir ke puncak pohon kelapa adalah $20\sqrt{3}\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1503" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1503" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1504">
+            <span class="text-sm font-medium">4. Jarak pandang Beni ke puncak pohon kelapa adalah $(2\sqrt{109 - 30\sqrt{3}})\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1504" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1504" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1505">
+            <span class="text-sm font-medium">5. Sudut elevasi Beni ke puncak pohon kelapa adalah $45^{\circ}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1505" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1505" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 16 -->
+    <article class="question-card p-5 sm:p-6" id="soal-16">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 16 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Rumah Ibu Dona terletak di suatu sudut pertigaan jalan seperti pada gambar berikut.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2jVGp_gKH_PB2dzCjIytYJ_OYLfbgImePIVbQcWxZGcRHSPyirL29sdeCOCiT_L5uhCr3folD1Ywdje_33DmIJoA7YRQJC-7CpKWui7Z0cumnIAhb7UASYk2RcY4WOovZlKfykknKfJIxtT0XIiBLmmOqj47PIBMceCRTqS0JC6GYAcwXEWXG6b6oCv5i/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Sudut Pertigaan Rumah Bu Dona" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Karena ada perluasan jalan, maka Bu Dona berencana akan menjual rumahnya. Untuk keperluan itu, Bu Dona ingin mengukur luas tanahnya. Luas tanah Bu Dona keseluruhan adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q16">
+          <label class="option-label"><input type="radio" name="q16" value="corect" class="mt-1 mr-3"><span>$(A)$ $58\text{ m}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="corect" class="mt-1 mr-3"><span>$(B)$ $68\text{ m}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="correct" class="mt-1 mr-3"><span>$(C)$ $(28 + 30\sqrt{3})\text{ m}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="corect" class="mt-1 mr-3"><span>$(D)$ $58\sqrt{3}\text{ m}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="corect" class="mt-1 mr-3"><span>$(E)$ $(28 - 30\sqrt{3})\text{ m}^2$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 17 -->
+    <article class="question-card p-5 sm:p-6" id="soal-17">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 17 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Nilai rata-rata ulangan matematika di suatu kelas dengan jumlah murid $22$ orang adalah $5$ dengan jangkauan $4$. Jika nilai murid yang paling rendah dan yang paling tinggi tidak disertakan, maka nilai rata-rata ulangan matematika kelas tersebut berubah menjadi $4{,}9$.<br>Nilai tertinggi ulangan matematika murid dalam kelas tersebut adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q17">
+          <label class="option-label"><input type="radio" name="q17" value="corect" class="mt-1 mr-3"><span>$(A)$ $4{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="corect" class="mt-1 mr-3"><span>$(B)$ $7{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="correct" class="mt-1 mr-3"><span>$(C)$ $8{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="corect" class="mt-1 mr-3"><span>$(D)$ $8{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="corect" class="mt-1 mr-3"><span>$(E)$ $9{,}0$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 18 -->
+    <article class="question-card p-5 sm:p-6" id="soal-18">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 18 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui data nilai tes sekelompok murid sebagai berikut.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdryxdI4entb8CmAK0jpYUjdRO0YEbAZDN4F39GpvQeIBaVJM8yvuH7P152D2IKwk4qSCAcT6Nx8I97kpO4JbxEPnPUa2dNoUkgNm2BegdRD6IEWbVf92UdzYWiVYDF-hqCF-yI8s5Dt0w-TVEuOGBYrRuokfeCnYtrSQI2rgCWFHwjMMh9DzQrfn_MCND/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Data Nilai Tes" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1801">
+            <span class="text-sm font-medium">1. Sebanyak $64\%$ murid mendapat nilai $\leq 79$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1801" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1801" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1802">
+            <span class="text-sm font-medium">2. Modus data tersebut adalah $71{,}5$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1802" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1802" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q1803">
+            <span class="text-sm font-medium">3. Selisih median dan modus data tersebut adalah $1{,}17$</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q1803" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q1803" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 19 -->
+    <article class="question-card p-5 sm:p-6" id="soal-19">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 19 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Sekelompok pemain takraw yang terdiri atas $12$ orang yang mempunyai kemampuan bermain takraw hampir sama mengikuti turnamen takraw. Mereka akan terbagi menjadi tiga regu, yaitu regu A, regu B, dan regu C. Peraturan turnamen memperbolehkan satu regu hanya terdiri atas $3$ orang pemain inti dan $1$ pemain pengganti.<br>Jika dari keduabelas orang tersebut sudah ditetapkan $3$ orang sebagai pemain tekong (pemain yang bertugas melakukan <i>service</i>) pada setiap regu (misal Ali di regu A, Budi di regu B, Chandra di regu C), maka banyak cara menempatkan pemain lain yang berbeda ke dalam regu adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q19">
+          <label class="option-label"><input type="radio" name="q19" value="corect" class="mt-1 mr-3"><span>$(A)$ $560\text{ cara}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="corect" class="mt-1 mr-3"><span>$(B)$ $1.120\text{ cara}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="corect" class="mt-1 mr-3"><span>$(C)$ $1.560\text{ cara}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="correct" class="mt-1 mr-3"><span>$(D)$ $1.680\text{ cara}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="corect" class="mt-1 mr-3"><span>$(E)$ $2.240\text{ cara}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 20 -->
+    <article class="question-card p-5 sm:p-6" id="soal-20">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 20 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <div class="text-center font-bold text-slate-800 bg-teal-50 py-1.5 rounded-lg border border-teal-200 mb-3">Klasemen 10 Besar Liga 1 2023-2024 Pekan ke-34</div>
+        <p class="text-slate-800 leading-relaxed mb-3">Liga 1 2023-2024 merupakan kasta tertinggi liga sepak bola Indonesia sejak didirikan pada tahun 2008. Liga 1 2023-2024 dimulai pada 1 Juli 2023 dan berakhir pada 31 Mei 2024. Berikut ini adalah klasemen 10 besar Liga 1 2023-2024 pekan ke-34.</p>
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic2I7lmYjjDW3IH-I03klnGH_MvUDEc6QVAJXt3dLXoVzsKvieJmUfGmcI8vMykEWS3p25-zyrRDwURxL2_rWsBYhhLrNW-dfVGCUXe5b0umRm9Vf1rHvfXdzvG0qZM32QvSMQe-yHt0nPe531XH5IrXOa3Ur6adPHRRl9F_DdyPf9tyEbOsV3GxdFMZRw/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Klasemen Liga 1" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2001">
+            <span class="text-sm font-medium">1. Peluang hasil pertandingan Persis berakhir kalah atau peluang hasil pertandingan Persija Jakarta berakhir seri adalah $\frac{3}{5}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2001" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2001" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2002">
+            <span class="text-sm font-medium">2. Peluang hasil pertandingan Dewa United berakhir menang dan peluang hasil pertandingan PSIS berakhir kalah adalah $\frac{6}{25}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2002" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2002" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2003">
+            <span class="text-sm font-medium">3. Peluang hasil pertandingan Dewa United berakhir seri dan peluang hasil pertandingan PSIS berakhir tidak menang adalah $\frac{3}{25}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2003" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2003" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 21 -->
+    <article class="question-card p-5 sm:p-6" id="soal-21">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 21 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">RUMAH TINGGAL</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-60 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQuyApktteilEwW1vFzBUBUEjim07-xiY3ktYqrdZ-U4V9TEKdEaYY5WJG0cZsk9cr8YmE-U-JJicaNYMgD1CfhqXlBzPJjw7AMeCxBiropkbBXQqO5ycd5rG7sWNwFlgQ2YQEC8rmH-5eodmCRQwoJSztJENcK0KEeSRWRsZ0MS0b7bJgDX9ZIrhGfPgm/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Rumah Tinggal" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed text-sm mb-2">Rumah adalah sesuatu bangunan yang tidak dapat di pisahkan dari kehidupan manusia karena rumah merupakan kebutuhan primer bagi manusia sebagai tempat berlindung manusia dari berbagai gangguan dari luar, selain itu kalau kita lihat dari beberapa pengertian rumah juga berfungsi sebagai tempat tinggal atau hunian, tempat manusia melangsungkan kehidupannya, dan sarana pembinaan keluarga.<br><span class="text-xs text-slate-500 italic">Sumber: https://www.kompasiana.com/</span></p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-60 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPGFSgN2Ogpw-prQgFgSAIwfIep_9oMBRHWHctaapokdMvVP5-13biGNyxrgx7X7d2Gj7meA4fj6IWwDCucHuXAaPi5HmjOoKoZaTFVbyXVB2V2xCLv4esjaX_6tuCLQCKhYP3McEgaRPk_xRQVdsT449D8s1LxJucMRUZjuqrLBapPcyZyaRS0weLmRpR/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Desain Rumah" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Pak Rifky merencanakan membuat rumah dengan design seperti gambar di bawah. Atap yang ideal jika gentingnya merupakan genting keramik mempunyai kemiringan $30^\circ$, sedangkan jika gentingnya dari seng atau asbes kemiringan atap minimal $10^\circ$.<br>Untuk kerangka atap penggunaan baja ringan dengan kualitas yang sama mempunyai harga relatif lebih murah daripada menggunakan kayu.</p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-48 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2i7ZfbyS2P4TmLv-9Y4Lk9TBk1Uxi4QhyphenhyphenK-ySXct7xmUAic-X2eCSIrkIXN_rGShLNf9S4SWuXSKScs4vm9b3Tj56Gol3Wh8iRogv_UUAOjO038-8l9ZHaMFzVxjMqOtt6lbopMq4EN27z9fOdSOMScA7er7w8BRkhwWtc27lVPydzyZE3ktorjdCN2Ks/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Kerangka Atap" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Kerangka atap rumah Pak Rifky tampak seperti di atas, maka tinggi atap rumah ($t$) bisa dinyatakan dengan rumus....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q21">
+          <label class="option-label"><input type="radio" name="q21" value="corect" class="mt-1 mr-3"><span>$(A)$ $t = 3 \sin 30^\circ$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="corect" class="mt-1 mr-3"><span>$(B)$ $t = 3 \cos 30^\circ$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="correct" class="mt-1 mr-3"><span>$(C)$ $t = 3 \tan 30^\circ$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="corect" class="mt-1 mr-3"><span>$(D)$ $t = 3 \cot 30^\circ$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="corect" class="mt-1 mr-3"><span>$(E)$ $t = 3 \sec 30^\circ$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 22 -->
+    <article class="question-card p-5 sm:p-6" id="soal-22">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 22 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 22-25!</p>
+        <p class="text-slate-800 leading-relaxed mb-3">Rumah Pak Rifky, merencanakan menggunakan genting metal pasir untuk atap rumahnya, untuk itu beliau pergi ke Toko Bahan Bangunan "Makmur", untuk mengetahui harganya. Berikut ini tabel harga genting pasir di Toko "Makmur"</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Harga Genting Metal Pasir</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifvhWTvnHbCj4gazMNuijMQOkE1CLH9lRqGtqU3faP8QRbJEXBeSZqD5I6YON3J4oXRofQ-urIc3fO0LZEYukGSmRj9x9RZcKETQ4BME4pOzWGpZh3b9BtRC1Uw6Ey-IIDzSg5Wl18k9dbQvNrJq2BycF40_mqhHAcLxFGhgEZs55UL2GuIawmWZs0GhsX/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Tabel Harga Genting Pasir" loading="lazy">
+        </div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-48 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6om9H4t3fvxXGzwQ6OF1Z6HU01zGtgIvr_cnk00oMHd4Puj6MIsb0kobvV9crMqf05DjCm_-ortXCYDG18VQ4Hd7WNAmhoTgkvRenW5B8RkwtmQdJOozEe085M2daRJpDcVk5nN3Wc4EWAG26xsO4GKuLTWhO57hb8qLP5O3Fla54wWQqhRnD_eWw7_g-/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Dimensi Rumah" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Bangunan rumah yang direncanakan Pak Rifky berukuran panjang $10\text{ m}$, dan lebar $6\text{ m}$.<br>(keterangan: $\sqrt{2} = 1{,}4$, $\sqrt{3} = 1{,}7$)<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2201">
+            <span class="text-sm font-medium">1. Luas atap adalah $60\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2201" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2201" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2202">
+            <span class="text-sm font-medium">2. Luas atap adalah $42\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2202" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2202" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2203">
+            <span class="text-sm font-medium">3. Lebar atap adalah $4,2\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2203" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2203" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2204">
+            <span class="text-sm font-medium">4. Lebar atap adalah $2,8\text{ m}$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2204" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2204" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2205">
+            <span class="text-sm font-medium">5. Luas atap adalah $84\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2205" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2205" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 23 -->
+    <article class="question-card p-5 sm:p-6" id="soal-23">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 23 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 2-5!</p>
+        <p class="text-slate-800 leading-relaxed mb-3">Rumah Pak Rifky, merencanakan menggunakan genting metal pasir untuk atap rumahnya, untuk itu beliau pergi ke Toko Bahan Bangunan "Makmur", untuk mengetahui harganya. Berikut ini tabel harga genting pasir di Toko "Makmur"</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Harga Genting Metal Pasir</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifvhWTvnHbCj4gazMNuijMQOkE1CLH9lRqGtqU3faP8QRbJEXBeSZqD5I6YON3J4oXRofQ-urIc3fO0LZEYukGSmRj9x9RZcKETQ4BME4pOzWGpZh3b9BtRC1Uw6Ey-IIDzSg5Wl18k9dbQvNrJq2BycF40_mqhHAcLxFGhgEZs55UL2GuIawmWZs0GhsX/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Tabel Harga Genting Pasir" loading="lazy">
+        </div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-48 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6om9H4t3fvxXGzwQ6OF1Z6HU01zGtgIvr_cnk00oMHd4Puj6MIsb0kobvV9crMqf05DjCm_-ortXCYDG18VQ4Hd7WNAmhoTgkvRenW5B8RkwtmQdJOozEe085M2daRJpDcVk5nN3Wc4EWAG26xsO4GKuLTWhO57hb8qLP5O3Fla54wWQqhRnD_eWw7_g-/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Dimensi Rumah" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Bangunan rumah yang direncanakan Pak Rifky berukuran panjang $10\text{ m}$, dan lebar $6\text{ m}$.<br>(keterangan: $\sqrt{2} = 1{,}4$, $\sqrt{3} = 1{,}7$)<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2301">
+            <span class="text-sm font-medium">1. Pak Rifky bisa menggunakan jenis G Metal Batuan $2\times4$ T $0{,}25$, sebanyak $137$ lembar.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2301" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2301" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2302">
+            <span class="text-sm font-medium">2. Pak Rifky bisa menggunakan jenis Intiroof $1\times4$ T $0{,}25$ Batuan sebanyak $275$ lembar.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2302" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2302" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2303">
+            <span class="text-sm font-medium">3. Pak Rifky bisa menggunakan jenis Intiroof $1\times4$ T $0{,}30$ Batuan sebanyak $273$ lembar.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2303" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2303" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2304">
+            <span class="text-sm font-medium">4. Untuk kualitas genting terbaik maka Pak Rifky bisa menggunakan Intiroof $1\times4$ T $0{,}35$ atau Intiroof $2\times4$ T $0{,}35$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2304" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2304" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2305">
+            <span class="text-sm font-medium">5. Untuk biaya paling ringan pak Rifky bisa menggunakan merk Adesia.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2305" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2305" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 24 -->
+    <article class="question-card p-5 sm:p-6" id="soal-24">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 24 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 22-25!</p>
+        <p class="text-slate-800 leading-relaxed mb-3">Rumah Pak Rifky, merencanakan menggunakan genting metal pasir untuk atap rumahnya, untuk itu beliau pergi ke Toko Bahan Bangunan "Makmur", untuk mengetahui harganya. Berikut ini tabel harga genting pasir di Toko "Makmur"</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Harga Genting Metal Pasir</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifvhWTvnHbCj4gazMNuijMQOkE1CLH9lRqGtqU3faP8QRbJEXBeSZqD5I6YON3J4oXRofQ-urIc3fO0LZEYukGSmRj9x9RZcKETQ4BME4pOzWGpZh3b9BtRC1Uw6Ey-IIDzSg5Wl18k9dbQvNrJq2BycF40_mqhHAcLxFGhgEZs55UL2GuIawmWZs0GhsX/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Tabel Harga Genting Pasir" loading="lazy">
+        </div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-48 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6om9H4t3fvxXGzwQ6OF1Z6HU01zGtgIvr_cnk00oMHd4Puj6MIsb0kobvV9crMqf05DjCm_-ortXCYDG18VQ4Hd7WNAmhoTgkvRenW5B8RkwtmQdJOozEe085M2daRJpDcVk5nN3Wc4EWAG26xsO4GKuLTWhO57hb8qLP5O3Fla54wWQqhRnD_eWw7_g-/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Dimensi Rumah" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Bangunan rumah yang direncanakan Pak Rifky berukuran panjang $10\text{ m}$, dan lebar $6\text{ m}$.<br>(keterangan: $\sqrt{2} = 1{,}4$, $\sqrt{3} = 1{,}7$)<br><br>Pak Rifky menginginkan genting kualitas terbaik maka biaya yang dikeluarkan Pak Rifky untuk membeli genting adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q24">
+          <label class="option-label"><input type="radio" name="q24" value="correct" class="mt-1 mr-3"><span>$(A)$ $\text{Rp } 8.653.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="corect" class="mt-1 mr-3"><span>$(B)$ $\text{Rp } 8.000.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="corect" class="mt-1 mr-3"><span>$(C)$ $\text{Rp } 10.353.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="corect" class="mt-1 mr-3"><span>$(D)$ $\text{Rp } 8.106.818{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="corect" class="mt-1 mr-3"><span>$(E)$ $\text{Rp } 8.750.000{,}00$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 25 -->
+    <article class="question-card p-5 sm:p-6" id="soal-25">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 25 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 22-25!</p>
+        <p class="text-slate-800 leading-relaxed mb-3">Rumah Pak Rifky, merencanakan menggunakan genting metal pasir untuk atap rumahnya, untuk itu beliau pergi ke Toko Bahan Bangunan "Makmur", untuk mengetahui harganya. Berikut ini tabel harga genting pasir di Toko "Makmur"</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Harga Genting Metal Pasir</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifvhWTvnHbCj4gazMNuijMQOkE1CLH9lRqGtqU3faP8QRbJEXBeSZqD5I6YON3J4oXRofQ-urIc3fO0LZEYukGSmRj9x9RZcKETQ4BME4pOzWGpZh3b9BtRC1Uw6Ey-IIDzSg5Wl18k9dbQvNrJq2BycF40_mqhHAcLxFGhgEZs55UL2GuIawmWZs0GhsX/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Tabel Harga Genting Pasir" loading="lazy">
+        </div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-48 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6om9H4t3fvxXGzwQ6OF1Z6HU01zGtgIvr_cnk00oMHd4Puj6MIsb0kobvV9crMqf05DjCm_-ortXCYDG18VQ4Hd7WNAmhoTgkvRenW5B8RkwtmQdJOozEe085M2daRJpDcVk5nN3Wc4EWAG26xsO4GKuLTWhO57hb8qLP5O3Fla54wWQqhRnD_eWw7_g-/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Dimensi Rumah" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Bangunan rumah yang direncanakan Pak Rifky berukuran panjang $10\text{ m}$, dan lebar $6\text{ m}$.<br>(keterangan: $\sqrt{2} = 1{,}4$, $\sqrt{3} = 1{,}7$)<br><br>Berdasarkan masukan dari berbagai pihak, untuk kemiringan atap yang ideal, dan untuk meminimalisir kebocoran maka Pak Rifky mengubah sudut kemiringan atap menjadi $45^\circ$.<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2501">
+            <span class="text-sm font-medium">1. Tinggi atap lebih besar dari sebelumnya.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2501" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2501" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2502">
+            <span class="text-sm font-medium">2. Luas atap menjadi lebih kecil dari sebelumnya.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2502" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2502" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2503">
+            <span class="text-sm font-medium">3. Biaya genting menjadi lebih mahal.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2503" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2503" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2504">
+            <span class="text-sm font-medium">4. Kemiringan atap menjadi lebih landai dari sebelumnya sehingga tidak mudah bocor.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2504" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2504" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 26 -->
+    <article class="question-card p-5 sm:p-6" id="soal-26">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 26 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 6-8!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">CANTIKNYA DESIGN KAP LAMPU MEJA</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_taHx6c3PuU7bdmfTF4QeqOhPaFckPdsYGGcvYEt_GYrhXqc8H37VwBjJXXKdxb_LNWsVsmo2zJCgBm4PjiRi8gcSimN3F69W3Pd9Aub0p4ks6jsf16A00IzQ1YZYu0CqO46btUmGwiquZl0L_hJRp77WHqIevRJOJYfqQom9XaP1OOON_wAGcMTJr7-N/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Kap Lampu Meja" loading="lazy">
+        </div>
+        <p class="text-xs text-slate-500 italic text-center mb-3">Sumber : https://www.dekoruma.com/artikel/83726/model-kap-lampu</p>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3"><i>Lighting</i> merupakan salah satu elemen terpenting di hunian. Selain menjadi sumber penerangan, pemasangan <i>lighting</i> yang tepat pun bisa menonjolkan konsep arsitektur dan interior yang bisa kita adopsi sehingga hunian dapat tampil lebih estetik. Tak hanya memilih jenis dan cahaya lampu yang tepat, penggunaan kap lampu juga memengaruhi bias atau pancaran sinar lampu sehingga dapat mengubah <i>mood</i> di hunian. Selain itu, kap lampu juga memberikan elemen dekoratif yang <i>stylish</i>, serta membuat lampu lebih tahan lama karena terhindar dari kerusakan akibat air, tersenggol atau terbentur dengan komponen lainnya.</p>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Kap lampu meja merupakan salah satu design lampu yang menarik dan artistik. Kap lampu yang berbentuk kerucut terpancung seperti terlihat pada gambar di atas, terlihat cantik tentunya bisa memperbaiki <i>mood</i> kita.</p>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Anindita akan mencoba membuat kap lampu seperti pada gambar di bawah ini dengan menggunakan bahan kertas, dengan ukuran seperti di bawah ini.</p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-52 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEic9Vr-xZc-aDrWfrk0Lg19YDFeZAk5cIrvt04CLMPApAI4pqv9Ymg9VF0sdEYwIuWlWuKqWTeVl8rzPt_pJKxxMvHR2z_6sEmrcn78zfvX8qMWmWkQORE2MknWtGf3JVh0AgVHYPZprW73T60N7BgZp2hT5WlcP5xjy1txwyeV8p-fIZsJxzkNwApBVATi/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Ukuran Kap Lampu Anindita" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Mengacu pada rumus luas selimut kerucut terpancung</p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-28 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgsLZr8usjAOnD7ulrsvBbkooHfE1-8f5-9bbXANfCNl-G8i3ob-feZG94TuEOQLwWrssjvsIS19FChgnW_halO6zFHHXcpRE6Oeyrn8OP7FyICig5JlKifsWXDa37aHpgUbc3zvAbL1DcA7ogiLrd-mUmOEmCROsYZlDKR-9I7oy4UcLJS9RJDBwAHaqC7/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Rumus Luas Selimut Kerucut Terpancung" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Maka luas kap lampu yang akan dibuat Anindita adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q26">
+          <label class="option-label"><input type="radio" name="q26" value="correct" class="mt-1 mr-3"><span>$(A)$ $2.035\text{ cm}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="corect" class="mt-1 mr-3"><span>$(B)$ $2.120\text{ cm}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="corect" class="mt-1 mr-3"><span>$(C)$ $3.454\text{ cm}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="corect" class="mt-1 mr-3"><span>$(D)$ $2.050\text{ cm}^2$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="corect" class="mt-1 mr-3"><span>$(E)$ $3.500\text{ cm}^2$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 27 -->
+    <article class="question-card p-5 sm:p-6" id="soal-27">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 27 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 6-8!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">CANTIKNYA DESIGN KAP LAMPU MEJA</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_taHx6c3PuU7bdmfTF4QeqOhPaFckPdsYGGcvYEt_GYrhXqc8H37VwBjJXXKdxb_LNWsVsmo2zJCgBm4PjiRi8gcSimN3F69W3Pd9Aub0p4ks6jsf16A00IzQ1YZYu0CqO46btUmGwiquZl0L_hJRp77WHqIevRJOJYfqQom9XaP1OOON_wAGcMTJr7-N/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Kap Lampu Meja" loading="lazy">
+        </div>
+        <p class="text-xs text-slate-500 italic text-center mb-3">Sumber : https://www.dekoruma.com/artikel/83726/model-kap-lampu</p>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Ria, sahabat Anindita tertarik juga untuk membuat kap lampu berbagai bentuk, seperti di bawah ini.</p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjwjiXePQdS2fxaOJn12hLE9WSx9e8svwAfEecylKf_yUm_PPv-xYJcZAaB2wcCkp1mR_oPCCrJNg46Bns8VVX-U-nCM_gBQBEQ-ilgGYcAq8vpxAHoUvXs5w-UyNj5_rgxXtYSjZ01BoJg9KLvk1kGFh0QpQ6ymed8YN8l5-a7yrODsPdNmXs1hMZZA7u6/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Bentuk Kap Lampu Ria" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2701">
+            <span class="text-sm font-medium">1. Luas kap lampu berbentuk balok adalah $0{,}112\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2701" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2701" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2702">
+            <span class="text-sm font-medium">2. Luas kap lampu terbesar adalah $1{,}232\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2702" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2702" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2703">
+            <span class="text-sm font-medium">3. Luas lampu kap lampu berbentuk tabung adalah $0{,}616\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2703" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2703" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2704">
+            <span class="text-sm font-medium">4. Luas kap lampu berbentuk bola tidak lebih besar dari kap lampu berbentuk tabung $0{,}2464\text{ m}^2$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2704" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2704" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q2705">
+            <span class="text-sm font-medium">5. Luas lampu terkecil adalah berbentuk setengah bola.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q2705" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q2705" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- SOAL 28 -->
+    <article class="question-card p-5 sm:p-6" id="soal-28">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 28 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 26-28!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">CANTIKNYA DESIGN KAP LAMPU MEJA</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_taHx6c3PuU7bdmfTF4QeqOhPaFckPdsYGGcvYEt_GYrhXqc8H37VwBjJXXKdxb_LNWsVsmo2zJCgBm4PjiRi8gcSimN3F69W3Pd9Aub0p4ks6jsf16A00IzQ1YZYu0CqO46btUmGwiquZl0L_hJRp77WHqIevRJOJYfqQom9XaP1OOON_wAGcMTJr7-N/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Kap Lampu Meja" loading="lazy">
+        </div>
+        <p class="text-xs text-slate-500 italic text-center mb-3">Sumber : https://www.dekoruma.com/artikel/83726/model-kap-lampu</p>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Ria, sahabat Anindita tertarik juga untuk membuat kap lampu berbagai bentuk, seperti di bawah ini.</p>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjwjiXePQdS2fxaOJn12hLE9WSx9e8svwAfEecylKf_yUm_PPv-xYJcZAaB2wcCkp1mR_oPCCrJNg46Bns8VVX-U-nCM_gBQBEQ-ilgGYcAq8vpxAHoUvXs5w-UyNj5_rgxXtYSjZ01BoJg9KLvk1kGFh0QpQ6ymed8YN8l5-a7yrODsPdNmXs1hMZZA7u6/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Bentuk Kap Lampu Ria" loading="lazy">
+        </div>
+        <hr class="my-3 border-slate-200">
+        <p class="text-slate-800 leading-relaxed mb-3">Ria menginginkan kap lampu yang berbentuk balok dan tabung mempunyai luas yang sama. Apabila tinggi balok dan tabung sama, maka perbandingan tinggi balok dan tabung adalah....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q28">
+          <label class="option-label"><input type="radio" name="q28" value="corect" class="mt-1 mr-3"><span>$(A)$ $\frac{2}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="corect" class="mt-1 mr-3"><span>$(B)$ $\frac{7}{3}$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="correct" class="mt-1 mr-3"><span>$(C)$ $\frac{11}{7}$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="corect" class="mt-1 mr-3"><span>$(D)$ $\frac{7}{11}$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="corect" class="mt-1 mr-3"><span>$(E)$ $\frac{22}{3}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 29 -->
+    <article class="question-card p-5 sm:p-6" id="soal-29">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 29 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pilihan Ganda</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 29-30!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Wacana Numerasi</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg34MaWqDuAQUHBFSNqxJw92pOzLpk_wfJg2MVoWVzekAnn-8aKoModyWlR9fi1wm_9ezgaem3GlmbPOc1H5wcKDQHi7qQPxVn4DFFKdkB82jUgtI3EMRSfc65bEPNahl8-zr3p7X5pLFZgDjd3fBzmYpbhn3q8v8sowj7OR1-Q4RL5QA2V1jvFttmJWhwE/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Bus Antar Kota" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Pendapatan Sopir Bus antar kota ditentukan dari besarnya UMR (Upah Minimum Regional) ditambah uang lembur per jam, dan ditambah hasil kali rata-rata indeks kepuasan pelanggan dengan jumlah penumpang dalam satu bulan kali $1000$. Indeks kepuasan pelanggan dalam bentuk presentase dari $50\%$ sd $90\%$. Uang lembur adalah $\text{Rp } 20.000{,}00$ per jam, dan maksimal lembur dalam satu hari $3$ jam.</p>
+        <hr class="my-3 border-slate-200">
+        <p class="text-slate-800 leading-relaxed mb-3">Jika upah minimul regional (UMR) daerah setempat adalah $\text{Rp } 3.200.000{,}00$, rata-rata indeks adalah $i$, banyaknya penumpang $x$, dan jumlah jam lembur dalam satu bulan adalah $y$, maka pendapatan sopir bus antar kota ($P$) dapat ditulis dengan rumus....</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q29">
+          <label class="option-label"><input type="radio" name="q29" value="corect" class="mt-1 mr-3"><span>$(A)$ $P = 1000\,ix + 20.000\,y + 3.200.000$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="corect" class="mt-1 mr-3"><span>$(B)$ $P = 20.000\,x + 1000\,iy + 3.200.000$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="correct" class="mt-1 mr-3"><span>$(C)$ $P = ix + 3.200.000\,x - 20.000\,y$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="corect" class="mt-1 mr-3"><span>$(D)$ $P = ix + 20.000\,y + 3.200.000$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="corect" class="mt-1 mr-3"><span>$(E)$ $P = iy - 20.000\,y - 3.200.000$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+      </div>
+    </article>
+
+    <!-- SOAL 30 -->
+    <article class="question-card p-5 sm:p-6" id="soal-30">
+      <svg class="card-watermark text-teal-900" viewBox="0 0 200 225"><use href="#dhanar-logo-mark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 30 • TO TKA Matematika SMA/SMK
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pernyataan Benar / Salah</span>
+        </div>
+        <p class="text-xs text-slate-500 italic mb-2">Perhatikan informasi berikut untuk menjawab soal nomor 29-30!</p>
+        <div class="text-center font-bold text-slate-800 mb-2">Wacana Numerasi</div>
+        <div class="flex justify-center my-3">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg34MaWqDuAQUHBFSNqxJw92pOzLpk_wfJg2MVoWVzekAnn-8aKoModyWlR9fi1wm_9ezgaem3GlmbPOc1H5wcKDQHi7qQPxVn4DFFKdkB82jUgtI3EMRSfc65bEPNahl8-zr3p7X5pLFZgDjd3fBzmYpbhn3q8v8sowj7OR1-Q4RL5QA2V1jvFttmJWhwE/s1600/soal-tka-matematika-sma-dan-kunci-jawaban-pdf.jpg" alt="Bus Antar Kota" loading="lazy">
+        </div>
+        <p class="text-slate-800 leading-relaxed text-sm mb-3">Pendapatan Sopir Bus antar kota ditentukan dari besarnya UMR (Upah Minimum Regional) ditambah uang lembur per jam, dan ditambah hasil kali rata-rata indeks kepuasan pelanggan dengan jumlah penumpang dalam satu bulan kali $1000$. Indeks kepuasan pelanggan dalam bentuk presentase dari $50\%$ sd $90\%$. Uang lembur adalah $\text{Rp } 20.000{,}00$ per jam, dan maksimal lembur dalam satu hari $3$ jam.</p>
+        <hr class="my-3 border-slate-200">
+        <p class="text-slate-800 leading-relaxed mb-3">Pak Andi salah satu sopir antar kota, dalam satu bulan banyaknya lembur adalah $25$ jam, dan besarnya rata-rata indeks kepuasan pelanggan adalah $80\%$ dari total penumpang selama satu bulan adalah $400$ penumpang.<br><br>Berdasarkan informasi di atas, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>.</p>
+
+        <div class="space-y-3 mt-4">
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q3001">
+            <span class="text-sm font-medium">1. Besar penghasilan Pak Andi dari lembur adalah kurang dari $\text{Rp } 500.000,00$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q3001" value="corect" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q3001" value="correct" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q3002">
+            <span class="text-sm font-medium">2. Besar penghasilan Pak Andi dari kepuasan pelanggan adalah $\text{Rp } 320.000,00$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q3002" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q3002" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q3003">
+            <span class="text-sm font-medium">3. Besar penghasilan Pak Andi total lebih dari $\text{Rp } 4.000.000,00$.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q3003" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q3003" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2" data-tf="q3004">
+            <span class="text-sm font-medium">4. Apabila penghasilan dari lembur $\text{Rp } 600.000$, maka jumlah jam lembur dalam satu bulan adalah $30$ jam.</span>
+            <div class="flex gap-2">
+              <label class="tf-btn"><input type="radio" name="q3004" value="correct" class="hidden"><span>Benar</span></label>
+              <label class="tf-btn"><input type="radio" name="q3004" value="corect" class="hidden"><span>Salah</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Tombol Evaluasi Jawaban & Rekap Nilai -->
+    <div class="text-center py-6">
+      <button id="btn-periksa" class="px-6 py-3 cursor-pointer font-bold bg-teal-600 hover:bg-teal-700 text-white rounded-xl shadow-md transition text-base flex items-center gap-2 mx-auto">
+        <i class="fa-solid fa-lightbulb"></i> Evaluasi Jawaban &amp; Cek Nilai
+      </button>
+      <div id="area-hasil-akhir" class="hidden mt-6 p-6 rounded-2xl bg-white border border-slate-200 shadow-lg max-w-xl mx-auto text-left"></div>
+    </div>
+
+  </main>
+
+  <!-- Footer Identik dengan Dhanardi Riansyah & WhatsApp -->
+  <footer class="mt-12 py-6 bg-white border-t border-slate-200 text-center text-xs md:text-sm text-slate-600">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5">
+      <div class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 225" class="h-6 md:h-7 w-auto text-teal-800 shrink-0" fill="none">
+          <use href="#dhanar-logo-mark"/>
+        </svg>
+        <span class="font-bold text-slate-800">&copy; Dhanardi Riansyah</span>
+        <span>&bull;</span>
+        <span class="font-medium text-slate-500">All Rights Reserved</span>
+      </div>
+      <a href="https://wa.me/6281381374712" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 font-bold text-slate-700 hover:text-emerald-700 transition bg-emerald-50/80 hover:bg-emerald-100 px-2.5 py-1 rounded-full border border-emerald-200/80 text-xs">
+        <svg class="w-3.5 h-3.5 text-emerald-600 fill-current shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.205 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.947-1.48-2.116-1.653-2.414-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        <span>0813-813-747-12</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // --- Multiple Choice & True/False Interactive Feedback ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Pilihan Ganda Interaktif
+      const radioInputs = document.querySelectorAll('div[data-question] input[type="radio"]');
+      radioInputs.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const groupName = e.target.name;
+          const container = document.querySelector(`[data-question="${groupName}"]`);
+          const card = container.closest('.question-card');
+          const feedback = card.querySelector('.feedback-msg');
+          const labels = container.querySelectorAll('.option-label');
+
+          labels.forEach(lbl => {
+            lbl.classList.remove('selected-correct', 'selected-wrong');
+          });
+
+          const currentLabel = e.target.closest('.option-label');
+          if (e.target.value === 'correct') {
+            currentLabel.classList.add('selected-correct');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> Jawaban Anda Benar! Mantap!';
+          } else {
+            currentLabel.classList.add('selected-wrong');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 text-sm"></i> Kurang tepat, silakan periksa kembali perhitungan Anda.';
+          }
+          feedback.classList.remove('hidden');
+        });
+      });
+
+      // 2. Pernyataan Benar/Salah (Badges)
+      const tfInputs = document.querySelectorAll('div[data-tf] input[type="radio"]');
+      tfInputs.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const container = e.target.closest('[data-tf]');
+          const btns = container.querySelectorAll('.tf-btn');
+          btns.forEach(btn => btn.classList.remove('selected-correct', 'selected-wrong'));
+
+          const currentBtn = e.target.closest('.tf-btn');
+          if (e.target.value === 'correct') {
+            currentBtn.classList.add('selected-correct');
+          } else {
+            currentBtn.classList.add('selected-wrong');
+          }
+        });
+      });
+
+      // 3. Tombol Evaluasi Jawaban
+      const btnPeriksa = document.getElementById('btn-periksa');
+      const areaHasil = document.getElementById('area-hasil-akhir');
+
+      btnPeriksa.addEventListener('click', () => {
+        let totalItems = 0;
+        let answeredItems = 0;
+        let correctItems = 0;
+
+        // Cek soal pilihan ganda
+        const questionGroups = new Set();
+        document.querySelectorAll('div[data-question]').forEach(el => {
+          questionGroups.add(el.getAttribute('data-question'));
+        });
+
+        questionGroups.forEach(qName => {
+          totalItems++;
+          const checked = document.querySelector(`input[name="${qName}"]:checked`);
+          if (checked) {
+            answeredItems++;
+            if (checked.value === 'correct') {
+              correctItems++;
+            }
+          }
+        });
+
+        // Cek soal Benar/Salah
+        const tfGroups = new Set();
+        document.querySelectorAll('div[data-tf]').forEach(el => {
+          tfGroups.add(el.getAttribute('data-tf'));
+        });
+
+        tfGroups.forEach(tfName => {
+          totalItems++;
+          const checked = document.querySelector(`input[name="${tfName}"]:checked`);
+          if (checked) {
+            answeredItems++;
+            if (checked.value === 'correct') {
+              correctItems++;
+            }
+          }
+        });
+
+        const score = Math.round((correctItems / totalItems) * 100);
+
+        areaHasil.className = 'mt-6 p-6 rounded-2xl bg-white border border-teal-200 shadow-xl max-w-xl mx-auto text-center space-y-3';
+        areaHasil.innerHTML = `
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-teal-100 text-teal-700 text-2xl font-bold mb-1">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800">Hasil Evaluasi Jawaban</h3>
+          <p class="text-sm text-slate-600">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+          <div class="grid grid-cols-3 gap-3 py-3 border-y border-slate-100 text-center">
+            <div>
+              <p class="text-xs text-slate-400">Total Butir</p>
+              <p class="text-lg font-bold text-slate-700">${totalItems}</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Terjawab</p>
+              <p class="text-lg font-bold text-slate-700">${answeredItems} / ${totalItems}</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400">Benar</p>
+              <p class="text-lg font-bold text-emerald-600">${correctItems}</p>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-teal-800">Nilai: ${score} / 100</div>
+          <p class="text-xs text-slate-500">${answeredItems < totalItems ? '*Catatan: Ada butir soal yang belum Anda jawab.' : 'Semua soal telah dijawab!'}</p>
+        `;
+        areaHasil.style.display = 'block';
+        areaHasil.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+
+    // --- Canvas Corat-coret (Scratchpad Engine) ---
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let isDrawingModeActive = false;
+    let currentColor = '#ef4444';
+    let currentLineWidth = 3;
+    let isEraser = false;
+
+    function resizeCanvas() {
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+
+      if (canvas.width > 0 && canvas.height > 0) {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.drawImage(canvas, 0, 0);
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx.drawImage(tempCanvas, 0, 0);
+      } else {
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+      }
+
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function toggleDrawingMode() {
+      isDrawingModeActive = !isDrawingModeActive;
+      const btn = document.getElementById('toggleDrawBtn');
+      const text = document.getElementById('drawStatusText');
+      const controls = document.getElementById('drawControls');
+
+      if (isDrawingModeActive) {
+        canvas.classList.add('active-draw');
+        btn.classList.replace('bg-teal-600', 'bg-rose-600');
+        btn.classList.replace('hover:bg-teal-700', 'hover:bg-rose-700');
+        text.innerText = 'Mode Coret: AKTIF';
+        controls.classList.remove('hidden');
+      } else {
+        canvas.classList.remove('active-draw');
+        btn.classList.replace('bg-rose-600', 'bg-teal-600');
+        btn.classList.replace('hover:bg-rose-700', 'hover:bg-teal-700');
+        text.innerText = 'Mode Coret: MATI';
+        controls.classList.add('hidden');
+      }
+    }
+
+    function setColor(color) {
+      isEraser = false;
+      currentColor = color;
+      currentLineWidth = 3;
+      document.getElementById('eraserBtn').classList.remove('bg-teal-200');
+    }
+
+    function setEraser() {
+      isEraser = true;
+      currentLineWidth = 24;
+      document.getElementById('eraserBtn').classList.add('bg-teal-200');
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function getCoords(e) {
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY
+        };
+      }
+      return {
+        x: e.clientX,
+        y: e.clientY
+      };
+    }
+
+    function startDrawing(e) {
+      if (!isDrawingModeActive) return;
+      isDrawing = true;
+      const { x, y } = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+
+    function draw(e) {
+      if (!isDrawing || !isDrawingModeActive) return;
+      e.preventDefault();
+      const { x, y } = getCoords(e);
+
+      ctx.save();
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = currentLineWidth;
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentLineWidth;
+      }
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function stopDrawing() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDrawing);
+
+    canvas.addEventListener('touchstart', startDrawing, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDrawing);
+  </script>
+</body>
+</html>
