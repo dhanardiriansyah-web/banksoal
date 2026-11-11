@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kompilasi Soal Statistika SMP/MTs Terstruktur & Interaktif</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- MathJax Configuration and Script -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      touch-action: pan-y;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+
+    /* Screen Canvas for Scratchpad */
+    #drawingCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 40;
+      pointer-events: none;
+      cursor: default;
+    }
+    #drawingCanvas.active-draw {
+      pointer-events: auto;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* Card styling */
+    .question-card {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border-radius: 1rem;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    .question-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      opacity: 0.035;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      width: 260px;
+      height: 290px;
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Multiple choice options */
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      padding: 0.75rem 0.95rem;
+      border-radius: 0.75rem;
+      border: 1.5px solid #e2e8f0;
+      background-color: #ffffff;
+      cursor: pointer;
+      transition: all 0.15s ease-in-out;
+      margin-bottom: 0.5rem;
+    }
+    .option-label:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .option-label.selected-correct {
+      background-color: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      color: #15803d;
+    }
+    .option-label.selected-wrong {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c;
+    }
+
+    details summary {
+      cursor: pointer;
+      user-select: none;
+    }
+    details[open] summary {
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Custom Table Styling */
+    .math-table {
+      width: 100%;
+      max-width: 500px;
+      margin: 1rem auto;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .math-table th {
+      background-color: #0f766e;
+      color: white;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+    .math-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .math-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-28">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-xs">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-teal-700 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+          <i class="fa-solid fa-chart-simple"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-800 tracking-tight leading-tight">Statistika Matematika SMP/MTs</h1>
+          <p class="text-xs text-teal-700 font-semibold flex items-center gap-1">
+            <i class="fa-solid fa-stairs"></i> Scaffolded Learning Path (Tingkat 1 &rarr; Tingkat 5)
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleAllSolutions()" id="btnToggleAll" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-2 rounded-lg transition border border-slate-300">
+          <i class="fa-solid fa-eye mr-1"></i> Buka Semua Pembahasan
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Learning Path Navigation Summary -->
+  <section class="max-w-4xl mx-auto px-4 mt-6">
+    <div class="bg-gradient-to-r from-teal-800 to-slate-800 text-white p-5 rounded-2xl shadow-sm">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-teal-300 mb-1 flex items-center gap-2">
+        <i class="fa-solid fa-compass"></i> Peta Belajar Terstruktur (Scaffolding Flow)
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-200 mb-3">
+        Seluruh soal asli ditata ulang secara pedagogis dari konsep dasar (definisi & data tunggal), pembacaan representasi visual diagram, tabel frekuensi berbobot, dinamika rata-rata gabungan, hingga penalaran aljabar tingkat tinggi (HOTS).
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
+        <a href="#level-1" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg text-center transition">
+          <span class="block font-bold text-teal-300">Level 1</span>
+          Modus & Median Tunggal
+        </a>
+        <a href="#level-2" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg text-center transition">
+          <span class="block font-bold text-teal-300">Level 2</span>
+          Diagram & Grafik
+        </a>
+        <a href="#level-3" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg text-center transition">
+          <span class="block font-bold text-teal-300">Level 3</span>
+          Tabel Frekuensi & Nilai
+        </a>
+        <a href="#level-4" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg text-center transition">
+          <span class="block font-bold text-teal-300">Level 4</span>
+          Rata-rata Gabungan
+        </a>
+        <a href="#level-5" class="bg-white/10 hover:bg-white/20 p-2 rounded-lg text-center transition">
+          <span class="block font-bold text-teal-300">Level 5</span>
+          Aljabar & Penalaran
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <canvas id="drawingCanvas"></canvas>
+
+  <!-- Scratchpad Floating Controls -->
+  <aside class="fixed bottom-4 right-4 z-50 flex flex-wrap items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-2 rounded-2xl shadow-xl border border-slate-300">
+    <button id="toggleDrawBtn" onclick="toggleDrawingMode()" class="px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition bg-teal-600 hover:bg-teal-700 text-white shadow-sm">
+      <i class="fa-solid fa-pen-nib"></i> <span id="drawStatusText">Mode Coret: MATI</span>
+    </button>
+
+    <div id="drawControls" class="hidden flex items-center gap-1.5 border-l border-slate-200 pl-2">
+      <button onclick="setColor('#ef4444')" class="w-6 h-6 rounded-full bg-red-500 ring-2 ring-transparent focus:ring-offset-1 focus:ring-red-400" title="Merah"></button>
+      <button onclick="setColor('#2563eb')" class="w-6 h-6 rounded-full bg-blue-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-blue-400" title="Biru"></button>
+      <button onclick="setColor('#0d9488')" class="w-6 h-6 rounded-full bg-teal-600 ring-2 ring-transparent focus:ring-offset-1 focus:ring-teal-400" title="Teal"></button>
+      <button onclick="setColor('#1e293b')" class="w-6 h-6 rounded-full bg-slate-800 ring-2 ring-transparent focus:ring-offset-1 focus:ring-slate-600" title="Hitam"></button>
+      <button onclick="setEraser()" id="eraserBtn" class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-700 text-xs border border-slate-300" title="Penghapus">
+        <i class="fa-solid fa-eraser"></i>
+      </button>
+      <button onclick="clearCanvas()" class="w-7 h-7 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 flex items-center justify-center text-xs border border-rose-200" title="Hapus Semua Coretan">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Watermark Template -->
+  <svg style="display:none;">
+    <g id="stat-watermark">
+      <rect x="20" y="20" width="160" height="160" rx="16" stroke="#0f766e" stroke-width="10" fill="none"/>
+      <line x1="45" y1="140" x2="45" y2="110" stroke="#0f766e" stroke-width="14" stroke-linecap="round"/>
+      <line x1="80" y1="140" x2="80" y2="75" stroke="#0f766e" stroke-width="14" stroke-linecap="round"/>
+      <line x1="115" y1="140" x2="115" y2="50" stroke="#0f766e" stroke-width="14" stroke-linecap="round"/>
+      <line x1="150" y1="140" x2="150" y2="90" stroke="#0f766e" stroke-width="14" stroke-linecap="round"/>
+      <text x="100" y="205" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#0f766e">STATISTIKA SMP</text>
+    </g>
+  </svg>
+
+  <main class="max-w-4xl mx-auto px-4 pt-4 space-y-8">
+
+    <!-- ========================================== -->
+    <!-- LEVEL 1: UKURAN PEMUSATAN DATA TUNGGAL -->
+    <!-- ========================================== -->
+    <div id="level-1" class="pt-2">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="level-badge bg-emerald-100 text-emerald-800 border border-emerald-300">Level 1</span>
+        <h2 class="text-base font-bold text-slate-800">Fondasi: Modus, Median, dan Rata-rata Data Tunggal</h2>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Fokus pembelajaran: memahami konsep frekuensi terbanyak (modus), pengurutan datum untuk menentukan nilai tengah (median), serta rataan data tunggal.</p>
+      
+      <!-- MATERI LEVEL 1 -->
+      <div class="mb-6 p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 text-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-emerald-900 text-sm mb-2">
+          <i class="fa-solid fa-book-open-reader text-emerald-600"></i> Ringkasan Materi & Rumus Kunci: Level 1
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+          <div class="bg-white/80 p-3 rounded-lg border border-emerald-100">
+            <span class="font-bold text-emerald-800 block mb-1"><i class="fa-solid fa-crown mr-1"></i>1. Modus ($Mo$)</span>
+            Nilai datum yang <strong>paling sering muncul</strong> (frekuensi terbesar). Data bisa memiliki satu modus (unimodal), lebih dari satu (bimodal/multimodal), atau tidak ada modus.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-emerald-100">
+            <span class="font-bold text-emerald-800 block mb-1"><i class="fa-solid fa-arrows-split-up-and-left mr-1"></i>2. Median ($Me$)</span>
+            Nilai tengah data <strong>setelah diurutkan</strong> dari terkecil ke terbesar:
+            <ul class="list-disc ml-4 mt-1 space-y-0.5">
+              <li>Jika $n$ ganjil: $Me = x_{\frac{n+1}{2}}$</li>
+              <li>Jika $n$ genap: $Me = \dfrac{x_{\frac{n}{2}} + x_{\frac{n}{2}+1}}{2}$</li>
+            </ul>
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-emerald-100">
+            <span class="font-bold text-emerald-800 block mb-1"><i class="fa-solid fa-calculator mr-1"></i>3. Rata-rata ($\bar{x}$)</span>
+            Jumlah seluruh nilai datum dibagi dengan banyaknya datum ($n$):
+            $$\bar{x} = \frac{\sum x}{n} = \frac{x_1 + x_2 + \dots + x_n}{n}$$
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL 1 (Ref: Soal 32) -->
+    <article class="question-card p-5 sm:p-6" id="soal-1">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 1 • UN Matematika SMP 2015 (No. 32)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Definisi Modus</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diketahui kelompok data: $35$, $30$, $45$, $20$, $40$, $25$, $40$, $35$, $35$. Pernyataan yang benar adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q1">
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(A)\ \text{modus}=35$, yaitu data yang terletak pertama</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="correct" class="mt-1 mr-3"><span>$(B)\ \text{modus}=35$, yaitu data yang memiliki frekuensi terbanyak</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(C)\ \text{modus}=35$, yaitu data yang terletak ditengah setelah diurutkan</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="wrong" class="mt-1 mr-3"><span>$(D)\ \text{modus}=35$, yaitu data yang terakhir</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data di atas jika kita urutkan adalah $20$, $25$, $30$, $35$, $35$, $35$, $40$, $40$, $45$.</p>
+            <p><strong>Modus</strong> adalah nilai data yang paling sering muncul atau nilai yang frekuensinya paling banyak. Angka $35$ muncul sebanyak tiga kali.</p>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)\ \text{modus}=35$, yaitu data yang memiliki frekuensi terbanyak</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 2 (Ref: Soal 39) -->
+    <article class="question-card p-5 sm:p-6" id="soal-2">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 2 • UN Matematika SMP 2013 (No. 39)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Modus Data Cacah</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Modus data: $6$, $8$, $7$, $8$, $5$, $6$, $5$, $8$, $9$, $7$, $8$, $6$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q2">
+          <label class="option-label"><input type="radio" name="q2" value="correct" class="mt-1 mr-3"><span>$(A)\ 8$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(B)\ 7$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(C)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="wrong" class="mt-1 mr-3"><span>$(D)\ 4$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data jika diurutkan: $5, 5, 6, 6, 6, 7, 7, \mathbf{8, 8, 8, 8}, 9$. Nilai $8$ muncul paling banyak ($4$ kali).</p>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(A)\ 8$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 3 (Ref: Soal 3) -->
+    <article class="question-card p-5 sm:p-6" id="soal-3">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 3 • UNBK Matematika SMP 2019 (No. 3)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Modus Data Ukuran Besar</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data tinggi badan $20$ siswa (dalam cm) sebagai berikut:<br>
+        $157$, $159$, $159$, $156$, $157$, $157$, $158$, $158$, $158$, $160$, $160$, $161$, $158$, $159$, $159$, $156$, $156$, $157$, $159$, $160$, $160$, $158$, $159$, $160$.<br>
+        Modus tinggi badan siswa adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q3">
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(A)\ 157\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(B)\ 158\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="correct" class="mt-1 mr-3"><span>$(C)\ 159\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="wrong" class="mt-1 mr-3"><span>$(D)\ 160\ \text{cm}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Frekuensi tiap tinggi badan:</p>
+            <ul class="list-disc ml-5 space-y-0.5">
+              <li>$156: 3 \times$</li>
+              <li>$157: 4 \times$</li>
+              <li>$158: 5 \times$</li>
+              <li><strong>$159: 6 \times$ (paling banyak)</strong></li>
+              <li>$160: 5 \times$</li>
+              <li>$161: 1 \times$</li>
+            </ul>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 159\ \text{cm}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 4 (Ref: Soal 15) -->
+    <article class="question-card p-5 sm:p-6" id="soal-4">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 4 • Simulasi UNBK Matematika SMP 2018 (No. 15)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Modus dan Rata-rata</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Lama pembicaraan telepon (dalam menit) yang dilakukan oleh seorang pengusaha adalah $7$, $8$, $10$, $6$, $6$, $4$, $5$, $4$, $5$, $7$, $9$, $7$. Modus dan rata-rata dari pembicaraan tersebut berturut-turut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q4">
+          <label class="option-label"><input type="radio" name="q4" value="correct" class="mt-1 mr-3"><span>$(A)\ 7\ \text{dan}\ 6{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(B)\ 7\ \text{dan}\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(C)\ 6\ \text{dan}\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="wrong" class="mt-1 mr-3"><span>$(D)\ 6\ \text{dan}\ 6{,}5$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data urut: $4, 4, 5, 5, 6, 6, \mathbf{7, 7, 7}, 8, 9, 10$. Modus $= 7$ (muncul 3 kali).</p>
+            $$\bar{x} = \frac{4+4+5+5+6+6+7+7+7+8+9+10}{12} = \frac{78}{12} = 6{,}5$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(A)\ 7\ \text{dan}\ 6{,}5$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 5 (Ref: Soal 29) -->
+    <article class="question-card p-5 sm:p-6" id="soal-5">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 5 • UN Matematika SMP 2016 (No. 29)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Modus & Rata-rata Nilai Remidial</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Nilai remedial ulangan harian matematika sebagai berikut:<br>
+        $60$, $70$, $50$, $60$, $80$, $50$, $75$, $80$, $70$, $75$, $70$, $90$, $60$, $75$, $70$.<br>
+        Modus dan rata-rata nilai tersebut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q5">
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(A)\ 60\ \text{dan}\ 69$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(B)\ 60\ \text{dan}\ 68$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="correct" class="mt-1 mr-3"><span>$(C)\ 70\ \text{dan}\ 69$</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="wrong" class="mt-1 mr-3"><span>$(D)\ 70\ \text{dan}\ 68$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data terurut ($15$ datum): $50, 50, 60, 60, 60, \mathbf{70, 70, 70, 70}, 75, 75, 75, 80, 80, 90$. Modus $= 70$ (muncul 4 kali).</p>
+            $$\bar{x} = \frac{100 + 180 + 280 + 225 + 160 + 90}{15} = \frac{1035}{15} = 69$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 70\ \text{dan}\ 69$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 6 (Ref: Soal 37) -->
+    <article class="question-card p-5 sm:p-6" id="soal-6">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 6 • UN Matematika SMP 2014 (No. 37)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Median Data Genap (12 Nilai)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Median dari data: $9$, $4$, $5$, $3$, $8$, $7$, $5$, $6$, $7$, $4$, $9$, $7$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q6">
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(A)\ 5{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(B)\ 6$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="correct" class="mt-1 mr-3"><span>$(C)\ 6{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="wrong" class="mt-1 mr-3"><span>$(D)\ 7$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Urutkan data: $3, 4, 4, 5, 5, \mathbf{6, 7}, 7, 7, 8, 9, 9$.</p>
+            $$\text{Median} = \frac{x_6 + x_7}{2} = \frac{6 + 7}{2} = 6{,}5$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 6{,}5$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 7 (Ref: Soal 8) -->
+    <article class="question-card p-5 sm:p-6" id="soal-7">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 7 • Simulasi UNBK Matematika SMP 2019 (No. 8)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Median Berat Badan (16 Nilai)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data berat badan (dalam kg) peserta didik kelas IX.A sebagai berikut:<br>
+        $40$, $36$, $38$, $35$, $42$, $39$, $41$, $37$, $42$, $38$, $36$, $40$, $40$, $38$, $37$, $41$.<br>
+        Berdasarkan data diatas median data tersebut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q7">
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(A)\ 38{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="correct" class="mt-1 mr-3"><span>$(B)\ 38{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(C)\ 39{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="wrong" class="mt-1 mr-3"><span>$(D)\ 39{,}5$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data diurutkan dari yang terkecil ke yang terbesar ($n = 16$):</p>
+            <p>$35, 36, 36, 37, 37, 38, 38, \mathbf{38, 39}, 40, 40, 40, 41, 41, 42, 42$</p>
+            $$\text{Median} = \frac{38 + 39}{2} = 38{,}5$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)\ 38{,}5$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 8 (Ref: Soal 11) -->
+    <article class="question-card p-5 sm:p-6" id="soal-8">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 8 • UNBK Matematika SMP 2018 (No. 11)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Median Ukuran Sepatu (18 Nilai)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data nomor sepatu dari $18$ peserta didik kelas IX SMP adalah sebagai berikut:<br>
+        $38$, $43$, $36$, $37$, $41$, $35$, $40$, $37$, $44$, $42$, $37$, $40$, $35$, $36$, $39$, $40$, $39$, $41$.<br>
+        Median dari data tersebut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q8">
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(A)\ 41$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(B)\ 40$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="correct" class="mt-1 mr-3"><span>$(C)\ 39$</span></label>
+          <label class="option-label"><input type="radio" name="q8" value="wrong" class="mt-1 mr-3"><span>$(D)\ 38$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data urut: $35, 35, 36, 36, 37, 37, 37, 38, \mathbf{39, 39}, 40, 40, 40, 41, 41, 42, 43, 44$.</p>
+            $$\text{Median} = \frac{x_9 + x_{10}}{2} = \frac{39 + 39}{2} = 39$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 39$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 9 (Ref: Soal 21) -->
+    <article class="question-card p-5 sm:p-6" id="soal-9">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 9 • UN Matematika SMP 2018 (No. 21)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Median Berat Badan (16 Nilai Acak)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan data berat badan (kg) dari $16$ siswa berikut!<br>
+        $63$, $58$, $46$, $57$, $64$, $52$, $60$, $46$, $54$, $55$, $58$, $65$, $46$, $46$, $62$, $56$.<br>
+        Median dari data tersebut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q9">
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(A)\ 46{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(B)\ 50{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="wrong" class="mt-1 mr-3"><span>$(C)\ 55{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q9" value="correct" class="mt-1 mr-3"><span>$(D)\ 56{,}5$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Data diurutkan dari yang terkecil ke yang terbesar:</p>
+            <p>$46, 46, 46, 46, 52, 54, 55, \mathbf{56, 57}, 58, 58, 60, 62, 63, 64, 65$</p>
+            $$\text{Median} = \frac{x_8 + x_9}{2} = \frac{56 + 57}{2} = 56{,}5$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 56{,}5$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+
+    <!-- ========================================== -->
+    <!-- LEVEL 2: DIAGRAM & GRAFIK STATISTIKA -->
+    <!-- ========================================== -->
+    <div id="level-2" class="pt-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="level-badge bg-blue-100 text-blue-800 border border-blue-300">Level 2</span>
+        <h2 class="text-base font-bold text-slate-800">Literasi Representasi Visual: Diagram Garis, Batang, dan Lingkaran</h2>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Fokus pembelajaran: interpretasi visual kurva & interval, membaca selisih, nilai data tersembunyi, dan kalkulasi proporsi sudut/persen lingkaran.</p>
+
+      <!-- MATERI LEVEL 2 -->
+      <div class="mb-6 p-4 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 text-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-blue-900 text-sm mb-2">
+          <i class="fa-solid fa-chart-pie text-blue-600"></i> Ringkasan Materi & Rumus Kunci: Level 2
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+          <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
+            <span class="font-bold text-blue-800 block mb-1"><i class="fa-solid fa-chart-line mr-1"></i>1. Diagram Garis & Tren</span>
+            Perhatikan skala sumbu tegak ($y$) dan datar ($x$). Interval konstan ditunjukkan oleh garis mendatar (horizontal), sedangkan penurunan tajam ditunjukkan oleh garis menurun berlereng curam.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
+            <span class="font-bold text-blue-800 block mb-1"><i class="fa-solid fa-circle-notch mr-1"></i>2. Diagram Lingkaran Derajat</span>
+            Lingkaran penuh $= 360^{\circ}$. Jika sudut bagian adalah $\theta^{\circ}$, maka:
+            $$\text{Banyak Anggota} = \frac{\theta^{\circ}}{360^{\circ}} \times \text{Total Data}$$
+            Perbandingan dua sektor: $\frac{\text{Banyak } A}{\text{Banyak } B} = \frac{\theta_A}{\theta_B}$.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-blue-100">
+            <span class="font-bold text-blue-800 block mb-1"><i class="fa-solid fa-percent mr-1"></i>3. Diagram Lingkaran Persen</span>
+            Lingkaran penuh $= 100\%$. Seperempat lingkaran bernilai $25\%$ (sudut siku-siku $90^\circ$).
+            $$\text{Banyak Anggota} = \frac{p\%}{100\%} \times \text{Total Data}$$
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL 10 (Ref: Soal 19) -->
+    <article class="question-card p-5 sm:p-6" id="soal-10">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 10 • TUK Masuk SMA Unggul DEL 2022 (No. 19)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Interpretasi Tren Kurva Garis</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Dita berlari dengan kecepatan berbeda pada program latihan fisiknya. Grafik di bawah ini menunjukkan denyut jantung per satuan waktu selama sesi latihannya:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEhFf9gIeP5Yw1hjzZMJ1aIHeB7BQqE4egqyLZl5qg9_G8imlCyvDqw8mCRx67otdksEIfRsKBzGfBGEPI-t6azyY66lYTi3bcqsYIyqOXvf7793DUB0BQ6aK4TLoGbyEJ1A6P4Iv46-gvgh20TpZBYZohmI-2MxckVTthODdBga7oPYYGD_bzIf3YVOVQ" alt="Grafik Denyut Jantung" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Interval di mana denyut jantung Dita konstan lalu menurun tajam adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q10">
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(A)\ \text{Di antara}\ 10 - 30\ \text{menit}$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(B)\ \text{Di antara}\ 40 - 60\ \text{menit}$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="wrong" class="mt-1 mr-3"><span>$(C)\ \text{Di antara}\ 50 - 65\ \text{menit}$</span></label>
+          <label class="option-label"><input type="radio" name="q10" value="correct" class="mt-1 mr-3"><span>$(D)\ \text{Di antara}\ 90 - 100\ \text{menit}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Berdasarkan grafik, bagian kurva yang mendatar (konstan) dan diikuti oleh lereng curam yang turun drastis terjadi pada menit ke-$90$ hingga $100$.</p>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ \text{Di antara}\ 90 - 100\ \text{menit}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 11 (Ref: Soal 13) -->
+    <article class="question-card p-5 sm:p-6" id="soal-11">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 11 • Simulasi UNBK Matematika SMP 2018 (No. 13)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Membaca Skala Grafik Garis</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Parto minum $80\ \text{mg}$ obat untuk mengendalikan tekanan darahnya. Grafik berikut memperlihatkan banyaknya obat pada saat itu beserta banyaknya obat dalam darah Parto setelah satu, dua, tiga dan empat hari:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEg8KGHVQHkHA-3zidxYIpKCmWRv1wzjgd8Zy9tvLJuNiJLij9pcxe-mCdgPZp-kJ8jAFhrDP7Yyaq2lLQRGh9seUkC_j9yK1_V8YTllN1hQtCBcl8u7H1JUw8daQOsjEBG9HMvBBNPxCM6rFsYxELQaWRGHGnEsF3D3r2dTXc5Hl_idJAQ1F-ph7wvdlw" alt="Grafik Peluruhan Dosis Obat" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Berapa banyak obat yang masih tetap aktif pada akhir hari pertama?</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q11">
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(A)\ 6\ \text{mg}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(B)\ 12\ \text{mg}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="wrong" class="mt-1 mr-3"><span>$(C)\ 26\ \text{mg}$</span></label>
+          <label class="option-label"><input type="radio" name="q11" value="correct" class="mt-1 mr-3"><span>$(D)\ 32\ \text{mg}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Sumbu $y$ menyatakan kadar dosis ($\text{mg}$) di mana satu kotak setara dengan $10\ \text{mg}$.</p>
+            <p>Pada akhir hari pertama (hari ke-$1$), titik kurva berada di antara $30$ dan $40\ \text{mg}$, yaitu tepat di angka $32\ \text{mg}$.</p>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 32$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 12 (Ref: Soal 38) -->
+    <article class="question-card p-5 sm:p-6" id="soal-12">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 12 • UN Matematika SMP 2014 (No. 38)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Penyusutan Nilai pada Diagram</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diagram berikut menunjukkan penyusutan harga mobil setelah dipakai dalam kurun waktu $5$ tahun:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEhEjCMaGVgM9sOi2tdZ8VUdn8UkgZOYoiZLxQch4s0L7T9_ohkSLBQ2OyaEAsmGebt1Hi_VQ-a8QCkcQWrZMlKLEyBKaITkZyFJdJxiskvmFTIW9N6UXPviDQf1NBQzxZrExM4gw9HjTfYX8IZwFj4oOQRQYKMJUvgMEg6nqYPOdDrBKcT4pWd3I3TVCQ" alt="Diagram Penyusutan Harga Mobil" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Penyusutan antara tahun $2010$ dan $2011$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q12">
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(A)\ \text{Rp}2.500.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(B)\ \text{Rp}5.000.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="wrong" class="mt-1 mr-3"><span>$(C)\ \text{Rp}5.500.000{,}00$</span></label>
+          <label class="option-label"><input type="radio" name="q12" value="correct" class="mt-1 mr-3"><span>$(D)\ \text{Rp}7.500.000{,}00$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Tahun $2010$: harga mobil $=\text{Rp}200.000.000{,}00$.</p>
+            <p>Tahun $2011$: harga mobil berada di kisaran $\text{Rp}192.500.000{,}00$.</p>
+            $$\text{Penyusutan} = 200.000.000 - 192.500.000 = \text{Rp}7.500.000{,}00$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ \text{Rp}7.500.000{,}00$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 13 (Ref: Soal 17) -->
+    <article class="question-card p-5 sm:p-6" id="soal-13">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 13 • TUK Masuk SMA Unggul DEL 2022 (No. 17)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Selisih Frekuensi Batang</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Grafik di bawah menunjukkan jumlah Home Run yang dilakukan oleh Barry Bond dari tahun $1993$ sampai $2003$:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEgXQXxi8MZfO81pQEjAZNMwu_G-FTYXpE4j1-GvQ8gj5x2koYxW2abtetUmOKkvin8PXxMwI325yz7KGUP1wwMxPJqCoQTOPWggWN1z1AEj2oBileleEisrsrlkPGJ-RJHpjy691bON8_YI5XH7fM1SYlmPKRGszkuKvhPUnzbdYvFord-ZHXiAzAGyWw" alt="Grafik Barry Bond Home Run" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Selisih Home Run Barry Bond antara tahun $1998$ sampai $1999$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q13">
+          <label class="option-label"><input type="radio" name="q13" value="wrong" class="mt-1 mr-3"><span>$(A)\ 3$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="wrong" class="mt-1 mr-3"><span>$(B)\ 4$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="wrong" class="mt-1 mr-3"><span>$(C)\ 5$</span></label>
+          <label class="option-label"><input type="radio" name="q13" value="correct" class="mt-1 mr-3"><span>$(D)\ 6$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Tahun $1998 = 37$ kali, tahun $1999 = 31$ kali.</p>
+            $$\text{Selisih} = 37 - 31 = 6$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 6$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 14 (Ref: Soal 28) -->
+    <article class="question-card p-5 sm:p-6" id="soal-14">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 14 • UN Matematika SMP 2017 (No. 28)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Selisih Pengunjung Perpustakaan</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data pengunjung perpustakaan dalam satu minggu ditunjukkan pada diagram batang berikut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEhn3zf-ubDubkt3Rnl4-5GAzK5n2d1FPxyrsYrQ-YGv5HY8T_V6jH8MDC1yTDo6EdPCR2lL_65BPbPxgrmfyZEby2GMspdRvdKKhhIi20ZTnTQ9wWRSrg0AsPPDUaUqg-DzQi6xGreEsQo6oHw0MT7rKC8IX9Xk7OrhLn0F6DA3gW3FYzo2NwsHzNawlQ" alt="Diagram Pengunjung Perpustakaan Mingguan" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Selisih pengunjung perpustakaan pada hari Rabu dan Sabtu adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q14">
+          <label class="option-label"><input type="radio" name="q14" value="wrong" class="mt-1 mr-3"><span>$(A)\ 62\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q14" value="correct" class="mt-1 mr-3"><span>$(B)\ 60\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q14" value="wrong" class="mt-1 mr-3"><span>$(C)\ 58\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q14" value="wrong" class="mt-1 mr-3"><span>$(D)\ 55\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Hari Rabu $= 30\ \text{orang}$, Sabtu $= 90\ \text{orang}$.</p>
+            $$\text{Selisih} = 90 - 30 = 60\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)\ 60\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 15 (Ref: Soal 5) -->
+    <article class="question-card p-5 sm:p-6" id="soal-15">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 15 • Simulasi UNBK Matematika SMP 2019 (No. 5)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Menentukan Frekuensi Hilang dari Total</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Hasil panen padi suatu daerah selama $5$ tahun tergambar pada diagram berikut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjSV-5G7oudlGf5wnCKnS4MWTTnZuxCZBYIFcI9Qed3MmdP5U8_QkHJImzkWQopjlu10iz0PZOR8KNq1te3RvumuUUeSfuGTT2wF_xdKLYrmLTZX-CoLVUtbAqcisby_znLzu9WgpDWKGYz/s1600/UNBK+matematika+SMP+Diagram+batang.jpg" alt="Diagram Panen Padi 5 Tahun" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Jika total hasil panen selama $5$ tahun adalah $190$ ton, besar panen pada tahun 2014 adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q15">
+          <label class="option-label"><input type="radio" name="q15" value="wrong" class="mt-1 mr-3"><span>$(A)\ 60\ \text{ton}$</span></label>
+          <label class="option-label"><input type="radio" name="q15" value="wrong" class="mt-1 mr-3"><span>$(B)\ 55\ \text{ton}$</span></label>
+          <label class="option-label"><input type="radio" name="q15" value="correct" class="mt-1 mr-3"><span>$(C)\ 50\ \text{ton}$</span></label>
+          <label class="option-label"><input type="radio" name="q15" value="wrong" class="mt-1 mr-3"><span>$(D)\ 45\ \text{ton}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Panen yang ada di grafik: $40 + 30 + 45 + x + 25 = 140 + x$.</p>
+            $$x = 190 - 140 = 50\ \text{ton}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 50\ \text{ton}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 16 (Ref: Soal 12) -->
+    <article class="question-card p-5 sm:p-6" id="soal-16">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 16 • UNBK Matematika SMP 2018 (No. 12)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Frekuensi Nilai 8 yang Belum Diketahui</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Berikut adalah data nilai matematika $150$ siswa:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgGvY8Y8vBAoeGkXhg_t-gfmXl61bQy0FEwrDCt3KsWTM84hsGbQbQRirCuTtMFm9zG6ZKz0NnNwMB6JTN1A-hPvLwahtR2CqRDb1qMu6moYxrl5JTYXQJTyc8HMArcW7ARmvTF1BxKRgco/s1600/Frekuensi.jpg" alt="Grafik Batang Nilai Matematika 150 Siswa" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Banyak siswa yang memperoleh nilai $8$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q16">
+          <label class="option-label"><input type="radio" name="q16" value="wrong" class="mt-1 mr-3"><span>$(A)\ 54\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="wrong" class="mt-1 mr-3"><span>$(B)\ 50\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="correct" class="mt-1 mr-3"><span>$(C)\ 44\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q16" value="wrong" class="mt-1 mr-3"><span>$(D)\ 34\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Frekuensi yang sudah diketahui: Nilai $6 = 35$, Nilai $7 = 27$, Nilai $9 = 44$.</p>
+            $$\text{Jumlah diketahui} = 35 + 27 + 44 = 106\ \text{siswa}$$
+            $$\text{Banyak siswa bernilai 8} = 150 - 106 = 44\ \text{siswa}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 44\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 17 (Ref: Soal 24) -->
+    <article class="question-card p-5 sm:p-6" id="soal-17">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 17 • UN Matematika SMP 2018 (No. 24)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Diagram Halaman Buku</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Buku Matematika SMP/MTs Kelas IX Semester I terdiri dari $6$ BAB yang semuanya berjumlah $170$ halaman, dengan rincian pelengkap (Judul, Daftar Isi, Glosarium, dll.) total sebanyak $16$ halaman. Masing-masing BAB disajikan dalam diagram batang berikut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEgtqsNXJNz3SV79HeBj4rjCsOXieyRux4xdCTRotPvxKoKpLi9MQ60KZ0jF1rihJjvqy4TC3Eq1dIoeky9FchFfICEEcJz78LaW7yaR3YqrU5BDTx4UGBtRl6iia3fH1WzUyE3ArLrqvoccKZi9PREDm5xODM2GsIRQMnn5s9b4dzJqbpHdn05dGXTnnQ" alt="Diagram Batang Halaman Buku Matematika" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Banyak halaman pada $\text{BAB IV}$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q17">
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(A)\ 20\ \text{halaman}$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="correct" class="mt-1 mr-3"><span>$(B)\ 22\ \text{halaman}$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(C)\ 28\ \text{halaman}$</span></label>
+          <label class="option-label"><input type="radio" name="q17" value="wrong" class="mt-1 mr-3"><span>$(D)\ 32\ \text{halaman}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Halaman yang telah diketahui:</p>
+            $$\text{Total diketahui} = 16\ (\text{pelengkap}) + 30\ (\text{BAB I}) + 26\ (\text{BAB II}) + 32\ (\text{BAB III}) + 24\ (\text{BAB V}) + 20\ (\text{BAB VI}) = 148$$
+            $$\text{Halaman BAB IV} = 170 - 148 = 22\ \text{halaman}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)\ 22\ \text{halaman}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 18 (Ref: Soal 18) -->
+    <article class="question-card p-5 sm:p-6" id="soal-18">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 18 • TUK Masuk SMA Unggul DEL 2022 (No. 18)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Survei Kepemilikan Komputer</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">$500$ keluarga disurvey terkait jumlah komputer yang ada di rumahnya. Diagram lingkaran berikut menunjukkan hasil survei tersebut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEj0MMXPx3-0RmOPy7s4VYAkIKxISj6s3N6BQgA07BC_2JO9GT8Wg6JhN8bfY6TTaM-UpuwqXGTFOOFHwPpGoYNQL-717hRoAdI-1ZFOFqr2KgOgeTXJ0mqCIYN7Bmmtqn5HWKCsGfeVCH-gWqH6LlyQV89q2X4TZCVZOlJkYQfMUoq_euILh9whHv_ayQ" alt="Diagram Persentase Komputer" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Jumlah keluarga yang tidak memiliki komputer dan memiliki lebih dari $3$ komputer adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q18">
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(A)\ 50\ \text{keluarga}$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(B)\ 75\ \text{keluarga}$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="wrong" class="mt-1 mr-3"><span>$(C)\ 100\ \text{keluarga}$</span></label>
+          <label class="option-label"><input type="radio" name="q18" value="correct" class="mt-1 mr-3"><span>$(D)\ 125\ \text{keluarga}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Tidak memiliki komputer: $20\% \times 500 = 100\ \text{keluarga}$.</p>
+            <p>Memiliki $>3$ komputer: $5\% \times 500 = 25\ \text{keluarga}$.</p>
+            $$\text{Total} = 100 + 25 = 125\ \text{keluarga}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 125$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 19 (Ref: Soal 9) -->
+    <article class="question-card p-5 sm:p-6" id="soal-19">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 19 • UNBK Matematika SMP 2018 (No. 9)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pekerjaan Penduduk Desa</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diagram lingkaran di bawah berikut adalah data pekerjaan penduduk sebuah desa. Jika penduduk desa tersebut $300$ orang, banyak pengusaha di desa tersebut adalah...</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-64 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFmt63TFf0iU_KkKZZwo9EUHgHsvqr5z2KXzZc_XbC-nZ_22OBXgF2TI4qIyfB92mHaJ7zQQdDSIEjq-nG_MwIML05DsTNgDNL4WdfQspIM2UFKfiUdVDWJLCr-3FSq1k0mLrRLSlG0Vus/s1600/UNBK+Matematika+SMP+Lingkaran.jpg" alt="Diagram Lingkaran Pekerjaan Penduduk" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q19">
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(A)\ 25\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="correct" class="mt-1 mr-3"><span>$(B)\ 45\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(C)\ 75\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q19" value="wrong" class="mt-1 mr-3"><span>$(D)\ 120\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Buruh $= 20\%$, Pedagang $= 40\%$, Petani (seperempat) $= 25\%$.</p>
+            $$\text{Persentase Pengusaha} = 100\% - (20\% + 40\% + 25\%) = 15\%$$
+            $$\text{Banyak Pengusaha} = \frac{15}{100} \times 300 = 45\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)\ 45\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 20 (Ref: Soal 6) -->
+    <article class="question-card p-5 sm:p-6" id="soal-20">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 20 • Simulasi UNBK Matematika SMP 2019 (No. 6)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pendidikan Orang Tua Siswa</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diagram lingkaran di bawah menunjukkan pendidikan orangtua siswa di suatu sekolah. Jika jumlah orang tua siswa di sekolah tersebut $900$ orang, banyak orang tua siswa yang berpendidikan SMP adalah...</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-64 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUkZJhx6fXUunbbNkjqSjqOxDp0yfUN42LbAX7-jMRK6Gu-9W5rPXmC-cIz_7a2JSN9waOXN3jESOrBguw4Zv5uaVWoAaOK5kIzluSuP_PJe9Xu6jjf-TLiKxdDn_EB698sGrzAqPfzGu1/s1600/UNBK+Matematika+SMP+Diagram+lingkaran.jpg" alt="Diagram Pendidikan Orang Tua" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q20">
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(A)\ 385\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(B)\ 375\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="wrong" class="mt-1 mr-3"><span>$(C)\ 350\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q20" value="correct" class="mt-1 mr-3"><span>$(D)\ 315\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Pendidikan SMP pada diagram tertulis $35\%$.</p>
+            $$\text{Jumlah orang tua SMP} = \frac{35}{100} \times 900 = 315\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 315\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 21 (Ref: Soal 4) -->
+    <article class="question-card p-5 sm:p-6" id="soal-21">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 21 • UNBK Matematika SMP 2019 (No. 4)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Diagram Lingkaran Derajat</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Sekolah melakukan pendataan terhadap kegiatan paling disenangi siswa setelah pulang sekolah seperti pada diagram berikut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-64 object-contain" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjVXNXYbr2bLNdkeLMUyH3zvuDpi_iIXbTygV0STZADisx676HJJ44471wbnUWVdqU28Lnuocq1HTbAZTH35KI4pkcjHG1R7aBu4N4mOMtlte8zDzT8EdU0Tz2fK0fYSL3dys6mrcxGwbry/s1600/UNBK+SMP+2019+Diagram+Lingkaran.jpg" alt="Diagram Sudut Derajat Aktivitas Siswa" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Jika banyak siswa yang didata $1.800$ anak, banyak siswa yang senang bermain bersama teman adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q21">
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(A)\ 300\ \text{anak}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(B)\ 350\ \text{anak}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="correct" class="mt-1 mr-3"><span>$(C)\ 400\ \text{anak}$</span></label>
+          <label class="option-label"><input type="radio" name="q21" value="wrong" class="mt-1 mr-3"><span>$(D)\ 600\ \text{anak}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Sudut "Bermain Bersama Teman" $= 360^{\circ} - (60^{\circ}+60^{\circ}+70^{\circ}+50^{\circ}+40^{\circ}) = 80^{\circ}$.</p>
+            $$\text{Banyak anak} = \frac{80^{\circ}}{360^{\circ}} \times 1.800 = \frac{2}{9} \times 1.800 = 400\ \text{anak}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 400\ \text{anak}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 22 (Ref: Soal 23) -->
+    <article class="question-card p-5 sm:p-6" id="soal-22">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 22 • UN Matematika SMP 2018 (No. 23)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Perbandingan Sudut Lingkaran</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diagram berikut menyatakan kegemaran siswa "SMP TARUNA". Jika banyak siswa yang gemar voli $54$ orang, banyak siswa yang gemar futsal adalah...</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-64 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEi8oemPtitEcYyUwvJWJpJuMiE0kMfVGYyn_sStpJNWF-bY1SuKqwyZ42wzw7ztNkdCjhgce2HegwUH3ELJjNCL_KWQADPofBZoxg8j25EDJRYeZsZ6zrotLlBckc1ISYui4KXaY6r_5BRpgMcY0Mkow-7qv8OSslo_Fj-uuu4T-uutqIw0Qc_s8Ku9Bg" alt="Diagram Lingkaran Kegemaran Olahraga" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q22">
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(A)\ 86\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(B)\ 84\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="wrong" class="mt-1 mr-3"><span>$(C)\ 83\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q22" value="correct" class="mt-1 mr-3"><span>$(D)\ 81\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Sudut siku-siku Voli $= 90^{\circ} \to 54\ \text{orang}$. Sudut Futsal $= 360^{\circ} - (90^{\circ}+60^{\circ}+75^{\circ}) = 135^{\circ}$.</p>
+            $$\text{Futsal} = \frac{135^{\circ}}{90^{\circ}} \times 54 = 81\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 81\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 23 (Ref: Soal 34) -->
+    <article class="question-card p-5 sm:p-6" id="soal-23">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 23 • UN Matematika SMP 2015 (No. 34)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Pendidikan Orang Tua (Derajat)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Diagram berikut menunjukkan pendidikan orang tua siswa. Jika banyak orang tua siswa yang berpendidikan SMP $180$ orang, banyak orang tua siswa yang berpendidikan Strata 2 (S2) adalah...</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-64 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEibUfOi161Ls03UnDCfOtMesp2p-TUCTvqdVSNdj0ne936i9TgR1Xty4Kfic-tqzvzUmWQhN9c0RejoT5puNnoDLRRXo0hqDVrXQf7QkdO38xb1xfKYbX92ZmRbvHK2J-DKhqWM3b26EkCSycyMALVxi9qEgnvlb4SaGuORSFvoWISvuK1RxhYaLSEUyg" alt="Diagram Pendidikan Orang Tua Derajat" loading="lazy">
+        </div>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q23">
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(A)\ 40\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(B)\ 60\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="correct" class="mt-1 mr-3"><span>$(C)\ 80\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q23" value="wrong" class="mt-1 mr-3"><span>$(D)\ 90\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Sudut siku-siku SMP $= 90^{\circ} \to 180\ \text{orang}$. Sudut S2 $= 360^{\circ} - (90^{\circ}+30^{\circ}+80^{\circ}+120^{\circ}) = 40^{\circ}$.</p>
+            $$\text{Banyak orang tua S2} = \frac{40^{\circ}}{90^{\circ}} \times 180 = 80\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 80\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+
+    <!-- ========================================== -->
+    <!-- LEVEL 3: TABEL FREKUENSI BERBOBOT -->
+    <!-- ========================================== -->
+    <div id="level-3" class="pt-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="level-badge bg-amber-100 text-amber-900 border border-amber-300">Level 3</span>
+        <h2 class="text-base font-bold text-slate-800">Analisis Data Berbobot: Distribusi Frekuensi & Ambang Nilai</h2>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Fokus pembelajaran: menghitung rata-rata berbobot ($\sum fx / \sum f$), median tabel kumulatif, serta menyeleksi siswa remidi/di atas rata-rata.</p>
+
+      <!-- MATERI LEVEL 3 -->
+      <div class="mb-6 p-4 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 text-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-amber-900 text-sm mb-2">
+          <i class="fa-solid fa-table-list text-amber-600"></i> Ringkasan Materi & Rumus Kunci: Level 3
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+          <div class="bg-white/80 p-3 rounded-lg border border-amber-100">
+            <span class="font-bold text-amber-800 block mb-1"><i class="fa-solid fa-calculator mr-1"></i>1. Rata-rata Berbobot</span>
+            Setiap nilai $x_i$ dikalikan frekuensinya $f_i$:
+            $$\bar{x} = \frac{\sum (f_i \times x_i)}{\sum f_i}$$
+            Total frekuensi adalah $n = \sum f_i$.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-amber-100">
+            <span class="font-bold text-amber-800 block mb-1"><i class="fa-solid fa-layer-group mr-1"></i>2. Median Tabel Kumulatif</span>
+            Tentukan letak median di datum ke-$\frac{n+1}{2}$. Susun kolom frekuensi kumulatif ($f_k$) untuk melihat nilai rentang datum tersebut.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-amber-100">
+            <span class="font-bold text-amber-800 block mb-1"><i class="fa-solid fa-user-check mr-1"></i>3. Kriteria Remidial</span>
+            Siswa yang nilainya kurang dari rata-rata ($x < \bar{x}$) wajib remidi. Jumlahkan frekuensi semua kolom yang nilainya berada di bawah rataan.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL 24 (Ref: Soal 27) -->
+    <article class="question-card p-5 sm:p-6" id="soal-24">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 24 • UN Matematika SMP 2017 (No. 27)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Nilai di Bawah Ambang Batas</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Tabel berikut adalah data nilai ulangan matematika suatu kelas:</p>
+
+        <div class="overflow-x-auto">
+          <table class="math-table">
+            <thead>
+              <tr><th>Nilai</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="font-semibold bg-slate-50">Frekuensi</td><td>6</td><td>11</td><td>10</td><td>8</td><td>5</td><td>1</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Banyak siswa yang mendapat nilai kurang dari $7$ adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q24">
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(A)\ 8\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(B)\ 18\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="correct" class="mt-1 mr-3"><span>$(C)\ 27\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q24" value="wrong" class="mt-1 mr-3"><span>$(D)\ 35\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Nilai kurang dari $7$ adalah nilai $4, 5,$ dan $6$:</p>
+            $$\sum f = 6 + 11 + 10 = 27\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 27\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 25 (Ref: Soal 25) -->
+    <article class="question-card p-5 sm:p-6" id="soal-25">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 25 • UN Matematika SMP 2017 (No. 25)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Median Tabel Distribusi</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan data tinggi badan siswa berikut!</p>
+
+        <div class="overflow-x-auto">
+          <table class="math-table">
+            <thead>
+              <tr><th>Tinggi Badan (cm)</th><th>155</th><th>156</th><th>157</th><th>158</th><th>159</th><th>160</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="font-semibold bg-slate-50">Frekuensi</td><td>3</td><td>5</td><td>2</td><td>3</td><td>4</td><td>3</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Median dari data di atas adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q25">
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(A)\ 156{,}5\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(B)\ 157\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="correct" class="mt-1 mr-3"><span>$(C)\ 157{,}5\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q25" value="wrong" class="mt-1 mr-3"><span>$(D)\ 158\ \text{cm}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Total data $n = 3 + 5 + 2 + 3 + 4 + 3 = 20$. Posisi median berada di datum ke-$10{,}5$ (antara $x_{10}$ dan $x_{11}$).</p>
+            <p>Frekuensi kumulatif: $x_{10} = 157$ dan $x_{11} = 158$.</p>
+            $$\text{Median} = \frac{157 + 158}{2} = 157{,}5\ \text{cm}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 157{,}5\ \text{cm}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 26 (Ref: Soal 2) -->
+    <article class="question-card p-5 sm:p-6" id="soal-26">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 26 • UNBK Matematika SMP 2019 (No. 2)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Tinggi Badan di Atas Rata-rata</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan tabel berikut!</p>
+
+        <div class="overflow-x-auto">
+          <table class="math-table">
+            <thead>
+              <tr><th>Tinggi Badan (cm)</th><th>Frekuensi (f)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>155</td><td>4</td></tr>
+              <tr><td>156</td><td>2</td></tr>
+              <tr><td>157</td><td>15</td></tr>
+              <tr><td>158</td><td>8</td></tr>
+              <tr><td>159</td><td>3</td></tr>
+              <tr class="font-bold bg-slate-100"><td>Jumlah</td><td>32</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Banyak siswa yang memiliki tinggi badan di atas rata-rata adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q26">
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(A)\ 26\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(B)\ 15\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="correct" class="mt-1 mr-3"><span>$(C)\ 11\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q26" value="wrong" class="mt-1 mr-3"><span>$(D)\ 6\ \text{siswa}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            $$\sum (t \times f) = (155 \times 4) + (156 \times 2) + (157 \times 15) + (158 \times 8) + (159 \times 3) = 5028$$
+            $$\bar{x} = \frac{5028}{32} = 157{,}125\ \text{cm}$$
+            <p>Tinggi di atas $157{,}125\ \text{cm}$ adalah $158\ \text{cm}$ dan $159\ \text{cm}$:</p>
+            $$\text{Banyak siswa} = 8 + 3 = 11\ \text{siswa}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 11\ \text{siswa}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 27 (Ref: Soal 35a - UN 2014) -->
+    <article class="question-card p-5 sm:p-6" id="soal-27">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 27 • UN Matematika SMP 2014 (No. 35)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Banyak Siswa Ikut Remedial</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data nilai ulangan matematika siswa kelas IX C disajikan pada tabel berikut:</p>
+
+        <div class="overflow-x-auto">
+          <table class="math-table">
+            <thead>
+              <tr><th>Nilai</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="font-semibold bg-slate-50">Frekuensi</td><td>4</td><td>5</td><td>7</td><td>13</td><td>6</td><td>5</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Siswa yang memperoleh nilai kurang dari nilai rata-rata harus mengikuti remedial. Banyak siswa yang ikut remedial adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q27">
+          <label class="option-label"><input type="radio" name="q27" value="correct" class="mt-1 mr-3"><span>$(A)\ 9\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(B)\ 12\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(C)\ 16\ \text{siswa}$</span></label>
+          <label class="option-label"><input type="radio" name="q27" value="wrong" class="mt-1 mr-3"><span>$(D)\ 19\ \text{siswa}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            $$\sum (f \times x) = (5 \times 4) + (6 \times 5) + (7 \times 7) + (8 \times 13) + (9 \times 6) + (10 \times 5) = 20 + 30 + 49 + 104 + 54 + 50 = 307$$
+            $$n = 4 + 5 + 7 + 13 + 6 + 5 = 40 \implies \bar{x} = \frac{307}{40} = 7{,}675$$
+            <p>Siswa yang remedial adalah yang nilainya $< 7{,}675$ (yaitu siswa bernilai $5$ dan $6$):</p>
+            $$\text{Remedial} = 4 + 5 = 9\ \text{siswa}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai $(A)\ 9\ \text{siswa}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 28 (Ref: Soal 35b - TKA) -->
+    <article class="question-card p-5 sm:p-6" id="soal-28">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 28 • Contoh Soal TKA Matematika SMP/MTs
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Uji Kebenaran Multi-Pernyataan</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Perhatikan tabel nilai ulangan matematika kelas $9\text{A}$ berikut:</p>
+
+        <div class="overflow-x-auto">
+          <table class="math-table">
+            <thead>
+              <tr><th>Nilai</th><th>Frekuensi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>60</td><td>6</td></tr>
+              <tr><td>70</td><td>7</td></tr>
+              <tr><td>80</td><td>8</td></tr>
+              <tr><td>90</td><td>5</td></tr>
+              <tr><td>100</td><td>4</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-slate-800 mb-2 font-medium">Berdasarkan informasi tabel di atas, tentukan pernyataan berikut yang <strong>Benar</strong>!</p>
+        <ol class="list-decimal ml-5 text-sm space-y-1 mb-4 text-slate-700">
+          <li>Jangkauan dari data tersebut adalah $40$.</li>
+          <li>Modus dari data tersebut adalah $80$.</li>
+          <li>Rata-rata data tersebut adalah $78$.</li>
+          <li>Banyak siswa yang memperoleh nilai di atas rata-rata adalah $13$ orang.</li>
+        </ol>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q28">
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(A)$ Pernyataan $1$ dan $2$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(B)$ Pernyataan $1$ dan $3$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="wrong" class="mt-1 mr-3"><span>$(C)$ Pernyataan $2$ dan $3$</span></label>
+          <label class="option-label"><input type="radio" name="q28" value="correct" class="mt-1 mr-3"><span>$(D)$ Pernyataan $1$, $2$, dan $3$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <ul class="list-disc ml-5 space-y-1">
+              <li>Pernyataan 1: Jangkauan $= 100 - 60 = 40$ &rarr; <b>Benar</b>.</li>
+              <li>Pernyataan 2: Modus $= 80$ (frekuensi terbanyak yaitu 8) &rarr; <b>Benar</b>.</li>
+              <li>Pernyataan 3: $\bar{x} = \frac{360 + 490 + 640 + 450 + 400}{30} = \frac{2340}{30} = 78$ &rarr; <b>Benar</b>.</li>
+              <li>Pernyataan 4: Siswa di atas rata-rata ($> 78$) adalah $8 + 5 + 4 = 17$ orang (bukan 13) &rarr; <b>Salah</b>.</li>
+            </ul>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)$ Pernyataan $1$, $2$, dan $3$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+
+    <!-- ========================================== -->
+    <!-- LEVEL 4: RATA-RATA GABUNGAN & DINAMIKA KELOMPOK -->
+    <!-- ========================================== -->
+    <div id="level-4" class="pt-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="level-badge bg-purple-100 text-purple-800 border border-purple-300">Level 4</span>
+        <h2 class="text-base font-bold text-slate-800">Dinamika Rata-rata Gabungan: Pengurangan, Penambahan & Proporsi</h2>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Fokus pembelajaran: perubahan rata-rata ketika datum dikeluarkan/disertakan, penggabungan kelompok, serta pemecahan masalah dengan metode selisih bobot.</p>
+
+      <!-- MATERI LEVEL 4 -->
+      <div class="mb-6 p-4 rounded-xl bg-gradient-to-br from-purple-50 to-fuchsia-50 border border-purple-200 text-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-purple-900 text-sm mb-2">
+          <i class="fa-solid fa-people-group text-purple-600"></i> Ringkasan Materi & Rumus Kunci: Level 4
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+          <div class="bg-white/80 p-3 rounded-lg border border-purple-100">
+            <span class="font-bold text-purple-800 block mb-1"><i class="fa-solid fa-code-merge mr-1"></i>1. Rumus Rata-rata Gabungan</span>
+            $$\bar{x}_{\text{gab}} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}$$
+            Dua kelompok digabung menghasilkan rata-rata tertimbang sesuai bobot jumlah anggotanya.
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-purple-100">
+            <span class="font-bold text-purple-800 block mb-1"><i class="fa-solid fa-arrow-right-arrow-left mr-1"></i>2. Nilai Masuk & Keluar</span>
+            Kunci: <strong>Kekekalan Jumlah Nilai</strong> ($\sum x = n \times \bar{x}$):
+            <ul class="list-disc ml-4 space-y-0.5 mt-1">
+              <li><strong>Keluar:</strong> $\bar{x}_{\text{baru}} = \dfrac{(n \bar{x}) - x_{\text{keluar}}}{n - 1}$</li>
+              <li><strong>Masuk:</strong> $\bar{x}_{\text{baru}} = \dfrac{(n \bar{x}) + x_{\text{masuk}}}{n + 1}$</li>
+            </ul>
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-purple-100">
+            <span class="font-bold text-purple-800 block mb-1"><i class="fa-solid fa-bolt mr-1"></i>3. Trik Selisih Bobot</span>
+            Mencari perbandingan jumlah anggota dua subkelompok:
+            $$\frac{n_1}{n_2} = \frac{|\bar{x}_2 - \bar{x}_{\text{gab}}|}{|\bar{x}_1 - \bar{x}_{\text{gab}}|}$$
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL 29 (Ref: Soal 36) -->
+    <article class="question-card p-5 sm:p-6" id="soal-29">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 29 • UN Matematika SMP 2014 (No. 36)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Konsep Matematis Rata-rata</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Ada $25$ murid perempuan dalam sebuah kelas. Tinggi rata-rata mereka adalah $130\ \text{cm}$. Bagaimana cara menghitung tinggi rata-rata tersebut?</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q29">
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(A)$ Jika ada seorang murid perempuan dengan tinggi $132\ \text{cm}$, maka pasti ada seorang murid perempuan dengan tinggi $128\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="correct" class="mt-1 mr-3"><span>$(B)$ Jika $23$ orang dari murid perempuan tersebut tingginya masing-masing $130\ \text{cm}$ dan satu orang tingginya $133\ \text{cm}$, maka satu orang lagi tingginya $127\ \text{cm}$.</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(C)$ Jika Anda mengurutkan semua perempuan tersebut dari yang terpendek sampai ke yang tertinggi, maka yang ditengah pasti mempunyai tinggi $130\ \text{cm}$.</span></label>
+          <label class="option-label"><input type="radio" name="q29" value="wrong" class="mt-1 mr-3"><span>$(D)$ Setengah dari perempuan di kelas pasti di bawah $130\ \text{cm}$ dan setengahnya lagi pasti di atas $130\ \text{cm}$.</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Total tinggi $25$ anak $= 25 \times 130 = 3250\ \text{cm}$.</p>
+            <p>Pada pilihan (B): $(23 \times 130) + 133 + 127 = 2990 + 260 = 3250\ \text{cm}$. Nilai totalnya tetap tepat $3250$, sehingga rata-rata tetap $130\ \text{cm}$.</p>
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(B)$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 30 (Ref: Soal 10) -->
+    <article class="question-card p-5 sm:p-6" id="soal-30">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 30 • UNBK Matematika SMP 2018 (No. 10)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Satu Nilai Dikeluarkan</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Nilai rata-rata dari $8$ orang siswa adalah $6{,}5$. Satu siswa yang mempunyai nilai $10$ keluar dari kelompok tersebut. Nilai rata-rata $7$ orang siswa adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q30">
+          <label class="option-label"><input type="radio" name="q30" value="correct" class="mt-1 mr-3"><span>$(A)\ 6{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(B)\ 6{,}5$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(C)\ 7{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q30" value="wrong" class="mt-1 mr-3"><span>$(D)\ 7{,}5$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Total awal $= 8 \times 6{,}5 = 52$. Keluar nilai $10 \implies$ total baru $= 52 - 10 = 42$.</p>
+            $$\bar{x}_{\text{baru}} = \frac{42}{7} = 6{,}0$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(A)\ 6{,}0$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 31 (Ref: Soal 7) -->
+    <article class="question-card p-5 sm:p-6" id="soal-31">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 31 • Simulasi UNBK Matematika SMP 2019 (No. 7)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Satu Nilai Dikeluarkan (Pecahan)</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Nilai rata-rata dari $16$ orang siswa adalah $6{,}3$. Satu siswa yang mempunyai nilai $7{,}8$ tidak disertakan dari kelompok tersebut. Nilai rata-rata yang baru adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q31">
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(A)\ 9{,}8$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(B)\ 7{,}2$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="correct" class="mt-1 mr-3"><span>$(C)\ 6{,}2$</span></label>
+          <label class="option-label"><input type="radio" name="q31" value="wrong" class="mt-1 mr-3"><span>$(D)\ 6{,}1$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Total nilai $16$ siswa $= 16 \times 6{,}3 = 100{,}8$.</p>
+            <p>Nilai $7{,}8$ tidak disertakan: $100{,}8 - 7{,}8 = 93$.</p>
+            $$\bar{x}_{\text{baru}} = \frac{93}{15} = 6{,}2$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 6{,}2$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 32 (Ref: Soal 22) -->
+    <article class="question-card p-5 sm:p-6" id="soal-32">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 32 • UN Matematika SMP 2018 (No. 22)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Satu Nilai Disertakan</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Rata-rata tinggi badan $32$ orang siswa adalah $170{,}5\ \text{cm}$. Jika satu siswa yang memiliki tinggi badan $154\ \text{cm}$ disertakan, rata-rata tinggi badan seluruhnya adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q32">
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(A)\ 160\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(B)\ 165\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="correct" class="mt-1 mr-3"><span>$(C)\ 170\ \text{cm}$</span></label>
+          <label class="option-label"><input type="radio" name="q32" value="wrong" class="mt-1 mr-3"><span>$(D)\ 175\ \text{cm}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            $$\text{Total mula-mula} = 32 \times 170{,}5 = 5.456\ \text{cm}$$
+            $$\bar{x}_{\text{gab}} = \frac{5.456 + 154}{33} = \frac{5.610}{33} = 170\ \text{cm}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 170\ \text{cm}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 33 (Ref: Soal 40) -->
+    <article class="question-card p-5 sm:p-6" id="soal-33">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 33 • UN Matematika SMP 2013 (No. 40)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Dua Kelompok Bilangan</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Rata-rata $8$ buah bilangan adalah $72$ dan rata-rata $12$ buah bilangan lain adalah $84$. Rata-rata $20$ buah bilangan adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q33">
+          <label class="option-label"><input type="radio" name="q33" value="correct" class="mt-1 mr-3"><span>$(A)\ 79{,}2$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(B)\ 78{,}0$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(C)\ 76{,}8$</span></label>
+          <label class="option-label"><input type="radio" name="q33" value="wrong" class="mt-1 mr-3"><span>$(D)\ 66{,}0$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            $$\bar{x}_{\text{gab}} = \frac{(8 \times 72) + (12 \times 84)}{8 + 12} = \frac{576 + 1.008}{20} = \frac{1.584}{20} = 79{,}2$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(A)\ 79{,}2$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 34 (Ref: Soal 31) -->
+    <article class="question-card p-5 sm:p-6" id="soal-34">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 34 • UN Matematika SMP 2015 (No. 31)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Rata-rata Gabungan Dua Jenis Kelamin</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Pada suatu kelas terdapat $14$ orang siswa laki-laki dan $16$ orang siswa perempuan. Jika rata-rata berat badan siswa laki-laki $54\ \text{kg}$ dan rata-rata berat badan siswa perempuan $48\ \text{kg}$, rata-rata berat badan seluruh siswa dalam kelas tersebut adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q34">
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(A)\ 50{,}2\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(B)\ 50{,}4\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="wrong" class="mt-1 mr-3"><span>$(C)\ 50{,}6\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q34" value="correct" class="mt-1 mr-3"><span>$(D)\ 50{,}8\ \text{kg}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            $$\bar{x}_{\text{gab}} = \frac{(54 \times 14) + (48 \times 16)}{14 + 16} = \frac{756 + 768}{30} = \frac{1.524}{30} = 50{,}8\ \text{kg}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 50{,}8\ \text{kg}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 35 (Ref: Soal 26) -->
+    <article class="question-card p-5 sm:p-6" id="soal-35">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 35 • UN Matematika SMP 2017 (No. 26)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Menentukan Banyak Siswa Putri</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Rata-rata nilai siswa putri $80$ dan rata-rata nilai siswa putra $75$. Jika rata-rata nilai seluruh siswa $78$ sedangkan jumlah seluruh siswa $30$ orang, banyak siswa putri adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q35">
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(A)\ 12\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(B)\ 14\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="wrong" class="mt-1 mr-3"><span>$(C)\ 16\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q35" value="correct" class="mt-1 mr-3"><span>$(D)\ 18\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Selisih nilai putra ke gabungan $= |75 - 78| = 3$.</p>
+            <p>Selisih nilai putri ke gabungan $= |80 - 78| = 2$.</p>
+            $$n_{\text{putri}} : n_{\text{putra}} = 3 : 2$$
+            $$n_{\text{putri}} = \frac{3}{3 + 2} \times 30 = \frac{3}{5} \times 30 = 18\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 18\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 36 (Ref: Soal 30) -->
+    <article class="question-card p-5 sm:p-6" id="soal-36">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 36 • UN Matematika SMP 2016 (No. 30)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Menentukan Banyak Siswa Wanita</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Rata-rata tinggi siswa wanita $135\ \text{cm}$ dan rata-rata tinggi siswa pria $138\ \text{cm}$. Jika banyak siswa $30$ orang dan rata-rata tinggi adalah $137\ \text{cm}$, maka banyak siswa wanita adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q36">
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(A)\ 24\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(B)\ 20\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="wrong" class="mt-1 mr-3"><span>$(C)\ 16\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q36" value="correct" class="mt-1 mr-3"><span>$(D)\ 10\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Selisih tinggi pria ke gabungan $= |138 - 137| = 1$.</p>
+            <p>Selisih tinggi wanita ke gabungan $= |135 - 137| = 2$.</p>
+            $$n_w : n_p = 1 : 2$$
+            $$n_w = \frac{1}{1 + 2} \times 30 = \frac{1}{3} \times 30 = 10\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 10\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 37 (Ref: Soal 16) -->
+    <article class="question-card p-5 sm:p-6" id="soal-37">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 37 • Simulasi UNBK Matematika SMP 2018 (No. 16)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Banyak Siswa Pria</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Data rata-rata tinggi siswa wanita $134\ \text{cm}$, rata-rata tinggi siswa pria $145\ \text{cm}$. Jika banyak siswa $33$ orang dan rata-rata tinggi seluruhnya $142\ \text{cm}$, maka banyak siswa pria adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q37">
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(A)\ 10\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(B)\ 12\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="wrong" class="mt-1 mr-3"><span>$(C)\ 18\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q37" value="correct" class="mt-1 mr-3"><span>$(D)\ 24\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Selisih wanita ke gabungan $= |134 - 142| = 8$.</p>
+            <p>Selisih pria ke gabungan $= |145 - 142| = 3$.</p>
+            $$n_p : n_w = 8 : 3$$
+            $$n_p = \frac{8}{8 + 3} \times 33 = \frac{8}{11} \times 33 = 24\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 24\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 38 (Ref: Soal 14) -->
+    <article class="question-card p-5 sm:p-6" id="soal-38">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 38 • Simulasi UNBK Matematika SMP 2018 (No. 14)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Sobekan Koran: Pengunjung Hari Rabu</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3"><strong>"Pengunjung Perpustakaan"</strong><br>
+        Suatu hari Ani menemukan sobekan koran yang memuat data pengunjung perpustakaan berupa gambar diagram batang sebagai berikut:</p>
+
+        <div class="flex justify-center my-4">
+          <img class="rounded-lg border border-slate-200 max-h-72 object-contain" src="https://blogger.googleusercontent.com/img/a/AVvXsEjZpT2QIUhpUDU96R064IaZ0JgRSRv95EVkF1x6ozIf7YPcjAJh_sd2Ta3avYK_CVhJODSgmKKJwcD1HmZUmvN64vMOLkI9Zx276OL3_zq4Om9RgVDNLki9H7Yzy--Zmq-yTMpix96WEdkJyP1ktXuXDrHPEDN5zlfO5MqscaYj9uoK1vNnMymvpxNKvA" alt="Sobekan Koran Diagram Batang Pengunjung" loading="lazy">
+        </div>
+
+        <p class="font-medium text-slate-800 mb-3">Informasi yang ada pada koran tersebut menunjukkan bahwa rata-rata pengunjung selama $5$ hari adalah $41$ orang. Berapa banyak pengunjung pada hari Rabu?</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q38">
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(A)\ 55\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(B)\ 60\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="wrong" class="mt-1 mr-3"><span>$(C)\ 65\ \text{orang}$</span></label>
+          <label class="option-label"><input type="radio" name="q38" value="correct" class="mt-1 mr-3"><span>$(D)\ 70\ \text{orang}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Hari Senin $= 45$, Selasa $= 40$, Kamis $= 30$, Jumat $= 20$.</p>
+            $$\bar{x} = \frac{45 + 40 + x_{\text{Rabu}} + 30 + 20}{5} = 41$$
+            $$135 + x_{\text{Rabu}} = 41 \times 5 = 205 \implies x_{\text{Rabu}} = 205 - 135 = 70\ \text{orang}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(D)\ 70\ \text{orang}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+
+    <!-- ========================================== -->
+    <!-- LEVEL 5: HOTS, ALJABAR & KOMBINATORIK -->
+    <!-- ========================================== -->
+    <div id="level-5" class="pt-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="level-badge bg-rose-100 text-rose-800 border border-rose-300">Level 5</span>
+        <h2 class="text-base font-bold text-slate-800">Tantangan HOTS: Pemodelan Aljabar dan Eksplorasi Susunan Data</h2>
+      </div>
+      <p class="text-xs text-slate-500 mb-4">Fokus pembelajaran: menyusun sistem persamaan aljabar linear dari informasi selisih nilai ekstrem dan rata-rata, serta analisis kombinatorik susunan data terurut.</p>
+
+      <!-- MATERI LEVEL 5 -->
+      <div class="mb-6 p-4 rounded-xl bg-gradient-to-br from-rose-50 to-red-50 border border-rose-200 text-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 font-bold text-rose-900 text-sm mb-2">
+          <i class="fa-solid fa-brain text-rose-600"></i> Ringkasan Strategi & Pemodelan HOTS: Level 5
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs leading-relaxed">
+          <div class="bg-white/80 p-3 rounded-lg border border-rose-100">
+            <span class="font-bold text-rose-800 block mb-1"><i class="fa-solid fa-square-root-variable mr-1"></i>1. Pemodelan Aljabar Nilai Ekstrem</span>
+            Ubah narasi selisih nilai ekstrem ke dalam SPLDV:
+            <ul class="list-disc ml-4 space-y-1 mt-1">
+              <li>Jumlah total: $\sum x = n \times \bar{x}$.</li>
+              <li>Selisih nilai terbesar dan terkecil: $x_{\max} - x_{\min} = \text{Jangkauan}$.</li>
+              <li>Eliminasi atau substitusikan variabel untuk mencari nilai datum terbesar/terkecil.</li>
+            </ul>
+          </div>
+          <div class="bg-white/80 p-3 rounded-lg border border-rose-100">
+            <span class="font-bold text-rose-800 block mb-1"><i class="fa-solid fa-list-ol mr-1"></i>2. Eksplorasi Kombinatorik Terurut</span>
+            Ketika diminta mencari banyak susunan data yang mungkin:
+            <ul class="list-disc ml-4 space-y-1 mt-1">
+              <li>Syarat terurut: $x_1 \leq x_2 \leq \dots \leq x_n$.</li>
+              <li>Bagi kasus berdasarkan nilai minimum $x_{\min}$ dengan rentang jangkauan tetap.</li>
+              <li>Cari seluruh kombinasi sisa datum yang memenuhi jumlah total.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOAL 39 (Ref: Soal 1) -->
+    <article class="question-card p-5 sm:p-6" id="soal-39">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 39 • UNBK Matematika SMP 2019 (No. 1)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Nilai Terbesar & Selisih Ekstrem</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Tim Bola Basket terdiri dari $5$ siswa memiliki rata-rata berat badan $45\ \text{kg}$. Selisih berat badan terbesar dan terkecil $15\ \text{kg}$. Ada satu orang terberat dan lainnya sama beratnya. Berat badan siswa yang terbesar adalah...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q39">
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(A)\ 42\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(B)\ 55\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="correct" class="mt-1 mr-3"><span>$(C)\ 57\ \text{kg}$</span></label>
+          <label class="option-label"><input type="radio" name="q39" value="wrong" class="mt-1 mr-3"><span>$(D)\ 60\ \text{kg}$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Misalkan berat $4$ siswa adalah $x_1$, dan $1$ siswa terberat adalah $x_5$.</p>
+            $$\bar{x} = \frac{4x_1 + x_5}{5} = 45 \implies 4x_1 + x_5 = 225$$
+            $$\text{Selisih: } x_5 - x_1 = 15 \implies x_5 = x_1 + 15$$
+            <p>Substitusikan:</p>
+            $$4x_1 + (x_1 + 15) = 225 \implies 5x_1 = 210 \implies x_1 = 42\ \text{kg}$$
+            $$x_5 = 42 + 15 = 57\ \text{kg}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(C)\ 57\ \text{kg}$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SOAL 40 (Ref: Soal 20) -->
+    <article class="question-card p-5 sm:p-6" id="soal-40">
+      <svg class="card-watermark" viewBox="0 0 200 225"><use href="#stat-watermark"/></svg>
+      <div class="card-content">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold bg-teal-100 text-teal-800">
+            <i class="fa-solid fa-bookmark"></i> Soal 40 • TUK Masuk SMA Unggul DEL 2022 (No. 20)
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Banyak Susunan Bilangan Terurut</span>
+        </div>
+        <p class="text-slate-800 leading-relaxed mb-3">Delapan bilangan asli memiliki rata-rata $6{,}5$. Empat dari delapan bilangan tersebut adalah $4, 5, 7,\ \text{dan}\ 8$. Selisih antara bilangan terbesar dan terkecil adalah $10$. Jika kedelapan bilangan diurutkan dari kecil ke besar, maka banyak susunannya ada...</p>
+
+        <div class="space-y-2 mt-4 text-sm" data-question="q40">
+          <label class="option-label"><input type="radio" name="q40" value="correct" class="mt-1 mr-3"><span>$(A)\ 16$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(B)\ 24$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(C)\ 36$</span></label>
+          <label class="option-label"><input type="radio" name="q40" value="wrong" class="mt-1 mr-3"><span>$(D)\ 48$</span></label>
+        </div>
+        <div class="feedback-msg hidden mt-3 p-3 rounded-lg text-xs font-semibold"></div>
+
+        <details class="mt-5 border border-slate-200 rounded-lg overflow-hidden bg-slate-50/50">
+          <summary class="font-semibold text-teal-800 p-3 bg-teal-50/80 hover:bg-teal-100 flex items-center justify-between text-xs sm:text-sm">
+            <span><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Alternatif Pembahasan</span>
+            <span class="text-slate-400 text-xs">Klik untuk buka/tutup</span>
+          </summary>
+          <div class="p-4 text-sm text-slate-700 space-y-2 leading-relaxed">
+            <p>Total nilai $8$ bilangan $= 8 \times 6{,}5 = 52$.</p>
+            <p>Jumlah empat bilangan yang diketahui $= 4 + 5 + 7 + 8 = 24$.</p>
+            <p>Jumlah $4$ bilangan tersisa ($x_a \leq x_b \leq x_c \leq x_d$): $52 - 24 = 28$. Dengan jangkauan $x_d - x_a = 10$:</p>
+            <ul class="list-disc ml-5 space-y-1">
+              <li>Jika $x_a = 1 \implies x_d = 11$. Pasangan $(x_b, x_c)$: $(5,11), (6,10), (7,9), (8,8) \to 4\ \text{susunan}$.</li>
+              <li>Jika $x_a = 2 \implies x_d = 12$. Pasangan $(x_b, x_c)$: $(2,12), (3,11), (4,10), (5,9), (6,8), (7,7) \to 6\ \text{susunan}$.</li>
+              <li>Jika $x_a = 3 \implies x_d = 13$. Pasangan $(x_b, x_c)$: $(3,9), (4,8), (5,7), (6,6) \to 4\ \text{susunan}$.</li>
+              <li>Jika $x_a = 4 \implies x_d = 14$. Pasangan $(x_b, x_c)$: $(4,6), (5,5) \to 2\ \text{susunan}$.</li>
+            </ul>
+            $$\text{Total susunan} = 4 + 6 + 4 + 2 = 16\ \text{susunan}$$
+            <p class="font-bold text-teal-800 mt-2">$\therefore$ Pilihan yang sesuai adalah $(A)\ 16$</p>
+          </div>
+        </details>
+      </div>
+    </article>
+
+  </main>
+
+  <script>
+    // --- Multiple Choice Interactive Feedback ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const radioInputs = document.querySelectorAll('div[data-question] input[type="radio"]');
+      radioInputs.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const groupName = e.target.name;
+          const container = document.querySelector(`[data-question="${groupName}"]`);
+          const card = container.closest('.question-card');
+          const feedback = card.querySelector('.feedback-msg');
+          const labels = container.querySelectorAll('.option-label');
+
+          labels.forEach(lbl => {
+            lbl.classList.remove('selected-correct', 'selected-wrong');
+          });
+
+          const currentLabel = e.target.closest('.option-label');
+          if (e.target.value === 'correct') {
+            currentLabel.classList.add('selected-correct');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i> Jawaban Anda Benar! Pemahaman konsep Anda sangat baik.';
+          } else {
+            currentLabel.classList.add('selected-wrong');
+            feedback.className = 'feedback-msg mt-3 p-3 rounded-lg text-xs font-semibold bg-rose-50 text-rose-800 border border-rose-200 flex items-center gap-2';
+            feedback.innerHTML = '<i class="fa-solid fa-circle-xmark text-rose-600 text-sm"></i> Kurang tepat. Silakan teliti kembali perhitungannya atau buka pembahasan di bawah.';
+          }
+          feedback.classList.remove('hidden');
+        });
+      });
+    });
+
+    // --- Toggle All Solutions ---
+    let allOpen = false;
+    function toggleAllSolutions() {
+      const detailsList = document.querySelectorAll('details');
+      const btn = document.getElementById('btnToggleAll');
+      allOpen = !allOpen;
+      detailsList.forEach(det => det.open = allOpen);
+      btn.innerHTML = allOpen 
+        ? '<i class="fa-solid fa-eye-slash mr-1"></i> Tutup Semua Pembahasan' 
+        : '<i class="fa-solid fa-eye mr-1"></i> Buka Semua Pembahasan';
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    // --- Canvas Corat-coret (Scratchpad Engine) ---
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let isDrawingModeActive = false;
+    let currentColor = '#ef4444';
+    let currentLineWidth = 3;
+    let isEraser = false;
+
+    function resizeCanvas() {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCtx.drawImage(canvas, 0, 0);
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      ctx.drawImage(tempCanvas, 0, 0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function toggleDrawingMode() {
+      isDrawingModeActive = !isDrawingModeActive;
+      const btn = document.getElementById('toggleDrawBtn');
+      const text = document.getElementById('drawStatusText');
+      const controls = document.getElementById('drawControls');
+
+      if (isDrawingModeActive) {
+        canvas.classList.add('active-draw');
+        btn.classList.replace('bg-teal-600', 'bg-rose-600');
+        btn.classList.replace('hover:bg-teal-700', 'hover:bg-rose-700');
+        text.innerText = 'Mode Coret: AKTIF';
+        controls.classList.remove('hidden');
+      } else {
+        canvas.classList.remove('active-draw');
+        btn.classList.replace('bg-rose-600', 'bg-teal-600');
+        btn.classList.replace('hover:bg-rose-700', 'hover:bg-teal-700');
+        text.innerText = 'Mode Coret: MATI';
+        controls.classList.add('hidden');
+      }
+    }
+
+    function setColor(color) {
+      isEraser = false;
+      currentColor = color;
+      currentLineWidth = 3;
+      document.getElementById('eraserBtn').classList.remove('bg-teal-200');
+    }
+
+    function setEraser() {
+      isEraser = true;
+      currentLineWidth = 24;
+      document.getElementById('eraserBtn').classList.add('bg-teal-200');
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function getCoords(e) {
+      if (e.touches && e.touches.length > 0) {
+        return {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY
+        };
+      }
+      return {
+        x: e.clientX,
+        y: e.clientY
+      };
+    }
+
+    function startDrawing(e) {
+      if (!isDrawingModeActive) return;
+      isDrawing = true;
+      const { x, y } = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+    }
+
+    function draw(e) {
+      if (!isDrawing || !isDrawingModeActive) return;
+      e.preventDefault();
+      const { x, y } = getCoords(e);
+
+      ctx.save();
+      if (isEraser) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineWidth = currentLineWidth;
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = currentLineWidth;
+      }
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function stopDrawing() {
+      if (!isDrawing) return;
+      isDrawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDrawing);
+
+    canvas.addEventListener('touchstart', startDrawing, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    window.addEventListener('touchend', stopDrawing);
+  </script>
+</body>
+</html>
